@@ -1,0 +1,58 @@
+.header {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: #fff;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+  padding: 0.4rem 10%;
+  display: flex;
+  align-items: center;
+  z-index: 1000;
+}
+
+.header .logo {
+  margin-right: auto;
+  font-size: 30px;
+  color: #F15A25;
+}
+
+.header img {
+  width: 80px;
+}
+
+.header .navbar {
+  position: relative;
+}
+
+.header .navbar a {
+  margin-right: 2rem;
+  font-size: 1rem;
+  text-transform: capitalize;
+  color: #000;
+  text-decoration: none;
+  padding: 1.5rem;
+  text-transform: uppercase;
+}
+
+.header .navbar a:hover {
+  color: #F15A25;
+  width: 80px;
+  height: 2000px;
+}
+
+.header .icons div {
+  cursor: pointer;
+  font-size: 2rem;
+  color: #000;
+  margin-left: 1.5rem;
+}
+
+.header .icons div:hover {
+  color: #F15A25;
+}
+
+.header #menu-btn {
+  display: none;
+}/*# sourceMappingURL=header.css.map */
