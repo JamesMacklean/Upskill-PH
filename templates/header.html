@@ -1,0 +1,19 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/header.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+<header class="header">
+
+    <a href="#" class="logo"><img src="{% static 'images/logo.png' %}" alt=""></a>
+ 
+    <nav class="navbar">
+       <a href="#">home</a>
+       <a href="#">about</a>
+    </nav>
+ 
+    <div class="icons">
+       <a href="/signup"><div id="account-btn" class="fas fa-user"></div></a>
+       <div id="menu-btn" class="fas fa-bars"></div>
+    </div>
+ 
+ </header>
