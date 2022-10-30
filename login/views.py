@@ -10,6 +10,9 @@ import login
 def home(request):
     return render(request, "index.html")
 
+def success(request):
+    return render(request, "welcome.html")
+
 def signup(request):
 
     if request.method == "POST":
@@ -26,7 +29,7 @@ def signup(request):
 
         messages.success(request, "Your Account has been successfully created!")
         
-        return redirect('home')
+        return redirect('welcome')
 
     return render(request, "authentication/login.html")
 
