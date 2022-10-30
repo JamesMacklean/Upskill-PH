@@ -39,21 +39,9 @@
                        <button type="submit" class="btn solid"> sign up</button>
                 </form>
 
-                <form action="" class="sign-in-form" id="signin">
+                <form action="" class="sign-in-form" id="signin" method="POST">
                     <h2 class="title">Sign in</h2>
-                    <div class="social-media">
-                        <a href="#" class="social-icon fb">
-                            <i class="fa fa-facebook"></i>&nbsp; &nbsp;
-                            Continue with Facebook
-                        </a>
-                        <a href="#" class="social-icon gg">
-                            <i class="fa fa-google"></i>&nbsp; &nbsp;
-                            Continue with Google
-                        </a>
-                    </div>
-                    <div>
-                        <p class="social-text">- or -</p>
-                    </div>
+                    {% csrf_token %}
                     <div class="input-field">
                         <i class="fas fa-user"></i>
                         <input type="text" name="username" placeholder="username">

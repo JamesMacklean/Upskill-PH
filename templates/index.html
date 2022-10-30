@@ -8,5 +8,9 @@
 </head>
 <body>
     {% include 'header.html' %}
+    
+    {% if user.is_authenticated %}
+        {% include profile.html %}
+    {% endif %}
 </body>
 </html>
