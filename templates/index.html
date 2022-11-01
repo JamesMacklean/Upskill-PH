@@ -9,7 +9,7 @@
 <body>
     {% include 'header.html' %}
     {% if not user.is_authenticated %}
-        {% include 'signup.html' %}
+        {% include 'authentication/signup.html' %}
     {% endif %}
 
     {% if user.is_authenticated %}
