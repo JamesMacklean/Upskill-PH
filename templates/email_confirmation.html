@@ -1,0 +1,11 @@
+{% autoescape off %}
+
+Welcome to Scholarium!
+
+Hello, {{ name }}
+
+Please confirm your account by clicking the link below
+
+http://{{ domain }}{% url 'activate' uidb64=uid token=token%}
+
+{% endautoescape %}

@@ -8,9 +8,12 @@
 </head>
 <body>
     {% include 'header.html' %}
-    
+    {% if not user.is_authenticated %}
+        {% include 'signup.html' %}
+    {% endif %}
+
     {% if user.is_authenticated %}
-        {% include profile.html %}
+        {% include dashboard.html %}
     {% endif %}
 </body>
 </html>

@@ -10,10 +10,15 @@
        <a href="#">home</a>
        <a href="#">about</a>
     </nav>
- 
+ {% if not user.is_authenticated %}
+      <div class="icons">
+         <a href="/signup"><div id="account-btn" class="fas fa-user"></div></a>
+         <div id="menu-btn" class="fas fa-bars"></div>
+      </div>
+   {% else %}
     <div class="icons">
-       <a href="/signup"><div id="account-btn" class="fas fa-user"></div></a>
+       <a href="/profile"><div id="account-btn" class="fas fa-user"></div></a>
        <div id="menu-btn" class="fas fa-bars"></div>
     </div>
- 
+{% endif %}
  </header>
