@@ -37,7 +37,10 @@ def signup(request):
             messages.error(request, "email already exists")
 
         
-        myuser = User.objects.create_user(username, email, firstname, lastname)
+        myuser = User.objects.create_user(username, email)
+        myuser.first_name = firstname
+        myuser.last_name = lastname
+
         myuser.is_active = False
         myuser.save()
 
@@ -72,8 +75,8 @@ def signin(request):
 
         if user is not None:
             login(request, user)
-            first_name = user.firstname
-            return render(request, "authentication/dashboard.html", {'first_name': first_name})
+            firstname = user.first_name
+            return render(request, "authentication/dashboard.html", {'first_name': firstname})
 
         else: 
             messages.error(request, "Invalid username/password")
