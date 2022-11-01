@@ -43,16 +43,16 @@ def signup(request):
         myuser.save()
 
         current_site = get_current_site(request)
-        subject = "Scholarium: Account Verification"
-        message = render_to_string('email_confirmation.html',{
+        email_subject = "Scholarium: Account Verification"
+        message1 = render_to_string('email_confirmation.html',{
             'name': myuser.first_name,
             'domain': current_site.domain,
             'uid': urlsafe_base64_encode(force_bytes(myuser.pk)),
             'token': generate_token.make_token(myuser)
         })
         email = EmailMessage(
-            subject,
-            message,
+            email_subject,
+            message1,
             settings.EMAIL_HOST_USER,
             [myuser.email],
         )
