@@ -1,11 +1,9 @@
-from email.message import EmailMessage
-from urllib import request
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from scholarium import settings
-from django.core.mail import send_mail
+from django.core.mail import EmailMessage, send_mail
 from django.contrib.sites.shortcuts import get_current_site
 from django.template.loader import render_to_string
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
@@ -47,7 +45,7 @@ def signup(request):
         current_site = get_current_site(request)
         subject = "Scholarium: Account Verification"
         message = render_to_string('email_confirmation.html',{
-            'name': myuser.firstname,
+            'name': myuser.first_name,
             'domain': current_site.domain,
             'uid': urlsafe_base64_encode(force_bytes(myuser.pk)),
             'token': generate_token.make_token(myuser)
