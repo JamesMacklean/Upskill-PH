@@ -52,7 +52,7 @@ def signup(request):
         })
         email = EmailMessage(
             subject,
-            message
+            message,
             settings.EMAIL_HOST_USER,
             [myuser.email],
         )
