@@ -125,6 +125,8 @@ STATICFILES_DIRS = [
     BASE_DIR / "static/",
 ]
 
+STATIC_ROOT = BASE_DIR / 'static'
+
 # temp static for admin
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
