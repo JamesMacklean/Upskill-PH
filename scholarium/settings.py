@@ -11,7 +11,8 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
-from . info import *
+from info import *
+
 from tempfile import template
 import os
 
