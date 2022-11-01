@@ -9,22 +9,22 @@
     {% csrf_token %}
                 <div class="input-field">
                     <i class="fas fa-user"></i>
-                    <input type="text" id="username" name="username" placeholder="username">
+                    <input type="text" id="username" name="username" placeholder="username" required>
                 </div>
                 
                 <div class="input-field">
                     <i class="fas fa-address-card"></i>
-                    <input type="text" id="firstname" name="firstname" placeholder="first name">
+                    <input type="text" id="firstname" name="firstname" placeholder="first name" required>
                 </div>
                 
                 <div class="input-field">
                     <i class="fas fa-address-card"></i>
-                    <input type="text" id="lastname" name="lastname" placeholder="last name">
+                    <input type="text" id="lastname" name="lastname" placeholder="last name" required>
                 </div>
                 
                 <div class="input-field">
                     <i class="fas fa-envelope"></i>
-                    <input type="text" id="email"  name="email" placeholder="email">
+                    <input type="text" id="email"  name="email" placeholder="email" required>
                 </div>
 
                     <button type="submit" class="btn solid">sign up</button>
