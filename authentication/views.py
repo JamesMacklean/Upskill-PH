@@ -33,7 +33,7 @@ def signup(request):
         if User.objects.filter(username=username):
             messages.error(request, "username already exists")
         
-        if User.obects.filter(email=email):
+        if User.objects.filter(email=email):
             messages.error(request, "email already exists")
 
         
