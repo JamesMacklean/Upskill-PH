@@ -261,7 +261,7 @@ a.gg:hover i {
   padding: 0.7rem 0;
 }
 
-a .btn-transparent {
+.btn-transparent {
   margin: 0;
   background: none;
   border: 2px solid #fff;
@@ -272,7 +272,7 @@ a .btn-transparent {
   font-size: 0.8rem;
 }
 
-a .btn-transparent:hover {
+.btn-transparent:hover {
   background-color: #fff;
   color: #F15A25;
 }
