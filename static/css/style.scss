@@ -52,13 +52,6 @@ form{
     grid-row: 1 / 2;
     transition: 0.2s 0.7s ease-in-out;
 }
-form.sign-up-form{
-    z-index: 2;
-}
-form.sign-in-form{
-    z-index: 1;
-    opacity: 0;
-}
 .title{
     font-size: 2.2rem;
     color: black;
@@ -227,36 +220,36 @@ a.gg:hover i{
 
 //animation
 
-.container.sign-in-mode::before{
-    transform: translate(100%,-50%);
-    right: 52%;
-}
-.container.sign-in-mode .left-panel .image,
-.container.sign-in-mode .left-panel .content{
-    transform: translateX(-800%);
-}
-.container.sign-in-mode .right-panel .content, 
-.container.sign-in-mode .right-panel .image{
-    transform: translateX(0px);
-}
+// .container.sign-in-mode::before{
+//     transform: translate(100%,-50%);
+//     right: 52%;
+// }
+// .container.sign-in-mode .left-panel .image,
+// .container.sign-in-mode .left-panel .content{
+//     transform: translateX(-800%);
+// }
+// .container.sign-in-mode .right-panel .content, 
+// .container.sign-in-mode .right-panel .image{
+//     transform: translateX(0px);
+// }
 
-.container.sign-in-mode .left-panel{
-    pointer-events: none;
-}
-.container.sign-in-mode .right-panel{
-    pointer-events: all;
-}
-.container.sign-in-mode .signup-signin{
-    left: 25%;
-}
-.container.sign-in-mode form.sign-up-form{
-    z-index: 1;
-    opacity: 0;
-}
-.container.sign-in-mode form.sign-in-form{
-    z-index: 2;
-    opacity: 1;
-}
+// .container.sign-in-mode .left-panel{
+//     pointer-events: none;
+// }
+// .container.sign-in-mode .right-panel{
+//     pointer-events: all;
+// }
+// .container.sign-in-mode .signup-signin{
+//     left: 25%;
+// }
+// .container.sign-in-mode form.sign-up-form{
+//     z-index: 1;
+//     opacity: 0;
+// }
+// .container.sign-in-mode form.sign-in-form{
+//     z-index: 2;
+//     opacity: 1;
+// }
 
 @media (max-width: 870px){
     .container{
