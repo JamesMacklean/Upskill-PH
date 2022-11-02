@@ -4,15 +4,15 @@
   box-sizing: border-box;
 }
 
-.container {
+.container-signup {
   position: relative;
   width: 100%;
   min-height: 100vh;
-  background-color: #fff;
+  background-color: #acacac;
   overflow: hidden;
 }
 
-.container:before {
+.container-signup:before {
   content: "";
   position: absolute;
   width: 2000px;
@@ -20,9 +20,29 @@
   border-radius: 50%;
   background: linear-gradient(-45deg, #F15A25, #fc7d4f);
   top: -10%;
-  right: 48%;
+  right: 35%;
   transform: translateY(-50%);
-  z-index: 6;
+  transition: 1.8s ease-in-out;
+}
+
+.container-signup {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  background-color: #acacac;
+  overflow: hidden;
+}
+
+.container-signup:before {
+  content: "";
+  position: absolute;
+  width: 2000px;
+  height: 2000px;
+  border-radius: 50%;
+  background: linear-gradient(-45deg, #F15A25, #fc7d4f);
+  top: -10%;
+  right: -40%;
+  transform: translateY(-50%);
   transition: 1.8s ease-in-out;
 }
 
@@ -38,6 +58,18 @@
   position: absolute;
   top: 50%;
   left: 75%;
+  transform: translate(-50%, -50%);
+  width: 50%;
+  display: grid;
+  grid-template-columns: 1fr;
+  z-index: 5;
+  transition: 1s 0.7s ease-in-out;
+}
+
+.signin-signup {
+  position: absolute;
+  top: 50%;
+  left: 30%;
   transform: translate(-50%, -50%);
   width: 50%;
   display: grid;
