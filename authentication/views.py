@@ -24,6 +24,7 @@ def signup(request):
 
     if request.method == "POST":
         username = request.POST['username']
+        password = request.POST['password']
         email= request.POST['email']
         firstname= request.POST['firstname']
         lastname= request.POST['lastname']
@@ -35,29 +36,10 @@ def signup(request):
             messages.error(request, "email already exists")
 
         
-        myuser = User.objects.create_user(username, email)
+        myuser = User.objects.create_user(username, email, password)
         myuser.first_name = firstname
         myuser.last_name = lastname
-
-        myuser.is_active = False
         myuser.save()
-
-        current_site = get_current_site(request)
-        email_subject = "Scholarium: Account Verification"
-        message1 = render_to_string('email_confirmation.html',{
-            'name': myuser.first_name,
-            'domain': current_site.domain,
-            'uid': urlsafe_base64_encode(force_bytes(myuser.pk)),
-            'token': generate_token.make_token(myuser)
-        })
-        email = EmailMessage(
-            email_subject,
-            message1,
-            settings.EMAIL_HOST_USER,
-            [myuser.email],
-        )
-        email.fail_silently = True
-        email.send()
 
         return redirect('success')
 

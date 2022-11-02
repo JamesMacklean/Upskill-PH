@@ -16,16 +16,16 @@ def success(request):
 def signup(request):
 
     if request.method == "POST":
-        username = request.POST['username']
-        firstname = request.POST['firstname']
-        lastname = request.POST['lastname']
-        email = request.POST['email']
+        dusername = request.POST['username']
+        dfirstname = request.POST['firstname']
+        dlastname = request.POST['lastname']
+        demail = request.POST['email']
 
-        myuser = User.objects.create_user(username, email)
-        myuser.first_name = firstname
-        myuser.last_name = lastname
+        dmyuser = User.objects.create_user(dusername, demail)
+        dmyuser.first_name = dfirstname
+        dmyuser.last_name = dlastname
 
-        myuser.save()
+        dmyuser.save()
 
         messages.success(request, "Your Account has been successfully created!")
         
@@ -35,10 +35,10 @@ def signup(request):
 
 def signin(request):
     if request.method == "POST":
-        username = request.POST['username']
-        password = request.POST['password']
+        dusername = request.POST['username']
+        dpassword = request.POST['password']
 
-        user = authenticate(username=username, password=password)
+        user = authenticate(username=dusername, password=dpassword)
 
         if user is not None:
             login(request, user)
