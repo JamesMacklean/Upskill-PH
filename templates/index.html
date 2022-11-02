@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+{% include 'header.html' %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -9,7 +9,9 @@
 <body>
     {% include 'header.html' %}
     {% if not user.is_authenticated %}
-        {% include 'authentication/signup.html' %}
+        <p>pag visible to, gawa ka account. pero landing page to.</p>
+        <a href="/signup"> link muna ito to signup page </a>
+        <p> papalitan ng button once may landing page na, press din the person sa header pwede to signup</p>
     {% endif %}
 
     {% if user.is_authenticated %}
