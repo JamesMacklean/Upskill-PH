@@ -217,6 +217,7 @@ a.gg:hover i {
 }
 
 .panels-container {
+  margin-top: 4%;
   position: absolute;
   width: 100%;
   height: 100%;
@@ -237,12 +238,12 @@ a.gg:hover i {
 
 .left-panel {
   pointer-events: all;
-  padding: 3rem 17% 2rem 12%;
+  padding: 3rem 17% 0rem 12%;
 }
 
 .right-panel {
-  pointer-events: none;
-  padding: 3rem 12% 2rem 17%;
+  pointer-events: all;
+  padding: 3rem 12% 0rem 17%;
 }
 
 .panel .content {
@@ -267,9 +268,14 @@ a.gg:hover i {
   border: 2px solid #fff;
   color: #fff;
   width: 130px;
-  height: 41px;
+  height: 60px;
   font-weight: 500;
-  font-size: 0.8rem;
+  font-size: 1rem;
+  padding: 10px 20px;
+  border-radius: 50px;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: 0.5s;
 }
 
 .btn-transparent:hover {
@@ -278,7 +284,6 @@ a.gg:hover i {
 }
 
 .image {
-  width: 100%;
   transition: 1.1s 0.4s ease-in-out;
 }
 
