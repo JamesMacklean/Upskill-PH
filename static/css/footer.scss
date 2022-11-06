@@ -1,0 +1,64 @@
+#scholarium-footer{
+    background-color: #F15A25;
+  }
+  .footer-link-heading{
+    font-size: 1.25rem;
+    font-weight: 500;
+  }
+  .footer-container-row{
+    font-size: 0.8rem;
+    padding: 25px 40px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    justify-content: center;
+  }
+  .footer-link-footer-static .static-link-footer{
+    list-style: none;
+    padding: 0;
+  }
+  .static-link-footer li{
+    padding: 2px;
+  }
+  .static-link-footer li a{
+    text-decoration: none;
+    color: #fff;
+  }
+  .static-link-footer li a:hover{ 
+    text-decoration: none;
+    color: #000;
+  }
+  .static-link-footer li a:visited, .static-link-footer li a:active{ 
+    text-decoration: none;
+    color: #fff;
+  }
+  .footer-container-col-left{
+    display: inline-block;
+    text-align: left;
+    justify-content: left;
+  }
+  .footer-container-col-right{
+    display: inline-block;
+    text-align: right;
+    justify-content: right;
+  }
+  .footer-link-footer-social{
+    padding: 0px 0px 15px 0px;
+  }
+  .footer-link-footer-social a{
+    display: inline-flex; 
+    padding: 10px; 
+    background-color: #515356; 
+    border-radius: 50%;
+  }
+  .footer-link-footer-social a:hover{
+    text-decoration: none;
+    background-color: #828282;
+  }
+  .footer-link-footer-social a i{
+    font-style: normal;
+    color: #fff;
+    font-weight: 500;
+    width: 15px;
+    height: 15px;
+    font-size: 1.25rem;
+  }

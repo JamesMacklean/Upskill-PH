@@ -1,5 +1,6 @@
+{% extends 'base.html' %}
 {% load static %}
-{% include 'header.html' %}
+{% block content %}
 <h2>Profile Data</h2>
 <input type="text" placeholder="First Name">
 <input type="text" placeholder="Middle Name">
@@ -130,4 +131,5 @@
     });
 </script>
 
+{% endblock %}
 <!--  COUNTRY SELECTION STOP  -->

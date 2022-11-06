@@ -1,20 +1,11 @@
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Scholarium</title>
-</head>
-<body>
-    {% include 'header.html' %}
+{% extends 'base.html' %}
+{% block content %}
+<!-- ***  LANDING PAGE START  ***-->
+<div class="landing-page">
     {% if not user.is_authenticated %}
-        <p>pag visible to, gawa ka account. pero landing page to.</p>
-        <a href="/signup"> link muna ito to signup page </a>
-        <p> papalitan ng button once may landing page na, press din the person sa header pwede to signup</p>
+        {% include 'signup.html' %}
+    {% else %}
+        <h1>THIS AS THE LANDING PAGE</h1>
     {% endif %}
-
-    {% if user.is_authenticated %}
-        {% include 'authentication/dashboard.html' %}
-    {% endif %}
-</body>
-</html>
+</div>
+{% endblock %}

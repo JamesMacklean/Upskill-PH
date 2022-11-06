@@ -1,14 +1,7 @@
+{% extends 'base.html' %}
 {% load static %}
-{% include 'header.html' %}
-<link rel="stylesheet" href="{% static 'css/style.css' %}">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/fontawesome.min.css" integrity="sha512-RvQxwf+3zJuNwl4e0sZjQeX7kUa3o82bDETpgVCH2RiwYSZVDdFJ7N/woNigN/ldyOOoKw8584jM4plQdt8bhA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-<script
-src="https://kit.fontawesome.com/64d58efce2.js"
-crossorigin="anonymous"
-></script>
-<div class="body-color-disregard">
+{% block content %}
 
-</div>
 <div class="profile-container">
     <div class="image-container">
         <img src="{% static 'images/profilepic.svg'%}" alt="" class="profile-picture">
@@ -45,3 +38,4 @@ crossorigin="anonymous"
         </section>
     </div>
 </div>
+{% endblock %}
