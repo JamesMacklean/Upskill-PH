@@ -117,4 +117,4 @@ def edit_profile(request):
 
     # scholar = ScholarProfile.objects.create(first_name, middle_name, last_name, profile_picture, emp_status, industry, employer, occupation, exp_level, degree, university, field, bio, country, region, municipality, socials, gender, birthday, phone, details_privacy)
     # scholar.save()
-    return(request, "edit_profile.html")
+    return render(request, "edit_profile.html")
