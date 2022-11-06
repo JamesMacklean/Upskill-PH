@@ -7,7 +7,7 @@ setup(
     name='authentication',
     version='1.0',
     description='Scholar Profiles',
-    packages=['scholarium'],
+    packages=['authentication'],
     install_requires=[
         'Django',
     ],
