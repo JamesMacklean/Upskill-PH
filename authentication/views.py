@@ -86,12 +86,13 @@ def activate(request, uidb64, token):
     else:
         return(request, "activation_failed.html")
 
-def profile(request, user):
-    firstname = user.first_name
-    lastname = user.last_name
-    return render(request, "profile.html", {'first_name': firstname, 'last_name': lastname})
+def profile(request):
+    user = User.objects.get(all)
+    # firstname = user.first_name
+    # lastname = user.last_name
+    return render(request, "profile.html")
 
-def edit_profile(request, user):
+def edit_profile(request):
     # first_name = request.POST['first_name']
     # middle_name = request.POST['middle_name']
     # last_name = request.POST['last_name']
@@ -117,5 +118,4 @@ def edit_profile(request, user):
 
     # scholar = ScholarProfile.objects.create(first_name, middle_name, last_name, profile_picture, emp_status, industry, employer, occupation, exp_level, degree, university, field, bio, country, region, municipality, socials, gender, birthday, phone, details_privacy)
     # scholar.save()
-    firstname = user.first_name
-    return(request, "edit_profile.html",{'first_name': firstname})
+    return(request, "edit_profile.html")
