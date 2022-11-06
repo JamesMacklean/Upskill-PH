@@ -87,7 +87,6 @@ def activate(request, uidb64, token):
         return(request, "activation_failed.html")
 
 def profile(request):
-    user = User.objects.get(all)
     # firstname = user.first_name
     # lastname = user.last_name
     return render(request, "profile.html")
