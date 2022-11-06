@@ -11,5 +11,5 @@ urlpatterns = [
     path('success', views.success, name="success"),
     path('activate/<uidb64>/<token>', views.activate, name="activate"),
     path('profile', views.profile, name="profile"),
-    path('pfofile/edit', views.edit_profile, name="edit profile")
+    path('profile/edit', views.edit_profile, name="edit profile")
 ]

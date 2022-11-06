@@ -440,3 +440,27 @@ a.gg:hover i{
 body{
     background-color: #F15A25;
 }
+
+// EDIT PROFILE
+
+.edit-update-profile{
+    background-color: #fff;
+    border: solid #000 1px;
+    max-width: 900px;
+    transform: translate(50%);
+}
+.profile-container, .educ-container, .about-container{
+    padding: 20px 30px;
+    justify-items: left;
+    display: block;
+}
+.profile-data, .educ-item, .about{
+    margin: 20px 0;
+}
+.profile-picture{
+    margin: 20px;
+}
+.save-changes{
+    transform: translate(50%);
+    padding: 15px 0;
+}
