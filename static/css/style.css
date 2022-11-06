@@ -382,7 +382,7 @@ a.gg:hover i {
     padding-top: 150px;
   }
 }
-.profile-container {
+.profile-wrapper {
   display: grid;
   position: relative;
   align-items: center;
