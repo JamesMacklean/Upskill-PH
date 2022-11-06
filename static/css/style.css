@@ -237,12 +237,10 @@ a.gg:hover i {
 }
 
 .left-panel {
-  pointer-events: all;
   padding: 3rem 17% 0rem 12%;
 }
 
 .right-panel {
-  pointer-events: all;
   padding: 3rem 12% 0rem 17%;
 }
 
