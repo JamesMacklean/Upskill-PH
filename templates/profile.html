@@ -7,11 +7,11 @@
         <img src="{% static 'images/profilepic.svg'%}" alt="" class="profile-picture">
     </div>
     <div class="name-container">
-        <h2 class="name">Juan D. Reksyon</h2>
+        <h2 class="name">{{ first_name }}</h2>
         <p>insert description</p>
     </div>
     <div class="edit-profile">
-       <a href="/edit_profile"><i class="fa fa-pencil"></i></a>
+       <a href="/profile/edit"><i class="fa fa-pencil"></i></a>
     </div>
     <div class="achievements-container">
         <section class="achievements">
