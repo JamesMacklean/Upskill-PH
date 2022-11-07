@@ -87,11 +87,15 @@ def activate(request, uidb64, token):
         return(request, "activation_failed.html")
 
 def profile(request):
-    # firstname = user.first_name
-    # lastname = user.last_name
-    return render(request, "profile.html")
+
+    if request.user.is_authenticated:
+        firstname = request.user.first_name
+        lastname = request.user.last_name
+
+    return render(request, "profile.html", {'firstname':firstname, 'lastname':lastname})
 
 def edit_profile(request):
+    
     first_name = request.POST['first_name']
     middle_name = request.POST['middle_name']
     last_name = request.POST['last_name']
