@@ -3,7 +3,7 @@
 {% block content %}
 
 <form action="" class="edit-update-profile">
-
+{% csrf_token %}
     <div class="profile-container">
         <h2 class="profile-label">Profile Data</h2>
         <div class="profile-data">

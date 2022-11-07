@@ -31,3 +31,6 @@ class ScholarProfile(models.Model):
 
     phone = models.IntegerField(max_length=11, null=True)
     details_privacy = models.CharField(max_length=200, null=True)
+    class Meta:
+        ordering = ['order']
+        verbose_name_plural = "Scholar Profiles"
