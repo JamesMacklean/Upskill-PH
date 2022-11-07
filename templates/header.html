@@ -1,5 +1,6 @@
 {% load static %}
 <link rel="stylesheet" href="{% static 'css/header.css' %}">
+<link rel="stylesheet" href="{% static 'js/header.js' %}">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
 <header class="header">
@@ -17,8 +18,18 @@
       </div>
    {% else %}
     <div class="icons">
-       <a href="/profile"><div id="account-btn" class="fas fa-user"></div></a>
+       {{ first_name }} <i class="fa fa-caret-down" id="user-dropdown" onclick="toggleMenu()"></i>
        <div id="menu-btn" class="fas fa-bars"></div>
+    </div>
+    <div class="sub-menu-wrappper" id="subMenu">
+      <div class="sub-menu">
+         <a href="/profile" class="sub-menu-link">
+            <p>Profile</p> <span>></span>
+         </a>
+         <a href="/signout" class="sub-menu-link">
+            <p>Sign Out</p> <span>></span>
+         </a>
+      </div>
     </div>
 {% endif %}
  </header>

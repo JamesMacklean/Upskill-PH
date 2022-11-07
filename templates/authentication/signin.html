@@ -1,8 +1,10 @@
+{% extends 'base.html' %}
 {% load static %}
-<body>
-<div class="container">
+{% block content %}
+
+<div class="container-signin">
     <div class="forms-container">
-        <div class="signup-signin">
+        <div class="signin-signup">
             <form action="" class="sign-in-form" id="signin" method="POST">
                 <h2 class="title">Sign in</h2>
     {% csrf_token %}
@@ -27,9 +29,9 @@
         <div class="content">
             <h3>don't have an account?</h3>
             <p></p>
-            <button class="btn transparent" id="sign-up-btn">Sign up</button>
+            <a class="btn-transparent" href="/signup">Sign up</a>
         </div>
         <img src="{% static 'images/signin.svg'%}" class="image" alt=""/>
     </div>
 </div>
-</body>
+{% endblock %}

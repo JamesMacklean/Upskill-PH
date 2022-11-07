@@ -1,22 +1,17 @@
-<link rel="stylesheet" href="css/style.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/fontawesome.min.css" integrity="sha512-RvQxwf+3zJuNwl4e0sZjQeX7kUa3o82bDETpgVCH2RiwYSZVDdFJ7N/woNigN/ldyOOoKw8584jM4plQdt8bhA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-<script
-src="https://kit.fontawesome.com/64d58efce2.js"
-crossorigin="anonymous"
-></script>
-<div class="body-color-disregard">
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
 
-</div>
-<div class="profile-container">
+<div class="profile-wrapper">
     <div class="image-container">
-        <img src="images/profilepic.svg" alt="" class="profile-picture">
+        <img src="{% static 'images/profilepic.svg'%}" alt="" class="profile-picture">
     </div>
     <div class="name-container">
-        <h2 class="name">Juan D. Reksyon</h2>
+        <h2 class="name">{{ first_name }}</h2>
         <p>insert description</p>
     </div>
     <div class="edit-profile">
-       <a href="/edit_profile"><i class="fa fa-pencil"></i></a>
+       <a href="/edit"><i class="fa fa-pencil"></i></a>
     </div>
     <div class="achievements-container">
         <section class="achievements">
@@ -43,3 +38,4 @@ crossorigin="anonymous"
         </section>
     </div>
 </div>
+{% endblock %}

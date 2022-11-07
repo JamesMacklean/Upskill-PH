@@ -1,90 +1,192 @@
-<h2>Profile Data</h2>
-<input type="text" placeholder="First Name">
-<input type="text" placeholder="Middle Name">
-<input type="text" placeholder="Last Name">
-<img src="images/profilepic.svg" alt="">
-<input type="button" value="UPLOAD">
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
 
-<h2>Education and Work Experience</h2>
-<label for="estatus">Employment Status</label>
-<select name="estatus" id="estatus">
-    <option value="ft">Full time</option>
-    <option value="pt">Part Time</option>
-    <option value="se">Self-Employed</option>
-    <option value="hm">Homemaker</option>
-    <option value="ue">Unemployed</option>
-    <option value="re">Retired</option>
-    <option value="uw">Unable to work</option>
-</select>
-<label for="industry">Industry</label>
-<select name="industry" id="industry">
-    <option value="it">Information Technology</option>
-    <option value="ot">Other</option>
-</select>
-<label for="employer">Employer</label>
-<input type="text" placeholder="Employer" name="employer">
-<label for="occupation">Occupation</label>
-<input type="text" placeholder="Occupation" name="occupation">
-<label for="experience">Experience Level</label>
-<select name="experience" id="experience">
-    <option value="int">Intern/Trainee</option>
-    <option value="jun">Junior/Entry level (0-2 years experience)</option>
-    <option value="mid">Mid-level (2+ years experience)</option>
-    <option value="lea">Lead/Manager</option>
-    <option value="sen">Senior Manager</option>
-    <option value="exe">Executive level</option>
-    <option value="na">Not Applicable</option>
-</select>
-<label for="degree"></label>
-<select name="degree" id="degree">
-    <option value="less">Less than high school diploma or equivalent</option>
-    <option value="juni">Junior high diploma</option>
-    <option value="seni">Senior high diploma</option>
-    <option value="some">Some units in college but no degree</option>
-    <option value="asso">Associate degree</option>
-    <option value="bach">Bachelor's degree</option>
-    <option value="mast">Master's degree</option>
-    <option value="doct">Doctorate degree</option>
-</select>
-<label for="university">University</label>
-<input type="text" placeholder="University">
-<label for="field">Field of Study</label>
-<select name="field" id="field">
-    <option value="bu">Business</option>
-    <option value="cs">Computer Science</option>
-    <option value="en">Engineering</option>
-    <option value="ms">Mathematics and Statistics</option>
-    <option value="ps">Physical Sciences</option>
-    <option value="bs">Biological Sciences</option>
-    <option value="ss">Social Sciences</option>
-    <option value="hp">Heath Professions</option>
-    <option value="lp">Legal Professions</option>
-    <option value="ed">Education</option>
-    <option value="ah">Arts and Humanities</option>
-    <option value="other">Other</option>
-    <option value="na">NA</option>
-</select>
+<form action="" class="edit-update-profile">
+{% csrf_token %}
+    <div class="profile-container">
+        <h2 class="profile-label">Profile Data</h2>
+        <div class="profile-data">
+            <label for="name"> Full name</label>
+            <input type="text" name="first_name" placeholder="{{first_name}}">
+            <input type="text" name="middle_name" placeholder="Middle Name (Optional)">
+            <input type="text" name="last_name" placeholder="{{last_name}}">
+        </div>
 
-<h2>About your self</h2>
-<label for="bio">About</label>
-<textarea name="bio" id="bio" cols="30" rows="3"></textarea>
+        <div class="profile-data">
+                <label for="profile_pic">Upload/ Update your Profile Picture:</label>
+            <input type="file" id="profile_pic" name="profile_pic" accept="image/*">
+        </div>
+            <input type="button" value="UPLOAD">
+    </div>
+    
+    <div class="educ-container">
+        <h2>Education and Work Experience</h2>
+        <div class="educ-item">
+            <label for="emp_status">Employment Status</label>
+            <select name="emp_status" id="empstatus">
+                <option value="ft">Full time</option>
+                <option value="pt">Part Time</option>
+                <option value="se">Self-Employed</option>
+                <option value="hm">Homemaker</option>
+                <option value="ue">Unemployed</option>
+                <option value="re">Retired</option>
+                <option value="uw">Unable to work</option>
+            </select>
+        </div>
+    
+        <div class="educ-item">
+            <label for="industry">Industry</label>
+            <select name="industry" id="industry">
+                <option value="it">Information Technology</option>
+                <option value="ot">Other</option>
+            </select>
+        </div>
+    
+        <div class="educ-item">
+            <label for="employer">Employer</label>
+            <input type="text" placeholder="Employer" name="employer">
+        </div>
+    
+        <div class="educ-item">
+            <label for="occupation">Occupation</label>
+            <input type="text" placeholder="Occupation" name="occupation">
+        </div>
+    
+        <div class="educ-item">
+            <label for="exp_level">Experience Level</label>
+            <select name="exp_level" id="experience">
+                <option value="int">Intern/Trainee</option>
+                <option value="jun">Junior/Entry level (0-2 years experience)</option>
+                <option value="mid">Mid-level (2+ years experience)</option>
+                <option value="lea">Lead/Manager</option>
+                <option value="sen">Senior Manager</option>
+                <option value="exe">Executive level</option>
+                <option value="na">Not Applicable</option>
+            </select>
+            </div>
+    
+        <div class="educ-item">
+            <label for="degree">Degree</label>
+            <select name="degree" id="degree">
+                <option value="less">Less than high school diploma or equivalent</option>
+                <option value="juni">Junior high diploma</option>
+                <option value="seni">Senior high diploma</option>
+                <option value="some">Some units in college but no degree</option>
+                <option value="asso">Associate degree</option>
+                <option value="bach">Bachelor's degree</option>
+                <option value="mast">Master's degree</option>
+                <option value="doct">Doctorate degree</option>
+            </select>
+        </div>
 
-<!--  COUNTRY SELECTION START  -->
+        <div class="educ-item">
+            <label for="university">University</label>
+            <input type="text" placeholder="University">
+        </div>
 
-<label for="country">Country</label>
-<select name="country" id="country">
-    <option value="" selected="selected">Select Country</option>
-    <option value="ph">Philippines</option>
-</select>
+        <div class="educ-item">
+            <label for="field">Field of Study</label>
+            <select name="field" id="field">
+                <option value="bu">Business</option>
+                <option value="cs">Computer Science</option>
+                <option value="en">Engineering</option>
+                <option value="ms">Mathematics and Statistics</option>
+                <option value="ps">Physical Sciences</option>
+                <option value="bs">Biological Sciences</option>
+                <option value="ss">Social Sciences</option>
+                <option value="hp">Heath Professions</option>
+                <option value="lp">Legal Professions</option>
+                <option value="ed">Education</option>
+                <option value="ah">Arts and Humanities</option>
+                <option value="other">Other</option>
+                <option value="na">NA</option>
+            </select>
+        </div>
+    </div>
+    
+    <div class="about-container">
+        <h2>About</h2>
+    
+        <div class="about">
+            <label for="bio">About Me</label>
+            <textarea name="bio" id="bio" cols="30" rows="3"></textarea>
+        </div>
+    
+    
+    <!--  COUNTRY SELECTION START  -->
+    
+        <div class="about">
+            <label for="country">Country</label>
+            <select name="country" id="country">
+                <option value="" selected="selected">Select Country</option>
+                <option value="ph">Philippines</option>
+            </select>
+        </div>
+    
+        <div class="about">
+            <label for="region">Region</label>
+            <select id="region" name="region"></select>
+        </div>
 
-<label for="region">Region</label>
-<select id="region">Select Region</select>
+        <div class="about">
+            <label for="city">Province/City</label>
+            <select id="province" name="province"></select>
+        </div>
 
-<label for="province">City/Province</label>
-<select id="province">Select City/Province</select>
+        <div class="about">
+            <label for="city">Municipality/City</label>
+            <select id="city" name="municipality"></select>
+        </div>
+    
+    <!--  COUNTRY SELECTION END  -->
+    
+        <div class="about">
+            <label for="Socials">Social Media Links</label>
+            <select id="Socials" name="">
+                <option value="li">Linkedin</option>
+                <option value="fb">Faceboook</option>
+                <option value="twt">Twitter</option>
+                <option value="other">Other</option>
+            </select>
+            <input type="button" value="add">
+        </div>
+    
+        <div class="about">
+            <label for="gender">Gender</label>
+                <select id="gender" name="gender">
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+                <option value="other">Other</option>
+                <option value="na">I'd rather not say</option>
+            </select>
+        </div>
+    
+        <div class="about">
+            <label for="dob">Date of Birth</label>
+            <input type="date" value="null">
+        </div>
+    
+        <div class="about">
+            <label for="mobile">Phone Number</label>
+            <input type="text">
+        </div>
+    
+        <div class="about">
+            <label for="details_privacy">Details Privacy</label>
+            <select name="details_privacy" id="details-privacy">
+                <option value="om">Only Me</option>
+                <option value="sc">Scholarium Community</option>
+                <option value="pub">Public on the Web</option>
+            </select>
+        </div>
+    </div>
+    
+    <div class="save-changes">
+        <input type="submit" value="SAVE CHANGES">
+    </div>
 
-<label for="city">Municipality/City</label>
-<select id="city">Select Municipality/City</select>
+</form>
 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.js"></script>
 <!-- script type="text/javascript" src="../../jquery.ph-locations.js"></script -->
@@ -128,4 +230,5 @@
     });
 </script>
 
+{% endblock %}
 <!--  COUNTRY SELECTION STOP  -->
