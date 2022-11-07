@@ -33,7 +33,7 @@
 //   .header .navbar #close-navbar:hover {
 //     transform: rotate(90deg);
 //   }
-  .header .navbar a {
+  .header .navbar .navbar-link {
     margin-right: 2rem;
     font-size: 1rem;
     text-transform: capitalize;
@@ -42,7 +42,7 @@
     padding: 1.5rem;
     text-transform: uppercase;
   }
-  .header .navbar a:hover {
+  .header .navbar .navbar-link:hover {
     color: #F15A25;
     width: 80px;
     height: 2000px;
@@ -75,9 +75,17 @@
     max-height: 400px;
   }
   .sub-menu{
+    display: none;
     background-color: #fff;
     padding: 20px;
     margin: 10px;
+  }
+  .user-dropdown{
+    text-decoration: none;
+    color: #000;
+  }
+  .user-dropdown:hover .sub-menu{
+    display: block;
   }
   .sub-menu-link{
     display: flex;
