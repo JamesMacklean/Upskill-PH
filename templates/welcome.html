@@ -1,5 +1,6 @@
-{% include 'header.html' %}
+{% extends 'base.html' %}
 {% load static %}
+{% block content %}
 <center>
 <img src="{% static 'images/success.svg'%}">
 <h5>You have successfully created your <p class="schol-heading" style="color: #F15A25; text-transfom: uppercase; font-weight: 500px;">Scholarium</p>account!
@@ -7,3 +8,4 @@
 <br> <em>  Note: also check on your SPAM folder </em> 
 </h5>
 </center>
+{% endblock %}
