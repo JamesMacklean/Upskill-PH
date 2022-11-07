@@ -13,12 +13,12 @@ def main(request):
 
     return render(request, template_name, context)
 
-def partner(request):
+def partners(request):
     """"""
     if not request.user.is_staff:
         raise Http404
 
-    template_name = "administration/admin_partner.html"
+    template_name = "administration/admin_partners.html"
     context = {}
 
     return render(request, template_name, context)
