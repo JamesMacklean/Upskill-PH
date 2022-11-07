@@ -23,6 +23,7 @@ class ScholarProfile(models.Model):
     bio = models.CharField(max_length=500, null=True)
     country = models.CharField(max_length=200, null=True)
     region = models.CharField(max_length=200, null=True)
+    province = models.CharField(max_length=200, null=True)
     municipality = models.CharField(max_length=200, null=True)
 
     social = models.CharField(max_length=200, null=True)
@@ -32,5 +33,5 @@ class ScholarProfile(models.Model):
     phone = models.IntegerField(max_length=11, null=True)
     details_privacy = models.CharField(max_length=200, null=True)
     class Meta:
-        ordering = ['order']
+        # ordering = ['order']
         verbose_name_plural = "Scholar Profiles"
