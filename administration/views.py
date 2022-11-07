@@ -5,8 +5,8 @@ from django.contrib.auth.models import User
 # Create your views here.
 def main(request):
     """"""
-    # if not request.user.is_staff:
-    #     raise Http404
+    if not request.user.is_staff:
+        raise Http404
 
     template_name = "administration/admin_main.html"
     context = {}
@@ -15,8 +15,8 @@ def main(request):
 
 def partner(request):
     """"""
-    # if not request.user.is_staff:
-    #     raise Http404
+    if not request.user.is_staff:
+        raise Http404
 
     template_name = "administration/admin_partner.html"
     context = {}
@@ -25,8 +25,8 @@ def partner(request):
 
 def staff(request):
     """"""
-    # if not request.user.is_staff:
-    #     raise Http404
+    if not request.user.is_staff:
+        raise Http404
 
     template_name = "administration/admin_staff.html"
     context = {}
