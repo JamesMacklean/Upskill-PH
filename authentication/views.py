@@ -19,6 +19,7 @@ import logging
 import requests
 
 # Create your views here.
+logger = logging.getLogger(__name__)
 
 def home(request):
     return render(request,"index.html")
@@ -51,7 +52,7 @@ def signup(request):
 
         response = requests.request("POST", url, headers=headers, data=payload, files=files)
         
-        logging.info(response.text)
+        logger.info(response.text)
         print(response.text)
         ############################## FOR API ##############################
         
@@ -71,7 +72,7 @@ def signup(request):
         
         return redirect('success')
     
-    logging.info("Testing")
+    logger.info("Testing")
 
     return render(request, "authentication/signup.html")
 
