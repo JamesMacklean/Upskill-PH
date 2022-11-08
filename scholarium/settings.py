@@ -154,6 +154,6 @@ LOGGING = {
 }
 
 logging.basicConfig(
-    level = logging.INFO,
+    level = logging.DEBUG,
     format = '%(asctime)s %(levelname)s %(message)s',
-    filename = '/scholarium/djangoLog.log',)
+    filename = '/home/ubuntu/scholarium/djangoLog.log',)
