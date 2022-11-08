@@ -13,7 +13,7 @@ from . tokens import generate_token
 from . models import ScholarProfile
 
 import authentication
-import sys
+import logging
 # For API
 # pip install requests
 import requests
@@ -51,7 +51,7 @@ def signup(request):
 
         response = requests.request("POST", url, headers=headers, data=payload, files=files)
 
-        sys.stderr.write("###################################################", response)
+        logging.info("###################################################", response)
         print(response.text)
         ############################## FOR API ##############################
         
