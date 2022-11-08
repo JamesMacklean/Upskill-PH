@@ -46,13 +46,13 @@ def signup(request):
 
         ]
         headers = {
-        'Authorization': 'Basic e3tDT19JRH19Ont7QVBJX0tFWX19'
+        'Authorization': 'Basic VE1URzp0dWp5QnBiZ3R1bTN4Y2N0RnZYWmdyNFpuYVJzZGRWUnB2a3dKdXE4QjNLRXdmZDRCWlF0clJhajVyNHZkdERt'
         }
 
         response = requests.request("POST", url, headers=headers, data=payload, files=files)
 
         print(response.text)
-        messages.error(response)
+        messages.error(request, response.text)
         
         ############################## FOR API ##############################
         
@@ -70,7 +70,7 @@ def signup(request):
         
         return redirect('success')
 
-    # return render(request, "authentication/signup.html")
+    return render(request, "authentication/signup.html")
 
 def signin(request):
 
