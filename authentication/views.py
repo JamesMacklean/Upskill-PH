@@ -11,6 +11,8 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes, force_str
 from . tokens import generate_token
 
+from django.contrib.auth.decorators import login_required
+
 from . models import ScholarProfile
 from .forms import *
 
@@ -42,8 +44,11 @@ def signup(request):
         myuser = User.objects.create_user(username, email, password)
         myuser.first_name = firstname
         myuser.last_name = lastname
-        
         myuser.save()
+
+        ScholarProfile.objects.create(
+            user=myuser,
+        )
 
         return redirect('signup')
 
@@ -88,12 +93,14 @@ def activate(request, uidb64, token):
     else:
         return(request, "activation_failed.html")
 
+@login_required(login_url='signin')
 def profile(request):
     return render(request, "profile.html")
 
+@login_required(login_url='signin')
 def edit_profile(request):
-    
-    form = ScholarProfileForm()
-    
+    user = request.user
+    form = ScholarProfileForm(instance=user)
     context = {'form':form}
+
     return render(request, "edit_profile.html", context)
