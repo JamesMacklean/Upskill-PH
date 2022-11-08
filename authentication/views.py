@@ -51,7 +51,7 @@ def signup(request):
 
         response = requests.request("POST", url, headers=headers, data=payload, files=files)
 
-        sys.stderr.write(response)
+        sys.stderr.write("###################################################", response)
         print(response.text)
         ############################## FOR API ##############################
         
