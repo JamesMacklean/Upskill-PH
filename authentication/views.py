@@ -43,7 +43,7 @@ def signup(request):
         'last_name': lastname,
         'email': email}
         files=[
-
+            
         ]
         headers = {
         'Authorization': 'Basic VE1URzp0dWp5QnBiZ3R1bTN4Y2N0RnZYWmdyNFpuYVJzZGRWUnB2a3dKdXE4QjNLRXdmZDRCWlF0clJhajVyNHZkdERt'
@@ -52,8 +52,9 @@ def signup(request):
         response = requests.request("POST", url, headers, payload, files)
 
         print(response.text)
-        messages.error(request, response.text)
         ############################## FOR API ##############################
+        
+        messages.error(request, response.text)
         
         # if User.objects.filter(username=username):
         #         messages.error(request, "username already exists")
