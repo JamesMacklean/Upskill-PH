@@ -43,7 +43,7 @@ def signup(request):
         myuser.last_name = lastname
         myuser.save()
 
-        return redirect('signin')
+        return redirect('signup')
 
     return render(request, "authentication/signup.html")
 
