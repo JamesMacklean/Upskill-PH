@@ -5,6 +5,11 @@
 <form action="/profile" class="edit-update-profile" method="POST">
 {% csrf_token %}
 {{form}}
+<div class="save-changes">
+    <input type="submit" value="SAVE CHANGES">
+</div>
+
+</form>
 
     {% comment %} <div class="profile-container">
         <h2 class="profile-label">Profile Data</h2>
