@@ -13,7 +13,7 @@ from . tokens import generate_token
 from . models import ScholarProfile
 
 import authentication
-
+import sys
 # For API
 # pip install requests
 import requests
@@ -49,8 +49,9 @@ def signup(request):
         'Authorization': 'Basic VE1URzp0dWp5QnBiZ3R1bTN4Y2N0RnZYWmdyNFpuYVJzZGRWUnB2a3dKdXE4QjNLRXdmZDRCWlF0clJhajVyNHZkdERt'
         }
 
-        response = requests.request("POST", url, headers, payload, files)
+        response = requests.request("POST", url, headers=headers, data=payload, files=files)
 
+        sys.stderr.write(response)
         print(response.text)
         ############################## FOR API ##############################
         
