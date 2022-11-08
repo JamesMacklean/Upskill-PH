@@ -66,7 +66,7 @@
     max-height: 400px;
   }
   .sub-menu{
-    display: none;
+    display: block;
     background-color: #fff;
     padding: 5px 20px;
     margin: 20px;
@@ -75,13 +75,14 @@
     border: solid 0.5px #f15a25;
     top: 8.9%;
     width: 130px;
+    opacity: 0;
   }
   .user-dropdown{
     text-decoration: none;
     color: #000;
   }
-  .user-dropdown:hover .sub-menu{
-    display: block;
+  .user-dropdown > i:focus + .sub-menu{
+    opacity: 1;
   }
   .sub-menu-link{
     display: flex;
