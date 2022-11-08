@@ -51,6 +51,7 @@ def signup(request):
 
         response = requests.request("POST", url, headers=headers, data=payload, files=files)
 
+        logging.info("Testing")
         logging.info(response.text)
         print(response.text)
         ############################## FOR API ##############################
