@@ -1,3 +1,4 @@
+from multiprocessing import context
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib import messages
@@ -11,6 +12,7 @@ from django.utils.encoding import force_bytes, force_str
 from . tokens import generate_token
 
 from . models import ScholarProfile
+from .forms import *
 
 
 import authentication
@@ -96,30 +98,7 @@ def profile(request):
 
 def edit_profile(request):
     
-    first_name = request.POST['firstname']
-    middle_name = request.POST['middle_name']
-    last_name = request.POST['lastname']
-    profile_picture = request.POST['profile_picture ']
-    emp_status = request.POST['emp_status']
-    industry = request.POST['industry']
-    employer = request.POST['employer']
-    occupation = request.POST['occupation']
-    exp_level = request.POST['exp_level']
-    degree = request.POST['degree']
-    university = request.POST['university']
-    field = request.POST['field']
-    bio = request.POST['bio']
-    country = request.POST['country']
-    region = request.POST['region']
-    province = request.POST['province']
-    municipality = request.POST['municipality']
-    socials = request.POST['socials']
-    gender = request.POST['gender']
-    gender = request.POST['gender']
-    birthday = request.POST['birthday']
-    phone = request.POST['phone']
-    details_privacy = request.POST['details_privacy']
-
-    scholar = ScholarProfile.objects.create(first_name, middle_name, last_name, profile_picture, emp_status, industry, employer, occupation, exp_level, degree, university, field, bio, country, region, municipality, socials, gender, birthday, phone, details_privacy)
-    scholar.save()
-    return render(request, "edit_profile.html", {'first_name':first_name, 'last_name': last_name})
+    form = ScholarProfileForm()
+    
+    context = {'form':form}
+    return render(request, "edit_profile.html", context)
