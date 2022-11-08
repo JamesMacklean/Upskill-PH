@@ -15,6 +15,7 @@ from . models import ScholarProfile
 import authentication
 
 # For API
+# pip install requests
 import requests
 
 # Create your views here.
@@ -34,38 +35,38 @@ def signup(request):
         firstname= request.POST['firstname']
         lastname= request.POST['lastname']
         
-        ############################## FOR API ############################## 
-        url = "https://scholarium.tmtg-clone.click/api/basic/create"
+        ############################## FOR API ##############################
+        # url = "https://scholarium.tmtg-clone.click/api/basic/create"
 
-        payload={'username': username,
-        'first_name': firstname,
-        'last_name': lastname,
-        'email': email}
-        files=[
+        # payload={'username': username,
+        # 'first_name': firstname,
+        # 'last_name': lastname,
+        # 'email': email}
+        # files=[
 
-        ]
-        headers = {
-        'Authorization': 'Basic e3tDT19JRH19Ont7QVBJX0tFWX19'
-        }
+        # ]
+        # headers = {
+        # 'Authorization': 'Basic e3tDT19JRH19Ont7QVBJX0tFWX19'
+        # }
 
-        response = requests.request("POST", url, headers=headers, data=payload, files=files)
+        # response = requests.request("POST", url, headers=headers, data=payload, files=files)
 
-        # print(response.text)
-        messages.error(response)
+        # # print(response.text)
+        # messages.error(response)
         
-        ############################## FOR API ############################## 
+        ############################## FOR API ##############################
         
-        # if User.objects.filter(username=username):
-        #         messages.error(request, "username already exists")
+        if User.objects.filter(username=username):
+                messages.error(request, "username already exists")
         
-        # if User.objects.filter(email=email):
-        #     messages.error(request, "email already exists")
+        if User.objects.filter(email=email):
+            messages.error(request, "email already exists")
 
-        # myuser = User.objects.create_user(username, email, password)
-        # myuser.first_name = firstname
-        # myuser.last_name = lastname
+        myuser = User.objects.create_user(username, email, password)
+        myuser.first_name = firstname
+        myuser.last_name = lastname
         
-        # myuser.save()
+        myuser.save()
         
         return redirect('signup')
 
