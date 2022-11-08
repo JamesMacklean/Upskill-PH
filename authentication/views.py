@@ -60,7 +60,7 @@ def signin(request):
         if user is not None:
             login(request, user)
             firstname = user.first_name
-            return render(request, "authentication/dashboard.html", {'first_name': firstname})
+            return render(request, "authentication/dashboard.html")
 
         else: 
             messages.error(request, "Invalid username/password")
@@ -89,12 +89,7 @@ def activate(request, uidb64, token):
         return(request, "activation_failed.html")
 
 def profile(request):
-
-    if request.user.is_authenticated:
-        firstname = request.user.first_name
-        lastname = request.user.last_name
-
-    return render(request, "profile.html", {'firstname':firstname, 'lastname':lastname})
+    return render(request, "profile.html")
 
 def edit_profile(request):
     
