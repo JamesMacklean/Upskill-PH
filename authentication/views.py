@@ -27,7 +27,7 @@ def success(request):
     return render(request,"welcome.html")
 
 def signup(request):
-
+        
     if request.method == "POST":
         username = request.POST['username']
         password = request.POST['password']
@@ -50,8 +50,7 @@ def signup(request):
         }
 
         response = requests.request("POST", url, headers=headers, data=payload, files=files)
-
-        logging.info("Testing")
+        
         logging.info(response.text)
         print(response.text)
         ############################## FOR API ##############################
@@ -71,6 +70,8 @@ def signup(request):
         # myuser.save()
         
         return redirect('success')
+    
+    logging.info("Testing")
 
     return render(request, "authentication/signup.html")
 
