@@ -70,7 +70,7 @@ def signup(request):
         
         return redirect('success')
 
-    return render(request, "authentication/signup.html")
+    # return render(request, "authentication/signup.html")
 
 def signin(request):
 
