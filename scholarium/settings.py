@@ -140,7 +140,7 @@ LOGGING = {
         'file': {
             'level': 'DEBUG',
             'class': 'logging.FileHandler',
-            'filename': 'debug.log',
+            'filename': '/home/ubuntu/scholarium/debug.log',
         },
     },
     'loggers': {
