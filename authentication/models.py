@@ -30,7 +30,7 @@ class ScholarProfile(models.Model):
 
     birthday = models.DateTimeField(null=True)
 
-    phone = models.IntegerField(max_length=11, null=True)
+    phone = models.IntegerField(null=True)
     details_privacy = models.CharField(max_length=200, null=True)
     class Meta:
         # ordering = ['order']
