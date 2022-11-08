@@ -8,8 +8,8 @@
     <a href="#" class="logo"><img src="{% static 'images/logo.png' %}" alt=""></a>
  
     <nav class="navbar">
-       <a href="#">home</a>
-       <a href="#">about</a>
+       <a class="nav-bar-link" href="#">home</a>
+       <a class="nav-bar-link" href="#">about</a>
     </nav>
  {% if not user.is_authenticated %}
       <div class="icons">
@@ -18,10 +18,9 @@
       </div>
    {% else %}
     <div class="icons">
-       {{ first_name }} <i class="fa fa-caret-down" id="user-dropdown" onclick="toggleMenu()"></i>
+       {{ first_name }} <a href="#" class="user-dropdown"><i class="fa fa-caret-down"></i></a>
        <div id="menu-btn" class="fas fa-bars"></div>
     </div>
-    <div class="sub-menu-wrappper" id="subMenu">
       <div class="sub-menu">
          <a href="/profile" class="sub-menu-link">
             <p>Profile</p> <span>></span>
@@ -30,6 +29,5 @@
             <p>Sign Out</p> <span>></span>
          </a>
       </div>
-    </div>
 {% endif %}
  </header>

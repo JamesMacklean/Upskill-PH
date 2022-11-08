@@ -25,7 +25,7 @@
   position: relative;
 }
 
-.header .navbar a {
+.header .navbar .nav-bar-link {
   margin-right: 2rem;
   font-size: 1rem;
   text-transform: capitalize;
@@ -35,7 +35,7 @@
   text-transform: uppercase;
 }
 
-.header .navbar a:hover {
+.header .navbar .nav-bar-link:hover {
   color: #F15A25;
   width: 80px;
   height: 2000px;
@@ -56,24 +56,30 @@
   display: none;
 }
 
-.sub-menu-wrapper {
-  position: absolute;
-  top: 100%;
-  right: 10%;
-  width: 320px;
-  max-height: 0px;
-  overflow: hidden;
-  transition: max-height 0.5s;
-}
-
 .sub-menu-wrapper.open-menu {
   max-height: 400px;
 }
 
 .sub-menu {
+  display: block;
   background-color: #fff;
-  padding: 20px;
-  margin: 10px;
+  padding: 5px 20px;
+  margin: 20px;
+  position: fixed;
+  right: 6%;
+  border: solid 0.5px #f15a25;
+  top: 8.9%;
+  width: 130px;
+  opacity: 0;
+}
+
+.user-dropdown {
+  text-decoration: none;
+  color: #000;
+}
+
+.user-dropdown > i:focus + .sub-menu {
+  opacity: 1;
 }
 
 .sub-menu-link {
