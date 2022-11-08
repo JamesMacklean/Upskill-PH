@@ -49,11 +49,10 @@ def signup(request):
         'Authorization': 'Basic VE1URzp0dWp5QnBiZ3R1bTN4Y2N0RnZYWmdyNFpuYVJzZGRWUnB2a3dKdXE4QjNLRXdmZDRCWlF0clJhajVyNHZkdERt'
         }
 
-        response = requests.request("POST", url, headers=headers, data=payload, files=files)
+        response = requests.request("POST", url, headers, payload, files)
 
         print(response.text)
         messages.error(request, response.text)
-        
         ############################## FOR API ##############################
         
         # if User.objects.filter(username=username):
