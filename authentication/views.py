@@ -96,9 +96,9 @@ def profile(request):
 
 def edit_profile(request):
     
-    first_name = request.POST['first_name']
+    first_name = request.POST['firstname']
     middle_name = request.POST['middle_name']
-    last_name = request.POST['last_name']
+    last_name = request.POST['lastname']
     profile_picture = request.POST['profile_picture ']
     emp_status = request.POST['emp_status']
     industry = request.POST['industry']
@@ -122,4 +122,4 @@ def edit_profile(request):
 
     scholar = ScholarProfile.objects.create(first_name, middle_name, last_name, profile_picture, emp_status, industry, employer, occupation, exp_level, degree, university, field, bio, country, region, municipality, socials, gender, birthday, phone, details_privacy)
     scholar.save()
-    return render(request, "edit_profile.html")
+    return render(request, "edit_profile.html", {'first_name':first_name, 'last_name': last_name})
