@@ -9,13 +9,11 @@ from django.template.loader import render_to_string
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes, force_str
 from . tokens import generate_token
-
+from scholarium.info import *
 from . models import ScholarProfile
 
-import authentication
 import requests
 
-# Create your views here.
 def home(request):
     return render(request,"index.html")
 
@@ -34,7 +32,6 @@ def signup(request):
             firstname= request.POST['firstname']
             lastname= request.POST['lastname']
                         
-            ############################## FOR API ##############################
             payload={
                 'username': username,
                 'first_name': firstname,
@@ -50,20 +47,31 @@ def signup(request):
 
             response = requests.request("POST", url, headers=headers, data=payload, files=files)
             
+            ############################## FOR MAIL ##############################
+            html = render_to_string('emails/email_verification.html', {
+                'username': username,
+                'first_name': firstname,
+                'last_name': lastname,
+                'email': email
+            })
+            
+            send_mail('Title', 'Content of the Message', EMAIL_HOST_USER, [TEST_EMAIL_RECEIVER], html_message=html)
+            ############################## FOR MAIL ##############################
+            
             if "email exists" in response.text:
                 # PALTAN ITO NG MESSAGE BOX NA NAGSASABING EMAIL ALREADY EXISTS
                 print(response.text)
-                print("Oh ayan nageexist na yung email")
                 return render(request, "authentication/signup.html")
             elif "username exists" in response.text:
                 # PALTAN ITO NG MESSAGE BOX NA NAGSASABING USERNAME ALREADY EXISTS
                 print(response.text)
-                print("Oh ayan nageexist na yung username")
                 return render(request, "authentication/signup.html")
             else:
                 print(response.text)
+                print("username: ", username)
+                print("email: ", email)
+                            
                 return redirect('success')
-            ############################## FOR API ##############################
             
             ############################## FOR DJANGO ##############################
             # if User.objects.filter(username=username):
@@ -84,6 +92,7 @@ def signup(request):
         
     except Exception as e:
         print(str(e))
+        return render(request, "authentication/signup.html")
 
 def signin(request):
 
