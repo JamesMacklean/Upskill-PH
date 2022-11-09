@@ -49,7 +49,20 @@ def signup(request):
             }
 
             response = requests.request("POST", url, headers=headers, data=payload, files=files)
-            print(response.text)
+            
+            if "email exists" in response.text:
+                # PALTAN ITO NG MESSAGE BOX NA NAGSASABING EMAIL ALREADY EXISTS
+                print(response.text)
+                print("Oh ayan nageexist na yung email")
+                return render(request, "authentication/signup.html")
+            elif "username exists" in response.text:
+                # PALTAN ITO NG MESSAGE BOX NA NAGSASABING USERNAME ALREADY EXISTS
+                print(response.text)
+                print("Oh ayan nageexist na yung username")
+                return render(request, "authentication/signup.html")
+            else:
+                print(response.text)
+                return redirect('success')
             ############################## FOR API ##############################
             
             ############################## FOR DJANGO ##############################
@@ -64,9 +77,8 @@ def signup(request):
             # myuser.last_name = lastname
             
             # myuser.save()
+            # return redirect('success')
             ############################## FOR DJANGO ##############################
-                
-            return redirect('success')
     
         return render(request, "authentication/signup.html")
         
