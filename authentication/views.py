@@ -13,14 +13,16 @@ from . tokens import generate_token
 from . models import ScholarProfile
 
 import authentication
-import logging
+
 # For API
 # pip install requests
 import requests
+import logging
 
-# Create your views here.
+
 logger = logging.getLogger(__name__)
 
+# Create your views here.
 def home(request):
     return render(request,"index.html")
 
@@ -28,53 +30,59 @@ def success(request):
     return render(request,"welcome.html")
 
 def signup(request):
-        
-    if request.method == "POST":
-        username = request.POST['username']
-        password = request.POST['password']
-        email= request.POST['email']
-        firstname= request.POST['firstname']
-        lastname= request.POST['lastname']
-        
-        ############################## FOR API ##############################
-        url = "https://scholarium.tmtg-clone.click/api/basic/create"
 
-        payload={'username': username,
-        'first_name': firstname,
-        'last_name': lastname,
-        'email': email}
-        files=[
+    url = "https://scholarium.tmtg-clone.click/api/basic/create"
+    try:
+        if request.method == "POST":
+            username = request.POST['username']
+            password = request.POST['password']
+            email= request.POST['email']
+            firstname= request.POST['firstname']
+            lastname= request.POST['lastname']
             
-        ]
-        headers = {
-        'Authorization': 'Basic VE1URzp0dWp5QnBiZ3R1bTN4Y2N0RnZYWmdyNFpuYVJzZGRWUnB2a3dKdXE4QjNLRXdmZDRCWlF0clJhajVyNHZkdERt'
-        }
+            logger.info("Test")
+            
+            ############################## FOR API ##############################
+            payload={
+                'username': username,
+                'first_name': firstname,
+                'last_name': lastname,
+                'email': email
+                }
+            
+            files=[]
+            
+            headers = {
+            'Authorization': 'Basic VE1URzp0dWp5QnBiZ3R1bTN4Y2N0RnZYWmdyNFpuYVJzZGRWUnB2a3dKdXE4QjNLRXdmZDRCWlF0clJhajVyNHZkdERt'
+            }
 
-        response = requests.request("POST", url, headers=headers, data=payload, files=files)
-        
-        logger.info(response.text)
-        print(response.text)
-        ############################## FOR API ##############################
-        
-        messages.error(request, response.text)
-        
-        # if User.objects.filter(username=username):
-        #         messages.error(request, "username already exists")
-        
-        # if User.objects.filter(email=email):
-        #     messages.error(request, "email already exists")
+            response = requests.request("POST", url, headers=headers, data=payload, files=files)
+            logger.info("Test")
+            logger.info(response.text)
+            
+            ############################## FOR API ##############################
+            
+            messages.error(request, response.text)
+            
+            # if User.objects.filter(username=username):
+            #         messages.error(request, "username already exists")
+            
+            # if User.objects.filter(email=email):
+            #     messages.error(request, "email already exists")
 
-        # myuser = User.objects.create_user(username, email, password)
-        # myuser.first_name = firstname
-        # myuser.last_name = lastname
-        
-        # myuser.save()
-        
+            # myuser = User.objects.create_user(username, email, password)
+            # myuser.first_name = firstname
+            # myuser.last_name = lastname
+            
+            # myuser.save()
+            
         return redirect('success')
     
-    logger.info("Testing")
-
-    return render(request, "authentication/signup.html")
+    except Exception as e:
+        logger.info(e)
+        raise Exception(e)
+    
+    # return render(request, "authentication/signup.html")
 
 def signin(request):
 
