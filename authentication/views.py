@@ -61,7 +61,7 @@ def signup(request):
         ############################## FOR API ##############################
         
         if User.objects.filter(username=username):
-                messages.error(request, "username already exists")
+            messages.error(request, "username already exists")
         
         if User.objects.filter(email=email):
             messages.error(request, "email already exists")
