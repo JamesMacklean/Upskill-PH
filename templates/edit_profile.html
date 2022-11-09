@@ -2,7 +2,7 @@
 {% load static %}
 {% block content %}
 
-<form action="/profile" class="edit-update-profile" method="POST">
+<form action="/profile" class="edit-update-profile" method="POST" enctype="multipart/form-data">
 {% csrf_token %}
 <h2>Edit my profile</h2>
 <p>username: {{request.user}}</p>
