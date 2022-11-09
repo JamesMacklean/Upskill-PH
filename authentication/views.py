@@ -9,19 +9,11 @@ from django.template.loader import render_to_string
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes, force_str
 from . tokens import generate_token
-
+from scholarium.info import *
 from . models import ScholarProfile
 
-import authentication
-
-# For API
-# pip install requests
 import requests
 
-import logging
-logger = logging.getLogger(__name__)
-
-# Create your views here.
 def home(request):
     return render(request,"index.html")
 
@@ -40,7 +32,6 @@ def signup(request):
             firstname= request.POST['firstname']
             lastname= request.POST['lastname']
                         
-            ############################## FOR API ##############################
             payload={
                 'username': username,
                 'first_name': firstname,
@@ -55,10 +46,32 @@ def signup(request):
             }
 
             response = requests.request("POST", url, headers=headers, data=payload, files=files)
-            print(response)
-            print(response.text)
-            logger.info(response.text)
-            ############################## FOR API ##############################
+            
+            ############################## FOR MAIL ##############################
+            html = render_to_string('emails/email_verification.html', {
+                'username': username,
+                'first_name': firstname,
+                'last_name': lastname,
+                'email': email
+            })
+            
+            send_mail('Title', 'Content of the Message', EMAIL_HOST_USER, [TEST_EMAIL_RECEIVER], html_message=html)
+            ############################## FOR MAIL ##############################
+            
+            if "email exists" in response.text:
+                # PALTAN ITO NG MESSAGE BOX NA NAGSASABING EMAIL ALREADY EXISTS
+                print(response.text)
+                return render(request, "authentication/signup.html")
+            elif "username exists" in response.text:
+                # PALTAN ITO NG MESSAGE BOX NA NAGSASABING USERNAME ALREADY EXISTS
+                print(response.text)
+                return render(request, "authentication/signup.html")
+            else:
+                print(response.text)
+                print("username: ", username)
+                print("email: ", email)
+                            
+                return redirect('success')
             
             ############################## FOR DJANGO ##############################
             # if User.objects.filter(username=username):
@@ -72,15 +85,14 @@ def signup(request):
             # myuser.last_name = lastname
             
             # myuser.save()
+            # return redirect('success')
             ############################## FOR DJANGO ##############################
-                
-            return redirect('success')
     
         return render(request, "authentication/signup.html")
         
     except Exception as e:
         print(str(e))
-        logger.info(str(e))
+        return render(request, "authentication/signup.html")
 
 def signin(request):
 
