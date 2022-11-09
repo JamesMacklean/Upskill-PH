@@ -55,6 +55,7 @@ def signup(request):
             }
 
             response = requests.request("POST", url, headers=headers, data=payload, files=files)
+            print(response)
             print(response.text)
             logger.info(response.text)
             ############################## FOR API ##############################
@@ -73,7 +74,7 @@ def signup(request):
             # myuser.save()
             ############################## FOR DJANGO ##############################
                 
-        return redirect('success')
+            return redirect('success')
         
     except Exception as e:
         print(str(e))
