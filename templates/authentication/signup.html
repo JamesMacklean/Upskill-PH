@@ -34,8 +34,18 @@
                     <input type="text" id="email"  name="email" placeholder="email" required>
                 </div>
 
-                    <button type="submit" class="btn solid">sign up</button>
+                    <button type="submit" class="btn solid" data-bs-toggle="modal" data-bs-target="#SuccessModal">sign up</button>
             </form>
+            {% for message in messages %}
+                {% if messages.tags != 'error' %}
+                <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+30JU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+                <script>
+                    $document.ready(function(){
+                    $("#SuccessModal").modal('show');
+                    });
+                </script>
+                {% endif %}
+            {% endfor %}
         </div>
     </div>
 </div>
@@ -50,5 +60,30 @@
         <img src="{% static 'images/signup.svg'%}" class="image" alt=""/>
     </div>
 </div>
+
+<!--MODAL START-->
+<div class="modal" tabindex="-1" id="SuccessModal" aria-hidden ="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Success 🎉</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <center>
+                <img src="{% static 'images/success.svg'%}">
+                <h5>You have successfully created your <h5 class="schol-heading" style="color: #F15A25; text-transfom: uppercase; font-weight: 500px;">Scholarium</h5>account!
+                <br>kindly check your inbox in your email: {{ myuser.email }} for verification. Thank You!
+                <br> <em>  Note: also check on your SPAM folder </em> 
+                </h5>
+                </center>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+<!--MODAL END-->
 
 {% endblock %}
