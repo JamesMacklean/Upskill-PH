@@ -17,10 +17,9 @@ import authentication
 # For API
 # pip install requests
 import requests
-import logging
 
-
-logger = logging.getLogger(__name__)
+# import logging
+# logger = logging.getLogger(__name__)
 
 # Create your views here.
 def home(request):
