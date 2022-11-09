@@ -13,13 +13,7 @@ from . tokens import generate_token
 from . models import ScholarProfile
 
 import authentication
-
-# For API
-# pip install requests
 import requests
-
-import logging
-logger = logging.getLogger(__name__)
 
 # Create your views here.
 def home(request):
@@ -55,9 +49,7 @@ def signup(request):
             }
 
             response = requests.request("POST", url, headers=headers, data=payload, files=files)
-            print(response)
             print(response.text)
-            logger.info(response.text)
             ############################## FOR API ##############################
             
             ############################## FOR DJANGO ##############################
@@ -80,7 +72,6 @@ def signup(request):
         
     except Exception as e:
         print(str(e))
-        logger.info(str(e))
 
 def signin(request):
 
