@@ -75,11 +75,12 @@ def signup(request):
             ############################## FOR DJANGO ##############################
                 
             return redirect('success')
+    
+        return render(request, "authentication/signup.html")
         
     except Exception as e:
         print(str(e))
         logger.info(str(e))
-        return render(request, "authentication/signup.html")
 
 def signin(request):
 
