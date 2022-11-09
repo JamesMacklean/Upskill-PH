@@ -48,6 +48,7 @@ def signup(request):
             response = requests.request("POST", url, headers=headers, data=payload, files=files)
             
             ############################## FOR MAIL ##############################
+            # {% comment %}http://{{ domain }}{% url 'activate' uidb64=uid token=token%} {% endcomment %}
             html = render_to_string('emails/email_verification.html', {
                 'username': username,
                 'first_name': firstname,
@@ -55,7 +56,14 @@ def signup(request):
                 'email': email
             })
             
-            send_mail('Title', 'Content of the Message', EMAIL_HOST_USER, [TEST_EMAIL_RECEIVER], html_message=html)
+            send_mail(
+                'Title', 
+                'Content of the Message', 
+                EMAIL_HOST_USER, 
+                [TEST_EMAIL_RECEIVER], 
+                html_message=html,
+                fail_silently=False
+            )
             ############################## FOR MAIL ##############################
             
             if "email exists" in response.text:
