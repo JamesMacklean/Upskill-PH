@@ -146,11 +146,13 @@ LOGGING = {
             'class': 'logging.StreamHandler',
             'filters': ['require_debug_true'],
         },
+        ########## COMMENT IN DEVELOPMENT ##########
         'file': {
             'level': 'DEBUG',
             'class': 'logging.FileHandler',
             'filename': '/home/ubuntu/scholarium/debug.log',
         },
+        ############################################
     },
     'loggers': {
         'django': {
