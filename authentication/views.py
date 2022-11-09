@@ -18,8 +18,8 @@ import authentication
 # pip install requests
 import requests
 
-# import logging
-# logger = logging.getLogger(__name__)
+import logging
+logger = logging.getLogger(__name__)
 
 # Create your views here.
 def home(request):
@@ -32,48 +32,53 @@ def signup(request):
 
     url = "https://scholarium.tmtg-clone.click/api/basic/create"
 
-    if request.method == "POST":
-        username = request.POST['username']
-        password = request.POST['password']
-        email= request.POST['email']
-        firstname= request.POST['firstname']
-        lastname= request.POST['lastname']
-                    
-        ############################## FOR API ##############################
-        # payload={
-        #     'username': username,
-        #     'first_name': firstname,
-        #     'last_name': lastname,
-        #     'email': email
-        #     }
-        
-        # files=[]
-        
-        # headers = {
-        # 'Authorization': 'Basic VE1URzp0dWp5QnBiZ3R1bTN4Y2N0RnZYWmdyNFpuYVJzZGRWUnB2a3dKdXE4QjNLRXdmZDRCWlF0clJhajVyNHZkdERt'
-        # }
-
-        # response = requests.request("POST", url, headers=headers, data=payload, files=files)
-        # logger.info("Test")
-        # logger.info(response.text)
-        # messages.error(request, response.text)
-        ############################## FOR API ##############################
-        
-        if User.objects.filter(username=username):
-            messages.error(request, "username already exists")
-        
-        if User.objects.filter(email=email):
-            messages.error(request, "email already exists")
-
-        myuser = User.objects.create_user(username, email, password)
-        myuser.first_name = firstname
-        myuser.last_name = lastname
-        
-        myuser.save()
+    try:
+        if request.method == "POST":
+            username = request.POST['username']
+            password = request.POST['password']
+            email= request.POST['email']
+            firstname= request.POST['firstname']
+            lastname= request.POST['lastname']
+                        
+            ############################## FOR API ##############################
+            payload={
+                'username': username,
+                'first_name': firstname,
+                'last_name': lastname,
+                'email': email
+                }
             
+            files=[]
+            
+            headers = {
+            'Authorization': 'Basic VE1URzp0dWp5QnBiZ3R1bTN4Y2N0RnZYWmdyNFpuYVJzZGRWUnB2a3dKdXE4QjNLRXdmZDRCWlF0clJhajVyNHZkdERt'
+            }
+
+            response = requests.request("POST", url, headers=headers, data=payload, files=files)
+            print(response.text)
+            logger.info(response.text)
+            ############################## FOR API ##############################
+            
+            ############################## FOR DJANGO ##############################
+            # if User.objects.filter(username=username):
+            #     messages.error(request, "username already exists")
+            
+            # if User.objects.filter(email=email):
+            #     messages.error(request, "email already exists")
+
+            # myuser = User.objects.create_user(username, email, password)
+            # myuser.first_name = firstname
+            # myuser.last_name = lastname
+            
+            # myuser.save()
+            ############################## FOR DJANGO ##############################
+                
         return redirect('success')
-    
-    return render(request, "authentication/signup.html")
+        
+    except Exception as e:
+        print(str(e))
+        logger.info(str(e))
+        return render(request, "authentication/signup.html")
 
 def signin(request):
 
