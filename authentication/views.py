@@ -73,14 +73,12 @@ def signup(request):
             # myuser.save()
             ############################## FOR DJANGO ##############################
                 
-            return redirect('success')
+        return redirect('success')
         
     except Exception as e:
         print(str(e))
         logger.info(str(e))
-        
-    
-    # return render(request, "authentication/signup.html")
+        return render(request, "authentication/signup.html")
 
 def signin(request):
 
