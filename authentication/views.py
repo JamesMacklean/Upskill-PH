@@ -32,6 +32,7 @@ def success(request):
 def signup(request):
 
     url = "https://scholarium.tmtg-clone.click/api/basic/create"
+    
     try:
         if request.method == "POST":
             username = request.POST['username']
@@ -39,42 +40,38 @@ def signup(request):
             email= request.POST['email']
             firstname= request.POST['firstname']
             lastname= request.POST['lastname']
-            
-            logger.info("Test")
-            
+                        
             ############################## FOR API ##############################
-            payload={
-                'username': username,
-                'first_name': firstname,
-                'last_name': lastname,
-                'email': email
-                }
+            # payload={
+            #     'username': username,
+            #     'first_name': firstname,
+            #     'last_name': lastname,
+            #     'email': email
+            #     }
             
-            files=[]
+            # files=[]
             
-            headers = {
-            'Authorization': 'Basic VE1URzp0dWp5QnBiZ3R1bTN4Y2N0RnZYWmdyNFpuYVJzZGRWUnB2a3dKdXE4QjNLRXdmZDRCWlF0clJhajVyNHZkdERt'
-            }
+            # headers = {
+            # 'Authorization': 'Basic VE1URzp0dWp5QnBiZ3R1bTN4Y2N0RnZYWmdyNFpuYVJzZGRWUnB2a3dKdXE4QjNLRXdmZDRCWlF0clJhajVyNHZkdERt'
+            # }
 
-            response = requests.request("POST", url, headers=headers, data=payload, files=files)
-            logger.info("Test")
-            logger.info(response.text)
-            
+            # response = requests.request("POST", url, headers=headers, data=payload, files=files)
+            # logger.info("Test")
+            # logger.info(response.text)
+            # messages.error(request, response.text)
             ############################## FOR API ##############################
             
-            messages.error(request, response.text)
+            if User.objects.filter(username=username):
+                    messages.error(request, "username already exists")
             
-            # if User.objects.filter(username=username):
-            #         messages.error(request, "username already exists")
-            
-            # if User.objects.filter(email=email):
-            #     messages.error(request, "email already exists")
+            if User.objects.filter(email=email):
+                messages.error(request, "email already exists")
 
-            # myuser = User.objects.create_user(username, email, password)
-            # myuser.first_name = firstname
-            # myuser.last_name = lastname
+            myuser = User.objects.create_user(username, email, password)
+            myuser.first_name = firstname
+            myuser.last_name = lastname
             
-            # myuser.save()
+            myuser.save()
             
         return redirect('success')
     
