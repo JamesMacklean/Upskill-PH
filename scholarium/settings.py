@@ -159,13 +159,4 @@ LOGGING = {
             'propagate': True,
         },
     },
-<<<<<<< HEAD
 }
-
-logging.basicConfig(
-    level = logging.DEBUG,
-    format = '%(asctime)s %(levelname)s %(message)s',
-    filename = '/home/ubuntu/scholarium/djangoLog.log',)
-=======
-}
->>>>>>> e46ed4029323227c422a4c3313347d110dbbb3f9
