@@ -58,8 +58,8 @@
 
 .sub-menu {
   position: absolute;
-  top: 9%;
-  right: 50px;
+  top: 120px;
+  right: 130px;
   padding: 10px 20px;
   background: #fff;
   width: 150px;
@@ -71,7 +71,7 @@
 }
 
 .sub-menu.active {
-  top: 9%;
+  top: 120px;
   visibility: visible;
   opacity: 1;
 }

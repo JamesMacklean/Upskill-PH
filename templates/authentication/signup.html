@@ -34,10 +34,10 @@
                     <input type="text" id="email"  name="email" placeholder="email" required>
                 </div>
 
-                    <button type="submit" class="btn solid" data-bs-toggle="modal" data-bs-target="#SuccessModal">sign up</button>
+                    <input type="submit" class="btn solid" data-bs-toggle="modal" data-bs-target="#SuccessModal">sign up</button>
             </form>
             {% for message in messages %}
-                {% if messages.tags != 'error' %}
+                {% if messages.tags == 'success' %}
                 <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+30JU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
                 <script>
                     $document.ready(function(){

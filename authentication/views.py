@@ -41,6 +41,7 @@ def signup(request):
         if User.objects.filter(email=email):
             messages.error(request, "email already exists")
         
+        messages.success("success!")
         myuser = User.objects.create_user(username, email, password)
         myuser.first_name = firstname
         myuser.last_name = lastname
