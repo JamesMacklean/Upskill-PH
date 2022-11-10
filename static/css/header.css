@@ -37,7 +37,6 @@
 
 .header .navbar .nav-bar-link:hover {
   color: #F15A25;
-  width: 80px;
 }
 
 .header .icons div {
@@ -49,10 +48,6 @@
 
 .header .icons div:hover {
   color: #F15A25;
-}
-
-.header #menu-btn {
-  display: none;
 }
 
 .sub-menu {

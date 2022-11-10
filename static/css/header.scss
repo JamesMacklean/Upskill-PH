@@ -21,18 +21,7 @@
   .header .navbar {
     position: relative;
   }
-//   .header .navbar #close-navbar {
-//     position: absolute;
-//     top: 1.5rem;
-//     right: 2rem;
-//     font-size: 4rem;
-//     cursor: pointer;
-//     color: #444;
-//     display: none;
-//   }
-//   .header .navbar #close-navbar:hover {
-//     transform: rotate(90deg);
-//   }
+  
   .header .navbar .nav-bar-link {
     margin-right: 2rem;
     font-size: 1rem;
@@ -44,7 +33,6 @@
   }
   .header .navbar .nav-bar-link:hover {
     color: #F15A25;
-    width: 80px;
   }
   .header .icons div {
     cursor: pointer;
@@ -54,9 +42,6 @@
   }
   .header .icons div:hover {
     color: #F15A25;
-  }
-  .header #menu-btn {
-    display: none;
   }
 
   //Sub menu

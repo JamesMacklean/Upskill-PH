@@ -121,11 +121,11 @@ form{
     height: 49px;
     border: none;
     outline: none;
-    border-radius: 49px;
+    border-radius: 49px !important;
     cursor: pointer;
-    background-color: #fff;
-    color: #F15A25;
-    border: solid 2px #F15A25;
+    background-color: #fff !important;
+    color: #F15A25 !important;
+    border: solid 2px #F15A25 !important;
     text-transform: uppercase;
     font-weight: 500;
     margin: 10px 0;
@@ -133,7 +133,7 @@ form{
 }
 .btn:hover{
     background-color: #F15A25;
-    color: #fff;
+    color: #fff !important;
     //border: solid 2px black;
 }
 .social-text{
