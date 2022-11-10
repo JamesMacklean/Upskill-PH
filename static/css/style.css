@@ -139,24 +139,24 @@ form {
   font-weight: 500;
 }
 
-#btn-solid {
-  width: 150px;
-  height: 49px;
-  border: none;
-  outline: none;
+button .btn {
+  width: 150px !important;
+  height: 49px !important;
+  border: none !important;
+  outline: none !important;
   border-radius: 49px !important;
   cursor: pointer;
   background-color: #fff !important;
   color: #F15A25 !important;
   border: solid 2px #F15A25 !important;
-  text-transform: uppercase;
-  font-weight: 500;
-  margin: 10px 0;
-  transition: 0.5s;
+  text-transform: uppercase !important;
+  font-weight: 500 !important;
+  margin: 10px 0 !important;
+  transition: 0.5s !important;
 }
 
-#btn-solid:hover {
-  background-color: #F15A25;
+button .btn:hover {
+  background-color: #F15A25 !important;
   color: #fff !important;
 }
 
