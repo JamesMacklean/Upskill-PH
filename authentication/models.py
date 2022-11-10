@@ -6,9 +6,9 @@ from django.contrib.auth.models import User
 class ScholarProfile(models.Model):
     user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
 
-    firstname = models.ForeignKey(max_length=200, null=True)
+    firstname = models.ForeignKey(User, on_delete=models.CASCADE)
     middle_name = models.CharField(max_length=200, null=True)
-    lastname = models.ForeignKey(max_length=200, null=True)
+    lastname = models.ForeignKey(User, on_delete=models.CASCADE)
     profile_pic = models.ImageField(null=True, blank=True)
     
     emp_status = models.CharField(max_length=200, null=True)
