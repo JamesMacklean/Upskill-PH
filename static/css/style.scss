@@ -116,7 +116,7 @@ form{
     color: #aaa;
     font-weight: 500;   
 }
-button .btn{
+button, button.btn{
     width: 150px !important;
     height: 49px !important;
     border: none !important;
@@ -131,7 +131,7 @@ button .btn{
     margin: 10px 0 !important;
     transition: 0.5s !important;
 }
-button .btn:hover{
+button:hover,button.btn:hover{
     background-color: #F15A25 !important;
     color: #fff !important;
     //border: solid 2px black;
