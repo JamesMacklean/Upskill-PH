@@ -44,17 +44,17 @@
   .footer-link-footer-social{
     padding: 0px 0px 15px 0px;
   }
-  .footer-link-footer-social .social-icon{
+  .footer-link-footer-social #footer-social-icon{
     display: inline-flex; 
     padding: 10px; 
     background-color: #515356; 
     border-radius: 50%;
   }
-  .footer-link-footer-social .social-icon:hover{
+  .footer-link-footer-social #footer-social-icon:hover{
     text-decoration: none;
     background-color: #828282;
   }
-  .footer-link-footer-social .social-icon i{
+  .footer-link-footer-social #footer-social-icon i{
     font-style: normal;
     color: #fff;
     font-weight: 500 !important;

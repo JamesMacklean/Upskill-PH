@@ -139,7 +139,7 @@ form {
   font-weight: 500;
 }
 
-.btn-solid {
+#btn-solid {
   width: 150px;
   height: 49px;
   border: none;
@@ -155,7 +155,7 @@ form {
   transition: 0.5s;
 }
 
-.btn-solid:hover {
+#btn-solid:hover {
   background-color: #F15A25;
   color: #fff !important;
 }
