@@ -48,7 +48,9 @@ def signup(request):
         myuser.save()
 
         ScholarProfile.objects.create(
-            user=myuser,
+            user = myuser,
+            fname = myuser.first_name,
+            lname = myuser.last_name
         )
 
         return redirect('signup')
@@ -101,7 +103,42 @@ def profile(request):
 @login_required(login_url='signin')
 def edit_profile(request):
     user = request.user
-    form = ScholarProfileForm(instance=user)
-    context = {'form':form}
+    fname = request.user.first_name
+    lname = request.user.last_name
+    #form = ScholarProfileForm(instance=user)
+    #context = {'form':form}
+    if request.method == 'POST':
+        middle_name = request.POST['middle_name']
+        profile_pic = request.POST['profile_pic']
+        emp_status = request.POST['emp_status']
+        industry = request.POST['industry']
+        employer = request.POST['employer']
+        occupation = request.POST['occupation']
+        exp_level = request.POST['exp_level']
+        degree = request.POST['degree']
+        university = request.POST['university']
+        field = request.POST['field']
+        
+        bio = request.POST['bio']
+        country = request.POST['country']
+        region =  request.POST['region']
+        province = request.POST['province']
+        municipality = request.POST['municipality']
 
-    return render(request, "edit_profile.html", context)
+        social =  request.POST['social']
+        gender = request.POST['gender']
+        birthday =  request.POST['birthday']
+
+        phone = request.POST['phone']
+        details_privacy = request.POST['details_privacy']
+    
+        profile = ScholarProfile(user, fname, lname,
+                    middle_name, profile_pic, 
+                    emp_status, industry, employer, occupation, 
+                    exp_level, degree, university, field, bio, 
+                    country, region, province, municipality,
+                    social, gender, birthday, phone, details_privacy)
+        profile.save()
+
+
+    return render(request, "edit_profile.html")
