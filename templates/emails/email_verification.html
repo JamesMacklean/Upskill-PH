@@ -1,7 +1,40 @@
-{% autoescape off %}
-
-Welcome to Scholarium!
-Hello, {{ username }}
-Please confirm your account by clicking the link below
-
-{% endautoescape %}
+{% load static %}
+{% block content %}
+<table width="100%" align="left" border="0" cellpadding="0" cellspacing="0" role="presentation">
+{% if route_enabled %}
+<tr>
+    <td>
+        <p style="color: rgba(0,0,0,.75);">
+            {% filter force_escape %}
+                This is a routed Account Activation email for {{ first_name }} {{ last_name}}, ({{ email }}): {{ username }}
+            {% endfilter %}
+            <br />
+        </p>
+    </td>
+</tr>
+{% endif %}
+<tr>
+    <td>
+        <h1>
+            WELCOME TO SCHOLARIUM!
+        </h1>
+        <p style="color: rgba(0,0,0,.75);">
+            {% filter force_escape %}
+                Hello {{ username }}!
+            {% endfilter %}
+            <br />
+        </p>
+        <p style="color: rgba(0,0,0,.75);">
+            {% filter force_escape %}
+                You're almost there! Click the button below to verify your account to access {{ platform_name }} courses. Note that you will NOT be able to log back into your account until you have activated it.
+            {% endfilter %}
+            <br />
+        </p>
+            {% comment %} Verify Your Account {{ hash }} {% endcomment %}
+            {% comment %} <a href={{ link }}{{ hash }}>Verify Your Account</a> {% endcomment %}
+            <a href=http://127.0.0.1:8000{% url 'verify_account' username=username user_hash=user_hash %}>Verify Your Account</a>
+            {% comment %} {% include "ace_common/edx_ace/common/return_to_course_cta.html" with course_cta_text=course_cta_text course_cta_url=confirm_activation_link %} {% endcomment %}
+    </td>
+</tr>
+</table>
+{% endblock %}

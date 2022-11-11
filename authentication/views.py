@@ -12,18 +12,71 @@ from . tokens import generate_token
 from scholarium.info import *
 from . models import ScholarProfile
 
-import requests
+import os
+import requests, ast
 
 def home(request):
     return render(request,"index.html")
 
 def success(request):
+    user_hash = request.session.get('user_hash')
+    username = request.session.get('username')
+    email = request.session.get('email')
+    firstname = request.session.get('first_name')
+    lastname = request.session.get('last_name')
+                
+    ############################# FOR MAIL ##############################
+    html = render_to_string('emails/email_verification.html', {
+        'username': username,
+        'first_name': firstname,
+        'last_name': lastname,
+        'email': email,
+        'user_hash': user_hash,
+        'link': API_VERIFY_ACCOUNT_URL
+    })
+    
+    send_mail(
+        'Title', 
+        'Content of the Message', 
+        EMAIL_HOST_USER, 
+        [TEST_EMAIL_RECEIVER], 
+        html_message=html,
+        fail_silently=False
+    )
+    ############################# FOR MAIL ##############################
+    
     return render(request,"welcome.html")
 
 def signup(request):
 
-    url = "https://scholarium.tmtg-clone.click/api/basic/create"
+    def create_account(username,firstname,lastname,email):     
+        payload={
+            'username': username,
+            'first_name': firstname,
+            'last_name': lastname,
+            'email': email
+            }
+        
+        files=[]
+        
+        headers = {
+        'Authorization': API_TOKEN
+        }
 
+        response = requests.request("POST", API_CREATE_ACCOUNT_URL, headers=headers, data=payload, files=files)
+
+        response_dict = ast.literal_eval(response.text)
+        
+        if 'data' in response_dict:
+            for data in response_dict['data']:
+                response_message = data.get("success")
+                user_hash = data.get("hash")
+        else:
+            response_message = response_dict.get("error")
+            user_hash = "invalid"         
+
+        return user_hash, response_message
+        
     try:
         if request.method == "POST":
             username = request.POST['username']
@@ -31,55 +84,24 @@ def signup(request):
             email= request.POST['email']
             firstname= request.POST['firstname']
             lastname= request.POST['lastname']
-                        
-            payload={
-                'username': username,
-                'first_name': firstname,
-                'last_name': lastname,
-                'email': email
-                }
-            
-            files=[]
-            
-            headers = {
-            'Authorization': 'Basic VE1URzp0dWp5QnBiZ3R1bTN4Y2N0RnZYWmdyNFpuYVJzZGRWUnB2a3dKdXE4QjNLRXdmZDRCWlF0clJhajVyNHZkdERt'
-            }
 
-            response = requests.request("POST", url, headers=headers, data=payload, files=files)
+            user_hash, response_message = create_account(username,firstname,lastname,email)
             
-            ############################## FOR MAIL ##############################
-            # {% comment %}http://{{ domain }}{% url 'activate' uidb64=uid token=token%} {% endcomment %}
-            html = render_to_string('emails/email_verification.html', {
-                'username': username,
-                'first_name': firstname,
-                'last_name': lastname,
-                'email': email
-            })
+            print("username: ", username)
+            print("email: ", email)
+            print ("hash:", user_hash)
             
-            send_mail(
-                'Title', 
-                'Content of the Message', 
-                EMAIL_HOST_USER, 
-                [TEST_EMAIL_RECEIVER], 
-                html_message=html,
-                fail_silently=False
-            )
-            ############################## FOR MAIL ##############################
-            
-            if "email exists" in response.text:
-                # PALTAN ITO NG MESSAGE BOX NA NAGSASABING EMAIL ALREADY EXISTS
-                print(response.text)
-                return render(request, "authentication/signup.html")
-            elif "username exists" in response.text:
-                # PALTAN ITO NG MESSAGE BOX NA NAGSASABING USERNAME ALREADY EXISTS
-                print(response.text)
-                return render(request, "authentication/signup.html")
-            else:
-                print(response.text)
-                print("username: ", username)
-                print("email: ", email)
-                            
+            if user_hash is not "invalid":
+                request.session['user_hash'] = user_hash
+                request.session['username'] = username
+                request.session['email'] = email
+                request.session['first_name'] = firstname
+                request.session['last_name'] = lastname
                 return redirect('success')
+            else:
+                # LAGYAN ITO NG MESSAGE BOX NA NAGSASABI NG ERROR MESSAGE
+                print ("ERROR:", response_message)
+                return render(request, "authentication/signup.html")
             
             ############################## FOR DJANGO ##############################
             # if User.objects.filter(username=username):
@@ -95,9 +117,9 @@ def signup(request):
             # myuser.save()
             # return redirect('success')
             ############################## FOR DJANGO ##############################
-    
+            
         return render(request, "authentication/signup.html")
-        
+    
     except Exception as e:
         print(str(e))
         return render(request, "authentication/signup.html")
@@ -126,20 +148,50 @@ def signout(request):
     messages.success(request, "Logged out successfully")
     return redirect('home')
 
-def activate(request, uidb64, token):
-    try:
-        uid = force_str(urlsafe_base64_decode(uidb64))
-        myuser = User.objects.get(pk=uid)
-    except (TypeError, ValueError, OverflowError, User.DoesNotExist):
-        myuser= None
+def verify_account(request, username, user_hash):
     
-    if myuser is not None and generate_token.check_token(myuser, token):
-        myuser.is_active = True
-        myuser.save()
-        login(request, myuser)
-        return redirect('signin')
-    else:
-        return(request, "activation_failed.html")
+    def verify(user_hash):
+        
+        payload={}
+        files={}
+        headers = {
+        'Authorization': API_TOKEN
+        }
+
+        response = requests.request("PUT", os.path.join(API_VERIFY_ACCOUNT_URL, user_hash), headers=headers, data=payload, files=files)
+        
+
+        response_dict = ast.literal_eval(response.text)
+        
+        if 'data' in response_dict:
+            for data in response_dict['data']:
+                response_message = data.get("success")
+                password = data.get("password")
+        else:
+            response_message = response_dict.get("error")
+            password=''   
+        
+        return response_message,password
+    
+    try:
+        context = {}
+        
+        response_message, password = verify(user_hash)
+        
+        context['response_message'] = response_message
+        context['password'] = password
+        
+        if password is not '':
+            print(password)
+            print ("SUCCESS:", response_message)
+            return render(request, "authentication/verification_successful.html", context)                 
+        else:
+            print ("ERROR:", response_message)
+            return render(request, "authentication/verification_failed.html") 
+        
+    except Exception as e:
+        print(str(e))
+        return render(request, "authentication/verification_failed.html")
 
 def profile(request):
 
