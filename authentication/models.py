@@ -99,4 +99,24 @@ class ScholarProfile(models.Model):
         verbose_name_plural = "Scholar Profiles"
 
     def __str__(self):
-        return self.User.username
+        return self.user.username
+
+    @property
+    def username(self):
+        return self.user.username
+
+    @property
+    def first_name(self):
+        try: 
+            fname =  self.user.first_name
+        except:
+            fname = ""
+        return fname
+
+    @property
+    def last_name(self):
+        try: 
+            lname =  self.user.last_name
+        except:
+            lname = ""
+        return lname
