@@ -99,4 +99,4 @@ class ScholarProfile(models.Model):
         verbose_name_plural = "Scholar Profiles"
 
     def __str__(self):
-        return self.user
+        return self.User.username
