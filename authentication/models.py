@@ -65,7 +65,7 @@ class ScholarProfile(models.Model):
     # )
 
     user = models.OneToOneField(
-            User,
+            User, null=True,
             on_delete=models.CASCADE)
 
     fname = models.CharField(max_length=200, null=True)
