@@ -1,8 +1,10 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
+<div style="padding-top: 100px; height:100vh;">    
 <center>
-<h1>WELCOME, {{ request.user }}</h1>
-<img src="{% static 'images/welcome.svg'%}">
-</center>
+    <h1>WELCOME, {{ request.user }}</h1>
+    <img src="{% static 'images/welcome.svg'%}">
+    </center>
+</div>
 {% endblock %}
