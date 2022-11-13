@@ -39,7 +39,12 @@ def success(request):
         'Title', 
         'Content of the Message', 
         EMAIL_HOST_USER, 
-        [TEST_EMAIL_RECEIVER], 
+        
+        # PRODUCTION CODE
+        # [email], 
+        # DEVELOPMENT CODE
+        [TEST_EMAIL_RECEIVER],
+
         html_message=html,
         fail_silently=False
     )
@@ -58,13 +63,11 @@ def signup(request):
             }
         
         files=[]
-        
         headers = {
         'Authorization': API_TOKEN
         }
 
         response = requests.request("POST", API_CREATE_ACCOUNT_URL, headers=headers, data=payload, files=files)
-
         response_dict = ast.literal_eval(response.text)
         
         if 'data' in response_dict:
@@ -91,7 +94,7 @@ def signup(request):
             print("email: ", email)
             print ("hash:", user_hash)
             
-            if user_hash is not "invalid":
+            if user_hash != "invalid":
                 request.session['user_hash'] = user_hash
                 request.session['username'] = username
                 request.session['email'] = email
@@ -126,20 +129,61 @@ def signup(request):
 
 def signin(request):
 
+    def login_account (username, password):
+
+        payload={'user': username,
+        'pass': password }
+        files=[]
+        headers = {
+        'Authorization': API_TOKEN
+        }
+
+        response = requests.request("POST", API_LOGIN_ACCOUNT_URL, headers=headers, data=payload, files=files)        
+        response_dict = ast.literal_eval(response.text)
+        
+        if 'data' in response_dict:
+            for data in response_dict['data']:
+                user_token = data.get("token")
+                expires = data.get("expires")
+                response_message = "Successfully Logged In!"
+        else:
+            user_token = ''
+            expires = ''
+            response_message = response_dict.get("error")      
+
+        return user_token, expires, response_message
+        
     if request.method == "POST":
         username = request.POST['username']
         password = request.POST['password']
 
-        user = authenticate(username=username, password=password)
+        user_token, expries, response_message = login_account(username, password)
+        
+        
 
-        if user is not None:
-            login(request, user)
-            firstname = user.first_name
-            return render(request, "authentication/dashboard.html", {'first_name': firstname})
+        if user_token != '':
+            # user = authenticate(username=username, password=password)
+            # login(request, user)
+            # firstname = user.first_name
+            print(user_token, expries, response_message)
+            return render(request, "authentication/dashboard.html", {'first_name': firstname})            
+        else:
+            # LAGYAN ITO NG MESSAGE BOX NA NAGSASABI NG ERROR MESSAGE
+            print ("ERROR:", response_message)
+            return render(request, "authentication/signin.html")
 
-        else: 
-            messages.error(request, "Invalid username/password")
-            return redirect('home')
+        ############################## FOR DJANGO ##############################
+        # user = authenticate(username=username, password=password)
+
+        # if user is not None:
+        #     login(request, user)
+        #     firstname = user.first_name
+        #     return render(request, "authentication/dashboard.html", {'first_name': firstname})
+
+        # else: 
+        #     messages.error(request, "Invalid username/password")
+        #     return redirect('home')
+        ############################## FOR DJANGO ##############################
 
     return render(request, "authentication/signin.html")
 
@@ -171,23 +215,22 @@ def verify_account(request, username, user_hash):
             response_message = response_dict.get("error")
             password=''   
         
-        return response_message,password
+        return password,response_message
     
     try:
         context = {}
-        
-        response_message, password = verify(user_hash)
+        password, response_message = verify(user_hash)
         
         context['response_message'] = response_message
         context['password'] = password
         
-        if password is not '':
+        if password != '':
             print(password)
             print ("SUCCESS:", response_message)
             return render(request, "authentication/verification_successful.html", context)                 
         else:
             print ("ERROR:", response_message)
-            return render(request, "authentication/verification_failed.html") 
+            return render(request, "authentication/verification_failed.html", context) 
         
     except Exception as e:
         print(str(e))

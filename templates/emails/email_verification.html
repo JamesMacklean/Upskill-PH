@@ -30,10 +30,10 @@
             {% endfilter %}
             <br />
         </p>
-            {% comment %} Verify Your Account {{ hash }} {% endcomment %}
-            {% comment %} <a href={{ link }}{{ hash }}>Verify Your Account</a> {% endcomment %}
+            {% comment %} DEVELOPMENT CODE {% endcomment %}
             <a href=http://127.0.0.1:8000{% url 'verify_account' username=username user_hash=user_hash %}>Verify Your Account</a>
-            {% comment %} {% include "ace_common/edx_ace/common/return_to_course_cta.html" with course_cta_text=course_cta_text course_cta_url=confirm_activation_link %} {% endcomment %}
+            {% comment %} PRODUCTION CODE {% endcomment %}
+            {% comment %} <a href={{ domain }}{% url 'verify_account' username=username user_hash=user_hash %}>Verify Your Account</a> {% endcomment %}
     </td>
 </tr>
 </table>
