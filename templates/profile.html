@@ -12,38 +12,39 @@
         </div>
         <div class="category-content">
             <div class="profile-picture-container">
-                {{request.user.profile_pic}}
+                {{request.scholarprofile.profile_pic}}
             </div>
             <div class="personal-container">
-                <h3>{{request.user.fname}} {{request.user.lname}}</h3>
+                <h3>{{request.rscholarprofile.fname}} {{request.scholarprofile.lname}}</h3>
+                <a href="{% url 'edit_profile' %}" class="btn-transparent"></a>
                 <h2>Profile</h2>
                 <hr>
-                <p>{{request.user.gender}}</p>
-                <p>{{request.user.industry}}</p>
-                <p>{{request.user.birthday}}</p>
-                <p>{{request.user.bio}}</p>
+                <p>{{request.scholarprofile.gender}}</p>
+                <p>{{request.scholarprofile.industry}}</p>
+                <p>{{request.scholarprofile.birthday}}</p>
+                <p>{{request.scholarprofile.bio}}</p>
             </div>
             <div class="contact-container">
                 <h2>Contact Information</h2>
                 <hr>
-                <p>{{request.user.phone}}</p>
-                <p>Country: {{request.user.country}}</p>
-                <p>{{request.user.municipality}}, {{request.user.region}}, {{request.user.province}}</p>
+                <p>{{request.scholarprofile.phone}}</p>
+                <p>Country: {{request.scholarprofile.country}}</p>
+                <p>{{request.scholarprofile.municipality}}, {{request.scholarprofile.region}}, {{request.scholarprofile.province}}</p>
             </div>
             <div class="education-container">
                 <h2>Education Information</h2>
                 <hr>
-                <p>{{request.user.degree}}</p>
-                <p>{{request.user.university}}</p>
-                <p>{{request.user.field}}</p>
+                <p>{{request.scholarprofile.degree}}</p>
+                <p>{{request.scholarprofile.university}}</p>
+                <p>{{request.scholarprofile.field}}</p>
             </div>
             <div class="employment-container">
                 <h2>Employment Information</h2>
                 <hr>
-                <p>{{request.user.emp_status}}</p>
-                <p>{{request.user.industry}}</p>
-                <p>{{request.user.occupation}}</p>
-                <p>{{request.user.exp_level}}</p>
+                <p>{{request.scholarprofile.emp_status}}</p>
+                <p>{{request.scholarprofile.industry}}</p>
+                <p>{{request.scholarprofile.occupation}}</p>
+                <p>{{request.scholarprofile.exp_level}}</p>
             </div>
         </div>
     </div>
