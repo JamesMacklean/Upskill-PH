@@ -166,7 +166,8 @@ def signin(request):
             # login(request, user)
             # firstname = user.first_name
             print(user_token, expries, response_message)
-            return render(request, "authentication/dashboard.html", {'first_name': firstname})            
+            # return render(request, "authentication/dashboard.html", {'first_name': firstname})            
+            return render(request, "authentication/dashboard.html", {'first_name': username})            
         else:
             # LAGYAN ITO NG MESSAGE BOX NA NAGSASABI NG ERROR MESSAGE
             print ("ERROR:", response_message)
