@@ -1,41 +1,51 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-
-<div class="profile-wrapper">
-    <div class="image-container">
-        <img src="{% static 'images/profilepic.svg'%}" alt="" class="profile-picture">
-    </div>
-    <div class="name-container">
-        <h2 class="name">{{ request.first_name }}</h2>
-        <p>insert description</p>
-    </div>
-    <div class="edit-profile">
-       <a href="/edit"><i class="fa fa-pencil"></i></a>
-    </div>
-    <div class="achievements-container">
-        <section class="achievements">
-            <div class="achievement-item">
-                <h3 class="achievement-title"><i class="fa fa-award"></i> Achievement #1</h3>
-                <p>achievement description</p>
-                <p>date acquired</p>
+<div class="tab-container">
+    <div class="tab-content">
+        <input type="radio" name="indicator" id="profile" checked >
+        <input type="radio" name="indicator" id="scholarship">
+        <div class="tab-list">
+            <label for="profile" class="profile">PROFILE</label>
+            <label for="scholarship" class="scholarship">SCHOLARSHIPS</label>
+            <div class="indicator"></div>
+        </div>
+        <div class="category-content">
+            <div class="profile-picture-container">
+                {{request.user.profile_pic}}
             </div>
-            <div class="achievement-item">
-                <h3 class="achievement-title"><i class="fa fa-award"></i> Achievement #2</h3>
-                <p>achievement description</p>
-                <p>date acquired</p>
+            <div class="personal-container">
+                <h3>{{request.user.fname}} {{request.user.lname}}</h3>
+                <h2>Profile</h2>
+                <hr>
+                <p>{{request.user.gender}}</p>
+                <p>{{request.user.industry}}</p>
+                <p>{{request.user.birthday}}</p>
+                <p>{{request.user.bio}}</p>
             </div>
-            <div class="achievement-item">
-                <h3 class="achievement-title"><i class="fa fa-award"></i> Achievement #3</h3>
-                <p>achievement description</p>
-                <p>date acquired</p>
+            <div class="contact-container">
+                <h2>Contact Information</h2>
+                <hr>
+                <p>{{request.user.phone}}</p>
+                <p>Country: {{request.user.country}}</p>
+                <p>{{request.user.municipality}}, {{request.user.region}}, {{request.user.province}}</p>
             </div>
-            <div class="achievement-item">
-                <h3 class="achievement-title"><i class="fa fa-award"></i> Achievement #4</h3>
-                <p>achievement description</p>
-                <p>date acquired</p>
+            <div class="education-container">
+                <h2>Education Information</h2>
+                <hr>
+                <p>{{request.user.degree}}</p>
+                <p>{{request.user.university}}</p>
+                <p>{{request.user.field}}</p>
             </div>
-        </section>
+            <div class="employment-container">
+                <h2>Employment Information</h2>
+                <hr>
+                <p>{{request.user.emp_status}}</p>
+                <p>{{request.user.industry}}</p>
+                <p>{{request.user.occupation}}</p>
+                <p>{{request.user.exp_level}}</p>
+            </div>
+        </div>
     </div>
 </div>
 {% endblock %}

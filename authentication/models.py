@@ -1,69 +1,10 @@
+from unicodedata import name
 from django.db import models
 from django.contrib.auth.models import User
 
 # Create your models here.
 
 class ScholarProfile(models.Model):
-    # EMP_CHOICES = (
-    #     ("FT", "Full time"),
-    #     ("PT", "Part time"),
-    #     ("SE", "Self Employed"),
-    #     ("HM", "Homemaker"),
-    #     ("UE", "Unemployed"),
-    #     ("RT", "Retired"),
-    #     ("UW", "Unable to work"),
-    # )
-    # INDUSTRY_CHOICES = (
-    #     ("AG","Agriculture and Land"),
-    #     ("CS","Chemical Sciences"),
-    #     ("CE","Construction"),
-    #     ("CR","Creatives"),
-    #     ("DT","Digital Technologies"),
-    #     ("EN","Energy"),
-    #     ("EM","Engineering and Manufactuting"),
-    #     ("FS","Financial services"),
-    #     ("FD","Food and drink"),
-    #     ("HC","Healthcare"),
-    #     ("LS","Life Sciences"),
-    #     ("SC","Social Care"),
-    #     ("TO","Tourism"),
-    #     ("TR","Transport"),
-    # )
-    # EXPLEVEL_CHOICES = (
-    #     ("IN","Intern/Trainee"),
-    #     ("JR","Junior / Entry Level (0 - 2 years experience)"),
-    #     ("ML","Mid-level (2+ years experience)"),
-    #     ("LM","Lead / Manager"),
-    #     ("SM","Senior Manager"),
-    #     ("EL","Executive Level"),
-    #     ("NA","Not Applicable"),
-    # )
-    # DEGREE_CHOICES = (
-    #     ("LD","Less than high school diploma or equivalent"),
-    #     ("JH","Junior high diploma"),
-    #     ("SH","Senior high diploma"),
-    #     ("CU","Some units in college but no degree"),
-    #     ("AS","Associate degree"),
-    #     ("BS","Bachelor's degree"),
-    #     ("MD","Master's degree"),
-    #     ("DD","Doctorate degree"),
-    # )
-    # FIELD_CHOICES = (
-    #     ("BU","Business"),
-    #     ("CS","Computer Science"),
-    #     ("EN","Engineering"),
-    #     ("MS","Mathematics and Statistics"),
-    #     ("PS","Physical Sciences"),
-    #     ("BS","Biological Sciences"),
-    #     ("SS","Social Sciences"),
-    #     ("HP","Health Professions"),
-    #     ("LP","Legal Professions"),
-    #     ("ED","Education"),
-    #     ("AH","Arts and Humanities"),
-    #     ("OT","Other"),
-    #     ("NA","Not Applicable"),
-    # )
-
     user = models.OneToOneField(
             User, null=True,
             on_delete=models.CASCADE)
@@ -120,3 +61,45 @@ class ScholarProfile(models.Model):
         except:
             lname = ""
         return lname
+
+# class education(models.Model):
+#     id = models.AutoField(primary_key=True)
+#     degree = models.CharField(max_length=2,null=True)
+#     school = models.CharField(max_length=200,null=True)
+#     study = models.CharField(max_length=200, null=True)
+#     last_modified = models.DateTimeField(null=True)
+#     user_id = #EDIT. ADD FOREIGN RELATION
+
+# class employment(models.Model):
+#     id = models.AutoField(primary_key=True)
+#     employ_status = models.CharField(max_length=255, null=True)
+#     industry = models.CharField(max_length=255, null=True)
+#     employer = models.CharField(max_length=255, null=True)
+#     occupation = models.CharField(max_length=255, null=True)
+#     experience = models.CharField(max_length=255, null=True)
+#     last_modified = models.DateTimeField(null=True)
+#     user_id = #EDIT. ADD RELATION TO OTHER TABLE
+
+
+# class partner(models.Model):
+#     id = models.AutoField(primary_key=True)
+#     name = models.CharField(max_field=255, null=True)
+
+# class parter_admin(models.Model):
+#     id = models.AutoField(primary_key=True,auto_created=True)
+#     name = models.CharField(max_field=255, null=True)
+#     partner_id = models.OneToOneField(partner, null=True, on_delete=models.CASCADE)
+
+# class program(models.Model):
+#     id = models.AutoField(primary_key=True, auto_created=True)
+#     name = models.CharField(max_field=255, null=True)
+#     partner_id = models.OneToOneField(partner, null=True, on_delete=models.CASCADE)
+
+# class scholar(models.Model):
+#     id = models.AutoField(primary_key=True, auto_created=True)
+#     partner_id = models.OneToOneField(partner, null=True, on_delete=models.CASCADE)
+#     is_verified = models.BooleanField(default=False)
+#     photo_verification = 
+#     user_id = 
+#     status = 
+
