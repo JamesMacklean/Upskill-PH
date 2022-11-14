@@ -105,8 +105,8 @@ def edit_profile(request):
     user = request.user
     fname = request.user.first_name
     lname = request.user.last_name
-    #form = ScholarProfileForm(instance=user)
-    #context = {'form':form}
+    form = ScholarProfileForm(instance=user)
+    context = {'form':form}
     if request.method == 'POST':
         middle_name = request.POST['middle_name']
         profile_pic = request.POST['profile_pic']
@@ -141,4 +141,4 @@ def edit_profile(request):
         profile.save()
 
 
-    return render(request, "edit_profile.html")
+    return render(request, "edit_profile.html", context)
