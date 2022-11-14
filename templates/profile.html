@@ -10,6 +10,7 @@
             <label for="scholarship" class="scholarship">SCHOLARSHIPS</label>
             <div class="indicator"></div>
         </div>
+        {% for scholarprofile in scholarprofiles %}
         <div class="category-content">
             <div class="profile-picture-container">
                 {{request.scholarprofile.profile_pic}}
@@ -46,6 +47,7 @@
                 <p>{{request.scholarprofile.occupation}}</p>
                 <p>{{request.scholarprofile.exp_level}}</p>
             </div>
+        {% endfor %}
         </div>
     </div>
 </div>
