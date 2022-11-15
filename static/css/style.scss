@@ -3,6 +3,9 @@
     margin: 0;
     box-sizing: border-box;
 }
+body{
+    background-color: #acacac !important;
+}
 .container-signup{
     position: relative;
     width: 100%;
@@ -116,24 +119,24 @@ form{
     color: #aaa;
     font-weight: 500;   
 }
-.btn{
-    width: 150px;
-    height: 49px;
-    border: none;
-    outline: none;
-    border-radius: 49px;
+button, button.btn{
+    width: 150px !important;
+    height: 49px !important;
+    border: none !important;
+    outline: none !important;
+    border-radius: 49px !important;
     cursor: pointer;
-    background-color: #fff;
-    color: #F15A25;
-    border: solid 2px #F15A25;
-    text-transform: uppercase;
-    font-weight: 500;
-    margin: 10px 0;
-    transition: 0.5s;
+    background-color: #fff !important;
+    color: #F15A25 !important;
+    border: solid 2px #F15A25 !important;
+    text-transform: uppercase !important;
+    font-weight: 500 !important;
+    margin: 10px 0 !important;
+    transition: 0.5s !important;
 }
-.btn:hover{
-    background-color: #F15A25;
-    color: #fff;
+button:hover,button.btn:hover{
+    background-color: #F15A25 !important;
+    color: #fff !important;
     //border: solid 2px black;
 }
 .social-text{
@@ -436,9 +439,6 @@ a.gg:hover i{
     width: 500px;
 }
 // FOR SAMPLE PURPOSES
-body{
-    background-color: #F15A25;
-}
 
 // EDIT PROFILE
 
@@ -462,4 +462,56 @@ body{
 .save-changes{
     transform: translate(50%);
     padding: 15px 0;
+}
+
+/* TABS */
+
+.tab-container{
+    padding: 40px 50px 40px 40px;
+    width: 950px;
+}
+.tab-container .tab-content .tab-list{
+    display: flex;
+    flex-direction: column;
+    width: 200px;
+    position: relative;
+}
+.tab-container .tab-content .tab-list label{
+    height: 60px;
+    font-size: 22px;
+    font-weight: 500;
+    cursor: pointer;
+    /*background-color: #f15a25;*/
+    line-height: 60px;
+    padding-left: 10px;
+    z-index: 12;
+    transition: all 0.4s ease;
+}
+.tab-container .tab-content .tab-list label:hover{
+    color: #f15a25;
+}
+.tab-container .indicator{
+    position: absolute;
+    height: 60px;
+    width: 100%;
+    left: 0;
+    top: 0;
+    background-color: #f15a25;
+    border-radius: 10px;
+}
+#profile:checked ~ .tab-list .profile, #scholarship:checked ~ .tab-list .scholarship{
+    color: #fff;
+}
+#profile:checked ~ .tab-list .indicator{
+    top: 0;
+}
+#scholarship:checked ~ .tab-list .indicator{
+    top: 60px;
+}
+.tab-container input[type="radio"]{
+    display: none;   
+}
+.tab-container .tab-content{
+    display: flex;
+    justify-content: space-between;
 }

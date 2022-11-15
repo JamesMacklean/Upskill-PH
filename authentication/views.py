@@ -1,3 +1,4 @@
+from multiprocessing import context
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib import messages
@@ -10,20 +11,79 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes, force_str
 from . tokens import generate_token
 from scholarium.info import *
-from . models import ScholarProfile
+from django.contrib.auth.decorators import login_required
 
-import requests
+from . models import ScholarProfile
+from .forms import *
+
+import os
+import requests, ast
 
 def home(request):
     return render(request,"index.html")
 
 def success(request):
+    user_hash = request.session.get('user_hash')
+    username = request.session.get('username')
+    email = request.session.get('email')
+    firstname = request.session.get('first_name')
+    lastname = request.session.get('last_name')
+                
+    ############################# FOR MAIL ##############################
+    html = render_to_string('emails/email_verification.html', {
+        'username': username,
+        'first_name': firstname,
+        'last_name': lastname,
+        'email': email,
+        'user_hash': user_hash,
+        'link': API_VERIFY_ACCOUNT_URL
+    })
+    
+    send_mail(
+        'Title', 
+        'Content of the Message', 
+        EMAIL_HOST_USER, 
+        
+        # PRODUCTION CODE
+        # [email], 
+        # DEVELOPMENT CODE
+        [TEST_EMAIL_RECEIVER],
+
+        html_message=html,
+        fail_silently=False
+    )
+    ############################# FOR MAIL ##############################
+    
     return render(request,"welcome.html")
 
 def signup(request):
 
-    url = "https://scholarium.tmtg-clone.click/api/basic/create"
+    def create_account(username,firstname,lastname,email):     
+        payload={
+            'username': username,
+            'first_name': firstname,
+            'last_name': lastname,
+            'email': email
+            }
+        
+        files=[]
+        headers = {
+        'Authorization': API_TOKEN
+        }
 
+        response = requests.request("POST", API_CREATE_ACCOUNT_URL, headers=headers, data=payload, files=files)
+        response_dict = ast.literal_eval(response.text)
+        
+        if 'data' in response_dict:
+            for data in response_dict['data']:
+                response_message = data.get("success")
+                user_hash = data.get("hash")
+        else:
+            response_message = response_dict.get("error")
+            user_hash = "invalid"         
+
+        return user_hash, response_message
+        
     try:
         if request.method == "POST":
             username = request.POST['username']
@@ -31,47 +91,24 @@ def signup(request):
             email= request.POST['email']
             firstname= request.POST['firstname']
             lastname= request.POST['lastname']
-                        
-            payload={
-                'username': username,
-                'first_name': firstname,
-                'last_name': lastname,
-                'email': email
-                }
-            
-            files=[]
-            
-            headers = {
-            'Authorization': 'Basic VE1URzp0dWp5QnBiZ3R1bTN4Y2N0RnZYWmdyNFpuYVJzZGRWUnB2a3dKdXE4QjNLRXdmZDRCWlF0clJhajVyNHZkdERt'
-            }
 
-            response = requests.request("POST", url, headers=headers, data=payload, files=files)
+            user_hash, response_message = create_account(username,firstname,lastname,email)
             
-            ############################## FOR MAIL ##############################
-            html = render_to_string('emails/email_verification.html', {
-                'username': username,
-                'first_name': firstname,
-                'last_name': lastname,
-                'email': email
-            })
+            print("username: ", username)
+            print("email: ", email)
+            print ("hash:", user_hash)
             
-            send_mail('Title', 'Content of the Message', EMAIL_HOST_USER, [TEST_EMAIL_RECEIVER], html_message=html)
-            ############################## FOR MAIL ##############################
-            
-            if "email exists" in response.text:
-                # PALTAN ITO NG MESSAGE BOX NA NAGSASABING EMAIL ALREADY EXISTS
-                print(response.text)
-                return render(request, "authentication/signup.html")
-            elif "username exists" in response.text:
-                # PALTAN ITO NG MESSAGE BOX NA NAGSASABING USERNAME ALREADY EXISTS
-                print(response.text)
-                return render(request, "authentication/signup.html")
-            else:
-                print(response.text)
-                print("username: ", username)
-                print("email: ", email)
-                            
+            if user_hash != "invalid":
+                request.session['user_hash'] = user_hash
+                request.session['username'] = username
+                request.session['email'] = email
+                request.session['first_name'] = firstname
+                request.session['last_name'] = lastname
                 return redirect('success')
+            else:
+                # LAGYAN ITO NG MESSAGE BOX NA NAGSASABI NG ERROR MESSAGE
+                print ("ERROR:", response_message)
+                return render(request, "authentication/signup.html")
             
             ############################## FOR DJANGO ##############################
             # if User.objects.filter(username=username):
@@ -85,31 +122,79 @@ def signup(request):
             # myuser.last_name = lastname
             
             # myuser.save()
+            
+            # ScholarProfile.objects.create(
+            # user = myuser,
+            # fname = myuser.first_name,
+            # lname = myuser.last_name
+            # )
+            
             # return redirect('success')
             ############################## FOR DJANGO ##############################
-    
+            
         return render(request, "authentication/signup.html")
-        
+    
     except Exception as e:
         print(str(e))
         return render(request, "authentication/signup.html")
-
 def signin(request):
 
+    def login_account (username, password):
+
+        payload={'user': username,
+        'pass': password }
+        files=[]
+        headers = {
+        'Authorization': API_TOKEN
+        }
+
+        response = requests.request("POST", API_LOGIN_ACCOUNT_URL, headers=headers, data=payload, files=files)        
+        response_dict = ast.literal_eval(response.text)
+        
+        if 'data' in response_dict:
+            for data in response_dict['data']:
+                user_token = data.get("token")
+                expires = data.get("expires")
+                response_message = "Successfully Logged In!"
+        else:
+            user_token = ''
+            expires = ''
+            response_message = response_dict.get("error")      
+
+        return user_token, expires, response_message
+        
     if request.method == "POST":
         username = request.POST['username']
         password = request.POST['password']
 
-        user = authenticate(username=username, password=password)
+        user_token, expries, response_message = login_account(username, password)
+        
+        
 
-        if user is not None:
-            login(request, user)
-            firstname = user.first_name
-            return render(request, "authentication/dashboard.html", {'first_name': firstname})
+        if user_token != '':
+            # user = authenticate(username=username, password=password)
+            # login(request, user)
+            # firstname = user.first_name
+            print(user_token, expries, response_message)
+            # return render(request, "authentication/dashboard.html", {'first_name': firstname})            
+            return render(request, "authentication/dashboard.html", {'first_name': username})            
+        else:
+            # LAGYAN ITO NG MESSAGE BOX NA NAGSASABI NG ERROR MESSAGE
+            print ("ERROR:", response_message)
+            return render(request, "authentication/signin.html")
 
-        else: 
-            messages.error(request, "Invalid username/password")
-            return redirect('home')
+        ############################## FOR DJANGO ##############################
+        # user = authenticate(username=username, password=password)
+
+        # if user is not None:
+        #     login(request, user)
+        #     firstname = user.first_name
+        #     return render(request, "authentication/dashboard.html", {'first_name': firstname})
+
+        # else: 
+        #     messages.error(request, "Invalid username/password")
+        #     return redirect('home')
+        ############################## FOR DJANGO ##############################
 
     return render(request, "authentication/signin.html")
 
@@ -118,55 +203,95 @@ def signout(request):
     messages.success(request, "Logged out successfully")
     return redirect('home')
 
-def activate(request, uidb64, token):
-    try:
-        uid = force_str(urlsafe_base64_decode(uidb64))
-        myuser = User.objects.get(pk=uid)
-    except (TypeError, ValueError, OverflowError, User.DoesNotExist):
-        myuser= None
+def verify_account(request, username, user_hash):
     
-    if myuser is not None and generate_token.check_token(myuser, token):
-        myuser.is_active = True
-        myuser.save()
-        login(request, myuser)
-        return redirect('signin')
-    else:
-        return(request, "activation_failed.html")
+    def verify(user_hash):
+        
+        payload={}
+        files={}
+        headers = {
+        'Authorization': API_TOKEN
+        }
 
+        response = requests.request("PUT", os.path.join(API_VERIFY_ACCOUNT_URL, user_hash), headers=headers, data=payload, files=files)
+        
+
+        response_dict = ast.literal_eval(response.text)
+        
+        if 'data' in response_dict:
+            for data in response_dict['data']:
+                response_message = data.get("success")
+                password = data.get("password")
+        else:
+            response_message = response_dict.get("error")
+            password=''   
+        
+        return password,response_message
+    
+    try:
+        context = {}
+        password, response_message = verify(user_hash)
+        
+        context['response_message'] = response_message
+        context['password'] = password
+        
+        if password != '':
+            print(password)
+            print ("SUCCESS:", response_message)
+            return render(request, "authentication/verification_successful.html", context)                 
+        else:
+            print ("ERROR:", response_message)
+            return render(request, "authentication/verification_failed.html", context) 
+        
+    except Exception as e:
+        print(str(e))
+        return render(request, "authentication/verification_failed.html")
+
+@login_required(login_url='signin')
 def profile(request):
+    return render(request, "profile.html")
 
-    if request.user.is_authenticated:
-        firstname = request.user.first_name
-        lastname = request.user.last_name
-
-    return render(request, "profile.html", {'firstname':firstname, 'lastname':lastname})
-
+@login_required(login_url='signin')
 def edit_profile(request):
     
-    first_name = request.POST['first_name']
-    middle_name = request.POST['middle_name']
-    last_name = request.POST['last_name']
-    profile_picture = request.POST['profile_picture ']
-    emp_status = request.POST['emp_status']
-    industry = request.POST['industry']
-    employer = request.POST['employer']
-    occupation = request.POST['occupation']
-    exp_level = request.POST['exp_level']
-    degree = request.POST['degree']
-    university = request.POST['university']
-    field = request.POST['field']
-    bio = request.POST['bio']
-    country = request.POST['country']
-    region = request.POST['region']
-    province = request.POST['province']
-    municipality = request.POST['municipality']
-    socials = request.POST['socials']
-    gender = request.POST['gender']
-    gender = request.POST['gender']
-    birthday = request.POST['birthday']
-    phone = request.POST['phone']
-    details_privacy = request.POST['details_privacy']
+    user = request.user
+    fname = request.user.first_name
+    lname = request.user.last_name
+    form = ScholarProfileForm(instance=user)
+    context = {'form':form}
+    
+    if request.method == 'POST':
+        middle_name = request.POST['middle_name']
+        profile_pic = request.POST['profile_pic']
+        emp_status = request.POST['emp_status']
+        industry = request.POST['industry']
+        employer = request.POST['employer']
+        occupation = request.POST['occupation']
+        exp_level = request.POST['exp_level']
+        degree = request.POST['degree']
+        university = request.POST['university']
+        field = request.POST['field']
+        
+        bio = request.POST['bio']
+        country = request.POST['country']
+        region =  request.POST['region']
+        province = request.POST['province']
+        municipality = request.POST['municipality']
 
-    scholar = ScholarProfile.objects.create(first_name, middle_name, last_name, profile_picture, emp_status, industry, employer, occupation, exp_level, degree, university, field, bio, country, region, municipality, socials, gender, birthday, phone, details_privacy)
-    scholar.save()
-    return render(request, "edit_profile.html")
+        social =  request.POST['social']
+        gender = request.POST['gender']
+        birthday =  request.POST['birthday']
+
+        phone = request.POST['phone']
+        details_privacy = request.POST['details_privacy']
+    
+        profile = ScholarProfile(user, fname, lname,
+                    middle_name, profile_pic, 
+                    emp_status, industry, employer, occupation, 
+                    exp_level, degree, university, field, bio, 
+                    country, region, province, municipality,
+                    social, gender, birthday, phone, details_privacy)
+        profile.save()
+
+
+    return render(request, "edit_profile.html", context)

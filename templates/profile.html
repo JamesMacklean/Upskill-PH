@@ -1,41 +1,52 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-
-<div class="profile-wrapper">
-    <div class="image-container">
-        <img src="{% static 'images/profilepic.svg'%}" alt="" class="profile-picture">
-    </div>
-    <div class="name-container">
-        <h2 class="name">{{ first_name }}</h2>
-        <p>insert description</p>
-    </div>
-    <div class="edit-profile">
-       <a href="/edit"><i class="fa fa-pencil"></i></a>
-    </div>
-    <div class="achievements-container">
-        <section class="achievements">
-            <div class="achievement-item">
-                <h3 class="achievement-title"><i class="fa fa-award"></i> Achievement #1</h3>
-                <p>achievement description</p>
-                <p>date acquired</p>
+<div class="tab-container">
+    <div class="tab-content">
+        <input type="radio" name="indicator" id="profile" checked >
+        <input type="radio" name="indicator" id="scholarship">
+        <div class="tab-list">
+            <label for="profile" class="profile">PROFILE</label>
+            <label for="scholarship" class="scholarship">SCHOLARSHIPS</label>
+            <div class="indicator"></div>
+        </div>
+        <div class="category-content">
+            <div class="profile-picture-container">
+                {{request.scholarprofile.profile_pic}}
             </div>
-            <div class="achievement-item">
-                <h3 class="achievement-title"><i class="fa fa-award"></i> Achievement #2</h3>
-                <p>achievement description</p>
-                <p>date acquired</p>
+            <div class="personal-container">
+                <h3>{{request.scholarprofile.fname}} {{request.scholarprofile.lname}}</h3>
+                <a href="{% url 'edit' %}" class="btn-transparent">edit profile</a>
+                <h2>Profile</h2>
+                <hr>
+                <p>{{request.scholarprofile.gender}}</p>
+                <p>{{request.scholarprofile.industry}}</p>
+                <p>{{request.scholarprofile.birthday}}</p>
+                <p>{{request.scholarprofile.bio}}</p>
             </div>
-            <div class="achievement-item">
-                <h3 class="achievement-title"><i class="fa fa-award"></i> Achievement #3</h3>
-                <p>achievement description</p>
-                <p>date acquired</p>
+            <div class="contact-container">
+                <h2>Contact Information</h2>
+                <hr>
+                <p>{{request.scholarprofile.phone}}</p>
+                <p>Country: {{request.scholarprofile.country}}</p>
+                <p>{{request.scholarprofile.municipality}}, {{request.scholarprofile.region}}, {{request.scholarprofile.province}}</p>
             </div>
-            <div class="achievement-item">
-                <h3 class="achievement-title"><i class="fa fa-award"></i> Achievement #4</h3>
-                <p>achievement description</p>
-                <p>date acquired</p>
+            <div class="education-container">
+                <h2>Education Information</h2>
+                <hr>
+                <p>{{request.scholarprofile.degree}}</p>
+                <p>{{request.scholarprofile.university}}</p>
+                <p>{{request.scholarprofile.field}}</p>
             </div>
-        </section>
+            <div class="employment-container">
+                <h2>Employment Information</h2>
+                <hr>
+                <p>{{request.scholarprofile.emp_status}}</p>
+                <p>{{request.scholarprofile.industry}}</p>
+                <p>{{request.scholarprofile.occupation}}</p>
+                <p>{{request.scholarprofile.exp_level}}</p>
+            </div>
+        </div>
     </div>
 </div>
 {% endblock %}

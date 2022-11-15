@@ -1,17 +1,14 @@
-TEST_EMAIL_RECEIVER = 'jamesmacklean27@gmail.com'
-
-EMAIL_USE_TLS = True
-# EMAIL_HOST = 'smtp.gmail.com' 
-# EMAIL_HOST_USER = 'markallensongco@gmail.com' 
-# EMAIL_HOST_PASSWORD = 'thsidqbusxfgovla'
-# EMAIL_PORT = 25
-
-# EMAIL_HOST = 'smtp.mailtrap.io'
-# EMAIL_HOST_USER = '2efd17270683ad'
-# EMAIL_HOST_PASSWORD = '34c92211fc1dd5'
-# EMAIL_PORT = '2525'
-
+# MAILER
 EMAIL_HOST = 'smtp.hostinger.com' 
 EMAIL_HOST_USER = 'mailer@scholarium.io' 
-EMAIL_HOST_PASSWORD = 'iEq{z2lWbJ%Pr|B|x2&JPN7|(lAO}lHn'
+EMAIL_HOST_PASSWORD = 'hnVw35UEvflyXYPzJI7IWk2AmZkIpL8-'
 EMAIL_PORT = 465
+EMAIL_USE_TLS = False
+EMAIL_USE_SSL = True
+TEST_EMAIL_RECEIVER = 'jamesmacklean27@gmail.com'
+
+# API
+API_TOKEN = 'Basic VE1URzp0dWp5QnBiZ3R1bTN4Y2N0RnZYWmdyNFpuYVJzZGRWUnB2a3dKdXE4QjNLRXdmZDRCWlF0clJhajVyNHZkdERt'
+API_CREATE_ACCOUNT_URL = "https://scholarium.tmtg-clone.click/api/basic/create"
+API_VERIFY_ACCOUNT_URL = "https://scholarium.tmtg-clone.click/api/basic/verify/"
+API_LOGIN_ACCOUNT_URL = "https://scholarium.tmtg-clone.click/api/login"
