@@ -1,3 +1,4 @@
+from multiprocessing import context
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib import messages
@@ -10,7 +11,10 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes, force_str
 from . tokens import generate_token
 from scholarium.info import *
+from django.contrib.auth.decorators import login_required
+
 from . models import ScholarProfile
+from .forms import *
 
 import os
 import requests, ast
@@ -118,6 +122,13 @@ def signup(request):
             # myuser.last_name = lastname
             
             # myuser.save()
+            
+            # ScholarProfile.objects.create(
+            # user = myuser,
+            # fname = myuser.first_name,
+            # lname = myuser.last_name
+            # )
+            
             # return redirect('success')
             ############################## FOR DJANGO ##############################
             
@@ -126,7 +137,6 @@ def signup(request):
     except Exception as e:
         print(str(e))
         return render(request, "authentication/signup.html")
-
 def signin(request):
 
     def login_account (username, password):
@@ -237,40 +247,51 @@ def verify_account(request, username, user_hash):
         print(str(e))
         return render(request, "authentication/verification_failed.html")
 
+@login_required(login_url='signin')
 def profile(request):
+    return render(request, "profile.html")
 
-    if request.user.is_authenticated:
-        firstname = request.user.first_name
-        lastname = request.user.last_name
-
-    return render(request, "profile.html", {'firstname':firstname, 'lastname':lastname})
-
+@login_required(login_url='signin')
 def edit_profile(request):
     
-    first_name = request.POST['first_name']
-    middle_name = request.POST['middle_name']
-    last_name = request.POST['last_name']
-    profile_picture = request.POST['profile_picture ']
-    emp_status = request.POST['emp_status']
-    industry = request.POST['industry']
-    employer = request.POST['employer']
-    occupation = request.POST['occupation']
-    exp_level = request.POST['exp_level']
-    degree = request.POST['degree']
-    university = request.POST['university']
-    field = request.POST['field']
-    bio = request.POST['bio']
-    country = request.POST['country']
-    region = request.POST['region']
-    province = request.POST['province']
-    municipality = request.POST['municipality']
-    socials = request.POST['socials']
-    gender = request.POST['gender']
-    gender = request.POST['gender']
-    birthday = request.POST['birthday']
-    phone = request.POST['phone']
-    details_privacy = request.POST['details_privacy']
+    user = request.user
+    fname = request.user.first_name
+    lname = request.user.last_name
+    form = ScholarProfileForm(instance=user)
+    context = {'form':form}
+    
+    if request.method == 'POST':
+        middle_name = request.POST['middle_name']
+        profile_pic = request.POST['profile_pic']
+        emp_status = request.POST['emp_status']
+        industry = request.POST['industry']
+        employer = request.POST['employer']
+        occupation = request.POST['occupation']
+        exp_level = request.POST['exp_level']
+        degree = request.POST['degree']
+        university = request.POST['university']
+        field = request.POST['field']
+        
+        bio = request.POST['bio']
+        country = request.POST['country']
+        region =  request.POST['region']
+        province = request.POST['province']
+        municipality = request.POST['municipality']
 
-    scholar = ScholarProfile.objects.create(first_name, middle_name, last_name, profile_picture, emp_status, industry, employer, occupation, exp_level, degree, university, field, bio, country, region, municipality, socials, gender, birthday, phone, details_privacy)
-    scholar.save()
-    return render(request, "edit_profile.html")
+        social =  request.POST['social']
+        gender = request.POST['gender']
+        birthday =  request.POST['birthday']
+
+        phone = request.POST['phone']
+        details_privacy = request.POST['details_privacy']
+    
+        profile = ScholarProfile(user, fname, lname,
+                    middle_name, profile_pic, 
+                    emp_status, industry, employer, occupation, 
+                    exp_level, degree, university, field, bio, 
+                    country, region, province, municipality,
+                    social, gender, birthday, phone, details_privacy)
+        profile.save()
+
+
+    return render(request, "edit_profile.html", context)
