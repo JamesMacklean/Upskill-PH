@@ -83,7 +83,7 @@ class Education(models.Model):
         User, 
         on_delete=models.CASCADE, 
         null=True, 
-        related_name="education_profiles"
+        related_name="profiles"
     )
 
 class Employment(models.Model):
@@ -98,7 +98,7 @@ class Employment(models.Model):
         User, 
         on_delete=models.CASCADE, 
         null=True, 
-        related_name="employment_profiles"
+        related_name="profiles"
     )
 
 class Partner(models.Model):
@@ -140,7 +140,7 @@ class Scholar(models.Model):
         User, 
         on_delete=models.CASCADE, 
         null=True, 
-        related_name="employment_profiles"
+        related_name="profiles"
     )
     status = models.BooleanField(null=True) 
 
