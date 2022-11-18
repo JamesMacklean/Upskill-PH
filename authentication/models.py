@@ -103,7 +103,7 @@ class Employment(models.Model):
 
 class Partner(models.Model):
     id = models.AutoField(primary_key=True)
-    name = models.CharField(max_field=255, null=True)
+    name = models.CharField(max_length=255, null=True)
 
 class PartnerAdmin(models.Model):
     id = models.AutoField(primary_key=True,auto_created=True)
