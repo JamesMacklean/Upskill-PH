@@ -43,8 +43,7 @@ class Profile(models.Model):
     user_id = models.ForeignKey(
         User, 
         on_delete=models.CASCADE, 
-        null=True, 
-        related_name="profiles"
+        null=True
     )
     class Meta:
         # ordering = ['order']
@@ -82,8 +81,7 @@ class Education(models.Model):
     user_id = models.ForeignKey(
         User, 
         on_delete=models.CASCADE, 
-        null=True, 
-        related_name="profiles"
+        null=True
     )
 
 class Employment(models.Model):
@@ -97,8 +95,7 @@ class Employment(models.Model):
     user_id = models.ForeignKey(
         User, 
         on_delete=models.CASCADE, 
-        null=True, 
-        related_name="profiles"
+        null=True
     )
 
 class Partner(models.Model):
@@ -123,24 +120,21 @@ class Program(models.Model):
     partner_id = models.ForeignKey(
         Partner, 
         null=True, 
-        on_delete=models.CASCADE,
-        related_name="programs"
+        on_delete=models.CASCADE
         )
 class Scholar(models.Model):
     id = models.AutoField(primary_key=True, auto_created=True)
     partner_id = models.ForeignKey(
         Partner, 
         null=True, 
-        on_delete=models.CASCADE,
-        related_name="partners"
+        on_delete=models.CASCADE
         )
     is_verified = models.BooleanField(default=False)
     photo_verification = models.URLField()
     user_id = models.ForeignKey(
         User, 
         on_delete=models.CASCADE, 
-        null=True, 
-        related_name="profiles"
+        null=True
     )
     status = models.BooleanField(null=True) 
 
