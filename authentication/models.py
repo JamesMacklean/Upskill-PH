@@ -107,7 +107,7 @@ class Partner(models.Model):
 
 class PartnerAdmin(models.Model):
     id = models.AutoField(primary_key=True,auto_created=True)
-    name = models.CharField(max_field=255, null=True)
+    name = models.CharField(max_length=255, null=True)
     partner_id = models.ForeignKey(
         Partner, 
         null=True, 
