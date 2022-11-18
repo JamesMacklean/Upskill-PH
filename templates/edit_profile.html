@@ -6,10 +6,11 @@
 {% csrf_token %}
 <h2>Edit my profile</h2>
 <p>username: {{request.user}}</p>
-{{form}}
+{{form.as_p}}
 <div class="save-changes">
     <input type="submit" value="SAVE CHANGES">
 </div>
+</form>
     {% comment %} <div class="profile-container">
         <h2 class="profile-label">Profile Data</h2>
         <div class="profile-data">
@@ -191,8 +192,6 @@
     <div class="save-changes">
         <input type="submit" value="SAVE CHANGES">
     </div> {% endcomment %}
-
-</form>
 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.js"></script>
 <!-- script type="text/javascript" src="../../jquery.ph-locations.js"></script -->

@@ -2,51 +2,64 @@
 {% load static %}
 {% block content %}
 <div class="tab-container">
+    <div class="tabs">
+        <h3 class="active">SCHOLARSHIPS</h3>
+        <h3>PROFILES</h3>
+        <h3>CERTS AND BADGES</h3>
+    </div>
     <div class="tab-content">
-        <input type="radio" name="indicator" id="profile" checked >
-        <input type="radio" name="indicator" id="scholarship">
-        <div class="tab-list">
-            <label for="profile" class="profile">PROFILE</label>
-            <label for="scholarship" class="scholarship">SCHOLARSHIPS</label>
-            <div class="indicator"></div>
+        <!--FIRST TAB-->
+        <div class="active">
+            <h4>Scholarships</h4>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis suscipit repellat, esse tempore ipsum quae placeat molestias ipsam totam hic modi alias, possimus a accusamus soluta facere enim nobis beatae!</p>
         </div>
-        <div class="category-content">
-            <div class="profile-picture-container">
-                {{request.scholarprofile.profile_pic}}
+        <!--SECOND TAB-->
+        <div class="">
+            <h4>Profile</h4>
+            <div>
+                {{request.user.profile.profile_pic}}
             </div>
-            <div class="personal-container">
-                <h3>{{request.scholarprofile.fname}} {{request.scholarprofile.lname}}</h3>
-                <a href="{% url 'edit' %}" class="btn-transparent">edit profile</a>
-                <h2>Profile</h2>
+            <div>
+                {{request.user.profile.fname}}{{request.user.profile.middle_name}}{{request.user.profile.lname}}
+            </div>
+            <div>
+                <h5>About Me</h5>
                 <hr>
-                <p>{{request.scholarprofile.gender}}</p>
-                <p>{{request.scholarprofile.industry}}</p>
-                <p>{{request.scholarprofile.birthday}}</p>
-                <p>{{request.scholarprofile.bio}}</p>
+                {{request.user.profile.about}}
             </div>
-            <div class="contact-container">
-                <h2>Contact Information</h2>
+            <div>
+                <h5>Work Experience and Education</h5>
                 <hr>
-                <p>{{request.scholarprofile.phone}}</p>
-                <p>Country: {{request.scholarprofile.country}}</p>
-                <p>{{request.scholarprofile.municipality}}, {{request.scholarprofile.region}}, {{request.scholarprofile.province}}</p>
+                {{request.user.profile.about}}
+                {{request.user.employment.experience}} | {{request.user.employment.employ_status}}
+                Education Level | {{request.user.education.degree}}
             </div>
-            <div class="education-container">
-                <h2>Education Information</h2>
-                <hr>
-                <p>{{request.scholarprofile.degree}}</p>
-                <p>{{request.scholarprofile.university}}</p>
-                <p>{{request.scholarprofile.field}}</p>
+            <div>
+                <a href="{% url 'edit_profile' %}"> Edit Profile</a>
             </div>
-            <div class="employment-container">
-                <h2>Employment Information</h2>
-                <hr>
-                <p>{{request.scholarprofile.emp_status}}</p>
-                <p>{{request.scholarprofile.industry}}</p>
-                <p>{{request.scholarprofile.occupation}}</p>
-                <p>{{request.scholarprofile.exp_level}}</p>
-            </div>
-        </div>
+        </div>           
+         <!--THIRD TAB-->
+        <div class="">
+            <h4>Certificates and Badges</h4>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio labore, excepturi assumenda quo mollitia dignissimos odit beatae illo. Error, velit molestiae repellat dolore explicabo facilis harum qui rem libero deleniti.</p>
+        </div>        
     </div>
 </div>
+<script>
+    let tabs = document.querySelectorAll(".tabs h3");
+    let tabContents = document.querySelectorAll(".tab-content div");
+
+    tabs.forEach((tab,index) => {
+        tab.addEventListener("click", () => {
+            tabContents.forEach((content) =>{
+                content.classList.remove("active");
+            });
+            tabs.forEach((tab) => {
+                tab.classList.remove("active");
+            });
+            tabContents[index].classList.add("active");
+            tabs[index].classList.add("active");
+        })
+    })
+</script>
 {% endblock %}
