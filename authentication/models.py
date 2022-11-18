@@ -40,11 +40,6 @@ class Profile(models.Model):
     phone = models.IntegerField(null=True)
     details_privacy = models.CharField(max_length=200, null=True)
     last_modified= models.DateField(null=True)
-    user_id = models.ForeignKey(
-        User, 
-        on_delete=models.CASCADE, 
-        null=True
-    )
     class Meta:
         # ordering = ['order']
         verbose_name_plural = "Profiles"
