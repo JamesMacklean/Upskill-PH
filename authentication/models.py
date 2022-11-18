@@ -117,7 +117,7 @@ class PartnerAdmin(models.Model):
 
 class Program(models.Model):
     id = models.AutoField(primary_key=True, auto_created=True)
-    name = models.CharField(max_field=255, null=True)
+    name = models.CharField(max_length=255, null=True)
     url= models.URLField(null=True)
     image_url= models.URLField(null=True)
     partner_id = models.ForeignKey(
