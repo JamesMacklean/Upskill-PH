@@ -16,27 +16,23 @@
         <!--SECOND TAB-->
         <div class="">
             <h4>Profile</h4>
-            <div>
                 {{request.user.profile.profile_pic}}
-            </div>
-            <div>
+
                 {{request.user.profile.fname}}{{request.user.profile.middle_name}}{{request.user.profile.lname}}
-            </div>
-            <div>
+                <br>
                 <h5>About Me</h5>
                 <hr>
+                <br>
                 {{request.user.profile.about}}
-            </div>
-            <div>
                 <h5>Work Experience and Education</h5>
                 <hr>
                 {{request.user.profile.about}}
                 {{request.user.employment.experience}} | {{request.user.employment.employ_status}}
+                <br>
                 Education Level | {{request.user.education.degree}}
-            </div>
-            <div>
+                <br>
                 <a href="{% url 'edit' %}"> Edit Profile</a>
-            </div>
+            
         </div>           
          <!--THIRD TAB-->
         <div class="">
