@@ -467,51 +467,64 @@ a.gg:hover i{
 /* TABS */
 
 .tab-container{
-    padding: 40px 50px 40px 40px;
-    width: 950px;
+    background-color: #fff;
+    width: 180vmin;
+    font-size: 16px;
+    min-width: 30em;
+    top: 50%;
+    left: 50%;
+    display: grid;
+    grid-template-columns: 2fr 10fr;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
 }
-.tab-container .tab-content .tab-list{
+.tabs h3{
+    padding: 10px;
+    cursor: pointer;
+}
+.tabs{
     display: flex;
     flex-direction: column;
-    width: 200px;
     position: relative;
+    background-color: #eeee;
+    padding: 10px;
 }
-.tab-container .tab-content .tab-list label{
-    height: 60px;
-    font-size: 22px;
-    font-weight: 500;
-    cursor: pointer;
-    /*background-color: #f15a25;*/
-    line-height: 60px;
-    padding-left: 10px;
-    z-index: 12;
-    transition: all 0.4s ease;
+.tab-container h3{
+    display: grid;
+    place-items: right;
+    font-size: 1.2rem;
+    font-weight: 600;
 }
-.tab-container .tab-content .tab-list label:hover{
-    color: #f15a25;
+.tab-content{
+    background-color: rgb(195, 195, 195);
+    padding: 1em 1.5em;
 }
-.tab-container .indicator{
+.tab-content h4{
+    font-size: 1.8em;
+    margin-bottom: 0.5em;
+}
+/* .tab-content:before{
+    content: '';
     position: absolute;
-    height: 60px;
-    width: 100%;
-    left: 0;
-    top: 0;
+    top: 20px;
+    left: 270px;
+    width: 20px;
+    height: 20px;
+    background: rgb(195, 195, 195);
+    transform: rotate(45deg);
+} */
+.tab-content p{
+    text-align: justify;
+    line-height: 1.9;
+    letter-spacing: 0.4px;
+}
+.tab-content div{
+    display: none;
+}
+.tab-content .active{
+    display: block;
+}
+.tabs .active{
     background-color: #f15a25;
-    border-radius: 10px;
-}
-#profile:checked ~ .tab-list .profile, #scholarship:checked ~ .tab-list .scholarship{
     color: #fff;
-}
-#profile:checked ~ .tab-list .indicator{
-    top: 0;
-}
-#scholarship:checked ~ .tab-list .indicator{
-    top: 60px;
-}
-.tab-container input[type="radio"]{
-    display: none;   
-}
-.tab-container .tab-content{
-    display: flex;
-    justify-content: space-between;
+    border-radius: 15px;
 }
