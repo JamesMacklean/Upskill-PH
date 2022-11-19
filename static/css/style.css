@@ -520,16 +520,6 @@ a.gg:hover i {
   margin-bottom: 0.5em;
 }
 
-/* .tab-content:before{
-    content: '';
-    position: absolute;
-    top: 20px;
-    left: 270px;
-    width: 20px;
-    height: 20px;
-    background: rgb(195, 195, 195);
-    transform: rotate(45deg);
-} */
 .tab-content p {
   text-align: justify;
   line-height: 1.9;
