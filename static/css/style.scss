@@ -466,7 +466,7 @@ a.gg:hover i{
 
 /* TABS */
 
-.tab-container{
+div.tab-container{
     background-color: #fff;
     width: 180vmin;
     font-size: 16px;
@@ -477,43 +477,43 @@ a.gg:hover i{
     grid-template-columns: 2fr 10fr;
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
 }
-.tabs h3{
+div.tabs h3{
     padding: 10px;
     cursor: pointer;
 }
-.tabs{
+div.tabs{
     display: flex;
     flex-direction: column;
     position: relative;
     background-color: #eeee;
     padding: 10px;
 }
-.tab-container h3{
+div.tab-container h3{
     display: grid;
     place-items: right;
     font-size: 1.2rem;
     font-weight: 600;
 }
-.tab-content{
+div.tab-content{
     background-color: rgb(195, 195, 195);
     padding: 1em 1.5em;
 }
-.tab-content h4{
+div.tab-content h4{
     font-size: 1.8em;
     margin-bottom: 0.5em;
 }
-.tab-content p{
+div.tab-content p{
     text-align: justify;
     line-height: 1.9;
     letter-spacing: 0.4px;
 }
-.tab-content div{
+div.tab-content div{
     display: none;
 }
-.tab-content .active{
+div.tab-content .active{
     display: block;
 }
-.tabs .active{
+div.tabs .active{
     background-color: #f15a25;
     color: #fff;
     border-radius: 15px;
