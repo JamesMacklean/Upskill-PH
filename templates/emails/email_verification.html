@@ -31,9 +31,9 @@
             <br />
         </p>
             {% comment %} DEVELOPMENT CODE {% endcomment %}
-            <a href=http://127.0.0.1:8000{% url 'verify_account' username=username user_hash=user_hash %}>Verify Your Account</a>
+            {% comment %} <a href=http://127.0.0.1:8000{% url 'verify_account' user_hash=user_hash %}>Verify Your Account</a> {% endcomment %}
             {% comment %} PRODUCTION CODE {% endcomment %}
-            {% comment %} <a href={{ domain }}{% url 'verify_account' username=username user_hash=user_hash %}>Verify Your Account</a> {% endcomment %}
+            <a href={{ domain }}{% url 'verify_account' username=username user_hash=user_hash %}>Verify Your Account</a>
     </td>
 </tr>
 </table>

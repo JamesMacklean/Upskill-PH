@@ -9,15 +9,17 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.template.loader import render_to_string
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes, force_str
-from . tokens import generate_token
 from scholarium.info import *
 from django.contrib.auth.decorators import login_required
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from rest_framework.exceptions import AuthenticationFailed
 
 from . models import ScholarProfile
 from .forms import *
 
 import os
-import requests, ast
+import requests, ast, jwt
 
 def home(request):
     return render(request,"index.html")
@@ -45,9 +47,10 @@ def success(request):
         EMAIL_HOST_USER, 
         
         # PRODUCTION CODE
-        # [email], 
+        [email], 
+        
         # DEVELOPMENT CODE
-        [TEST_EMAIL_RECEIVER],
+        # [TEST_EMAIL_RECEIVER],
 
         html_message=html,
         fail_silently=False
@@ -87,7 +90,7 @@ def signup(request):
     try:
         if request.method == "POST":
             username = request.POST['username']
-            password = request.POST['password']
+            # password = request.POST['password']
             email= request.POST['email']
             firstname= request.POST['firstname']
             lastname= request.POST['lastname']
@@ -104,39 +107,30 @@ def signup(request):
                 request.session['email'] = email
                 request.session['first_name'] = firstname
                 request.session['last_name'] = lastname
+                
+                # myuser = User.objects.create_user(username, email, password)
+                # myuser.first_name = firstname
+                # myuser.last_name = lastname
+                # myuser.save()
+                
+                # ScholarProfile.objects.create(
+                # user = myuser,
+                # fname = myuser.first_name,
+                # lname = myuser.last_name,
+                # )
+                
                 return redirect('success')
             else:
                 # LAGYAN ITO NG MESSAGE BOX NA NAGSASABI NG ERROR MESSAGE
                 print ("ERROR:", response_message)
                 return render(request, "authentication/signup.html")
-            
-            ############################## FOR DJANGO ##############################
-            # if User.objects.filter(username=username):
-            #     messages.error(request, "username already exists")
-            
-            # if User.objects.filter(email=email):
-            #     messages.error(request, "email already exists")
 
-            # myuser = User.objects.create_user(username, email, password)
-            # myuser.first_name = firstname
-            # myuser.last_name = lastname
-            
-            # myuser.save()
-            
-            # ScholarProfile.objects.create(
-            # user = myuser,
-            # fname = myuser.first_name,
-            # lname = myuser.last_name
-            # )
-            
-            # return redirect('success')
-            ############################## FOR DJANGO ##############################
-            
         return render(request, "authentication/signup.html")
     
     except Exception as e:
         print(str(e))
         return render(request, "authentication/signup.html")
+    
 def signin(request):
 
     def login_account (username, password):
@@ -151,50 +145,71 @@ def signin(request):
         response = requests.request("POST", API_LOGIN_ACCOUNT_URL, headers=headers, data=payload, files=files)        
         response_dict = ast.literal_eval(response.text)
         
+        print(response.text)
+        
         if 'data' in response_dict:
             for data in response_dict['data']:
                 user_token = data.get("token")
                 expires = data.get("expires")
                 response_message = "Successfully Logged In!"
+            
         else:
             user_token = ''
             expires = ''
-            response_message = response_dict.get("error")      
-
-        return user_token, expires, response_message
+            response_message = response_dict.get("error")
         
+        return user_token, expires, response_message
+    
+    context = {}
+    
     if request.method == "POST":
         username = request.POST['username']
         password = request.POST['password']
 
-        user_token, expries, response_message = login_account(username, password)
+        user_token, expires, response_message = login_account(username, password)
         
-        
-
         if user_token != '':
+            
+            # COMMAND TO PUT USER_TOKEN INTO SESSIONS
+            request.session['user_token'] = user_token
+            request.session.modified = True
+            
+            # PUT JWT TOKEN TO COOKIES
+            response = Response()
+            response.set_cookie(key='jwt',value=user_token, httponly=True)
+            response.data = {
+                'jwt': user_token
+            }
+            
+            print('COOKIE RESPONSE:', response.data)
+            
+            # DISPLAY SESSION ITEMS
+            # counter = 0
+            # for item in request.session.items():
+            #     counter = counter + 1
+            #     print("ITEM",counter, ":", item)
+                
             # user = authenticate(username=username, password=password)
             # login(request, user)
             # firstname = user.first_name
-            print(user_token, expries, response_message)
-            # return render(request, "authentication/dashboard.html", {'first_name': firstname})            
-            return render(request, "authentication/dashboard.html", {'first_name': username})            
+            
+            # user = User.objects.filter(username=username).first()
+            # if user is None:
+            #     raise AuthenticationFailed('User does not exist.')
+            
+            # if not user.check_password(password):
+            #     raise AuthenticationFailed('Invalid Password.')
+            
+            context['username'] = username
+            context['expires'] = expires
+            context['user_token'] = user_token
+                  
+            return render(request, "authentication/dashboard.html", context)            
+        
         else:
             # LAGYAN ITO NG MESSAGE BOX NA NAGSASABI NG ERROR MESSAGE
             print ("ERROR:", response_message)
             return render(request, "authentication/signin.html")
-
-        ############################## FOR DJANGO ##############################
-        # user = authenticate(username=username, password=password)
-
-        # if user is not None:
-        #     login(request, user)
-        #     firstname = user.first_name
-        #     return render(request, "authentication/dashboard.html", {'first_name': firstname})
-
-        # else: 
-        #     messages.error(request, "Invalid username/password")
-        #     return redirect('home')
-        ############################## FOR DJANGO ##############################
 
     return render(request, "authentication/signin.html")
 
@@ -203,7 +218,7 @@ def signout(request):
     messages.success(request, "Logged out successfully")
     return redirect('home')
 
-def verify_account(request, username, user_hash):
+def verify_account(request, user_hash):
     
     def verify(user_hash):
         
@@ -215,7 +230,6 @@ def verify_account(request, username, user_hash):
 
         response = requests.request("PUT", os.path.join(API_VERIFY_ACCOUNT_URL, user_hash), headers=headers, data=payload, files=files)
         
-
         response_dict = ast.literal_eval(response.text)
         
         if 'data' in response_dict:
@@ -249,6 +263,7 @@ def verify_account(request, username, user_hash):
 
 @login_required(login_url='signin')
 def profile(request):
+    
     return render(request, "profile.html")
 
 @login_required(login_url='signin')
@@ -295,3 +310,21 @@ def edit_profile(request):
 
 
     return render(request, "edit_profile.html", context)
+
+class DashboardView(APIView):
+    def get(self, request):
+        # user_token = request.COOKIES.get('jwt')
+        user_token = request.session['user_token']
+        print("USER TOKEN:", user_token)
+        
+        if not user_token:
+            raise AuthenticationFailed('Unauthenticated!')
+        
+        try:
+            payload = jwt.decode(user_token, API_SECRET_KEY, algorithms=['HS256'])
+        except jwt.ExpiredSignatureError:
+            raise AuthenticationFailed('Unauthenticated!')
+        
+        print("PAYLOAD:", payload)
+        
+        return Response(payload)

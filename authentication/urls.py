@@ -2,6 +2,7 @@ from unicodedata import name
 from django.contrib import admin
 from django.urls import path,include
 from . import views
+from .views import DashboardView
 
 urlpatterns = [
     path('',views.home, name="home"),
@@ -9,7 +10,8 @@ urlpatterns = [
     path('signin',views.signin, name="signin"),
     path('signout',views.signout, name="signout"),
     path('success', views.success, name="success"),
-    path('verify/<username>/<user_hash>', views.verify_account, name="verify_account"),
+    path('verify/<user_hash>', views.verify_account, name="verify_account"),
     path('profile', views.profile, name="profile"),
-    path('edit', views.edit_profile, name="edit")
+    path('edit', views.edit_profile, name="edit"),
+    path('dashboard', DashboardView.as_view(), name="dashboard"),
 ]
