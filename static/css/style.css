@@ -526,7 +526,7 @@ div.tab-content p {
   letter-spacing: 0.4px;
 }
 
-div.tab-content div.tab {
+div.tab-content .tab {
   display: none;
 }
 

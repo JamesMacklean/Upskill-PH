@@ -27,7 +27,7 @@
                 <li><a href="{% url 'signout' %}">Sign out</a></li>
             </ul>
         </div>
-        {% elif user.group == "partner" and user.group == "scholar"%}
+    {% elif user.group == "partner" and user.group == "scholar"%}
         <div class="icons">
             {{ request.user }} <a href="#" class="user-dropdown" onclick="submenuToggle()"><i class="fa fa-caret-down"></i></a>
         </div>
