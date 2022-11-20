@@ -18,7 +18,7 @@
             <h4>Profile</h4>
                 {{request.user.profile.profile_pic}}
 
-                {{request.user.profile.fname}}{{request.user.profile.middle_name}}{{request.user.profile.lname}}
+                {{request.user.profile.fname}} &nbsp {{request.user.profile.middle_name}} &nbsp {{request.user.profile.lname}}
                 <br>
                 <h5>About Me</h5>
                 <hr>
@@ -26,7 +26,6 @@
                 {{request.user.profile.about}}
                 <h5>Work Experience and Education</h5>
                 <hr>
-                {{request.user.profile.about}}
                 {{request.user.employment.experience}} | {{request.user.employment.employ_status}}
                 <br>
                 Education Level | {{request.user.education.degree}}
