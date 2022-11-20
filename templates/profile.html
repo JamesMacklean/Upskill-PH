@@ -9,12 +9,39 @@
     </div>
     <div class="tab-content">
         <!--FIRST TAB-->
-        <div class="active">
+        <div class="tab active">
             <h4>Scholarships</h4>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis suscipit repellat, esse tempore ipsum quae placeat molestias ipsam totam hic modi alias, possimus a accusamus soluta facere enim nobis beatae!</p>
+            <div class="sub-tabs">
+                <h5 class="opentab">SCHOLARSHIPS</h5>
+                <h5>IN PROGRESS</h5>
+            </div>
+            <div class="sub-tab-content">
+                <div class="subtab opentab">
+                    <div class="card-wrapper">
+                        <div class="card-container">
+                            <div class="card-image"></div>
+                            <div class="card-badge"></div>
+                            <div class="card-content">
+                                <div class="container-card-title">
+                                    <h2>Course Title 1</h2>
+                                    <p class="card-title-content">
+                                        course number <br>
+                                        start date
+                                    </p>
+                                    <p class="card-footer">
+                                        registration end date
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="subtab">
+
+                </div>
         </div>
         <!--SECOND TAB-->
-        <div class="">
+        <div class="tab">
             <h4>Profile</h4>
                 {{request.user.profile.profile_pic}}
 
@@ -34,7 +61,7 @@
             
         </div>           
          <!--THIRD TAB-->
-        <div class="">
+        <div class="tab">
             <h4>Certificates and Badges</h4>
         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio labore, excepturi assumenda quo mollitia dignissimos odit beatae illo. Error, velit molestiae repellat dolore explicabo facilis harum qui rem libero deleniti.</p>
         </div>        
@@ -42,7 +69,10 @@
 </div>
 <script>
     let tabs = document.querySelectorAll(".tabs h3");
-    let tabContents = document.querySelectorAll(".tab-content div");
+    let tabContents = document.querySelectorAll(".tab-content .tab");
+
+    let subTabs = document.querySelectorAll(".sub-tabs h5");
+    let subTabContents = document.querySelectorAll(".sub-tab-content .subtab");
 
     tabs.forEach((tab,index) => {
         tab.addEventListener("click", () => {
@@ -54,6 +84,19 @@
             });
             tabContents[index].classList.add("active");
             tabs[index].classList.add("active");
+        })
+    })
+
+    subTabs.forEach((subtab,index) => {
+        subtab.addEventListener("click", () => {
+            subTabContents.forEach((subcontent) =>{
+                subcontent.classList.remove("opentab");
+            });
+            subTabs.forEach((subtab) => {
+                subtab.classList.remove("opentab");
+            });
+            subTabContents[index].classList.add("opentab");
+            subTabs[index].classList.add("opentab");
         })
     })
 </script>

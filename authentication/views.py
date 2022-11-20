@@ -106,6 +106,10 @@ def profile(request):
     return render(request, "profile.html",context)
 
 @login_required(login_url='signin')
+def partner(request):
+    return render(request, "partner_dashboard.html")
+
+@login_required(login_url='signin')
 def edit_profile(request):
     user = request.user
     form = ProfileForm(instance=user)

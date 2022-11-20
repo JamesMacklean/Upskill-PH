@@ -507,7 +507,7 @@ div.tab-content p{
     line-height: 1.9;
     letter-spacing: 0.4px;
 }
-div.tab-content div{
+div.tab-content div.tab{
     display: none;
 }
 div.tab-content .active{
@@ -517,4 +517,52 @@ div.tabs .active{
     background-color: #f15a25;
     color: #fff;
     border-radius: 15px;
+}
+
+div.sub-tabs{
+    display: flex;
+    margin: 20px 0;
+}
+div.sub-tabs h5{
+    margin-right: 20px;
+}
+div.sub-tab-content .subtab{
+    display: none;
+}
+div.sub-tab-content .opentab{
+    display: flex;
+}
+h5.opentab{
+    text-decoration: underline #f15a25 3px;
+}
+
+/* CARDS */
+div.card-container {
+    border: lightgray solid 1px;
+    width: 250px !important;
+    height: 350px !important;
+    background-color: #fff;
+}
+div.card-image {
+    height: 150px;
+    background-size: cover;
+}
+div.card-badge{
+    display: flex;
+    max-width: 82px;
+}
+div.container-card-title h2{
+    text-align: left;
+    color: #f15a25;
+    padding: 15px;
+    font-weight: 500;
+}
+div.container-card-title .card-title-content{
+    text-align: left;
+    padding: 15px;
+    line-height: 1;
+}
+div.container-card-title .card-footer{
+    padding: 35px 15px;
+    color: #f15a25;
 }
