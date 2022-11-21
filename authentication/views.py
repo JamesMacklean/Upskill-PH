@@ -47,10 +47,10 @@ def success(request):
         EMAIL_HOST_USER, 
         
         # PRODUCTION CODE
-        [email], 
+        # [email], 
         
         # DEVELOPMENT CODE
-        # [TEST_EMAIL_RECEIVER],
+        [TEST_EMAIL_RECEIVER],
 
         html_message=html,
         fail_silently=False
