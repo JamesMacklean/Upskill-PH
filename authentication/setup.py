@@ -1,11 +1,5 @@
-# -*- coding: utf-8 -*-
-#
-# Imports ###########################################################
-
 import os
 from setuptools import setup, find_packages
-
-# Main ##############################################################
 
 setup(
     name='authentication',
