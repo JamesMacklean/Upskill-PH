@@ -248,7 +248,7 @@ def verify_account(request, user_hash):
         
         context['response_message'] = response_message
         context['password'] = password
-        
+        context['domain'] = DOMAIN
         if password != '':
             print(password)
             print ("SUCCESS:", response_message)

@@ -10,16 +10,15 @@ TEST_EMAIL_RECEIVER = 'jamesmacklean27@gmail.com'
 # API
 
 # PRODUCTION CODE
-API_TOKEN = 'TMTG tujyBpbgtum3xcctFvXZgr4ZnaRsddVRpvkwJuq8B3KEwfd4BZQtrRaj5r4vdtDm'
+# API_TOKEN = 'TMTG tujyBpbgtum3xcctFvXZgr4ZnaRsddVRpvkwJuq8B3KEwfd4BZQtrRaj5r4vdtDm'
 # DEVELOPMENT CODE
-# API_TOKEN = 'LOC_TEST b3vg5vz5t6QJqRccTTysUtaYzF9bmUUrZXDNP54hxyF3Nr6azNdmAHXRrYjSQXA5'
-
+API_TOKEN = 'LOC_TEST b3vg5vz5t6QJqRccTTysUtaYzF9bmUUrZXDNP54hxyF3Nr6azNdmAHXRrYjSQXA5'
 
 API_CREATE_ACCOUNT_URL = "https://scholarium.tmtg-clone.click/api/user/create"
 API_VERIFY_ACCOUNT_URL = "https://scholarium.tmtg-clone.click/api/user/verify/"
 API_LOGIN_ACCOUNT_URL = "https://scholarium.tmtg-clone.click/api/login"
 API_SECRET_KEY = "5af375913e149630a4dd18e2ac1548cf9bdcde9c9e03eb24e1a1f3cb5e540c4a"
-
+DOMAIN = 'scholarium.io'
 
 # Engr_James
 # e84c2f7ab568bbf073ec619aee9bb0d189651e05
