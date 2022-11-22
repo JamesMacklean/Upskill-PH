@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="tab-container">
+    <div class="tabs">
+        <h3 class="active">PARTNER DASHBOARD</h3>
+        <h3>SCHOLARSHIP PROGRAMS</h3>
+        <h3>SCHOLARSHIP APPLICATIONS</h3>
+        <h3>SCHOLARS</h3>
+    </div>
+    <div class="tab-content">
+        <!--FIRST TAB-->
+        <div class="tab active">
+            <h4>Scholarships</h4>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis suscipit repellat, esse tempore ipsum quae placeat molestias ipsam totam hic modi alias, possimus a accusamus soluta facere enim nobis beatae!</p>
+        </div>
+        <!--SECOND TAB-->
+        <div class="tab">
+            <h4>Profile</h4>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio labore, excepturi assumenda quo mollitia dignissimos odit beatae illo. Error, velit molestiae repellat dolore explicabo facilis harum qui rem libero deleniti.</p>
+        </div>           
+         <!--THIRD TAB-->
+        <div class="tab">
+            <h4>Certificates and Badges</h4>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio labore, excepturi assumenda quo mollitia dignissimos odit beatae illo. Error, velit molestiae repellat dolore explicabo facilis harum qui rem libero deleniti.</p>
+        </div>
+        <!--FOURTH TAB-->
+        <div class="tab">
+            <h4>Certificates and Badges</h4>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio labore, excepturi assumenda quo mollitia dignissimos odit beatae illo. Error, velit molestiae repellat dolore explicabo facilis harum qui rem libero deleniti.</p>
+        </div>
+    </div>
+</div>
+<script>
+    let tabs = document.querySelectorAll(".tabs h3");
+    let tabContents = document.querySelectorAll(".tab-content .tab");
+
+    tabs.forEach((tab,index) => {
+        tab.addEventListener("click", () => {
+            tabContents.forEach((content) =>{
+                content.classList.remove("active");
+            });
+            tabs.forEach((tab) => {
+                tab.classList.remove("active");
+            });
+            tabContents[index].classList.add("active");
+            tabs[index].classList.add("active");
+        })
+    })
+</script>
+{% endblock %}

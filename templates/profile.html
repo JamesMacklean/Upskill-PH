@@ -2,51 +2,102 @@
 {% load static %}
 {% block content %}
 <div class="tab-container">
+    <div class="tabs">
+        <h3 class="active">SCHOLARSHIPS</h3>
+        <h3>PROFILES</h3>
+        <h3>CERTS AND BADGES</h3>
+    </div>
     <div class="tab-content">
-        <input type="radio" name="indicator" id="profile" checked >
-        <input type="radio" name="indicator" id="scholarship">
-        <div class="tab-list">
-            <label for="profile" class="profile">PROFILE</label>
-            <label for="scholarship" class="scholarship">SCHOLARSHIPS</label>
-            <div class="indicator"></div>
+        <!--FIRST TAB-->
+        <div class="tab active">
+            <h4>Scholarships</h4>
+            <div class="sub-tabs">
+                <h5 class="opentab">SCHOLARSHIPS</h5>
+                <h5>IN PROGRESS</h5>
+            </div>
+            <div class="sub-tab-content">
+                <div class="subtab opentab">
+                    <div class="card-wrapper">
+                        <div class="card-container">
+                            <div class="card-image"></div>
+                            <div class="card-badge"></div>
+                            <div class="card-content">
+                                <div class="container-card-title">
+                                    <h2>Course Title 1</h2>
+                                    <p class="card-title-content">
+                                        course number <br>
+                                        start date
+                                    </p>
+                                    <p class="card-title-footer">
+                                        registration end date
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="subtab">
+
+                </div>
         </div>
-        <div class="category-content">
-            <div class="profile-picture-container">
-                {{request.scholarprofile.profile_pic}}
-            </div>
-            <div class="personal-container">
-                <h3>{{request.scholarprofile.fname}} {{request.scholarprofile.lname}}</h3>
-                <a href="{% url 'edit' %}" class="btn-transparent">edit profile</a>
-                <h2>Profile</h2>
+        <!--SECOND TAB-->
+        <div class="tab">
+            <h4>Profile</h4>
+                {{request.user.profile.profile_pic}}
+
+                {{request.user.profile.fname}} &nbsp {{request.user.profile.middle_name}} &nbsp {{request.user.profile.lname}}
+                <br>
+                <h5>About Me</h5>
                 <hr>
-                <p>{{request.scholarprofile.gender}}</p>
-                <p>{{request.scholarprofile.industry}}</p>
-                <p>{{request.scholarprofile.birthday}}</p>
-                <p>{{request.scholarprofile.bio}}</p>
-            </div>
-            <div class="contact-container">
-                <h2>Contact Information</h2>
+                <br>
+                {{request.user.profile.about}}
+                <h5>Work Experience and Education</h5>
                 <hr>
-                <p>{{request.scholarprofile.phone}}</p>
-                <p>Country: {{request.scholarprofile.country}}</p>
-                <p>{{request.scholarprofile.municipality}}, {{request.scholarprofile.region}}, {{request.scholarprofile.province}}</p>
-            </div>
-            <div class="education-container">
-                <h2>Education Information</h2>
-                <hr>
-                <p>{{request.scholarprofile.degree}}</p>
-                <p>{{request.scholarprofile.university}}</p>
-                <p>{{request.scholarprofile.field}}</p>
-            </div>
-            <div class="employment-container">
-                <h2>Employment Information</h2>
-                <hr>
-                <p>{{request.scholarprofile.emp_status}}</p>
-                <p>{{request.scholarprofile.industry}}</p>
-                <p>{{request.scholarprofile.occupation}}</p>
-                <p>{{request.scholarprofile.exp_level}}</p>
-            </div>
-        </div>
+                {{request.user.employment.experience}} | {{request.user.employment.employ_status}}
+                <br>
+                Education Level | {{request.user.education.degree}}
+                <br>
+                <a href="{% url 'edit' %}"> Edit Profile</a>
+            
+        </div>           
+         <!--THIRD TAB-->
+        <div class="tab">
+            <h4>Certificates and Badges</h4>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio labore, excepturi assumenda quo mollitia dignissimos odit beatae illo. Error, velit molestiae repellat dolore explicabo facilis harum qui rem libero deleniti.</p>
+        </div>        
     </div>
 </div>
+<script>
+    let tabs = document.querySelectorAll(".tabs h3");
+    let tabContents = document.querySelectorAll(".tab-content .tab");
+
+    let subTabs = document.querySelectorAll(".sub-tabs h5");
+    let subTabContents = document.querySelectorAll(".sub-tab-content .subtab");
+
+    tabs.forEach((tab,index) => {
+        tab.addEventListener("click", () => {
+            tabContents.forEach((content) =>{
+                content.classList.remove("active");
+            });
+            tabs.forEach((tab) => {
+                tab.classList.remove("active");
+            });
+            tabContents[index].classList.add("active");
+            tabs[index].classList.add("active");
+        })
+    })
+
+    subTabs.forEach((subtab,index) => {
+        subtab.addEventListener("click", () => {
+            subTabContents.forEach((subcontent) =>{
+                subcontent.classList.remove("opentab");
+            });
+            subTabs.forEach((subtab) => {
+                subtab.classList.remove("opentab");
+            });
+            subTabContents[index].classList.add("opentab");
+            subTabs[index].classList.add("opentab");
+        })
+    })
+</script>
 {% endblock %}

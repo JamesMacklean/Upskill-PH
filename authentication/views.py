@@ -15,8 +15,9 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.exceptions import AuthenticationFailed
 
-from . models import ScholarProfile
+from .models import *
 from .forms import *
+from .decorators import *
 
 import os
 import requests, ast, jwt
@@ -113,7 +114,7 @@ def signup(request):
                 # myuser.last_name = lastname
                 # myuser.save()
                 
-                # ScholarProfile.objects.create(
+                # Profile.objects.create(
                 # user = myuser,
                 # fname = myuser.first_name,
                 # lname = myuser.last_name,
@@ -263,51 +264,22 @@ def verify_account(request, user_hash):
 
 @login_required(login_url='signin')
 def profile(request):
-    
-    return render(request, "profile.html")
+    user = request.user
+    form = ProfileForm(instance=user)
+    context = {'form':form}
+
+    return render(request, "profile.html",context)
+
+@login_required(login_url='signin')
+def partner(request):
+    return render(request, "partner_dashboard.html")
 
 @login_required(login_url='signin')
 def edit_profile(request):
     
     user = request.user
-    fname = request.user.first_name
-    lname = request.user.last_name
-    form = ScholarProfileForm(instance=user)
+    form = ProfileForm(instance=user)
     context = {'form':form}
-    
-    if request.method == 'POST':
-        middle_name = request.POST['middle_name']
-        profile_pic = request.POST['profile_pic']
-        emp_status = request.POST['emp_status']
-        industry = request.POST['industry']
-        employer = request.POST['employer']
-        occupation = request.POST['occupation']
-        exp_level = request.POST['exp_level']
-        degree = request.POST['degree']
-        university = request.POST['university']
-        field = request.POST['field']
-        
-        bio = request.POST['bio']
-        country = request.POST['country']
-        region =  request.POST['region']
-        province = request.POST['province']
-        municipality = request.POST['municipality']
-
-        social =  request.POST['social']
-        gender = request.POST['gender']
-        birthday =  request.POST['birthday']
-
-        phone = request.POST['phone']
-        details_privacy = request.POST['details_privacy']
-    
-        profile = ScholarProfile(user, fname, lname,
-                    middle_name, profile_pic, 
-                    emp_status, industry, employer, occupation, 
-                    exp_level, degree, university, field, bio, 
-                    country, region, province, municipality,
-                    social, gender, birthday, phone, details_privacy)
-        profile.save()
-
 
     return render(request, "edit_profile.html", context)
 

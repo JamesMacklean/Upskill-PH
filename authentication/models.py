@@ -1,10 +1,26 @@
+from email.mime import application
+from tabnanny import verbose
 from unicodedata import name
 from django.db import models
 from django.contrib.auth.models import User
 
 # Create your models here.
 
-class ScholarProfile(models.Model):
+# class User():
+#     id = models.AutoField(primary_key=True)
+#     username = 
+#     password 
+#     email 
+#     date_joined
+#     last_login
+#     hash 
+#     is_global
+#     is_admin
+#     is_staff
+#     status 
+
+class Profile(models.Model):
+    id = models.AutoField(primary_key=True)
     user = models.OneToOneField(
             User, null=True,
             on_delete=models.CASCADE)
@@ -12,32 +28,21 @@ class ScholarProfile(models.Model):
     fname = models.CharField(max_length=200, null=True)
     middle_name = models.CharField(max_length=200, null=True)
     lname = models.CharField(max_length=200, null=True)
-    profile_pic = models.ImageField(null=True, blank=True)
-    
-    emp_status = models.CharField(max_length=200, null=True)
-    industry = models.CharField(max_length=200, null=True)
-    employer = models.CharField(max_length=200, null=True)
-    occupation = models.CharField(max_length=200, null=True)
-    exp_level = models.CharField(max_length=200, null=True)
-    degree = models.CharField(max_length=200, null=True)
-    university = models.CharField(max_length=200, null=True)
-    field = models.CharField(max_length=200, null=True)
-    
-    bio = models.CharField(max_length=500, null=True)
+    profile_pic = models.ImageField(null=True, blank=True)    
+    about = models.CharField(max_length=500, null=True)
     country = models.CharField(max_length=200, null=True)
     region = models.CharField(max_length=200, null=True)
     province = models.CharField(max_length=200, null=True)
     municipality = models.CharField(max_length=200, null=True)
-
-    social = models.CharField(max_length=200, null=True)
     gender = models.CharField(max_length=200, null=True)
     birthday = models.DateTimeField(null=True)
-
+    social = models.CharField(max_length=200, null=True)
     phone = models.IntegerField(null=True)
     details_privacy = models.CharField(max_length=200, null=True)
+    last_modified= models.DateField(null=True)
     class Meta:
         # ordering = ['order']
-        verbose_name_plural = "Scholar Profiles"
+        verbose_name_plural = "Profiles"
 
     def __str__(self):
         return self.user.username
@@ -62,44 +67,122 @@ class ScholarProfile(models.Model):
             lname = ""
         return lname
 
-# class education(models.Model):
-#     id = models.AutoField(primary_key=True)
-#     degree = models.CharField(max_length=2,null=True)
-#     school = models.CharField(max_length=200,null=True)
-#     study = models.CharField(max_length=200, null=True)
-#     last_modified = models.DateTimeField(null=True)
-#     user_id = #EDIT. ADD FOREIGN RELATION
+class Education(models.Model):
+    id = models.AutoField(primary_key=True)
+    degree = models.CharField(max_length=2,null=True)
+    school = models.CharField(max_length=200,null=True)
+    study = models.CharField(max_length=200, null=True)
+    last_modified = models.DateTimeField(null=True)
+    user_id = models.ForeignKey(
+        User, 
+        on_delete=models.CASCADE, 
+        null=True
+    )
 
-# class employment(models.Model):
-#     id = models.AutoField(primary_key=True)
-#     employ_status = models.CharField(max_length=255, null=True)
-#     industry = models.CharField(max_length=255, null=True)
-#     employer = models.CharField(max_length=255, null=True)
-#     occupation = models.CharField(max_length=255, null=True)
-#     experience = models.CharField(max_length=255, null=True)
-#     last_modified = models.DateTimeField(null=True)
-#     user_id = #EDIT. ADD RELATION TO OTHER TABLE
+class Employment(models.Model):
+    id = models.AutoField(primary_key=True)
+    employ_status = models.CharField(max_length=255, null=True)
+    industry = models.CharField(max_length=255, null=True)
+    employer = models.CharField(max_length=255, null=True)
+    occupation = models.CharField(max_length=255, null=True)
+    experience = models.CharField(max_length=255, null=True)
+    last_modified = models.DateTimeField(null=True)
+    user_id = models.ForeignKey(
+        User, 
+        on_delete=models.CASCADE, 
+        null=True
+    )
 
+class Partner(models.Model):
+    id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=255, null=True)
 
-# class partner(models.Model):
-#     id = models.AutoField(primary_key=True)
-#     name = models.CharField(max_field=255, null=True)
+class PartnerAdmin(models.Model):
+    id = models.AutoField(primary_key=True,auto_created=True)
+    name = models.CharField(max_length=255, null=True)
+    partner_id = models.ForeignKey(
+        Partner, 
+        null=True, 
+        on_delete=models.CASCADE,
+        related_name="partner_admin"
+        )
 
-# class parter_admin(models.Model):
-#     id = models.AutoField(primary_key=True,auto_created=True)
-#     name = models.CharField(max_field=255, null=True)
-#     partner_id = models.OneToOneField(partner, null=True, on_delete=models.CASCADE)
+class Program(models.Model):
+    id = models.AutoField(primary_key=True, auto_created=True)
+    name = models.CharField(max_length=255, null=True)
+    url= models.URLField(null=True)
+    image_url= models.URLField(null=True)
+    partner_id = models.ForeignKey(
+        Partner, 
+        null=True, 
+        on_delete=models.CASCADE
+        )
+class Scholar(models.Model):
+    id = models.AutoField(primary_key=True, auto_created=True)
+    partner_id = models.ForeignKey(
+        Partner, 
+        null=True, 
+        on_delete=models.CASCADE
+        )
+    is_verified = models.BooleanField(default=False)
+    photo_verification = models.URLField()
+    user_id = models.ForeignKey(
+        User, 
+        on_delete=models.CASCADE, 
+        null=True
+    )
+    status = models.BooleanField(null=True) 
 
-# class program(models.Model):
-#     id = models.AutoField(primary_key=True, auto_created=True)
-#     name = models.CharField(max_field=255, null=True)
-#     partner_id = models.OneToOneField(partner, null=True, on_delete=models.CASCADE)
+class Application(models.Model):
+    """
+    """
+    SHORTLIST = "SL"
+    WAITLIST = "WL"
+    APPROVED = "AP"
+    REJECTED = "RE"
+    STATUS_CHOICES = (
+        (SHORTLIST, "Shortlisted"),
+        (WAITLIST, "Waitlisted"),
+        (APPROVED, "Approved"),
+        (REJECTED, "Rejected")
+    )
+    id = models.AutoField(primary_key=True, auto_created=True)
+    profile = models.ForeignKey(
+        Profile,
+        on_delete=models.CASCADE,
+        related_name="applications",
+        verbose_name="Scholarium username"
+    )
+    program = models.ForeignKey(
+        Program,
+        null=True,
+        on_delete=models.CASCADE,
+        related_name="applications",
+        verbose_name="Program"
+    )
+    status = models.CharField(max_length=2, choices=STATUS_CHOICES, default=SHORTLIST)
+    class Meta:
+        verbose_name_plural = "Scholarship Applications"
 
-# class scholar(models.Model):
-#     id = models.AutoField(primary_key=True, auto_created=True)
-#     partner_id = models.OneToOneField(partner, null=True, on_delete=models.CASCADE)
-#     is_verified = models.BooleanField(default=False)
-#     photo_verification = 
-#     user_id = 
-#     status = 
+    def __str__(self):
+        return "{}: {}".format(self.profile.user.username, self.program.name)
 
+    def shortlist(self):
+        if self.status != self.SHORTLIST:
+            self.status = self.SHORTLIST
+            self.save()
+
+    def waitlist(self):
+        if self.status != self.WAITLIST:
+            self.status = self.WAITLIST
+            self.save()
+
+    def approve(self):
+        if self.status != self.APPROVED:
+            self.status = self.APPROVED
+            self.save()
+
+    def reject(self):
+        if self.status != self.REJECTED:
+            self.status = self.REJECTED
+            self.save()

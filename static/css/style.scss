@@ -466,52 +466,103 @@ a.gg:hover i{
 
 /* TABS */
 
-.tab-container{
-    padding: 40px 50px 40px 40px;
-    width: 950px;
+div.tab-container{
+    background-color: #fff;
+    height: 100vh;
+    font-size: 16px;
+    min-width: 30em;
+    top: 50%;
+    left: 50%;
+    display: grid;
+    grid-template-columns: 2fr 10fr;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
 }
-.tab-container .tab-content .tab-list{
+div.tabs h3{
+    padding: 10px;
+    cursor: pointer;
+}
+div.tabs{
     display: flex;
     flex-direction: column;
-    width: 200px;
     position: relative;
+    background-color: #eeee;
+    padding: 10px;
 }
-.tab-container .tab-content .tab-list label{
-    height: 60px;
-    font-size: 22px;
-    font-weight: 500;
-    cursor: pointer;
-    /*background-color: #f15a25;*/
-    line-height: 60px;
-    padding-left: 10px;
-    z-index: 12;
-    transition: all 0.4s ease;
+div.tab-container h3{
+    display: grid;
+    place-items: right;
+    font-size: 1.2rem;
+    font-weight: 600;
 }
-.tab-container .tab-content .tab-list label:hover{
-    color: #f15a25;
+div.tab-content{
+    background-color: rgb(195, 195, 195);
+    padding: 1em 1.5em;
 }
-.tab-container .indicator{
-    position: absolute;
-    height: 60px;
-    width: 100%;
-    left: 0;
-    top: 0;
+div.tab-content h4{
+    font-size: 1.8em;
+    margin-bottom: 0.5em;
+}
+div.tab-content p{
+    text-align: justify;
+    line-height: 1.9;
+    letter-spacing: 0.4px;
+}
+div.tab-content .tab{
+    display: none;
+}
+div.tab-content .active{
+    display: block;
+}
+div.tabs .active{
     background-color: #f15a25;
-    border-radius: 10px;
-}
-#profile:checked ~ .tab-list .profile, #scholarship:checked ~ .tab-list .scholarship{
     color: #fff;
+    border-radius: 15px;
 }
-#profile:checked ~ .tab-list .indicator{
-    top: 0;
-}
-#scholarship:checked ~ .tab-list .indicator{
-    top: 60px;
-}
-.tab-container input[type="radio"]{
-    display: none;   
-}
-.tab-container .tab-content{
+
+div.sub-tabs{
     display: flex;
-    justify-content: space-between;
+    margin: 20px 0;
+}
+div.sub-tabs h5{
+    margin-right: 20px;
+}
+div.sub-tab-content .subtab{
+    display: none;
+}
+div.sub-tab-content .opentab{
+    display: flex;
+}
+h5.opentab{
+    text-decoration: underline #f15a25 3px;
+}
+
+/* CARDS */
+div.card-container {
+    border: lightgray solid 1px;
+    width: 250px !important;
+    height: 350px !important;
+    background-color: #fff;
+}
+div.card-image {
+    height: 150px;
+    background-size: cover;
+}
+div.card-badge{
+    display: flex;
+    max-width: 82px;
+}
+div.container-card-title h2{
+    text-align: left;
+    color: #f15a25;
+    padding: 15px;
+    font-weight: 500;
+}
+div.container-card-title .card-title-content{
+    text-align: left;
+    padding: 15px;
+    line-height: 1;
+}
+div.container-card-title .card-title-footer{
+    padding: 35px 15px;
+    color: #f15a25;
 }
