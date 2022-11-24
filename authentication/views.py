@@ -1,5 +1,6 @@
 from multiprocessing import context
-from django.shortcuts import render, redirect
+from re import template
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
@@ -100,9 +101,23 @@ def activate(request, uidb64, token):
 @login_required(login_url='signin')
 def profile(request):
     user = request.user
-    form = ProfileForm(instance=user)
-    context = {'form':form}
 
+    program = Program.objects.filter(is_active=True)
+    available = []
+    ongoing = []
+
+    for group in program.groups.all().filter(is_active=True):
+        programs = {}
+        if group.type == "AB":
+            available.append(programs)
+        else:
+            ongoing.append(programs)
+
+    form = ProfileForm(instance=user)
+    context = {
+        'form':form,
+        'program':program,
+    }
     return render(request, "profile.html",context)
 
 @login_required(login_url='signin')
@@ -116,3 +131,15 @@ def edit_profile(request):
     context = {'form':form}
 
     return render(request, "edit_profile.html", context)
+
+@login_required(login_url='signin')
+def program(request, slug):
+    """"""
+    template_name = "scholar_program.html"
+    context = {}
+
+    program = get_object_or_404(Program, slug=slug)
+    
+    context['program']= program
+    context['partner_logos']= Program.objects.partner_logo
+    return render(request, template_name, context)
