@@ -136,10 +136,13 @@ def signup(request):
         response_dict = ast.literal_eval(response.text)
         ###################### https://scholarium.tmtg-clone.click/api/user/create ###################### 
         
+        print(response.text)
+        
         if 'data' in response_dict:
             for data in response_dict['data']:
                 response_message = data.get("success")
                 user_hash = data.get("hash")
+
         else:
             response_message = response_dict.get("error")
             user_hash = "invalid"         
@@ -205,12 +208,13 @@ def signin(request):
         print(response.text)
         ###################### https://scholarium.tmtg-clone.click/api/login ######################
         
+        
         if 'data' in response_dict:
             for data in response_dict['data']:
                 user_token = data.get("token")
                 expires = data.get("expires")
                 response_message = "Successfully Logged In!"
-            
+        
         else:
             user_token = ''
             expires = ''
@@ -305,6 +309,8 @@ def verify_account(request, user_hash):
         response_dict = ast.literal_eval(response.text)
         ###################### https://scholarium.tmtg-clone.click/api/user/verify/[args] ###################### 
         
+        print(response.text)
+        
         if 'data' in response_dict:
             for data in response_dict['data']:
                 response_message = data.get("success")
@@ -344,7 +350,7 @@ def profile(request):
     clear_session(request,'url')
     ########## LOGIN REQUIRED ##########
     
-    # context = {}
+    context = {}
 
     # user = request.user
 
@@ -397,9 +403,16 @@ def edit_profile(request):
 # @login_required(login_url='signin')
 def program(request, slug):
     """"""
-    template_name = "scholar_program.html"
+    template_name = "scholar_programs.html"
     context = {}
 
+    ########## LOGIN REQUIRED ##########
+    if not authenticate_user(request):
+        request.session['url'] = "program/"+slug
+        return HttpResponseRedirect('signin?next=program/'+slug)
+    clear_session(request,'url')
+    ########## LOGIN REQUIRED ##########
+    
     program = get_object_or_404(Program, slug=slug)
     
     context['program']= program

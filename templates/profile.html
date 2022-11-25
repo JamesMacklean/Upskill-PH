@@ -54,19 +54,18 @@
         <!--SECOND TAB-->
         <div class="tab">
             <h4>Profile</h4>
-                {{request.user.profile.profile_pic}}
-
-                {{request.user.profile.fname}} &nbsp {{request.user.profile.middle_name}} &nbsp {{request.user.profile.lname}}
+                {% comment %} {{request.user.profile.profile_pic}} {% endcomment %}
+                {% comment %} {{request.user.profile.fname}} &nbsp {{request.user.profile.middle_name}} &nbsp {{request.user.profile.lname}} {% endcomment %}
                 <br>
                 <h5>About Me</h5>
                 <hr>
                 <br>
-                {{request.user.profile.about}}
+                {% comment %} {{request.user.profile.about}} {% endcomment %}
                 <h5>Work Experience and Education</h5>
                 <hr>
-                {{request.user.employment.experience}} | {{request.user.employment.employ_status}}
+                {% comment %} {{request.user.employment.experience}} | {{request.user.employment.employ_status}} {% endcomment %}
                 <br>
-                Education Level | {{request.user.education.degree}}
+                {% comment %} Education Level | {{request.user.education.degree}} {% endcomment %}
                 <br>
                 <a href="{% url 'edit' %}"> Edit Profile</a>
         </div>   
