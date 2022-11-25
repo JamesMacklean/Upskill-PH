@@ -1,6 +1,4 @@
-from email.mime import application
-from tabnanny import verbose
-from unicodedata import name
+from django.urls import reverse
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -108,15 +106,65 @@ class PartnerAdmin(models.Model):
         )
 
 class Program(models.Model):
+    """
+    """
     id = models.AutoField(primary_key=True, auto_created=True)
     name = models.CharField(max_length=255, null=True)
     url= models.URLField(null=True)
     image_url= models.URLField(null=True)
+    partner_logo= models.URLField(null=True)
+    slug= models.SlugField(null=True)
+    course_number= models.PositiveSmallIntegerField(default=0)
+    description = models.TextField(blank=True, default="")
+    links = models.TextField(blank=True, default="")
+    start_date = models.DateField(null=True)
+    end_date = models.DateField(null=True)
+    group = models.ForeignKey(
+        'ProgramGroup',
+        on_delete= models.CASCADE,
+        null=True, blank=True,
+        related_name="programs"
+    )
     partner_id = models.ForeignKey(
         Partner, 
         null=True, 
         on_delete=models.CASCADE
         )
+    is_active = models.BooleanField(default=True)
+    class Meta:
+        verbose_name_plural = "Programs"
+    def get_absolute_url(self):
+        return reverse("program", kwargs={'slug': self.slug})
+    
+    def __str__(self):
+        return self.name
+class ProgramGroup(models.Model):
+    """
+    """
+    AVAILABLE = "AB"
+    ONGOING = "OG"
+    group_type= (
+        (AVAILABLE, "Available Programs"),
+        (ONGOING, "On Going"),
+    )
+    type = models.CharField(max_length=2, choices=group_type, default="AVAILABLE")
+    name = models.CharField(max_length=255, null=True, blank=True)
+    start_date = models.DateField(null=True, blank=True)
+    end_date = models.DateField(null=True, blank=True)
+    program = models.ForeignKey(
+        Program,
+        on_delete=models.CASCADE,
+        null=True, blank=True,
+        related_name="groups"
+    )
+    is_active= models.BooleanField(default=True)
+
+    class Meta:
+        verbose_name_plural = "Program Groups"
+    
+    def __str__(self):
+        return self.name or "{}: {}".format(self.program.name, self.type)
+
 class Scholar(models.Model):
     id = models.AutoField(primary_key=True, auto_created=True)
     partner_id = models.ForeignKey(

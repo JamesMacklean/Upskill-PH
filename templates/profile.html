@@ -15,31 +15,42 @@
                 <h5 class="opentab">SCHOLARSHIPS</h5>
                 <h5>IN PROGRESS</h5>
             </div>
+
             <div class="sub-tab-content">
                 <div class="subtab opentab">
                     <div class="card-wrapper">
-                        <div class="card-container">
-                            <div class="card-image"></div>
-                            <div class="card-badge"></div>
-                            <div class="card-content">
-                                <div class="container-card-title">
-                                    <h2>Course Title 1</h2>
-                                    <p class="card-title-content">
-                                        course number <br>
-                                        start date
-                                    </p>
-                                    <p class="card-title-footer">
-                                        registration end date
-                                    </p>
+                        {% for program in programs %}
+                        <a href="{% url 'program' slug=program.slug%}">
+                            <div class="card-container">
+                                <div class="card-image {{ program.slug }}_image">
+                                </div>
+                                <div class="card-partner-logo">
+                                    {% for logo in partner_logos %}
+                                    {{ logo }}
+                                    {% endfor %}
+                                </div>
+                                <div class="card-content">
+                                    <div class="container-card-title">
+                                        <h2>{{ program.name }}</h2>
+                                        <p class="card-title-content">
+                                            {{ program.course_number }} <br>
+                                            {{ program.start_date }}
+                                        </p>
+                                        <p class="card-title-footer">
+                                            {{program.end_date}}
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        </a>
+                        {% endfor %}
                     </div>
                 </div>
-                <div class="subtab">
 
-                </div>
-        </div>
+                <div class="subtab"> </div>
+            </div>
+        </div> 
+
         <!--SECOND TAB-->
         <div class="tab">
             <h4>Profile</h4>
@@ -58,13 +69,14 @@
                 Education Level | {{request.user.education.degree}}
                 <br>
                 <a href="{% url 'edit' %}"> Edit Profile</a>
-            
-        </div>           
+        </div>   
+
          <!--THIRD TAB-->
         <div class="tab">
             <h4>Certificates and Badges</h4>
         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio labore, excepturi assumenda quo mollitia dignissimos odit beatae illo. Error, velit molestiae repellat dolore explicabo facilis harum qui rem libero deleniti.</p>
         </div>        
+        </div>
     </div>
 </div>
 <script>
