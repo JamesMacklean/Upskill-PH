@@ -1,26 +1,75 @@
-from multiprocessing import context
 from django.shortcuts import render, redirect
-from django.contrib.auth.models import User
-from django.contrib import messages
-from django.contrib.auth import authenticate, login, logout
-from scholarium import settings
-from django.core.mail import EmailMessage, send_mail
-from django.contrib.sites.shortcuts import get_current_site
+from django.core.mail import send_mail
 from django.template.loader import render_to_string
-from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
-from django.utils.encoding import force_bytes, force_str
 from scholarium.info import *
-from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse, Http404, HttpResponseRedirect
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework.exceptions import AuthenticationFailed
 
 from .models import *
 from .forms import *
 from .decorators import *
 
-import os
-import requests, ast, jwt
+import os, requests, ast, jwt
+class SessionChecker(APIView):
+    def get(self, request):
+        
+        # CHECK IF USER IS AUTHENTICATED
+        try:            
+            
+            # user_token = request.COOKIES.get('jwt')    
+            try:    
+                user_token = request.session['user_token']
+                payload = jwt.decode(user_token, API_SECRET_KEY, algorithms=['HS256'])
+
+                # SAVE JWT PAYLOAD INTO SESSIONS
+                for key,value in payload.items():
+                    if key == 'data':
+                        for key,value in payload['data'].items():
+                            request.session[key] = value
+            
+                # DISPLAY SESSION ITEMS
+                for key, value in request.session.items():
+                    print('{}: {}'.format(key, value))
+                        
+                return Response(payload)
+                      
+            except jwt.ExpiredSignatureError:
+                # raise AuthenticationFailed('Unauthenticated!')
+                raise Http404
+            
+        except KeyError:
+            raise Http404
+
+def authenticate_user(request):
+    
+    try:
+        
+        # user_token = request.COOKIES.get('jwt')    
+        try:   
+            user_token = request.session['user_token'] 
+            payload = jwt.decode(user_token, API_SECRET_KEY, algorithms=['HS256'])
+        
+            # SAVE JWT PAYLOAD INTO SESSIONS
+            for key,value in payload.items():
+                if key == 'data':
+                    for key,value in payload['data'].items():
+                        request.session[key] = value   
+            return True
+        
+        except jwt.ExpiredSignatureError:
+            return False
+        
+    except KeyError:
+        return False
+    
+def clear_session(request,key):
+    
+    try:
+        del request.session[key]
+    except KeyError:
+        pass
+    return HttpResponse(key, "session data cleared")
 
 def home(request):
     return render(request,"index.html")
@@ -47,10 +96,9 @@ def success(request):
         'Content of the Message', 
         EMAIL_HOST_USER, 
         
-        # PRODUCTION CODE
+        ########## ORIGINAL CODE ##########
         # [email], 
-        
-        # DEVELOPMENT CODE
+        ########## FOR TEST CODE ##########
         [TEST_EMAIL_RECEIVER],
 
         html_message=html,
@@ -62,7 +110,9 @@ def success(request):
 
 def signup(request):
 
-    def create_account(username,firstname,lastname,email):     
+    def create_account(username,firstname,lastname,email):    
+        
+        ###################### https://scholarium.tmtg-clone.click/api/user/create ###################### 
         payload={
             'username': username,
             'first_name': firstname,
@@ -77,6 +127,7 @@ def signup(request):
 
         response = requests.request("POST", API_CREATE_ACCOUNT_URL, headers=headers, data=payload, files=files)
         response_dict = ast.literal_eval(response.text)
+        ###################### https://scholarium.tmtg-clone.click/api/user/create ###################### 
         
         if 'data' in response_dict:
             for data in response_dict['data']:
@@ -91,7 +142,6 @@ def signup(request):
     try:
         if request.method == "POST":
             username = request.POST['username']
-            # password = request.POST['password']
             email= request.POST['email']
             firstname= request.POST['firstname']
             lastname= request.POST['lastname']
@@ -109,15 +159,11 @@ def signup(request):
                 request.session['first_name'] = firstname
                 request.session['last_name'] = lastname
                 
-                # myuser = User.objects.create_user(username, email, password)
-                # myuser.first_name = firstname
-                # myuser.last_name = lastname
-                # myuser.save()
-                
+                # ICOCONFIGURE PA ITO NA DAPAT SA PROFILE TABLES NG API MAIISTORE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!          
                 # Profile.objects.create(
-                # user = myuser,
-                # fname = myuser.first_name,
-                # lname = myuser.last_name,
+                # user = username,
+                # fname = firstname,
+                # lname = lastname,
                 # )
                 
                 return redirect('success')
@@ -134,8 +180,11 @@ def signup(request):
     
 def signin(request):
 
+    context = {}
+    
     def login_account (username, password):
 
+        ###################### https://scholarium.tmtg-clone.click/api/login ######################
         payload={'user': username,
         'pass': password }
         files=[]
@@ -147,6 +196,7 @@ def signin(request):
         response_dict = ast.literal_eval(response.text)
         
         print(response.text)
+        ###################### https://scholarium.tmtg-clone.click/api/login ######################
         
         if 'data' in response_dict:
             for data in response_dict['data']:
@@ -161,8 +211,6 @@ def signin(request):
         
         return user_token, expires, response_message
     
-    context = {}
-    
     if request.method == "POST":
         username = request.POST['username']
         password = request.POST['password']
@@ -171,42 +219,51 @@ def signin(request):
         
         if user_token != '':
             
-            # COMMAND TO PUT USER_TOKEN INTO SESSIONS
-            request.session['user_token'] = user_token
-            request.session.modified = True
-            
             # PUT JWT TOKEN TO COOKIES
-            response = Response()
-            response.set_cookie(key='jwt',value=user_token, httponly=True)
-            response.data = {
-                'jwt': user_token
-            }
+            # response = Response()
+            # response.set_cookie(key='jwt',value=user_token, httponly=True)
+            # response.data = {
+            #     'jwt': user_token
+            # }
             
-            print('COOKIE RESPONSE:', response.data)
+            # print('COOKIE RESPONSE:', response.data)
             
-            # DISPLAY SESSION ITEMS
-            # counter = 0
-            # for item in request.session.items():
-            #     counter = counter + 1
-            #     print("ITEM",counter, ":", item)
-                
-            # user = authenticate(username=username, password=password)
-            # login(request, user)
-            # firstname = user.first_name
+            ############################# FOR AUTHENTICATION ##############################
+            try:    
+                request.session['user_token'] = user_token
+                payload = jwt.decode(user_token, API_SECRET_KEY, algorithms=['HS256'])
             
-            # user = User.objects.filter(username=username).first()
-            # if user is None:
-            #     raise AuthenticationFailed('User does not exist.')
+                # SAVE JWT PAYLOAD INTO SESSIONS
+                for key,value in payload.items():
+                    if key == 'data':
+                        for key,value in payload['data'].items():
+                            request.session[key] = value
             
-            # if not user.check_password(password):
-            #     raise AuthenticationFailed('Invalid Password.')
-            
+                # PRINT SESSION ITEMS
+                for key, value in request.session.items():
+                    print('{}: {}'.format(key, value))
+                                
+            except jwt.ExpiredSignatureError:
+                # raise AuthenticationFailed('Unauthenticated!')
+                raise Http404
+            ############################# FOR AUTHENTICATION ##############################
+          
             context['username'] = username
             context['expires'] = expires
             context['user_token'] = user_token
-                  
-            return render(request, "authentication/dashboard.html", context)            
-        
+            
+            # CHECK IF THE REQUEST IS REDIRECTION
+            try:
+                next_page = request.session['url']
+            except:
+                next_page = ""
+            
+            # IF REDIRECTION SIYA, PUNTA SA NEXT PAGE, PERO KUNG HINDI, SA DASHBOARD
+            if next_page == "":
+                return render(request, "authentication/dashboard.html", context)
+            else:
+                return HttpResponseRedirect(next_page)
+
         else:
             # LAGYAN ITO NG MESSAGE BOX NA NAGSASABI NG ERROR MESSAGE
             print ("ERROR:", response_message)
@@ -215,14 +272,21 @@ def signin(request):
     return render(request, "authentication/signin.html")
 
 def signout(request):
-    logout(request)
-    messages.success(request, "Logged out successfully")
+    
+    # CLEAR SESSIONS
+    try:   
+        for key in list(request.session.keys()):
+            del request.session[key]
+    except KeyError as e:
+        print (e)
+        
     return redirect('home')
 
 def verify_account(request, user_hash):
     
     def verify(user_hash):
         
+        ###################### https://scholarium.tmtg-clone.click/api/user/verify/[args] ###################### 
         payload={}
         files={}
         headers = {
@@ -232,6 +296,7 @@ def verify_account(request, user_hash):
         response = requests.request("PUT", os.path.join(API_VERIFY_ACCOUNT_URL, user_hash), headers=headers, data=payload, files=files)
         
         response_dict = ast.literal_eval(response.text)
+        ###################### https://scholarium.tmtg-clone.click/api/user/verify/[args] ###################### 
         
         if 'data' in response_dict:
             for data in response_dict['data']:
@@ -250,6 +315,7 @@ def verify_account(request, user_hash):
         context['response_message'] = response_message
         context['password'] = password
         context['domain'] = DOMAIN
+        
         if password != '':
             print(password)
             print ("SUCCESS:", response_message)
@@ -262,41 +328,46 @@ def verify_account(request, user_hash):
         print(str(e))
         return render(request, "authentication/verification_failed.html")
 
-@login_required(login_url='signin')
 def profile(request):
-    user = request.user
-    form = ProfileForm(instance=user)
-    context = {'form':form}
-
+    
+    ########## LOGIN REQUIRED ##########
+    if not authenticate_user(request):
+        request.session['url'] = "profile"
+        return HttpResponseRedirect('signin?next=profile')
+    clear_session(request,'url')
+    ########## LOGIN REQUIRED ##########
+    
+    context = {}
+    # user = request.user
+    # form = ProfileForm(instance=user)
+    # context = {'form':form}
+    
     return render(request, "profile.html",context)
 
-@login_required(login_url='signin')
 def partner(request):
+    
+    ########## LOGIN REQUIRED ##########
+    if not authenticate_user(request):
+        request.session['url'] = "partner"
+        return HttpResponseRedirect('signin?next=partner')
+    clear_session(request,'url')
+    ########## LOGIN REQUIRED ##########
+    
     return render(request, "partner_dashboard.html")
 
-@login_required(login_url='signin')
 def edit_profile(request):
     
-    user = request.user
-    form = ProfileForm(instance=user)
-    context = {'form':form}
-
+    ########## LOGIN REQUIRED ##########
+    if not authenticate_user(request):
+        request.session['url'] = "edit"
+        return HttpResponseRedirect('signin?next=edit')
+    clear_session(request,'url')
+    ########## LOGIN REQUIRED ##########
+    
+    context = {}
+    # user = request.user
+    # form = ProfileForm(instance=user)
+    # context = {'form':form}
+    
     return render(request, "edit_profile.html", context)
-
-class DashboardView(APIView):
-    def get(self, request):
-        # user_token = request.COOKIES.get('jwt')
-        user_token = request.session['user_token']
-        print("USER TOKEN:", user_token)
         
-        if not user_token:
-            raise AuthenticationFailed('Unauthenticated!')
-        
-        try:
-            payload = jwt.decode(user_token, API_SECRET_KEY, algorithms=['HS256'])
-        except jwt.ExpiredSignatureError:
-            raise AuthenticationFailed('Unauthenticated!')
-        
-        print("PAYLOAD:", payload)
-        
-        return Response(payload)

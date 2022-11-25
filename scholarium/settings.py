@@ -27,7 +27,6 @@ EMAIL_HOST_PASSWORD = EMAIL_HOST_PASSWORD
 EMAIL_USE_TLS = EMAIL_USE_TLS
 EMAIL_USE_SSL = EMAIL_USE_SSL
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
@@ -39,9 +38,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['54.249.25.89', 'scholarium.io','127.0.0.1']
 
-# PRODUCTION CODE
+########## ORIGINAL CODE ##########
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-# DEVELOPMENT CODE
+########## FOR TEST CODE ##########
 # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 

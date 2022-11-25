@@ -1,13 +1,12 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-
 <div class="container-signin">
     <div class="forms-container">
         <div class="signin-signup">
             <form action="" class="sign-in-form" id="signin" method="POST">
                 <h2 class="title">Sign in</h2>
-    {% csrf_token %}
+                {% csrf_token %}
                 <div class="input-field">
                     <i class="fas fa-user"></i>
                     <input type="text" name="username" placeholder="username">

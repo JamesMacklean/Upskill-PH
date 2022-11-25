@@ -1,7 +1,6 @@
 # TO INSTALL
 
 1. Add "<app_name>" to "INSTALLED_APPS" in scholarium/settings.py
-
 2. Check for errors:
     python3 manage.py check
 3. Run migrations.
@@ -14,3 +13,8 @@
     urlpatterns = [
         path('', include('<app_name>.urls')),
     ]
+
+## BEFORE PUSHING INTO PRODUCTION
+
+1. Search for the comments 'ORIGINAL CODE' and uncomment them.
+2. Search for the comments 'FOR TEST CODE' and comment them.

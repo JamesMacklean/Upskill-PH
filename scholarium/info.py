@@ -9,10 +9,11 @@ TEST_EMAIL_RECEIVER = 'jamesmacklean27@gmail.com'
 
 # API
 
-# PRODUCTION CODE
+########## ORIGINAL CODE ##########
 # API_TOKEN = 'TMTG tujyBpbgtum3xcctFvXZgr4ZnaRsddVRpvkwJuq8B3KEwfd4BZQtrRaj5r4vdtDm'
-# DEVELOPMENT CODE
+########## FOR TEST CODE ##########
 API_TOKEN = 'LOC_TEST b3vg5vz5t6QJqRccTTysUtaYzF9bmUUrZXDNP54hxyF3Nr6azNdmAHXRrYjSQXA5'
+
 
 API_CREATE_ACCOUNT_URL = "https://scholarium.tmtg-clone.click/api/user/create"
 API_VERIFY_ACCOUNT_URL = "https://scholarium.tmtg-clone.click/api/user/verify/"

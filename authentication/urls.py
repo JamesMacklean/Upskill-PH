@@ -2,7 +2,7 @@ from unicodedata import name
 from django.contrib import admin
 from django.urls import path,include
 from . import views
-from .views import DashboardView
+from .views import SessionChecker
 
 urlpatterns = [
     path('',views.home, name="home"),
@@ -14,5 +14,5 @@ urlpatterns = [
     path('profile', views.profile, name="profile"),
     path('edit', views.edit_profile, name="edit"),
     path('partner', views.partner, name="partner"),
-    path('dashboard', DashboardView.as_view(), name="dashboard"),
+    path('sessions', SessionChecker.as_view(), name="sessions"),
 ]

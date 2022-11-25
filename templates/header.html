@@ -11,40 +11,42 @@
        <a class="nav-bar-link" href="#">home</a>
        <a class="nav-bar-link" href="#">about</a>
     </nav>
- {% if not user.is_authenticated %}
-      <div class="icons">
-         <a href="/signup"><div id="account-btn" class="fas fa-user"></div></a>
-      </div>
-   {% else %}
-    {% if user.group.name == "partner" %}
+{% if not request.session.username %}
+    <div class="icons">
+        <a href="/signup"><div id="account-btn" class="fas fa-user"></div></a>
+    </div>
+{% else %}
+    {% comment %} NOTE: PAPALITAN ANG IS_ADMIN NG IS_SCHOLAR {% endcomment %}
+    {% if request.session.is_partner and request.session.is_admin %}
         <div class="icons">
-            {{ request.user }} <a href="#" class="user-dropdown" onclick="submenuToggle()"><i class="fa fa-caret-down"></i></a>
+            {{ request.session.username }} <a href="#" class="user-dropdown" onclick="submenuToggle()"><i class="fa fa-caret-down"></i></a>
         </div>
         <div class="sub-menu">
-            <h3>{{request.user.first_name}} {{request.user.last_name}}</h3>
-            <ul>
-                <li><a href="{% url 'partner' %}">Dashboard</a></li>
-                <li><a href="{% url 'signout' %}">Sign out</a></li>
-            </ul>
-        </div>
-    {% elif user.group.name == "partner" and user.group.name == "scholar"%}
-        <div class="icons">
-            {{ request.user }} <a href="#" class="user-dropdown" onclick="submenuToggle()"><i class="fa fa-caret-down"></i></a>
-        </div>
-        <div class="sub-menu">
-            <h3>{{request.user.first_name}} {{request.user.last_name}}</h3>
+            <h3>{{request.session.first_name}} {{request.session.last_name}}</h3>
             <ul>
                 <li><a href="{% url 'partner' %}">Dashboard</a></li>
                 <li><a href="{% url 'profile' %}">My Profile</a></li>
                 <li><a href="{% url 'signout' %}">Sign out</a></li>
             </ul>
         </div>
-        {% else %}
+    {% elif request.session.is_partner %}
         <div class="icons">
-            {{ request.user }} <a href="#" class="user-dropdown" onclick="submenuToggle()"><i class="fa fa-caret-down"></i></a>
+            {{ request.session.username }} <a href="#" class="user-dropdown" onclick="submenuToggle()"><i class="fa fa-caret-down"></i></a>
         </div>
         <div class="sub-menu">
-            <h3>{{request.user.first_name}} {{request.user.last_name}}</h3>
+            <h3>{{request.session.first_name}} {{request.session.last_name}}</h3>
+            <ul>
+                <li><a href="{% url 'partner' %}">Dashboard</a></li>
+                <li><a href="{% url 'signout' %}">Sign out</a></li>
+            </ul>
+        </div>
+    
+    {% else %}
+        <div class="icons">
+            {{ request.session.username }} <a href="#" class="user-dropdown" onclick="submenuToggle()"><i class="fa fa-caret-down"></i></a>
+        </div>
+        <div class="sub-menu">
+            <h3>{{request.session.first_name}} {{request.session.last_name}}</h3>
             <ul>
                 <li><a href="{% url 'profile' %}">My Profile</a></li>
                 <li><a href="{% url 'signout' %}">Sign out</a></li>
