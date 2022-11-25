@@ -104,9 +104,9 @@ def success(request):
         EMAIL_HOST_USER, 
         
         ########## ORIGINAL CODE ##########
-        # [email], 
+        [email], 
         ########## FOR TEST CODE ##########
-        [TEST_EMAIL_RECEIVER],
+        # [TEST_EMAIL_RECEIVER],
 
         html_message=html,
         fail_silently=False

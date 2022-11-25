@@ -38,11 +38,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['54.249.25.89', 'scholarium.io','127.0.0.1']
 
-########## ORIGINAL CODE ##########
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-########## FOR TEST CODE ##########
-# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-
 
 # Application definition
 

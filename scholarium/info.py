@@ -5,14 +5,14 @@ EMAIL_HOST_PASSWORD = 'hnVw35UEvflyXYPzJI7IWk2AmZkIpL8-'
 EMAIL_PORT = 465
 EMAIL_USE_TLS = False
 EMAIL_USE_SSL = True
-TEST_EMAIL_RECEIVER = 'jamesmacklean27@gmail.com'
+TEST_EMAIL_RECEIVER = 'tmtcoredev@gmail.com'
 
 # API
 
 ########## ORIGINAL CODE ##########
-# API_TOKEN = 'TMTG tujyBpbgtum3xcctFvXZgr4ZnaRsddVRpvkwJuq8B3KEwfd4BZQtrRaj5r4vdtDm'
+API_TOKEN = 'TMTG tujyBpbgtum3xcctFvXZgr4ZnaRsddVRpvkwJuq8B3KEwfd4BZQtrRaj5r4vdtDm'
 ########## FOR TEST CODE ##########
-API_TOKEN = 'LOC_TEST b3vg5vz5t6QJqRccTTysUtaYzF9bmUUrZXDNP54hxyF3Nr6azNdmAHXRrYjSQXA5'
+# API_TOKEN = 'LOC_TEST b3vg5vz5t6QJqRccTTysUtaYzF9bmUUrZXDNP54hxyF3Nr6azNdmAHXRrYjSQXA5'
 
 
 API_CREATE_ACCOUNT_URL = "https://scholarium.tmtg-clone.click/api/user/create"
