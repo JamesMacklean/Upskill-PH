@@ -2,10 +2,9 @@
 {% block content %}
 <!-- ***  LANDING PAGE START  ***-->
 <div class="landing-page">
-    {% if not user.is_authenticated %}
-        {% include 'authentication/signup.html' %}
-    {% else %}
-        <h1>THIS IS THE LANDING PAGE</h1>
-    {% endif %}
+    <center>
+        <img class="landing-photo" src="SCHOL.PNG" alt="">
+        <a href="" class="btn solid">JOIN TODAY</a>
+    </center>
 </div>
 {% endblock %}
