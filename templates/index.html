@@ -5,7 +5,13 @@
 <div class="landing-page">
     <center>
         <img class="landing-photo" src="% static 'images/SCHOL.PNG'%" alt="">
-        <a href="" class="btn solid">JOIN TODAY</a>
+        <a href="" class="btn solid" onclick= toSignup()>JOIN TODAY</a>
     </center>
 </div>
+<script>
+ 
+    function toSignup(){
+        windows.location.href = "{% url 'signup' %}";
+    }
+</script>
 {% endblock %}
