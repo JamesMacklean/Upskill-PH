@@ -71,9 +71,9 @@ LOGIN_URL = '/signin'
 # SESSION_EXPIRE_AFTER_LAST_ACTIVITY = True
 
 ########## ORIGINAL CODE ##########
-# SESSION_EXPIRE_SECONDS = 3600   # 1 hour
+SESSION_EXPIRE_SECONDS = 3600   # 1 hour
 ########## FOR TEST CODE ##########
-SESSION_EXPIRE_SECONDS = 300    # 5 minutes
+# SESSION_EXPIRE_SECONDS = 300    # 5 minutes
 
 TEMPLATES = [
     {
