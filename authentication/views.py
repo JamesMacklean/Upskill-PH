@@ -49,30 +49,30 @@ class SessionChecker(APIView):
             raise Http404
 
 def authenticate_user(request):
-    
     try:
         
         # user_token = request.COOKIES.get('jwt')    
         try:   
             user_token = request.session['user_token'] 
-            print ("AUTHENTICATE:",user_token)
+            # print ("AUTHENTICATE:",user_token)
             payload = jwt.decode(user_token, API_SECRET_KEY, algorithms=['HS256'])
-        
+
             # SAVE JWT PAYLOAD INTO SESSIONS
             for key,value in payload.items():
                 if key == 'data':
                     for key,value in payload['data'].items():
-                        request.session[key] = value   
+                        request.session[key] = value
             return True
         
         except jwt.ExpiredSignatureError:
+            signout(request)
             return False
         
     except KeyError:
+        signout(request)
         return False
     
 def clear_session(request,key):
-    
     try:
         del request.session[key]
     except KeyError:
@@ -80,9 +80,17 @@ def clear_session(request,key):
     return HttpResponse(key, "session data cleared")
 
 def home(request):
+    authenticate_user(request)
     return render(request,"index.html")
 
 def success(request):
+    
+    ########## LOGIN REQUIRED ##########
+    if not authenticate_user(request):
+        return HttpResponseRedirect('signin')
+    clear_session(request,'url')
+    ########## LOGIN REQUIRED ##########
+    
     user_hash = request.session.get('user_hash')
     username = request.session.get('username')
     email = request.session.get('email')
@@ -117,7 +125,6 @@ def success(request):
     return render(request,"welcome.html")
 
 def signup(request):
-
     def create_account(username,firstname,lastname,email):    
         
         ###################### https://scholarium.tmtg-clone.click/api/user/create ###################### 
@@ -190,7 +197,6 @@ def signup(request):
         return render(request, "authentication/signup.html")
     
 def signin(request):
-
     context = {}
     
     def login_account (username, password):
@@ -343,6 +349,9 @@ def verify_account(request, user_hash):
         return render(request, "authentication/verification_failed.html")
 
 def profile(request):
+    """"""
+    template_name = "profile.html"
+    context = {}
     
     ########## LOGIN REQUIRED ##########
     if not authenticate_user(request):
@@ -372,9 +381,12 @@ def profile(request):
     #     'program':program,
     # }
     
-    return render(request, "profile.html",context)
+    return render(request, template_name, context)
 
 def partner(request):
+    """"""
+    template_name = "partner_dashboard.html"
+    context = {}
     
     ########## LOGIN REQUIRED ##########
     if not authenticate_user(request):
@@ -383,9 +395,12 @@ def partner(request):
     clear_session(request,'url')
     ########## LOGIN REQUIRED ##########
     
-    return render(request, "partner_dashboard.html")
+    return render(request, template_name)
 
 def edit_profile(request):
+    """"""
+    template_name = "edit_profile.html"
+    context = {}
     
     ########## LOGIN REQUIRED ##########
     if not authenticate_user(request):
@@ -393,13 +408,12 @@ def edit_profile(request):
         return HttpResponseRedirect('signin?next=edit')
     clear_session(request,'url')
     ########## LOGIN REQUIRED ##########
-    
-    context = {}
+
     # user = request.user
     # form = ProfileForm(instance=user)
     # context = {'form':form}
     
-    return render(request, "edit_profile.html", context)
+    return render(request, template_name, context)
 
 def program(request, slug):
     """"""
