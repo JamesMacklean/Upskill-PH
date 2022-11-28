@@ -63,9 +63,17 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'corsheaders.middleware.CorsMiddleware',
+    'django_session_timeout.middleware.SessionTimeoutMiddleware',
 ]
 
 ROOT_URLCONF = 'scholarium.urls'
+LOGIN_URL = '/signin'
+# SESSION_EXPIRE_AFTER_LAST_ACTIVITY = True
+
+########## ORIGINAL CODE ##########
+# SESSION_EXPIRE_SECONDS = 3600   # 1 hour
+########## FOR TEST CODE ##########
+SESSION_EXPIRE_SECONDS = 300    # 5 minutes
 
 TEMPLATES = [
     {
