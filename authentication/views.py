@@ -28,7 +28,7 @@ class SessionChecker(APIView):
             try:    
                 user_token = request.session['user_token']
                 payload = jwt.decode(user_token, API_SECRET_KEY, algorithms=['HS256'])
-
+                
                 # SAVE JWT PAYLOAD INTO SESSIONS
                 for key,value in payload.items():
                     if key == 'data':
@@ -38,7 +38,7 @@ class SessionChecker(APIView):
                 # DISPLAY SESSION ITEMS
                 for key, value in request.session.items():
                     print('{}: {}'.format(key, value))
-                        
+                      
                 return Response(payload)
                       
             except jwt.ExpiredSignatureError:
@@ -55,6 +55,7 @@ def authenticate_user(request):
         # user_token = request.COOKIES.get('jwt')    
         try:   
             user_token = request.session['user_token'] 
+            print ("AUTHENTICATE:",user_token)
             payload = jwt.decode(user_token, API_SECRET_KEY, algorithms=['HS256'])
         
             # SAVE JWT PAYLOAD INTO SESSIONS
@@ -400,7 +401,6 @@ def edit_profile(request):
     
     return render(request, "edit_profile.html", context)
 
-# @login_required(login_url='signin')
 def program(request, slug):
     """"""
     template_name = "scholar_programs.html"
