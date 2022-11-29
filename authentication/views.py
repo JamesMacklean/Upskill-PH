@@ -18,6 +18,7 @@ from .forms import *
 from .decorators import *
 
 import os, requests, ast, jwt
+import json
 class SessionChecker(APIView):
     def get(self, request):
         
@@ -126,7 +127,6 @@ def success(request):
 
 def signup(request):
     def create_account(username,firstname,lastname,email):    
-        
         ###################### https://scholarium.tmtg-clone.click/api/user/create ###################### 
         payload={
             'username': username,
@@ -360,27 +360,86 @@ def profile(request):
     clear_session(request,'url')
     ########## LOGIN REQUIRED ##########
     
-    context = {}
+    def user_profile(bearer_token):  
+        profile_data = []
+        ###################### https://scholarium.tmtg-clone.click/api/me/profile ###################### 
+        payload={}
+        headers = {
+        'Authorization': bearer_token
+        }
+        
+        response = requests.request("GET", API_USER_PROFILE_URL, headers=headers, data=payload)
+        response_dict = json.loads(response.text)
+        ###################### https://scholarium.tmtg-clone.click/api/me/profile ######################
 
-    # user = request.user
-
-    # program = Program.objects.filter(is_active=True)
-    # available = []
-    # ongoing = []
-
-    # for group in program.groups.all().filter(is_active=True):
-    #     programs = {}
-    #     if group.type == "AB":
-    #         available.append(programs)
-    #     else:
-    #         ongoing.append(programs)
-
-    # form = ProfileForm(instance=user)
-    # context = {
-    #     'form':form,
-    #     'program':program,
-    # }
+        # AUTO-ADD SA CONTEXT NG MGA KEYS NA NA-GET VIA API
+        if 'data' in response_dict:
+            for data in response_dict['data']:
+                for key, value in data.items():
+                    if value is not None:
+                        user_data = {key:data.get(key)}
+                        profile_data.append(user_data)
+                        context["profile_"+key] = data.get(key)
+        
+        return profile_data
     
+    def user_employment(bearer_token):  
+        employment_data = []
+        ###################### https://scholarium.tmtg-clone.click/api/me/employment ###################### 
+        payload={}
+        headers = {
+        'Authorization': bearer_token
+        }
+        
+        response = requests.request("GET", API_USER_EMPLOYMENT_URL, headers=headers, data=payload)
+        response_dict = json.loads(response.text)
+        ###################### https://scholarium.tmtg-clone.click/api/me/employment ######################
+
+        # AUTO-ADD SA CONTEXT NG MGA KEYS NA NA-GET VIA API
+        if 'data' in response_dict:
+            for data in response_dict['data']:
+                for key, value in data.items():
+                    if value is not None:
+                        user_data = {key:data.get(key)}
+                        employment_data.append(user_data)
+                        context["employment_"+key] = data.get(key)
+        
+        return employment_data
+    
+    def user_education(bearer_token):  
+        education_data = []
+        ###################### https://scholarium.tmtg-clone.click/api/me/education ###################### 
+        payload={}
+        headers = {
+        'Authorization': bearer_token
+        }
+        
+        response = requests.request("GET", API_USER_EDUCATION_URL, headers=headers, data=payload)
+        response_dict = json.loads(response.text)
+        ###################### https://scholarium.tmtg-clone.click/api/me/education ######################
+
+        # AUTO-ADD SA CONTEXT NG MGA KEYS NA NA-GET VIA API
+        if 'data' in response_dict:
+            for data in response_dict['data']:
+                for key, value in data.items():
+                    if value is not None:
+                        user_data = {key:data.get(key)}
+                        education_data.append(user_data)
+                        context["education_"+key] = data.get(key)
+        
+        return education_data
+    
+    user_token = request.session['user_token']
+    profile_data = user_profile(user_token)
+    employment_data = user_employment(user_token)
+    education_data = user_education(user_token)
+    
+    
+    context['user_profile'] = profile_data
+    context['user_employment'] = employment_data
+    context['user_education'] = education_data
+    
+    print ("CONTEXT:",context)
     return render(request, template_name, context)
 
 def partner(request):
