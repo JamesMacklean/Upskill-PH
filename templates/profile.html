@@ -5,10 +5,11 @@
     <div class="tabs">
         <h3 class="active">SCHOLARSHIPS</h3>
         <h3>PROFILES</h3>
-        <h3>CERTS AND BADGES</h3>
+        <h3>ACHIEVEMENTS</h3>
     </div>
+    
     <div class="tab-content">
-        <!--FIRST TAB-->
+        {% comment %} FIRST TAB {% endcomment %}
         <div class="tab active">
             <h4>Scholarships</h4>
             <div class="sub-tabs">
@@ -51,26 +52,51 @@
             </div>
         </div> 
 
-        <!--SECOND TAB-->
+        {% comment %} SECOND TAB {% endcomment %}
         <div class="tab">
             <h4>Profile</h4>
                 {% comment %} {{request.user.profile.profile_pic}} {% endcomment %}
-                {% comment %} {{request.user.profile.fname}} &nbsp {{request.user.profile.middle_name}} &nbsp {{request.user.profile.lname}} {% endcomment %}
+                {{profile_first_name}} &nbsp {{profile_middle_name}} &nbsp {{profile_last_name}}
+                <br>
                 <br>
                 <h5>About Me</h5>
                 <hr>
+                    {{profile_about}}
+                    <br>
+                    Gender: {{profile_gender}}
+                    <br>
+                    Socials: {{profile_socials}}
+                    <br>
+                    Country: {{profile_country}}
+                    <br>
+                    Birthday: {{profile_birthday}}
+                    <br>
+                    Contact: {{profile_contact}}
+                    <br>
+                    Privacy: {{profile_privacy}}
                 <br>
-                {% comment %} {{request.user.profile.about}} {% endcomment %}
+                <br>                
                 <h5>Work Experience and Education</h5>
                 <hr>
-                {% comment %} {{request.user.employment.experience}} | {{request.user.employment.employ_status}} {% endcomment %}
+                {% if employment_experience %}
+                {{employment_experience}} | {{employment_employ_status}}
+                {% else %}
+                No employment experience
+                {% endif %}
                 <br>
-                {% comment %} Education Level | {{request.user.education.degree}} {% endcomment %}
+                <br>
+                {% if education_degree %}
+                Education Level | {{education_degree}}
+                {% else %}
+                No educational attainment
+                {% endif %}
+                <br>
+                <br>
                 <br>
                 <a href="{% url 'edit' %}"> Edit Profile</a>
         </div>   
 
-         <!--THIRD TAB-->
+        {% comment %} THIRD TAB {% endcomment %}
         <div class="tab">
             <h4>Certificates and Badges</h4>
         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio labore, excepturi assumenda quo mollitia dignissimos odit beatae illo. Error, velit molestiae repellat dolore explicabo facilis harum qui rem libero deleniti.</p>
