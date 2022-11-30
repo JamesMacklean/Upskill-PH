@@ -43,11 +43,9 @@
   // .header .icons div:hover {
   //   color: #F15A25;
   // }
-  .header .icons a.btn{
-    width: 150px !important;
+.header .icons a.btn-solid{
+    width: 120px !important;
     height: 49px !important;
-    border: none !important;
-    outline: none !important;
     border-radius: 50px !important;
     cursor: pointer;
     background-color: #f15a25 !important;
@@ -59,7 +57,7 @@
     transition: 0.5s !important;
     line-height: 2;
 }
-.header .icons a.btn:hover{
+.header .icons a.btn-solid:hover{
   background-color: #fff !important;
   color: #f15a25 !important;
   //border: solid 2px black;
@@ -67,7 +65,7 @@
 
   //Sub menu
 
-  .sub-menu{
+.sub-menu{
     position: absolute;
     top: 120px;
     right: 85px;
@@ -118,10 +116,10 @@
     justify-self: center;
 }
 .sub-menu ul a{
-    display: inline-block;
-    text-decoration: none;
-    color: #333;
+    display: inline-block !important;
+    text-decoration: none !important;
+    color: #333 !important;
 }
 .sub-menu ul a:hover li{
-    color: #f15a25;
+    color: #f15a25 !important;
 }
