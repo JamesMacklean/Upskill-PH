@@ -39,15 +39,26 @@
   color: #F15A25;
 }
 
-.header .icons div {
+.header .icons a.btn {
+  width: 150px !important;
+  height: 49px !important;
+  border: none !important;
+  outline: none !important;
+  border-radius: 50px !important;
   cursor: pointer;
-  font-size: 2rem;
-  color: #000;
-  margin-left: 1.5rem;
+  background-color: #f15a25 !important;
+  color: #fff !important;
+  border: solid 2px #F15A25 !important;
+  text-transform: uppercase !important;
+  font-weight: 500 !important;
+  margin: 10px 0 !important;
+  transition: 0.5s !important;
+  line-height: 2;
 }
 
-.header .icons div:hover {
-  color: #F15A25;
+.header .icons a.btn:hover {
+  background-color: #fff !important;
+  color: #f15a25 !important;
 }
 
 .sub-menu {
@@ -98,7 +109,7 @@
   margin: 0 !important;
 }
 
-.sub-menu ul li {
+.sub-menu ul li, .sub-menu ul a {
   list-style: none;
   text-transform: uppercase;
   padding: 10px 0;
@@ -108,12 +119,12 @@
   justify-self: center;
 }
 
-.sub-menu ul li a {
+.sub-menu ul a {
   display: inline-block;
   text-decoration: none;
   color: #333;
 }
 
-.sub-menu ul li:hover a {
+.sub-menu ul a:hover li {
   color: #f15a25;
 }/*# sourceMappingURL=header.css.map */
