@@ -13,7 +13,7 @@
     </nav>
 {% if not request.session.username %}
     <div class="icons">
-        <a href="/signup" class="btn-solid">join now</a>
+        <a href="/signin"><div id="account-btn" class="fas fa-user"></div></a>
     </div>
 {% else %}
     {% comment %} NOTE: PAPALITAN ANG IS_ADMIN NG IS_SCHOLAR {% endcomment %}

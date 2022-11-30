@@ -82,7 +82,7 @@ def clear_session(request,key):
 
 def home(request):
     authenticate_user(request)
-    return render(request,"index.html")
+    return render(request,"authentication/signup.html")
 
 def success(request):
     

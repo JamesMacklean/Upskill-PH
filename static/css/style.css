@@ -558,6 +558,7 @@ div.sub-tabs {
 
 div.sub-tabs h5 {
   margin-right: 20px;
+  cursor: pointer;
 }
 
 div.sub-tab-content .subtab {
