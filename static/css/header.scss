@@ -43,7 +43,7 @@
   // .header .icons div:hover {
   //   color: #F15A25;
   // }
-.header .icons a.btn-solid{
+a.btn-solid{
     width: 120px !important;
     height: 49px !important;
     border-radius: 50px !important;
@@ -57,7 +57,7 @@
     transition: 0.5s !important;
     line-height: 2;
 }
-.header .icons a.btn-solid:hover{
+a.btn-solid:hover{
   background-color: #fff !important;
   color: #f15a25 !important;
   //border: solid 2px black;
