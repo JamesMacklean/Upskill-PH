@@ -36,8 +36,7 @@
 
                     <button type="submit" class="btn solid" data-bs-toggle="modal" data-bs-target="#SuccessModal" >sign up</button>
             </form>
-            {% for message in messages %}
-                {% if messages.tags == 'success' %}
+                {% if message == "success" %}
                 <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+30JU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
                 <script>
                     $document.ready(function(){
@@ -45,7 +44,6 @@
                     });
                 </script>
                 {% endif %}
-            {% endfor %}
         </div>
     </div>
 </div>
