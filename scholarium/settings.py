@@ -67,7 +67,6 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'scholarium.urls'
 LOGIN_URL = '/signin'
-
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
