@@ -632,8 +632,15 @@ div.program-grid-right{
 }
 div.program-grid-right .program-partner-logos{
     display: flex;
-    justify-content: space-between;
-    padding: 30px 10px;
+    justify-content: flex-start;
+    max-height: 150px;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    align-items: center;
+    align-content: center;
+}
+div.program-grid-right .program-partner-logos img{
+    max-width: 250px;
 }
 div.program-grid-right .program-description h3,p{
     margin: 30px 0;
