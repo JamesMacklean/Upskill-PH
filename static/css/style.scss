@@ -553,32 +553,44 @@ h5.opentab{
 }
 
 /* CARDS */
-div.card-container {
+div.card-wrapper{
+    display: grid;
+}
+div.card-wrapper a{
+    text-decoration: none !important;
+}
+div.card-container{
     border: lightgray solid 1px;
     width: 250px !important;
     height: 350px !important;
     background-color: #fff;
 }
-div.card-image {
+div.card-image{
     height: 150px;
+    width: 250px;
+}
+div.card-image img{
     background-size: cover;
 }
 div.card-partner-logo{
     display: inline-block;
-    max-width: 82px;
+    max-width: 250px;
 }
-div.container-card-title h2{
+div.card-partner-logo img{
+    width: 82px;
+}
+div.container-card-title h3{
     text-align: left;
     color: #f15a25;
     padding: 15px;
     font-weight: 500;
 }
-div.container-card-title .card-title-content{
+div.container-card-title p.card-title-content{
     text-align: left;
     padding: 15px;
     line-height: 1;
 }
-div.container-card-title .card-title-footer{
+div.container-card-title p.card-title-footer{
     padding: 35px 15px;
     color: #f15a25;
 }
