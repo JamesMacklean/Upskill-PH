@@ -582,6 +582,7 @@ h5.opentab {
 /* CARDS */
 div.card-wrapper {
   display: grid;
+  margin: 30px;
 }
 
 div.card-wrapper a {
@@ -596,39 +597,41 @@ div.card-container {
 }
 
 div.card-image {
-  height: 150px;
+  height: 130px;
   width: 250px;
 }
 
 div.card-image img {
   width: 248px;
-  height: 150px;
+  height: 130px;
 }
 
 div.card-partner-logo {
-  display: inline-block;
-  max-width: 250px;
-}
-
-div.card-partner-logo img {
-  width: 82px;
+  display: flex;
+  max-width: 248px;
+  height: 50px;
+  align-content: space-around;
+  justify-content: space-evenly;
+  flex-wrap: nowrap;
+  flex-direction: row;
 }
 
 div.container-card-title h3 {
   text-align: left;
   color: #f15a25;
-  padding: 15px;
+  padding: 10px;
   font-weight: 500;
 }
 
 div.container-card-title p.card-title-content {
   text-align: left;
-  padding: 15px;
+  color: #333;
+  padding: 10px;
   line-height: 1;
 }
 
 div.container-card-title p.card-title-footer {
-  padding: 35px 15px;
+  padding: 10px;
   color: #f15a25;
 }
 
