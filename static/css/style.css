@@ -631,7 +631,7 @@ div.container-card-title p.card-title-content {
 }
 
 div.container-card-title p.card-title-footer {
-  padding: 0 10px;
+  padding: 10px;
   color: #f15a25;
   line-height: 1;
 }
