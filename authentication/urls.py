@@ -17,5 +17,5 @@ urlpatterns = [
     path('program/<slug>', views.program, name="program"),
     path('partner', views.partner, name="partner"),
     path('sampleprogram1', views.sampleprogram1, name="sampleprogram1"),
-    path('sampleprogram1/certificate', views.certificate, name="certificate")
+    path('certificate', views.certificate, name="certificate")
 ]
