@@ -555,7 +555,7 @@ h5.opentab{
 /* CARDS */
 div.card-wrapper{
     display: grid;
-    margin: 30px;
+    grid-template-columns: auto auto auto auto;
 }
 div.card-wrapper a{
     text-decoration: none !important;
@@ -565,6 +565,7 @@ div.card-container{
     width: 250px !important;
     height: 350px !important;
     background-color: #fff;
+    margin: 0 15px;
 }
 div.card-image{
     height: 130px;
