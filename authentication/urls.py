@@ -16,6 +16,6 @@ urlpatterns = [
     path('sessions', SessionChecker.as_view(), name="sessions"),
     path('program/<slug>', views.program, name="program"),
     path('partner', views.partner, name="partner"),
-    path('program/sampleprogram1', views.sampleprogram1, name="sampleprogram1"),
-    path('program/sampleprogram1/certificate', views.certificate, name="certificate")
+    path('sampleprogram1', views.sampleprogram1, name="sampleprogram1"),
+    path('sampleprogram1/certificate', views.certificate, name="certificate")
 ]
