@@ -29,14 +29,15 @@
                     <input type="text" id="email"  name="email" placeholder="email" required>
                 </div>
 
-                    <button type="submit" class="btn solid" data-bs-toggle="modal" data-bs-target="#SuccessModal" >sign up</button>
+                    <button type="submit" class="btn solid" data-bs-toggle="modal" onclick="modalToggle()">sign up</button>
             </form>
                 {% if message == "success" %}
                 <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+30JU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
                 <script>
-                    $document.ready(function(){
-                    $("#SuccessModal").modal('show');
-                    });
+                    function modalToggle(){
+                        const toggleMenu = document.querySelector('.modal');
+                        toggleMenu.classList.toggle('.show')
+                    }
                 </script>
                 {% endif %}
         </div>
@@ -60,7 +61,6 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">Success 🎉</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
             <center>

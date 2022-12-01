@@ -60,6 +60,10 @@ div.landing-page center .landing-photo {
   transition: 1.8s ease-in-out;
 }
 
+.show {
+  display: block !important;
+}
+
 .forms-container {
   position: absolute;
   width: 100%;
