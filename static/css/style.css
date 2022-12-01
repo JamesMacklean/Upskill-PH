@@ -626,13 +626,14 @@ div.container-card-title h3 {
 div.container-card-title p.card-title-content {
   text-align: left;
   color: #333;
-  padding: 10px;
+  padding: 0 10px;
   line-height: 1;
 }
 
 div.container-card-title p.card-title-footer {
-  padding: 10px;
+  padding: 0 10px;
   color: #f15a25;
+  line-height: 1;
 }
 
 /*   PROGRAM PAGE  */
