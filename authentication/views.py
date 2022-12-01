@@ -494,3 +494,9 @@ def program(request, slug):
     context['program']= program
     context['partner_logos']= Program.objects.partner_logo
     return render(request, template_name, context)
+
+def sampleprogram1(request):
+    return render(request, "tempPrograms/sample_program1.html")
+
+def certificate(request):
+    return render(request, "certificate.html")

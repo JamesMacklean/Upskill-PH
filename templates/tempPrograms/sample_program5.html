@@ -1,0 +1,33 @@
+<link rel="stylesheet" href="styles.css">
+<div class="program-grid-container">
+    <div class="program-grid-left">
+        <h5>
+            Credentials earned:
+        </h5>
+        <div class="credential-container">
+            <img src="certificate.svg" alt="certificate">
+            <img src="badge.svg" alt="badge">
+        </div>
+    </div>
+    <div class="program-grid-right">
+        {% for program in programs %}
+        <h1>{{ program.name }}</h1>
+        <div class="program-partner-logos">
+            {{program.partner_logo}}
+        </div>
+        <div class="program-description">
+            <hr>
+            <h3>About this Program</h3>
+            <p>{{  program.description  }}</p>    
+            <h3>Learning Platforms</h3>
+            <p>{{ program.links  }}</p>
+            <hr>
+            <h3>Earning Criteria</h3>
+            <p>Complete the following courses to earn this program’s digital credential. Click on a course to view its course page.​</p>
+        </div>
+        {% endfor %}
+        <div class="program-progress">
+            from api
+        </div>
+    </div>
+</div>
