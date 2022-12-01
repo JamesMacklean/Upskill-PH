@@ -677,3 +677,68 @@ div.signatures{
 .certificate-program{
     color: rgb(122, 122, 122);
 }
+
+//APPLICATIONS
+.scholarship-applications{
+    display: grid;
+    grid-template-columns: auto auto;
+    justify-content: space-between;
+    align-items: center;
+    width: 1000px;
+    border: 1px solid #f15a25;
+}
+.scholarship-applications .action-name{
+    padding: 20px;
+    display: block;
+}
+.scholarship-applications .action-name p{
+    line-height: 0;
+}
+.action-buttons{
+    padding: 20px;
+}
+.action-btn{
+    width: 80px;
+    height: 40px;
+    color: #fff;
+    background-color: #f15a25;
+    cursor: pointer;
+    border-radius: 15px;
+    outline: none;
+    border-style: none;
+    font-size: 16px;
+}
+.red:hover{
+    color: black;
+    background-color: red;
+}
+.green:hover{
+    color: black;
+    background-color: green;
+}
+.blue:hover{
+    color: black;
+    background-color: lightskyblue;
+}
+.yellow:hover{
+    color: black;
+    background-color: yellow;
+}
+
+table{
+    margin: 20px;
+    width: 1000px;
+    border-radius: 50px;
+}
+table tr{
+    margin: 20px;
+    text-align: center;
+}
+table tr th{
+    height: 50px;
+    color: #fff;
+    background-color: #f15a25;
+}
+table tr td{
+    padding: 20px;
+}
