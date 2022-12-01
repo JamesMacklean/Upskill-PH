@@ -106,20 +106,20 @@
     padding: 0 !important;
     margin: 0 !important;
 }
-.sub-menu ul li, .sub-menu ul a{
-    list-style: none;
-    text-transform: uppercase;
-    padding: 10px 0;
-    border-top: 1px solid rgba(0,0,0,0.1);
+.sub-menu ul li{
     display: flex;
     align-items: center;
     justify-self: center;
+    list-style: none;
 }
 .sub-menu ul a{
-    display: inline-block !important;
-    text-decoration: none !important;
-    color: #333 !important;
+  text-transform: uppercase;
+  padding: 10px 0;
+  border-top: 1px solid rgba(0,0,0,0.1);
+  display: block !important;
+  text-decoration: none !important;
+  color: #333 !important;
 }
 .sub-menu ul a:hover li{
-    color: #f15a25 !important;
+  color: #f15a25 !important;
 }
