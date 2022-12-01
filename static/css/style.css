@@ -601,7 +601,8 @@ div.card-image {
 }
 
 div.card-image img {
-  background-size: cover;
+  width: 248px;
+  height: 150px;
 }
 
 div.card-partner-logo {
