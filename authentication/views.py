@@ -82,7 +82,7 @@ def clear_session(request,key):
 
 def home(request):
     authenticate_user(request)
-    return render(request,"index.html")
+    return render(request,"authentication/signup.html")
 
 def success(request):
     
@@ -126,6 +126,7 @@ def success(request):
     return render(request,"welcome.html")
 
 def signup(request):
+    context = {}
     def create_account(username,firstname,lastname,email):    
         ###################### https://scholarium.tmtg-clone.click/api/user/create ###################### 
         payload={
@@ -176,6 +177,8 @@ def signup(request):
                 request.session['email'] = email
                 request.session['first_name'] = firstname
                 request.session['last_name'] = lastname
+
+                context['message'] = "success"
                 
                 # ICOCONFIGURE PA ITO NA DAPAT SA PROFILE TABLES NG API MAIISTORE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!          
                 # Profile.objects.create(
@@ -184,11 +187,11 @@ def signup(request):
                 # lname = lastname,
                 # )
                 
-                return redirect('success')
+                return redirect('signin', context)
             else:
                 # LAGYAN ITO NG MESSAGE BOX NA NAGSASABI NG ERROR MESSAGE
-                print ("ERROR:", response_message)
-                return render(request, "authentication/signup.html")
+                context['message'] = response_message
+                return render(request, "authentication/signup.html", context)
 
         return render(request, "authentication/signup.html")
     

@@ -13,11 +13,6 @@
                     <i class="fas fa-user"></i>
                     <input type="text" id="username" name="username" placeholder="username" required>
                 </div>
-
-                <div class="input-field">
-                    <i class="fas fa-user"></i>
-                    <input type="password" id="password" name="password" placeholder="password" required>
-                </div>
                 
                 <div class="input-field">
                     <i class="fas fa-address-card"></i>
@@ -34,18 +29,17 @@
                     <input type="text" id="email"  name="email" placeholder="email" required>
                 </div>
 
-                    <button type="submit" class="btn solid" data-bs-toggle="modal" data-bs-target="#SuccessModal" >sign up</button>
+                    <button type="submit" class="btn solid" data-bs-toggle="modal" onclick="modalToggle()">sign up</button>
             </form>
-            {% for message in messages %}
-                {% if messages.tags == 'success' %}
+                {% if message == "success" %}
                 <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+30JU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
                 <script>
-                    $document.ready(function(){
-                    $("#SuccessModal").modal('show');
-                    });
+                    function modalToggle(){
+                        const toggleMenu = document.querySelector('.modal');
+                        toggleMenu.classList.toggle('.show')
+                    }
                 </script>
                 {% endif %}
-            {% endfor %}
         </div>
     </div>
 </div>
@@ -53,7 +47,7 @@
 <div class="panels-container">
     <div class="panel left-panel">
         <div class="content">
-            <h3>already have an account?</h3>
+            <h3>Already have an account?</h3>
             <p></p>
             <a class="btn-transparent" href="/signin">Sign in</a>
         </div>
@@ -67,7 +61,6 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">Success 🎉</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
             <center>

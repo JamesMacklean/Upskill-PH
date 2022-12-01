@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="certificate-frame">
+    <div class="certificate-left">
+        <div class="certificate-heading">
+            <p class="verify-text"> CERTIFICATE</p>
+            <p class="id-number">Certificate ID Number: </p>
+        </div>
+        <p class="cert-text">This is to certify that</p>
+        <div class="certificate-content">
+            <h1 class="certificate-name">NAME OF CERTIFICATE HOLDER</h1>
+        </div>
+        <p class="certificate-text">succesfully completed</p>
+        <div class="certificate-content">
+            <h2 class="certificate-program"> NAME OF PROGRAM</h2>
+        </div>
+        <p class="certificate-text">program description</p>
+        <div class="signatures">
+            <p class="signature-signature">signature</p>
+            <p class="signature-name">Name</p>
+            <p class="signature-title">Title</p>
+            <p class="signature-company">Company/Department</p>
+        </div>
+    </div>
+    <div class="certificate-right">
+        <img src="" alt="logo">
+    </div>
+</div>
+{% endblock  %}

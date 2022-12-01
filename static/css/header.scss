@@ -31,22 +31,41 @@
     padding: 1.5rem;
     text-transform: uppercase;
   }
-  .header .navbar .nav-bar-link:hover {
+.header .navbar .nav-bar-link:hover {
     color: #F15A25;
   }
-  .header .icons div {
+.header .icons div {
     cursor: pointer;
     font-size: 2rem;
     color: #000;
     margin-left: 1.5rem;
   }
-  .header .icons div:hover {
+.header .icons div:hover {
     color: #F15A25;
   }
+// a.btn-solid{
+//     width: 120px !important;
+//     height: 49px !important;
+//     border-radius: 50px !important;
+//     cursor: pointer;
+//     background-color: #f15a25 !important;
+//     color: #fff !important;
+//     border: solid 2px #F15A25 !important;
+//     text-transform: uppercase !important;
+//     font-weight: 500 !important;
+//     margin: 10px 0 !important;
+//     transition: 0.5s !important;
+//     line-height: 2;
+// }
+// a.btn-solid:hover{
+//   background-color: #fff !important;
+//   color: #f15a25 !important;
+//   border: solid 2px black;
+// }
 
   //Sub menu
 
-  .sub-menu{
+.sub-menu{
     position: absolute;
     top: 120px;
     right: 85px;
@@ -88,19 +107,19 @@
     margin: 0 !important;
 }
 .sub-menu ul li{
-    list-style: none;
-    text-transform: uppercase;
-    padding: 10px 0;
-    border-top: 1px solid rgba(0,0,0,0.1);
     display: flex;
     align-items: center;
     justify-self: center;
+    list-style: none;
 }
-.sub-menu ul li a{
-    display: inline-block;
-    text-decoration: none;
-    color: #333;
+.sub-menu ul a{
+  text-transform: uppercase;
+  padding: 10px 0;
+  border-top: 1px solid rgba(0,0,0,0.1);
+  display: block !important;
+  text-decoration: none !important;
+  color: #333 !important;
 }
-.sub-menu ul li:hover a{
-    color: #f15a25;
+.sub-menu ul a:hover li{
+  color: #f15a25 !important;
 }

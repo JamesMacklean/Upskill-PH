@@ -52,6 +52,10 @@ div.landing-page center .landing-photo{
     transform: translateY(-50%);
     transition: 1.8s ease-in-out;
 }
+//modal
+.show{
+    display:block !important;
+}
 .forms-container{
     position: absolute;
     width: 100%;
@@ -141,6 +145,7 @@ button, button.btn, a.btn{
     font-weight: 500 !important;
     margin: 10px 0 !important;
     transition: 0.5s !important;
+    line-height: 2;
 }
 button:hover,button.btn:hover, a.btn:hover{
     background-color: #F15A25 !important;
@@ -533,6 +538,7 @@ div.sub-tabs{
 }
 div.sub-tabs h5{
     margin-right: 20px;
+    cursor: pointer;
 }
 div.sub-tab-content .subtab{
     display: none;
@@ -541,36 +547,51 @@ div.sub-tab-content .opentab{
     display: flex;
 }
 h5.opentab{
-    text-decoration: underline #f15a25 3px;
+    border-bottom: solid 3px #f15a25;
+    padding-bottom: 5px;
+    transition: 0.125s ease;
 }
 
 /* CARDS */
-div.card-container {
+div.card-wrapper{
+    display: grid;
+}
+div.card-wrapper a{
+    text-decoration: none !important;
+}
+div.card-container{
     border: lightgray solid 1px;
     width: 250px !important;
     height: 350px !important;
     background-color: #fff;
 }
-div.card-image {
+div.card-image{
     height: 150px;
-    background-size: cover;
+    width: 250px;
+}
+div.card-image img{
+    width: 248px;
+    height: 150px;
 }
 div.card-partner-logo{
-    display: flex;
-    max-width: 82px;
+    display: inline-block;
+    max-width: 250px;
 }
-div.container-card-title h2{
+div.card-partner-logo img{
+    width: 82px;
+}
+div.container-card-title h3{
     text-align: left;
     color: #f15a25;
     padding: 15px;
     font-weight: 500;
 }
-div.container-card-title .card-title-content{
+div.container-card-title p.card-title-content{
     text-align: left;
     padding: 15px;
     line-height: 1;
 }
-div.container-card-title .card-title-footer{
+div.container-card-title p.card-title-footer{
     padding: 35px 15px;
     color: #f15a25;
 }
@@ -612,4 +633,33 @@ div.program-grid-right .program-description h3,p{
 }
 div.program-grid-right .program-progress{
     padding: 30px 0;
+}
+
+//CERTIFICATES
+
+div.certificate-frame p{
+    padding: 0 !important;
+    margin: 0 !important;
+}
+div.certificate-frame{
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    justify-content: center;
+    width: 1200px;
+    margin: auto;
+    margin-top: 100px;
+    padding: 50px;
+    border: 1px solid #f15a25;
+}
+div.certificate-left{
+    justify-content: center;
+}
+div.certificate-content{
+    padding: 50 0px;
+}
+div.signatures{
+    margin-top: 150px;
+}
+.certificate-program{
+    color: rgb(122, 122, 122);
 }
