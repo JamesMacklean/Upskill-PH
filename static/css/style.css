@@ -574,8 +574,9 @@ div.sub-tab-content .opentab {
 }
 
 h5.opentab {
-  -webkit-text-decoration: underline #f15a25 3px;
-          text-decoration: underline #f15a25 3px;
+  border-bottom: solid 3px #f15a25;
+  padding-bottom: 5px;
+  transition: 0.125s ease;
 }
 
 /* CARDS */
@@ -592,7 +593,7 @@ div.card-image {
 }
 
 div.card-partner-logo {
-  display: flex;
+  display: inline-block;
   max-width: 82px;
 }
 
