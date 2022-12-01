@@ -460,6 +460,7 @@ a.gg:hover i{
     border: solid #000 1px;
     max-width: 900px;
     transform: translate(50%);
+    align-items: flex-start;
 }
 .profile-container, .educ-container, .about-container{
     padding: 20px 30px;
