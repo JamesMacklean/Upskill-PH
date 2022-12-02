@@ -13,11 +13,11 @@ from scholarium.info import *
 from django.http import HttpResponse, Http404, HttpResponseRedirect
 from rest_framework.response import Response
 from rest_framework.views import APIView
-
 from .models import *
 from .forms import *
 from .decorators import *
 
+from .variables import *
 import os, requests, ast, jwt
 import json
 class SessionChecker(APIView):
@@ -636,11 +636,12 @@ def edit_profile(request):
             'last_modified': date_now,
             'privacy': privacy
         }
+        
         files=[]
         headers = {
         'Authorization': bearer_token
         }
-
+        
         response = requests.request("POST", API_USER_EDUCATION_URL, headers=headers, data=payload, files=files)        
         response_dict = ast.literal_eval(response.text)
         print(response.text)
@@ -692,6 +693,10 @@ def edit_profile(request):
         privacy = request.POST.get('details_privacy')
         date_now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         
+        request.session['first_name']=first_name
+        request.session['middle_name']=first_name
+        request.session['last_name']=first_name
+        
         update_profile(user_token,first_name,
                     middle_name, last_name, about, country,
                     region, municipality, socials, gender,
@@ -701,12 +706,17 @@ def edit_profile(request):
                     privacy)
         update_education(user_token, degree, university, 
                     study, date_now, privacy)
-
-        print("##############DEGREE:",degree)
-        # print ("UPDATED CONTEXT:",context) 
+        
         return redirect("profile")
         
-
+    context['employment_status_choices'] = EMPLOYMENT_STATUS
+    context['industry_choices'] = INDUSTRY
+    context['experience_choices'] = EXPERIENCE
+    context['degree_choices'] = DEGREE
+    context['field_of_study_choices'] = FIELD_OF_STUDY
+    context['country_choices'] = COUNTRY
+    context['gender_choices'] = GENDER
+    
     return render(request, template_name, context)
 
 def program(request, slug):
