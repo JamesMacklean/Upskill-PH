@@ -726,3 +726,21 @@ def program(request, slug):
     context['program']= program
     context['partner_logos']= Program.objects.partner_logo
     return render(request, template_name, context)
+
+def sampleprogram1(request):
+    return render(request, "tempPrograms/sample_program1.html")
+
+def sampleprogram2(request):
+    return render(request, "tempPrograms/sample_program2.html")
+
+def sampleprogram3(request):
+    return render(request, "tempPrograms/sample_program3.html")
+
+def sampleprogram4(request):
+    return render(request, "tempPrograms/sample_program4.html")
+
+def sampleprogram5(request):
+    return render(request, "tempPrograms/sample_program5.html")
+
+def certificate(request):
+    return render(request, "certificate.html")

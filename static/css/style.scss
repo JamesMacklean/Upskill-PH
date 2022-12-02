@@ -460,6 +460,7 @@ a.gg:hover i{
     border: solid #000 1px;
     max-width: 900px;
     transform: translate(50%);
+    align-items: flex-start;
 }
 .profile-container, .educ-container, .about-container{
     padding: 20px 30px;
@@ -555,7 +556,7 @@ h5.opentab{
 /* CARDS */
 div.card-wrapper{
     display: grid;
-    margin: 30px;
+    grid-template-columns: auto auto auto auto;
 }
 div.card-wrapper a{
     text-decoration: none !important;
@@ -565,6 +566,7 @@ div.card-container{
     width: 250px !important;
     height: 350px !important;
     background-color: #fff;
+    margin: 0 15px;
 }
 div.card-image{
     height: 130px;
@@ -592,12 +594,13 @@ div.container-card-title h3{
 div.container-card-title p.card-title-content{
     text-align: left;
     color: #333;
-    padding: 10px;
+    padding: 0 10px;
     line-height: 1;
 }
 div.container-card-title p.card-title-footer{
     padding: 10px;
     color: #f15a25;
+    line-height: 1;
 }
 
 /*   PROGRAM PAGE  */
@@ -629,8 +632,15 @@ div.program-grid-right{
 }
 div.program-grid-right .program-partner-logos{
     display: flex;
-    justify-content: space-between;
-    padding: 30px 10px;
+    justify-content: flex-start;
+    max-height: 150px;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    align-items: center;
+    align-content: center;
+}
+div.program-grid-right .program-partner-logos img{
+    max-width: 250px;
 }
 div.program-grid-right .program-description h3,p{
     margin: 30px 0;
@@ -666,4 +676,69 @@ div.signatures{
 }
 .certificate-program{
     color: rgb(122, 122, 122);
+}
+
+//APPLICATIONS
+.scholarship-applications{
+    display: grid;
+    grid-template-columns: auto auto;
+    justify-content: space-between;
+    align-items: center;
+    width: 1000px;
+    border: 1px solid #f15a25;
+}
+.scholarship-applications .action-name{
+    padding: 20px;
+    display: block;
+}
+.scholarship-applications .action-name p{
+    line-height: 0;
+}
+.action-buttons{
+    padding: 20px;
+}
+.action-btn{
+    width: 80px;
+    height: 40px;
+    color: #fff;
+    background-color: #f15a25;
+    cursor: pointer;
+    border-radius: 15px;
+    outline: none;
+    border-style: none;
+    font-size: 16px;
+}
+.red:hover{
+    color: black;
+    background-color: red;
+}
+.green:hover{
+    color: black;
+    background-color: green;
+}
+.blue:hover{
+    color: black;
+    background-color: lightskyblue;
+}
+.yellow:hover{
+    color: black;
+    background-color: yellow;
+}
+
+table{
+    margin: 20px;
+    width: 1000px;
+    border-radius: 50px;
+}
+table tr{
+    margin: 20px;
+    text-align: center;
+}
+table tr th{
+    height: 50px;
+    color: #fff;
+    background-color: #f15a25;
+}
+table tr td{
+    padding: 20px;
 }
