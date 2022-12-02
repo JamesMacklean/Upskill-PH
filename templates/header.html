@@ -11,7 +11,7 @@
        <a class="nav-bar-link" href="#">home</a>
        <a class="nav-bar-link" href="#">about</a>
     </nav>
-{% if not request.session.username %}
+{% if not request.session.user_token %}
     <div class="icons">
         <a href="/signin"><div id="account-btn" class="fas fa-user"></div></a>
     </div>

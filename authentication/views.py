@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from scholarium import settings
+from datetime import datetime, timedelta
 from django.core.mail import EmailMessage, send_mail
 from django.contrib.sites.shortcuts import get_current_site
 from django.template.loader import render_to_string
@@ -51,7 +52,6 @@ class SessionChecker(APIView):
 
 def authenticate_user(request):
     try:
-        
         # user_token = request.COOKIES.get('jwt')    
         try:   
             user_token = request.session['user_token'] 
@@ -81,11 +81,22 @@ def clear_session(request,key):
     return HttpResponse(key, "session data cleared")
 
 def home(request):
-    authenticate_user(request)
-    return render(request,"authentication/signup.html")
+    """"""
+    template_anonymous = "authentication/signup.html"
+    template_authenticated = "authentication/dashboard.html"
+    context = {}
+    
+    ########## LOGIN REQUIRED ##########
+    if authenticate_user(request):
+        return render(request, template_authenticated, context)
+    ########## LOGIN REQUIRED ##########
+    
+    # PALITAN ITO NG HOME TALAGA
+    return render(request,template_anonymous, context)
 
 def success(request):
-    
+    """"""
+    template_name = "welcome.html"
     ########## LOGIN REQUIRED ##########
     if not authenticate_user(request):
         return HttpResponseRedirect('signin')
@@ -123,10 +134,13 @@ def success(request):
     )
     ############################# FOR MAIL ##############################
     
-    return render(request,"welcome.html")
+    return render(request,template_name)
 
 def signup(request):
+    """"""
+    template_name = "authentication/signup.html"
     context = {}
+    
     def create_account(username,firstname,lastname,email):    
         ###################### https://scholarium.tmtg-clone.click/api/user/create ###################### 
         payload={
@@ -167,46 +181,31 @@ def signup(request):
 
             user_hash, response_message = create_account(username,firstname,lastname,email)
             
-            print("username: ", username)
-            print("email: ", email)
-            print ("hash:", user_hash)
-            
             if user_hash != "invalid":
-                request.session['user_hash'] = user_hash
-                request.session['username'] = username
-                request.session['email'] = email
-                request.session['first_name'] = firstname
-                request.session['last_name'] = lastname
-
                 context['message'] = "success"
-                
-                # ICOCONFIGURE PA ITO NA DAPAT SA PROFILE TABLES NG API MAIISTORE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!          
-                # Profile.objects.create(
-                # user = username,
-                # fname = firstname,
-                # lname = lastname,
-                # )
-                
                 return redirect('signin', context)
             else:
-                # LAGYAN ITO NG MESSAGE BOX NA NAGSASABI NG ERROR MESSAGE
                 context['message'] = response_message
-                return render(request, "authentication/signup.html", context)
+                return render(request, template_name, context)
 
-        return render(request, "authentication/signup.html")
+        return render(request, template_name, context)
     
     except Exception as e:
         print(str(e))
-        return render(request, "authentication/signup.html")
+        return render(request, template_name, context)
     
-def signin(request):
+def signin(request): 
+    """"""
+    template_name = "authentication/signin.html"
     context = {}
     
     def login_account (username, password):
 
         ###################### https://scholarium.tmtg-clone.click/api/login ######################
-        payload={'user': username,
-        'pass': password }
+        payload={
+            'user': username,
+            'pass': password 
+        }
         files=[]
         headers = {
         'Authorization': API_TOKEN
@@ -214,17 +213,14 @@ def signin(request):
 
         response = requests.request("POST", API_LOGIN_ACCOUNT_URL, headers=headers, data=payload, files=files)        
         response_dict = ast.literal_eval(response.text)
-        
-        print(response.text)
         ###################### https://scholarium.tmtg-clone.click/api/login ######################
-        
         
         if 'data' in response_dict:
             for data in response_dict['data']:
                 user_token = data.get("token")
                 expires = data.get("expires")
                 response_message = "Successfully Logged In!"
-        
+
         else:
             user_token = ''
             expires = ''
@@ -252,6 +248,7 @@ def signin(request):
             ############################# FOR AUTHENTICATION ##############################
             try:    
                 request.session['user_token'] = user_token
+                request.session['expires'] = expires
                 payload = jwt.decode(user_token, API_SECRET_KEY, algorithms=['HS256'])
             
                 # SAVE JWT PAYLOAD INTO SESSIONS
@@ -281,16 +278,16 @@ def signin(request):
             
             # IF REDIRECTION SIYA, PUNTA SA NEXT PAGE, PERO KUNG HINDI, SA DASHBOARD
             if next_page == "":
-                return render(request, "authentication/dashboard.html", context)
+                return redirect('home')
             else:
                 return HttpResponseRedirect(next_page)
 
         else:
             # LAGYAN ITO NG MESSAGE BOX NA NAGSASABI NG ERROR MESSAGE
             print ("ERROR:", response_message)
-            return render(request, "authentication/signin.html")
+            return render(request, template_name, context)
 
-    return render(request, "authentication/signin.html")
+    return render(request, template_name, context)
 
 def signout(request):
     
@@ -304,7 +301,9 @@ def signout(request):
     return redirect('home')
 
 def verify_account(request, user_hash):
-    
+    """"""
+    template_successful = "authentication/verification_successful.html"
+    template_failed = "authentication/verification_failed.html"
     def verify(user_hash):
         
         ###################### https://scholarium.tmtg-clone.click/api/user/verify/[args] ###################### 
@@ -342,14 +341,14 @@ def verify_account(request, user_hash):
         if password != '':
             print(password)
             print ("SUCCESS:", response_message)
-            return render(request, "authentication/verification_successful.html", context)                 
+            return render(request, template_successful, context)                 
         else:
             print ("ERROR:", response_message)
-            return render(request, "authentication/verification_failed.html", context) 
+            return render(request, template_failed, context) 
         
     except Exception as e:
         print(str(e))
-        return render(request, "authentication/verification_failed.html")
+        return render(request, template_failed, context)
 
 def profile(request):
     """"""
@@ -433,14 +432,9 @@ def profile(request):
         return education_data
     
     user_token = request.session['user_token']
-    profile_data = user_profile(user_token)
-    employment_data = user_employment(user_token)
-    education_data = user_education(user_token)
-    
-    
-    context['user_profile'] = profile_data
-    context['user_employment'] = employment_data
-    context['user_education'] = education_data
+    user_profile(user_token)
+    user_employment(user_token)
+    user_education(user_token)
     
     print ("CONTEXT:",context)
     return render(request, template_name, context)
@@ -471,10 +465,248 @@ def edit_profile(request):
     clear_session(request,'url')
     ########## LOGIN REQUIRED ##########
 
-    # user = request.user
-    # form = ProfileForm(instance=user)
-    # context = {'form':form}
+    def user_profile(bearer_token):  
+        profile_data = []
+        ###################### https://scholarium.tmtg-clone.click/api/me/profile ###################### 
+        payload={}
+        headers = {
+        'Authorization': bearer_token
+        }
+        
+        response = requests.request("GET", API_USER_PROFILE_URL, headers=headers, data=payload)
+        response_dict = json.loads(response.text)
+        ###################### https://scholarium.tmtg-clone.click/api/me/profile ######################
+
+        # AUTO-ADD SA CONTEXT NG MGA KEYS NA NA-GET VIA API
+        if 'data' in response_dict:
+            for data in response_dict['data']:
+                for key, value in data.items():
+                    if value is not None:
+                        user_data = {key:data.get(key)}
+                        profile_data.append(user_data)
+                        context["profile_"+key] = data.get(key)
+        
+        return profile_data
     
+    def user_employment(bearer_token):  
+        employment_data = []
+        ###################### https://scholarium.tmtg-clone.click/api/me/employment ###################### 
+        payload={}
+        headers = {
+        'Authorization': bearer_token
+        }
+        
+        response = requests.request("GET", API_USER_EMPLOYMENT_URL, headers=headers, data=payload)
+        response_dict = json.loads(response.text)
+        ###################### https://scholarium.tmtg-clone.click/api/me/employment ######################
+
+        # AUTO-ADD SA CONTEXT NG MGA KEYS NA NA-GET VIA API
+        if 'data' in response_dict:
+            for data in response_dict['data']:
+                for key, value in data.items():
+                    if value is not None:
+                        user_data = {key:data.get(key)}
+                        employment_data.append(user_data)
+                        context["employment_"+key] = data.get(key)
+        
+        return employment_data
+    
+    def user_education(bearer_token):  
+        education_data = []
+        ###################### https://scholarium.tmtg-clone.click/api/me/education ###################### 
+        payload={}
+        headers = {
+        'Authorization': bearer_token
+        }
+        
+        response = requests.request("GET", API_USER_EDUCATION_URL, headers=headers, data=payload)
+        response_dict = json.loads(response.text)
+        ###################### https://scholarium.tmtg-clone.click/api/me/education ######################
+
+        # AUTO-ADD SA CONTEXT NG MGA KEYS NA NA-GET VIA API
+        if 'data' in response_dict:
+            for data in response_dict['data']:
+                for key, value in data.items():
+                    if value is not None:
+                        user_data = {key:data.get(key)}
+                        education_data.append(user_data)
+                        context["education_"+key] = data.get(key)
+        
+        return education_data
+    
+    def update_profile (bearer_token, first_name, middle_name, 
+                last_name, about, country, region, municipality, 
+                socials, gender, birthday, contact, date_now, privacy):
+        profile_data = []
+
+        ###################### https://scholarium.tmtg-clone.click/api/me/profile ######################
+        payload={
+            'first_name': first_name,
+            'middle_name': middle_name,
+            'last_name': last_name,
+            'about': about,
+            'country': country,
+            'municipality': municipality,
+            'region': region,
+            'socials': socials,
+            'gender': gender,
+            'birthday': birthday,
+            'contact': contact,
+            'last_modified': date_now,
+            'privacy': privacy
+        }
+        files=[]
+        headers = {
+        'Authorization': bearer_token
+        }
+
+        response = requests.request("POST", API_USER_PROFILE_URL, headers=headers, data=payload, files=files)        
+        response_dict = ast.literal_eval(response.text)
+        print(response.text)
+        ###################### https://scholarium.tmtg-clone.click/api/me/profile ######################
+        
+        if 'data' in response_dict:
+                response_message = "User Account Updated!"
+
+        else:
+            response_message = response_dict.get("error")
+        
+        # AUTO-ADD SA CONTEXT NG MGA KEYS NA NA-UPDATE VIA API
+        if 'data' in response_dict:
+            for data in response_dict['data']:
+                for key, value in data.items():
+                    if value is not None:
+                        user_data = {key:data.get(key)}
+                        profile_data.append(user_data)
+                        context["profile_"+key] = data.get(key)
+                        
+        return profile_data, response_message
+    
+    def update_employment (bearer_token, employ_status, industry,
+                           employer, occupation, experience,
+                           date_now, privacy):
+        employment_data = []
+        
+        ###################### https://scholarium.tmtg-clone.click/api/me/employment ######################
+        payload={
+            'employ_status': employ_status,
+            'industry': industry,
+            'employer': employer,
+            'occupation': occupation,
+            'experience': experience,
+            'last_modified': date_now,
+            'privacy': privacy
+        }
+        files=[]
+        headers = {
+        'Authorization': bearer_token
+        }
+
+        response = requests.request("POST", API_USER_EMPLOYMENT_URL, headers=headers, data=payload, files=files)        
+        response_dict = ast.literal_eval(response.text)
+        print(response.text)
+        ###################### https://scholarium.tmtg-clone.click/api/me/employment ######################
+        
+        if 'data' in response_dict:
+                response_message = "User Account Updated!"
+
+        else:
+            response_message = response_dict.get("error")
+        
+        # AUTO-ADD SA CONTEXT NG MGA KEYS NA NA-UPDATE VIA API
+        if 'data' in response_dict:
+            for data in response_dict['data']:
+                for key, value in data.items():
+                    if value is not None:
+                        user_data = {key:data.get(key)}
+                        employment_data.append(user_data)
+                        context["employment_"+key] = data.get(key)
+                        
+        return employment_data, response_message
+    
+    def update_education (bearer_token, degree, school,
+                           study, date_now, privacy):
+        education_data = []
+        
+        ###################### https://scholarium.tmtg-clone.click/api/me/education ######################
+        payload={
+            'degree': degree,
+            'school': school,
+            'study': study,
+            'last_modified': date_now,
+            'privacy': privacy
+        }
+        files=[]
+        headers = {
+        'Authorization': bearer_token
+        }
+
+        response = requests.request("POST", API_USER_EDUCATION_URL, headers=headers, data=payload, files=files)        
+        response_dict = ast.literal_eval(response.text)
+        print(response.text)
+        ###################### https://scholarium.tmtg-clone.click/api/me/education ######################
+        
+        if 'data' in response_dict:
+                response_message = "User Account Updated!"
+
+        else:
+            response_message = response_dict.get("error")
+        
+        # AUTO-ADD SA CONTEXT NG MGA KEYS NA NA-UPDATE VIA API
+        if 'data' in response_dict:
+            for data in response_dict['data']:
+                for key, value in data.items():
+                    if value is not None:
+                        user_data = {key:data.get(key)}
+                        education_data.append(user_data)
+                        context["education_"+key] = data.get(key)
+                        
+        return education_data, response_message
+    
+    user_token = request.session['user_token']
+    
+    user_profile(user_token)
+    user_employment(user_token)
+    user_education(user_token)
+    
+    if request.method == "POST":
+        first_name = request.POST.get('first_name')
+        middle_name = request.POST.get('middle_name')
+        last_name = request.POST.get('last_name')
+        employ_status = request.POST.get('employ_status')
+        industry = request.POST.get('industry')
+        employer = request.POST.get('employer')
+        occupation = request.POST.get('occupation')
+        exp_level = request.POST.get('exp_level')
+        degree = request.POST.get('degree')
+        university = request.POST.get('university')
+        study = request.POST.get('study')
+        about = request.POST.get('bio')
+        country = request.POST.get('country')
+        region = request.POST.get('region')
+        municipality = request.POST.get('municipality')
+        socials = request.POST.get('socials')
+        gender = request.POST.get('gender')
+        birthday = request.POST.get('birthday')
+        contact = request.POST.get('mobile')
+        privacy = request.POST.get('details_privacy')
+        date_now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        
+        update_profile(user_token,first_name,
+                    middle_name, last_name, about, country,
+                    region, municipality, socials, gender,
+                    birthday, contact, date_now,privacy)
+        update_employment(user_token, employ_status, industry, 
+                    employer, occupation, exp_level, date_now, 
+                    privacy)
+        update_education(user_token, degree, university, 
+                    study, date_now, privacy)
+
+        print("##############DEGREE:",degree)
+        # print ("UPDATED CONTEXT:",context) 
+        return redirect("profile")
+        
+
     return render(request, template_name, context)
 
 def program(request, slug):
