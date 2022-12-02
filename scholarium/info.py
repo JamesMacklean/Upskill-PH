@@ -10,17 +10,18 @@ EMAIL_USE_SSL = True
 TEST_EMAIL_RECEIVER = 'tmtcoredev@gmail.com'
 
 # API
+API_SECRET_KEY = "5af375913e149630a4dd18e2ac1548cf9bdcde9c9e03eb24e1a1f3cb5e540c4a"
 API_CREATE_ACCOUNT_URL = "https://scholarium.tmtg-clone.click/api/user/add"
 API_VERIFY_ACCOUNT_URL = "https://scholarium.tmtg-clone.click/api/user/verify/"
 API_LOGIN_ACCOUNT_URL = "https://scholarium.tmtg-clone.click/api/login"
 API_USER_PROFILE_URL = "https://scholarium.tmtg-clone.click/api/me/profile"
 API_USER_EMPLOYMENT_URL = "https://scholarium.tmtg-clone.click/api/me/employment"
 API_USER_EDUCATION_URL = "https://scholarium.tmtg-clone.click/api/me/education"
-API_SECRET_KEY = "5af375913e149630a4dd18e2ac1548cf9bdcde9c9e03eb24e1a1f3cb5e540c4a"
+API_PARTNER_PROGRAMS_URL = "https://scholarium.tmtg-clone.click/api/partner/programs/"
 ########## ORIGINAL CODE ##########
-API_TOKEN = 'TMTG tujyBpbgtum3xcctFvXZgr4ZnaRsddVRpvkwJuq8B3KEwfd4BZQtrRaj5r4vdtDm'
+# API_TOKEN = 'TMTG tujyBpbgtum3xcctFvXZgr4ZnaRsddVRpvkwJuq8B3KEwfd4BZQtrRaj5r4vdtDm'
 ########## FOR TEST CODE ##########
-# API_TOKEN = 'LOC_TEST b3vg5vz5t6QJqRccTTysUtaYzF9bmUUrZXDNP54hxyF3Nr6azNdmAHXRrYjSQXA5'
+API_TOKEN = 'LOC_TEST b3vg5vz5t6QJqRccTTysUtaYzF9bmUUrZXDNP54hxyF3Nr6azNdmAHXRrYjSQXA5'
 
 # Engr_James
 # e84c2f7ab568bbf073ec619aee9bb0d189651e05

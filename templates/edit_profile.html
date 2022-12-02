@@ -10,9 +10,9 @@
         <h2 class="profile-label">Profile Data</h2>
         <div class="profile-data">
             <label for="name"> Full name: </label>
-            <input type="text" name="first_name" placeholder="First Name" value="{{profile_first_name}}">
-            <input type="text" name="middle_name" placeholder="Middle Name (Optional)" value="{{profile_middle_name}}">
-            <input type="text" name="last_name" placeholder="Last Name" value="{{profile_last_name}}">
+            <input type="text" name="first_name" placeholder="First Name" value="{{profile.first_name}}">
+            <input type="text" name="middle_name" placeholder="Middle Name (Optional)" value="{{profile.middle_name}}">
+            <input type="text" name="last_name" placeholder="Last Name" value="{{profile.last_name}}">
         </div>
 
         <div class="profile-data">
@@ -28,8 +28,8 @@
             <label for="employ_status">Employment Status: </label>
             
             <select name="employ_status" id="empstatus">
-                {% if employment_employ_status %}
-                    <option value="" selected disabled hidden>{{employment_employ_status}}</option>
+                {% if employment.employ_status %}
+                    <option value="" selected disabled hidden>{{employment.employ_status}}</option>
                 {% endif %}
                 {% for employment_status in employment_status_choices %}
                     <option value="{{employment_status}}">{{employment_status}}</option>
@@ -40,8 +40,8 @@
         <div class="educ-item">
             <label for="industry">Industry: </label>
             <select name="industry" id="industry">
-                {% if employment_industry %}
-                    <option value="" selected disabled hidden>{{employment_industry}}</option>
+                {% if employment.industry %}
+                    <option value="" selected disabled hidden>{{employment.industry}}</option>
                 {% endif %}
                 {% for industry in industry_choices %}
                     <option value="{{industry}}">{{industry}}</option>
@@ -51,19 +51,19 @@
     
         <div class="educ-item">
             <label for="employer">Employer: </label>
-            <input type="text" placeholder="Employer" name="employer" value="{{employment_employer}}">
+            <input type="text" placeholder="Employer" name="employer" value="{{employment.employer}}">
         </div>
     
         <div class="educ-item">
             <label for="occupation">Occupation: </label>
-            <input type="text" placeholder="Occupation" name="occupation" value="{{employment_occupation}}">
+            <input type="text" placeholder="Occupation" name="occupation" value="{{employment.occupation}}">
         </div>
     
         <div class="educ-item">
             <label for="exp_level">Experience Level: </label>
             <select name="exp_level" id="experience">
-                {% if employment_experience %}
-                    <option value="" selected disabled hidden>{{employment_experience}}</option>
+                {% if employment.experience %}
+                    <option value="" selected disabled hidden>{{employment.experience}}</option>
                 {% endif %}
                 {% for experience in experience_choices %}
                     <option value="{{experience}}" >{{experience}}</option>
@@ -74,8 +74,8 @@
         <div class="educ-item">
             <label for="degree">Degree: </label>
             <select name="degree" id="degree">
-                {% if education_degree %}
-                    <option value="" selected disabled hidden>{{education_degree}}</option>
+                {% if education.degree %}
+                    <option value="" selected disabled hidden>{{education.degree}}</option>
                 {% endif %}
                 {% for degree in degree_choices %}
                     <option value="{{degree}}">{{degree}}</option>
@@ -85,14 +85,14 @@
 
         <div class="educ-item">
             <label for="university">University: </label>
-            <input type="text" name = "university" placeholder="University" value="{{education_school}}">
+            <input type="text" name = "university" placeholder="University" value="{{education.school}}">
         </div>
 
         <div class="educ-item">
             <label for="study">Field of Study: </label>
             <select name="study" id="field">
-                {% if education_study %}
-                    <option value="" selected disabled hidden>{{education_study}}</option>
+                {% if education.study %}
+                    <option value="" selected disabled hidden>{{education.study}}</option>
                 {% endif %}
                 {% for field_of_study in field_of_study_choices %}
                     <option value="{{field_of_study}}">{{field_of_study}}</option>
@@ -106,7 +106,7 @@
     
         <div class="about">
             <label for="bio">About Me: </label>
-            <textarea name="bio" id="bio" cols="30" rows="3">{{profile_about}}</textarea>
+            <textarea name="bio" id="bio" cols="30" rows="3">{{profile.about}}</textarea>
         </div>
     
     <!--  COUNTRY SELECTION START  -->
@@ -114,8 +114,8 @@
         <div class="about">
             <label for="country">Country: </label>
             <select name="country" id="country">
-                {% if profile_country %}
-                    <option value="" selected disabled hidden>{{profile_country}}</option>
+                {% if profile.country %}
+                    <option value="" selected disabled hidden>{{profile.country}}</option>
                 {% endif %}
                 {% for country in country_choices %}
                     <option value="{{country}}">{{country}}</option>
@@ -147,8 +147,8 @@
         <div class="about">
             <label for="gender">Gender: </label>
                 <select id="gender" name="gender">
-                    {% if profile_gender %}
-                    <option value="" selected disabled hidden>{{profile_gender}}</option>
+                    {% if profile.gender %}
+                    <option value="" selected disabled hidden>{{profile.gender}}</option>
                     {% endif %}
                     {% for gender in gender_choices %}
                         <option value="{{gender}}">{{gender}}</option>
@@ -158,20 +158,20 @@
     
         <div class="about">
             <label for="birthday">Date of Birth:</label>
-            <input type="date" value="{{profile_birthday}}" name="birthday">
+            <input type="date" value="{{profile.birthday}}" name="birthday">
         </div>
     
         <div class="about">
             <label for="mobile">Mobile Number: </label>
-            <input type="text" name="mobile" value="{{profile_contact}}">
+            <input type="text" name="mobile" value="{{profile.contact}}">
         </div>
     
         <div class="about">
             <label for="details_privacy">Details Privacy: </label>
             <select name="details_privacy" id="details-privacy">
-                    <option value="2" {% if profile_privacy == 2 %}selected{% endif %}>Only Me</option>
-                    <option value="1" {% if profile_privacy == 1 %}selected{% endif %}>Scholarium Community</option>
-                    <option value="0" {% if profile_privacy == 0 %}selected{% endif %}>Public on the Web</option>
+                    <option value="2" {% if profile.privacy == 2 %}selected{% endif %}>Only Me</option>
+                    <option value="1" {% if profile.privacy == 1 %}selected{% endif %}>Scholarium Community</option>
+                    <option value="0" {% if profile.privacy == 0 %}selected{% endif %}>Public on the Web</option>
             </select>
         </div>
     </div>

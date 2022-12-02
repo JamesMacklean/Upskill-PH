@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load parse_iso %}
 {% block content %}
 <div class="tab-container">
     <div class="tabs">
@@ -20,91 +21,43 @@
             <div class="sub-tab-content">
                 <div class="subtab opentab" id="available">
                     <div class="card-wrapper">
-                        {% comment %} FIRST CARD {% endcomment %}
-                        <a href="{% url 'sampleprogram1' %}">
-                            <div class="card-container">
-                                <div class="card-image">
-                                    <img src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/sample-background.jpeg">
-                                </div>
-                                
-                                <div class="card-partner-logo">
-                                    <img src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/DICT-Logo-nobg.png">
-                                    <img src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/ILCDB+logo_2.png">
-                                    <img src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/coursera-social-logo-brand.png">
-                                </div>
-                                
-                                <div class="card-content">
-                                    <div class="container-card-title">
-                                        <h3>Sample Program 1</h3>
-                                        <p class="card-title-content">
-                                            6 courses <br>
-                                            Feb 01 - Jul 31, 2023
-                                        </p>
-                                        <p class="card-title-footer">
-                                            Registration closes on <br>
-                                            Jan 25, 2023
-                                        </p>
+                        {% for program in program_list %}
+                            <a href="{% url 'sampleprogram1' %}">
+                                <div class="card-container">
+                                    <div class="card-image">
+                                        <img src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/sample-background.jpeg">
+                                    </div>
+                                    
+                                    <div class="card-partner-logo">
+                                        <img src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/DICT-Logo-nobg.png">
+                                        <img src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/ILCDB+logo_2.png">
+                                        <img src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/coursera-social-logo-brand.png">
+                                    </div>
+                                    
+                                    <div class="card-content">
+                                        <div class="container-card-title">
+                                            <h3>{{program.name}}</h3>
+                                            <p class="card-title-content">
+                                                6 courses <br>
+                                                {% if program.end_date %}
+                                                    {{program.start_date|parse_iso|date:"M d"}} - {{program.end_date|parse_iso|date:"M d, Y"}}
+                                                {% else %}
+                                                    since {{program.start_date|parse_iso|date:"M d, Y"}}
+                                                {% endif %}
+                                            </p>
+                                            <p class="card-title-footer">
+                                                {% if program.registration_end %}
+                                                    Registration closes on <br>
+                                                    {{program.registration_end}}
+                                                {% else %}
+                                                    Registration is open
+                                                {% endif %}
+                                            </p>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </a>
-                        {% comment %} SECOND CARD {% endcomment %}
-                        <a href="{% url 'sampleprogram2' %}">
-                            <div class="card-container">
-                                <div class="card-image">
-                                    <img src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/sample-background.jpeg">
-                                </div>
-                                
-                                <div class="card-partner-logo">
-                                    <img src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/DICT-Logo-nobg.png">
-                                    <img src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/ILCDB+logo_2.png">
-                                    <img src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/coursera-social-logo-brand.png">
-                                </div>
-                                
-                                <div class="card-content">
-                                    <div class="container-card-title">
-                                        <h3>Sample Program 2</h3>
-                                        <p class="card-title-content">
-                                            6 courses <br>
-                                            Feb 01 - Jul 31, 2023
-                                        </p>
-                                        <p class="card-title-footer">
-                                            Registration closes on <br>
-                                            Jan 25, 2023
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                        {% comment %} THIRD CARD {% endcomment %}
-                        <a href="{% url 'sampleprogram3' %}">
-                            <div class="card-container">
-                                <div class="card-image">
-                                    <img src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/sample-background.jpeg">
-                                </div>
-                                
-                                <div class="card-partner-logo">
-                                    <img src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/DICT-Logo-nobg.png">
-                                    <img src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/ILCDB+logo_2.png">
-                                    <img src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/coursera-social-logo-brand.png">
-                                </div>
-                                
-                                <div class="card-content">
-                                    <div class="container-card-title">
-                                        <h3>Sample Program 3</h3>
-                                        <p class="card-title-content">
-                                            6 courses <br>
-                                            Feb 01 - Jul 31, 2023
-                                        </p>
-                                        <p class="card-title-footer">
-                                            Registration closes on <br>
-                                            Jan 25, 2023
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                        
+                            </a>    
+                        {% endfor%}                      
                     </div>
                 </div>
 
@@ -177,38 +130,45 @@
         {% comment %} SECOND TAB {% endcomment %}
         <div class="tab">
             <h4>Profile</h4>
-                {% comment %} {{request.user.profile.profile_pic}} {% endcomment %}
-                <p class="profile-full-name">{{profile_first_name}} {{profile_middle_name}} {{profile_last_name}}<p>
+                {% comment %} {{profile.photo}} {% endcomment %}
+                <p class="profile-full-name">{{profile.first_name}} {{profile.middle_name}} {{profile.last_name}}<p>
                 <br>
                 <br>
                 <h5>About Me</h5>
                 <hr>
-                    {{profile_about}}
+                    {{profile.about}}
                     <br>
                     <br>
-                    Gender: {{profile_gender}}
+                    Gender: {{profile.gender}}
                     <br>
-                    Socials: {{profile_socials}}
+                    Socials: {{profile.socials}}
                     <br>
-                    Country: {{profile_country}}
+                    Country: {{profile.country}}
                     <br>
-                    Birthday: {{profile_birthday}}
+                    Birthday: {{profile.birthday}}
                     <br>
-                    Contact: {{profile_contact}}
+                    Contact: {{profile.contact}}
                     <br>
-                    Privacy: {{profile_privacy}}
+                    Privacy:
+                        {% if profile.privacy == 0 %}
+                            Public on the Web
+                        {% elif profile.privacy == 1 %}
+                            Scholarium Community
+                        {% else %}
+                            Only Me
+                        {% endif %}
                 <br>
                 <br>                
                 <h5>Work Experience and Education</h5>
                 <hr>
-                {% if employment_experience %}
-                {{employment_experience}} | {{employment_employ_status}}
+                {% if employment.experience %}
+                {{employment.experience}} | {{employment.employ_status}}
                 {% else %}
                 No employment experience
                 {% endif %}
                 <br>
-                {% if education_degree %}
-                Education Level | {{education_degree}}
+                {% if education.degree %}
+                Education Level | {{education.degree}}
                 {% else %}
                 No educational attainment
                 {% endif %}
