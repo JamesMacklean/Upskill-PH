@@ -8,8 +8,8 @@
     <a href="#" class="logo"><img src="{% static 'images/logo.png' %}" alt=""></a>
  
     <nav class="navbar">
-       <a class="nav-bar-link" href="#">home</a>
-       <a class="nav-bar-link" href="#">about</a>
+       {% comment %} <a class="nav-bar-link" href="#">home</a>
+       <a class="nav-bar-link" href="#">about</a> {% endcomment %}
     </nav>
 {% if not request.session.user_token %}
     <div class="icons">
