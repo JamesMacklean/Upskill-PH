@@ -7,7 +7,7 @@ EMAIL_HOST_PASSWORD = 'hnVw35UEvflyXYPzJI7IWk2AmZkIpL8-'
 EMAIL_PORT = 465
 EMAIL_USE_TLS = False
 EMAIL_USE_SSL = True
-TEST_EMAIL_RECEIVER = 'tmtcoredev@gmail.com'
+TEST_EMAIL_RECEIVER = 'jamesmacklean27@gmail.com'
 
 # API
 API_SECRET_KEY = "5af375913e149630a4dd18e2ac1548cf9bdcde9c9e03eb24e1a1f3cb5e540c4a"

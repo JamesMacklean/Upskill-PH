@@ -54,6 +54,10 @@ class SessionChecker(APIView):
 def authenticate_user(request):
     try:
         # user_token = request.COOKIES.get('jwt')    
+        # PRINT SESSION ITEMS
+        for key, value in request.session.items():
+            print('{}: {}'.format(key, value))
+            
         try:   
             user_token = request.session['user_token'] 
             # print ("AUTHENTICATE:",user_token)
@@ -64,6 +68,7 @@ def authenticate_user(request):
                 if key == 'data':
                     for key,value in payload['data'].items():
                         request.session[key] = value
+        
             return True
         
         except jwt.ExpiredSignatureError:
@@ -95,28 +100,31 @@ def home(request):
     # PALITAN ITO NG HOME TALAGA
     return render(request,template_anonymous, context)
 
-def success(request):
+def success(request, user_hash):
     """"""
-    template_name = "welcome.html"
-    ########## LOGIN REQUIRED ##########
-    if not authenticate_user(request):
+    template_name = "success.html"
+    context = {}
+                    
+    # user_hash = request.session.get('user_hash')
+    username = request.session.get('new_username')        
+    first_name = request.session.get('new_first_name')
+    last_name = request.session.get('new_last_name')
+    email = request.session.get('new_email')
+
+    ########## ANONYMOUS REQUIRED ##########
+    if authenticate_user(request):
         return HttpResponseRedirect('signin')
     clear_session(request,'url')
-    ########## LOGIN REQUIRED ##########
-    
-    user_hash = request.session.get('user_hash')
-    username = request.session.get('username')
-    email = request.session.get('email')
-    firstname = request.session.get('first_name')
-    lastname = request.session.get('last_name')
-                
+    ########## ANONYMOUS REQUIRED ##########
+    print (user_hash)
     ############################# FOR MAIL ##############################
     html = render_to_string('emails/email_verification.html', {
         'username': username,
-        'first_name': firstname,
-        'last_name': lastname,
+        'first_name': first_name,
+        'last_name': last_name,
         'email': email,
         'user_hash': user_hash,
+        'domain': DOMAIN,
         'link': API_VERIFY_ACCOUNT_URL
     })
     
@@ -135,7 +143,9 @@ def success(request):
     )
     ############################# FOR MAIL ##############################
     
-    return render(request,template_name)
+    context['email'] = email
+    
+    return render(request,template_name, context)
 
 def verify_account(request, user_hash):
     """"""
@@ -191,7 +201,7 @@ def signup(request):
     """"""
     template_name = "authentication/signup.html"
     context = {}
-    
+
     def create_account(username,firstname,lastname,email):    
         ###################### https://scholarium.tmtg-clone.click/api/user/create ###################### 
         payload={
@@ -205,7 +215,10 @@ def signup(request):
         headers = {
         'Authorization': API_TOKEN
         }
-
+            
+        for key, value in payload.items():
+            request.session['new_'+key] = value
+            
         response = requests.request("POST", API_CREATE_ACCOUNT_URL, headers=headers, data=payload, files=files)
         response_dict = ast.literal_eval(response.text)
         ###################### https://scholarium.tmtg-clone.click/api/user/create ###################### 
@@ -214,6 +227,7 @@ def signup(request):
         
         if 'data' in response_dict:
             for data in response_dict['data']:
+                
                 response_message = data.get("success")
                 user_hash = data.get("hash")
 
@@ -234,7 +248,8 @@ def signup(request):
             
             if user_hash != "invalid":
                 context['message'] = "success"
-                return redirect('signin', context)
+                request.session['user_hash'] = user_hash
+                return redirect('success', user_hash)
             else:
                 context['message'] = response_message
                 return render(request, template_name, context)
@@ -242,7 +257,7 @@ def signup(request):
         return render(request, template_name, context)
     
     except Exception as e:
-        print(str(e))
+        print("1st error",str(e))
         return render(request, template_name, context)
     
 def signin(request): 
@@ -484,22 +499,21 @@ def partner(request):
     print("##############",partners)
     return render(request, template_name, context)
 
-def program(request, slug):
+def program(request, partner_id, program_id):
     """"""
     template_name = "scholar_programs.html"
     context = {}
 
     ########## LOGIN REQUIRED ##########
-    if not authenticate_user(request):
-        request.session['url'] = "program/"+slug
-        return HttpResponseRedirect('signin?next=program/'+slug)
-    clear_session(request,'url')
+    # if not authenticate_user(request):
+    #     request.session['url'] = "program/"+slug
+    #     return HttpResponseRedirect('signin?next=program/'+slug)
+    # clear_session(request,'url')
+
     ########## LOGIN REQUIRED ##########
-    
-    program = get_object_or_404(Program, slug=slug)
-    
-    context['program']= program
-    context['partner_logos']= Program.objects.partner_logo
+      
+    # context ['partner_id'] = partner_id
+    # context ['program_id'] = program_id  
     return render(request, template_name, context)
 
 def sampleprogram1(request):
