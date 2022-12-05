@@ -113,7 +113,7 @@ def success(request, user_hash):
 
     ########## ANONYMOUS REQUIRED ##########
     if authenticate_user(request):
-        return HttpResponseRedirect('signin')
+        return HttpResponseRedirect('/signin')
     clear_session(request,'url')
     ########## ANONYMOUS REQUIRED ##########
     print (user_hash)
@@ -346,7 +346,7 @@ def signin(request):
             if next_page == "":
                 return redirect('home')
             else:
-                return HttpResponseRedirect(next_page)
+                return HttpResponseRedirect(reverse(next_page))
 
         else:
             # LAGYAN ITO NG MESSAGE BOX NA NAGSASABI NG ERROR MESSAGE
@@ -374,7 +374,7 @@ def profile(request):
     ########## LOGIN REQUIRED ##########
     if not authenticate_user(request):
         request.session['url'] = "profile"
-        return HttpResponseRedirect('signin?next=profile')
+        return HttpResponseRedirect('/signin?next=profile')
     clear_session(request,'url')
     ########## LOGIN REQUIRED ##########
     
@@ -401,7 +401,7 @@ def edit_profile(request):
     ########## LOGIN REQUIRED ##########
     if not authenticate_user(request):
         request.session['url'] = "edit"
-        return HttpResponseRedirect('signin?next=edit')
+        return HttpResponseRedirect('/signin?next=edit')
     clear_session(request,'url')
     ########## LOGIN REQUIRED ##########
     
@@ -479,7 +479,7 @@ def partner(request):
     ########## LOGIN REQUIRED ##########
     if not authenticate_user(request):
         request.session['url'] = "partner"
-        return HttpResponseRedirect('signin?next=partner')
+        return HttpResponseRedirect('/signin?next=partner')
     clear_session(request,'url')
     ########## LOGIN REQUIRED ##########
     
@@ -504,16 +504,41 @@ def program(request, partner_id, program_id):
     template_name = "scholar_programs.html"
     context = {}
 
-    ########## LOGIN REQUIRED ##########
-    # if not authenticate_user(request):
-    #     request.session['url'] = "program/"+slug
-    #     return HttpResponseRedirect('signin?next=program/'+slug)
-    # clear_session(request,'url')
+    ######### LOGIN REQUIRED ##########
+    if not authenticate_user(request):
+        request.session['url'] = "program/"+partner_id+"/"+program_id
+        return HttpResponseRedirect('/signin?next=program/'+partner_id+"/"+program_id)
+    clear_session(request,'url')
+    ######### LOGIN REQUIRED ##########
+    
+    user_token = request.session['user_token']
+    
+    def scholar_apply(bearer_token, program_id):
+    
+        payload={'program_id': program_id}
+        headers = {
+        'Authorization': bearer_token,
+        }
 
-    ########## LOGIN REQUIRED ##########
-      
-    # context ['partner_id'] = partner_id
-    # context ['program_id'] = program_id  
+        response = requests.request("POST", API_SCHOLAR_APPLY_URL, headers=headers, data=payload)
+        response_dict = json.loads(response.text)
+        
+        if 'data' in response_dict:
+            for data in response_dict['data']:
+                response_message = "Successfully Applied!"
+
+        else:
+            response_message = response_dict.get("error")
+
+        return response_message
+    
+    context['programs'] = get_programs(user_token,partner_id,program_id)
+    print(context['programs'])
+    
+    if request.method == "POST":
+        response = scholar_apply(user_token,program_id)
+        print(response)
+    
     return render(request, template_name, context)
 
 def sampleprogram1(request):
@@ -603,7 +628,6 @@ def user_education(bearer_token):
 # GET https://scholarium.tmtg-clone.click/api/partner/programs/[partner_id]/[program_id]
 def get_programs(bearer_token, partner_id,program_id):  
     program_list = []
-    context = {}
     
     payload={}
     headers = {

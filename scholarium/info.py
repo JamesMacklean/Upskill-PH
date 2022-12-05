@@ -18,6 +18,8 @@ API_USER_PROFILE_URL = "https://scholarium.tmtg-clone.click/api/me/profile"
 API_USER_EMPLOYMENT_URL = "https://scholarium.tmtg-clone.click/api/me/employment"
 API_USER_EDUCATION_URL = "https://scholarium.tmtg-clone.click/api/me/education"
 API_PARTNER_PROGRAMS_URL = "https://scholarium.tmtg-clone.click/api/partner/programs/"
+API_SCHOLAR_APPLY_URL = "https://scholarium.tmtg-clone.click/api/me/scholarship"
+API_SCHOLAR_UPDATE_URL = "https://scholarium.tmtg-clone.click/api/partner/scholarship"
 ########## ORIGINAL CODE ##########
 # API_TOKEN = 'TMTG tujyBpbgtum3xcctFvXZgr4ZnaRsddVRpvkwJuq8B3KEwfd4BZQtrRaj5r4vdtDm'
 ########## FOR TEST CODE ##########

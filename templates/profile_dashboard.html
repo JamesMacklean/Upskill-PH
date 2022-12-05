@@ -22,7 +22,7 @@
                 <div class="subtab opentab" id="available">
                     <div class="card-wrapper">
                         {% for program in program_list %}
-                        <a href={% url 'program' partner_id=program.partner_id program_id=program.id %}/>
+                        <a href={% url 'program' program.partner_id program.id %}/>
                             {% comment %} <a href="{% url 'sampleprogram1' %}"> {% endcomment %}
                                 <div class="card-container">
                                     <div class="card-image">
