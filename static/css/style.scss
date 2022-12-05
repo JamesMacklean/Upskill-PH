@@ -107,7 +107,7 @@ form{
     height: 45px;
     background-color: #f0f0f0;
     margin: 5px 0;
-    border-radius: 55px;
+    border-radius: 9px;
     display: grid;
     grid-template-columns: 15% 85%;
     padding: 0 0.4rem;
@@ -499,7 +499,7 @@ div.tabs{
     display: flex;
     flex-direction: column;
     position: relative;
-    background-color: #eeee;
+    background-color: #dddfde;
     padding: 10px;
 }
 div.tab-container h3{
@@ -509,7 +509,7 @@ div.tab-container h3{
     font-weight: 600;
 }
 div.tab-content{
-    background-color: rgb(195, 195, 195);
+    background-color: #fff;
     padding: 1em 1.5em;
 }
 div.tab-content h4{
@@ -530,7 +530,7 @@ div.tab-content .active{
 div.tabs .active{
     background-color: #f15a25;
     color: #fff;
-    border-radius: 15px;
+    border-radius: 5px;
 }
 
 div.sub-tabs{

@@ -9,6 +9,7 @@
     display: flex;
     align-items: center;
     z-index: 1000;
+    box-shadow: 0px 0px 5px 0;
   }
   .header .logo {
     margin-right: auto;
@@ -43,6 +44,9 @@
 .header .icons div:hover {
     color: #F15A25;
   }
+.header .icons i.orange{
+  color: #F15A25;
+}
 // a.btn-solid{
 //     width: 120px !important;
 //     height: 49px !important;
@@ -77,6 +81,7 @@
     transition: 0.5s;
     visibility: hidden;
     opacity: 0;
+    box-shadow: 1px 2px 4px 0px;
 }
 .sub-menu.active{
     top: 120px;
