@@ -66,18 +66,21 @@
             <div class="program-list">
                 <h3>PROGRAMS</h3>
                 <table>
+                    
                     <tr>
                         <th>PROGRAM</th>
                         <th>ACTION</th>
                     </tr>
-                    <tr>
-                        <td>
-                            Sample Program 1
-                        </td>
-                        <td>
-                            <a href="" class="action-btn" style="padding:10px 20px; text-decoration: none;">view</a>
-                        </td>
-                    </tr>
+                    {% for program in program_list %}
+                        <tr>
+                            <td>
+                                {{program.name}}
+                            </td>
+                            <td>
+                                <a href="" class="action-btn" style="padding:10px 20px; text-decoration: none;">view</a>
+                            </td>
+                        </tr>
+                    {% endfor%}   
                 </table>
             </div>
         </div>           

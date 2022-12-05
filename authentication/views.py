@@ -365,12 +365,12 @@ def profile(request):
     
     user_token = request.session['user_token']
     
+    # NAKADEFAULT MUNA ITO SA 2 SINCE DICT PA LANG ANG MAY PROGRAMS, PERO SOON, PAPALITAN ITO KAPAG MARAMI NG PROGRAMS
+    context ['program_list'] = get_programs(user_token,2,None)
+    
     context ['profile'] = user_profile(user_token)
     context ['employment'] = user_employment(user_token)
     context ['education'] = user_education(user_token)
-    
-    # NAKADEFAULT MUNA ITO SA 2 SINCE DICT PA LANG ANG MAY PROGRAMS, PERO SOON, PAPALITAN ITO KAPAG MARAMI NG PROGRAMS
-    context ['program_list'] = get_programs(user_token,2)
     
     print ("PROFILE:", context ['profile'])
     print ("EMPLOYMENT:", context ['employment'])
@@ -460,7 +460,7 @@ def partner(request):
     """"""
     template_name = "partner_dashboard.html"
     context = {}
-    
+    partner_programs = []
     ########## LOGIN REQUIRED ##########
     if not authenticate_user(request):
         request.session['url'] = "partner"
@@ -468,13 +468,21 @@ def partner(request):
     clear_session(request,'url')
     ########## LOGIN REQUIRED ##########
     
+    user_token = request.session['user_token']
+    partners = request.session['partners']
     
-
-    # user_token = request.session['user_token']
+    for data in partners:
+        partner_id = data['partner_id']
+        program_id = data['program_id']
+        programs_list = get_programs(user_token,partner_id,program_id)
+        for program in programs_list:
+            partner_programs.append(program)
+        
+    context ['program_list'] = partner_programs
     
-    # get_programs(user_token)
-    
-    return render(request, template_name)
+    print(partner_programs)
+    print("##############",partners)
+    return render(request, template_name, context)
 
 def program(request, slug):
     """"""
@@ -496,12 +504,6 @@ def program(request, slug):
 
 def sampleprogram1(request):
     return render(request, "tempPrograms/sample_program1.html")
-
-def sampleprogram2(request):
-    return render(request, "tempPrograms/sample_program2.html")
-
-def sampleprogram3(request):
-    return render(request, "tempPrograms/sample_program3.html")
 
 def sampleprogram4(request):
     return render(request, "tempPrograms/sample_program4.html")
@@ -583,6 +585,32 @@ def user_education(bearer_token):
                     context[key] = data.get(key)
     
     return context
+
+# GET https://scholarium.tmtg-clone.click/api/partner/programs/[partner_id]/[program_id]
+def get_programs(bearer_token, partner_id,program_id):  
+    program_list = []
+    context = {}
+    
+    payload={}
+    headers = {
+    'Authorization': bearer_token
+    }
+    
+    if program_id:
+        response = requests.request("GET", os.path.join(API_PARTNER_PROGRAMS_URL, str(partner_id)+"/"+str(program_id)), headers=headers, data=payload)
+        response_dict = json.loads(response.text)
+        if 'data' in response_dict:
+            for data in response_dict['data']:
+                program_list.append(data)
+                
+    else:
+        response = requests.request("GET", os.path.join(API_PARTNER_PROGRAMS_URL, str(partner_id)), headers=headers, data=payload)
+        response_dict = json.loads(response.text)
+        if 'data' in response_dict:
+            for data in response_dict['data']:
+                program_list.append(data)
+        
+    return program_list
 
 # POST https://scholarium.tmtg-clone.click/api/me/profile 
 def update_profile (bearer_token, photo, first_name, middle_name, last_name, about, country, region, municipality, socials, gender, birthday, contact, date_now, privacy):
@@ -708,21 +736,3 @@ def update_education (bearer_token, degree, school,
                     
     return context, response_message
 
-# GET https://scholarium.tmtg-clone.click/api/partner/programs/[partner_id]/[program_id]
-def get_programs(bearer_token, partner_id):  
-    program_list = []
-    context = {}
-    
-    payload={}
-    headers = {
-    'Authorization': bearer_token
-    }
-    
-    response = requests.request("GET", os.path.join(API_PARTNER_PROGRAMS_URL, str(partner_id)), headers=headers, data=payload)
-    response_dict = json.loads(response.text)
-    
-    if 'data' in response_dict:
-        for data in response_dict['data']:
-            program_list.append(data)
-        
-    return program_list
