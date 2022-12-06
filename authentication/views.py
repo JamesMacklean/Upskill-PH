@@ -355,8 +355,7 @@ def signin(request):
 
     return render(request, template_name, context)
 
-def signout(request):
-    
+def signout(request):   
     # CLEAR SESSIONS
     try:   
         for key in list(request.session.keys()):
@@ -544,9 +543,7 @@ def program(request, partner_id, program_id):
         response_dict = json.loads(response.text)
         
         if 'data' in response_dict:
-            for data in response_dict['data']:
-                response_message = "Successfully Applied!"
-
+            response_message = "Successfully Applied!"
         else:
             response_message = response_dict.get("error")
 
@@ -589,13 +586,15 @@ def user_profile(bearer_token):
 
     # AUTO-ADD SA CONTEXT NG MGA KEYS NA NA-GET VIA API
     if 'data' in response_dict:
-        for data in response_dict['data']:
-            for key, value in data.items():
-                if value is not None:
-                    user_data = {key:data.get(key)}
-                    profile_data.append(user_data)
-                    context[key] = data.get(key)
-    
+        try:
+            for data in response_dict['data']:
+                for key, value in data.items():
+                    if value is not None:
+                        user_data = {key:data.get(key)}
+                        profile_data.append(user_data)
+                        context[key] = data.get(key)
+        except Exception as e:
+            print(e)
     return context
 
 # GET https://scholarium.tmtg-clone.click/api/me/employment 
@@ -613,13 +612,15 @@ def user_employment(bearer_token):
 
     # AUTO-ADD SA CONTEXT NG MGA KEYS NA NA-GET VIA API
     if 'data' in response_dict:
-        for data in response_dict['data']:
-            for key, value in data.items():
-                if value is not None:
-                    user_data = {key:data.get(key)}
-                    employment_data.append(user_data)
-                    context[key] = data.get(key)
-    
+        try:
+            for data in response_dict['data']:
+                for key, value in data.items():
+                    if value is not None:
+                        user_data = {key:data.get(key)}
+                        employment_data.append(user_data)
+                        context[key] = data.get(key)
+        except Exception as e:
+            print(e)
     return context
 
 # GET https://scholarium.tmtg-clone.click/api/me/education
@@ -637,12 +638,15 @@ def user_education(bearer_token):
 
     # AUTO-ADD SA CONTEXT NG MGA KEYS NA NA-GET VIA API
     if 'data' in response_dict:
-        for data in response_dict['data']:
-            for key, value in data.items():
-                if value is not None:
-                    user_data = {key:data.get(key)}
-                    education_data.append(user_data)
-                    context[key] = data.get(key)
+        try:
+            for data in response_dict['data']:
+                for key, value in data.items():
+                    if value is not None:
+                        user_data = {key:data.get(key)}
+                        education_data.append(user_data)
+                        context[key] = data.get(key)
+        except Exception as e:
+            print(e)
     
     return context
 
@@ -659,16 +663,21 @@ def get_programs(bearer_token, partner_id,program_id):
         response = requests.request("GET", os.path.join(API_PARTNER_PROGRAMS_URL, str(partner_id)+"/"+str(program_id)), headers=headers, data=payload)
         response_dict = json.loads(response.text)
         if 'data' in response_dict:
-            for data in response_dict['data']:
-                program_list.append(data)
-                
+            try:
+                for data in response_dict['data']:
+                    program_list.append(data)
+            except Exception as e:
+                print(e)                
     else:
         response = requests.request("GET", os.path.join(API_PARTNER_PROGRAMS_URL, str(partner_id)), headers=headers, data=payload)
         response_dict = json.loads(response.text)
         if 'data' in response_dict:
-            for data in response_dict['data']:
-                program_list.append(data)
-        
+            try:
+                for data in response_dict['data']:
+                    program_list.append(data)
+            except Exception as e:
+                print(e)
+
     return program_list
 
 # GET https://scholarium.tmtg-clone.click/api/partner/scholarship/[program_id]/[status]
@@ -685,24 +694,21 @@ def get_applicants(bearer_token, program_id, status):
         response = requests.request("GET", os.path.join(API_SCHOLAR_UPDATE_URL,str(program_id)+"/"+status), headers=headers, data=payload)
         response_dict = json.loads(response.text)
         if 'data' in response_dict:
-            for data in response_dict['data']:
-                applicants_list.append(data)
+            try:
+                for data in response_dict['data']:
+                    applicants_list.append(data)
+            except Exception as e:
+                print(e)
     else:
         response = requests.request("GET", os.path.join(API_SCHOLAR_UPDATE_URL,str(program_id)), headers=headers, data=payload)
         response_dict = json.loads(response.text)
         if 'data' in response_dict:
-            for data in response_dict['data']:
-                applicants_list.append(data)
-        
-    # AUTO-ADD SA CONTEXT NG MGA KEYS NA NA-GET VIA API
-    # if 'data' in response_dict:
-    #     for data in response_dict['data']:
-    #         for key, value in data.items():
-    #             if value is not None:
-    #                 user_data = {key:data.get(key)}
-    #                 profile_data.append(user_data)
-    #                 context[key] = data.get(key)
-    
+            try:
+                for data in response_dict['data']:
+                    applicants_list.append(data)
+            except Exception as e:
+                print(e)
+                
     return applicants_list
 
 # POST https://scholarium.tmtg-clone.click/api/me/profile 
@@ -736,19 +742,21 @@ def update_profile (bearer_token, photo, first_name, middle_name, last_name, abo
     
     if 'data' in response_dict:
             response_message = "User Account Updated!"
-
     else:
         response_message = response_dict.get("error")
     
     # AUTO-ADD SA CONTEXT NG MGA KEYS NA NA-UPDATE VIA API
     if 'data' in response_dict:
-        for data in response_dict['data']:
-            for key, value in data.items():
-                if value is not None:
-                    user_data = {key:data.get(key)}
-                    profile_data.append(user_data)
-                    context[key] = data.get(key)
-                    
+        try:
+            for data in response_dict['data']:
+                for key, value in data.items():
+                    if value is not None:
+                        user_data = {key:data.get(key)}
+                        profile_data.append(user_data)
+                        context[key] = data.get(key)
+        except Exception as e:
+            print(e)
+            
     return context, response_message
 
 # POST https://scholarium.tmtg-clone.click/api/me/employment 
@@ -775,19 +783,21 @@ def update_employment (bearer_token, employ_status, industry, employer, occupati
     
     if 'data' in response_dict:
             response_message = "User Account Updated!"
-
     else:
         response_message = response_dict.get("error")
     
     # AUTO-ADD SA CONTEXT NG MGA KEYS NA NA-UPDATE VIA API
     if 'data' in response_dict:
-        for data in response_dict['data']:
-            for key, value in data.items():
-                if value is not None:
-                    user_data = {key:data.get(key)}
-                    employment_data.append(user_data)
-                    context[key] = data.get(key)
-                    
+        try:
+            for data in response_dict['data']:
+                for key, value in data.items():
+                    if value is not None:
+                        user_data = {key:data.get(key)}
+                        employment_data.append(user_data)
+                        context[key] = data.get(key)
+        except Exception as e:
+            print(e)
+
     return context, response_message
 
 # POST https://scholarium.tmtg-clone.click/api/me/education 
@@ -814,19 +824,21 @@ def update_education (bearer_token, degree, school,
     
     if 'data' in response_dict:
             response_message = "User Account Updated!"
-
     else:
         response_message = response_dict.get("error")
     
     # AUTO-ADD SA CONTEXT NG MGA KEYS NA NA-UPDATE VIA API
     if 'data' in response_dict:
-        for data in response_dict['data']:
-            for key, value in data.items():
-                if value is not None:
-                    user_data = {key:data.get(key)}
-                    education_data.append(user_data)
-                    context[key] = data.get(key)
-                    
+        try:
+            for data in response_dict['data']:
+                for key, value in data.items():
+                    if value is not None:
+                        user_data = {key:data.get(key)}
+                        education_data.append(user_data)
+                        context[key] = data.get(key)
+        except Exception as e:
+            print(e)
+
     return context, response_message
 
 # PUT https://scholarium.tmtg-clone.click/api/partner/scholarship/[program_id]/[status]
@@ -849,9 +861,7 @@ def update_applicant(bearer_token, user_id, program_id, status):
     response_dict = json.loads(response.text)
     
     if 'data' in response_dict:
-        for data in response_dict['data']:
-            response_message = "Successfully Updated!"
-
+        response_message = "Successfully Updated!"
     else:
         response_message = response_dict.get("error")
     
