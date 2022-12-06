@@ -19,11 +19,11 @@ API_USER_EMPLOYMENT_URL = "https://scholarium.tmtg-clone.click/api/me/employment
 API_USER_EDUCATION_URL = "https://scholarium.tmtg-clone.click/api/me/education"
 API_PARTNER_PROGRAMS_URL = "https://scholarium.tmtg-clone.click/api/partner/programs/"
 API_SCHOLAR_APPLY_URL = "https://scholarium.tmtg-clone.click/api/me/scholarship"
-API_SCHOLAR_UPDATE_URL = "https://scholarium.tmtg-clone.click/api/partner/scholarship"
+API_SCHOLAR_UPDATE_URL = "https://scholarium.tmtg-clone.click/api/partner/scholarship/"
 ########## ORIGINAL CODE ##########
-# API_TOKEN = 'TMTG tujyBpbgtum3xcctFvXZgr4ZnaRsddVRpvkwJuq8B3KEwfd4BZQtrRaj5r4vdtDm'
+API_TOKEN = 'TMTG tujyBpbgtum3xcctFvXZgr4ZnaRsddVRpvkwJuq8B3KEwfd4BZQtrRaj5r4vdtDm'
 ########## FOR TEST CODE ##########
-API_TOKEN = 'LOC_TEST b3vg5vz5t6QJqRccTTysUtaYzF9bmUUrZXDNP54hxyF3Nr6azNdmAHXRrYjSQXA5'
+# API_TOKEN = 'LOC_TEST b3vg5vz5t6QJqRccTTysUtaYzF9bmUUrZXDNP54hxyF3Nr6azNdmAHXRrYjSQXA5'
 
 # Engr_James
 # e84c2f7ab568bbf073ec619aee9bb0d189651e05

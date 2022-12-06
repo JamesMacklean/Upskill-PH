@@ -476,6 +476,7 @@ def partner(request):
     template_name = "partner_dashboard.html"
     context = {}
     partner_programs = []
+    scholarship_applicants = []
     ########## LOGIN REQUIRED ##########
     if not authenticate_user(request):
         request.session['url'] = "partner"
@@ -484,18 +485,36 @@ def partner(request):
     ########## LOGIN REQUIRED ##########
     
     user_token = request.session['user_token']
-    partners = request.session['partners']
     
+    partners = request.session['partners']    
     for data in partners:
         partner_id = data['partner_id']
         program_id = data['program_id']
         programs_list = get_programs(user_token,partner_id,program_id)
         for program in programs_list:
             partner_programs.append(program)
-        
-    context ['program_list'] = partner_programs
     
-    print(partner_programs)
+    applicants = get_applicants(user_token,7,None)
+    for applicant in applicants:
+        scholarship_applicants.append(applicant)
+    
+    context ['program_list'] = partner_programs
+    context ['scholarship_applicants'] = scholarship_applicants
+    
+    if request.method == "POST":
+        user_id = request.POST.get("user_id")
+        request_program_id = request.POST.get("program_id")
+        if 'approve' in request.POST:
+            print("asdasdwgerw rvre ",user_id, request_program_id)
+            response_message = update_applicant(user_token, user_id, request_program_id, 1)
+        elif 'waitlist' in request.POST:
+            response_message = update_applicant(user_token, user_id, request_program_id, 2)
+        elif 'reject' in request.POST:
+            response_message = update_applicant(user_token, user_id, request_program_id, 3)
+    
+        print(response_message)
+
+    print(scholarship_applicants)
     print("##############",partners)
     return render(request, template_name, context)
 
@@ -513,6 +532,7 @@ def program(request, partner_id, program_id):
     
     user_token = request.session['user_token']
     
+    ###################### https://scholarium.tmtg-clone.click/api/me/scholarship ######################
     def scholar_apply(bearer_token, program_id):
     
         payload={'program_id': program_id}
@@ -531,6 +551,7 @@ def program(request, partner_id, program_id):
             response_message = response_dict.get("error")
 
         return response_message
+    ###################### https://scholarium.tmtg-clone.click/api/me/scholarship ######################
     
     context['programs'] = get_programs(user_token,partner_id,program_id)
     print(context['programs'])
@@ -649,6 +670,40 @@ def get_programs(bearer_token, partner_id,program_id):
                 program_list.append(data)
         
     return program_list
+
+# GET https://scholarium.tmtg-clone.click/api/partner/scholarship/[program_id]/[status]
+def get_applicants(bearer_token, program_id, status):  
+    context = {}
+    applicants_list = []
+    
+    payload={}
+    headers = {
+    'Authorization': bearer_token
+    }
+    
+    if status:
+        response = requests.request("GET", os.path.join(API_SCHOLAR_UPDATE_URL,str(program_id)+"/"+status), headers=headers, data=payload)
+        response_dict = json.loads(response.text)
+        if 'data' in response_dict:
+            for data in response_dict['data']:
+                applicants_list.append(data)
+    else:
+        response = requests.request("GET", os.path.join(API_SCHOLAR_UPDATE_URL,str(program_id)), headers=headers, data=payload)
+        response_dict = json.loads(response.text)
+        if 'data' in response_dict:
+            for data in response_dict['data']:
+                applicants_list.append(data)
+        
+    # AUTO-ADD SA CONTEXT NG MGA KEYS NA NA-GET VIA API
+    # if 'data' in response_dict:
+    #     for data in response_dict['data']:
+    #         for key, value in data.items():
+    #             if value is not None:
+    #                 user_data = {key:data.get(key)}
+    #                 profile_data.append(user_data)
+    #                 context[key] = data.get(key)
+    
+    return applicants_list
 
 # POST https://scholarium.tmtg-clone.click/api/me/profile 
 def update_profile (bearer_token, photo, first_name, middle_name, last_name, about, country, region, municipality, socials, gender, birthday, contact, date_now, privacy):
@@ -774,3 +829,30 @@ def update_education (bearer_token, degree, school,
                     
     return context, response_message
 
+# PUT https://scholarium.tmtg-clone.click/api/partner/scholarship/[program_id]/[status]
+def update_applicant(bearer_token, user_id, program_id, status):  
+    context = {}
+    applicants_list = []
+    
+    payload = json.dumps({
+    "data": {
+        "user_id": user_id,
+        "program_id": program_id,
+        "status": status
+    }
+    })
+    headers = {
+    'Authorization': bearer_token
+    }
+    
+    response = requests.request("PUT", API_SCHOLAR_UPDATE_URL, headers=headers, data=payload)
+    response_dict = json.loads(response.text)
+    
+    if 'data' in response_dict:
+        for data in response_dict['data']:
+            response_message = "Successfully Updated!"
+
+    else:
+        response_message = response_dict.get("error")
+    
+    return response_message

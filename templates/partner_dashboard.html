@@ -86,59 +86,25 @@
         </div>           
          <!--THIRD TAB-->
         <div class="tab" id="scholarship-applications">
-            <h4>Scholarship Applications</h4>
-            <div class="scholarship-applications">
+            <h4>Applications</h4>
+            {% for applicant in scholarship_applicants %}
+            <form action="" class="scholarship-applications" id="apply" method="POST">
                 <div class="action-name">
-                    <h4>Name</h4>
+                    <h4>User {{applicant.user_id}}</h4>
                     <p>University</p>
                     <p>Degree</p>
+                    Application Status: {{ applicant.status}}
+                    <input type="hidden" name="user_id" value="{{applicant.user_id}}" />
+                    <input type="hidden" name="program_id" value="{{applicant.program_id}}" />
                 </div>
                 <div class="action-buttons">
-                    <button class="action-btn blue">Shortlist</button>
-                    <button class="action-btn yellow">Waitlist</button>
-                    <button class="action-btn green">Approve</button>
-                    <button class="action-btn red">Reject</button>
+                        {% csrf_token %}
+                    <button class="action-btn green" name='approve'>Approve</button>
+                    <button class="action-btn yellow" name='waitlist'>Waitlist</button>
+                    <button class="action-btn red" name='reject'>Reject</button>
                 </div>
-            </div>
-            <div class="scholarship-applications">
-                <div class="action-name">
-                    <h4>Name</h4>
-                    <p>University</p>
-                    <p>Degree</p>
-                </div>
-                <div class="action-buttons">
-                    <button class="action-btn blue">Shortlist</button>
-                    <button class="action-btn yellow">Waitlist</button>
-                    <button class="action-btn green">Approve</button>
-                    <button class="action-btn red">Reject</button>
-                </div>
-            </div>
-            <div class="scholarship-applications">
-                <div class="action-name">
-                    <h4>Name</h4>
-                    <p>University</p>
-                    <p>Degree</p>
-                </div>
-                <div class="action-buttons">
-                    <button class="action-btn blue">Shortlist</button>
-                    <button class="action-btn yellow">Waitlist</button>
-                    <button class="action-btn green">Approve</button>
-                    <button class="action-btn red">Reject</button>
-                </div>
-            </div>
-            <div class="scholarship-applications">
-                <div class="action-name">
-                    <h4>Name</h4>
-                    <p>University</p>
-                    <p>Degree</p>
-                </div>
-                <div class="action-buttons">
-                    <button class="action-btn blue">Shortlist</button>
-                    <button class="action-btn yellow">Waitlist</button>
-                    <button class="action-btn green">Approve</button>
-                    <button class="action-btn red">Reject</button>
-                </div>
-            </div>
+            </form>
+            {% endfor %}
         </div>
         <!--FOURTH TAB-->
         <div class="tab" id="scholars">
