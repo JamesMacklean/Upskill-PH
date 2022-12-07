@@ -90,10 +90,10 @@
             {% for applicant in scholarship_applicants %}
             <form action="" class="scholarship-applications" id="apply" method="POST">
                 <div class="action-name">
-                    <h4>User {{applicant.user_id}}</h4>
+                    <h4>{{applicant.first_name}} {{applicant.last_name}}</h4>
                     <p>University</p>
                     <p>Degree</p>
-                    Application Status: {{ applicant.status}}
+                    Application Status: {{applicant.status}}
                     <input type="hidden" name="user_id" value="{{applicant.user_id}}" />
                     <input type="hidden" name="program_id" value="{{applicant.program_id}}" />
                 </div>
@@ -134,7 +134,20 @@
     let tabs = document.querySelectorAll(".tabs h3");
     let tabContents = document.querySelectorAll(".tab-content .tab");
 
-    tabs.forEach((tab,index) => {
+    var lastTabIndex = sessionStorage.getItem('lastTabIndex');
+
+    tabs.forEach((tab,index) => {    
+        if (lastTabIndex) {
+            tabContents.forEach((content) =>{
+                content.classList.remove("active");
+            });
+            tabs.forEach((tab) => {
+                tab.classList.remove("active");
+            });
+            tabContents[lastTabIndex].classList.add("active");
+            tabs[lastTabIndex].classList.add("active");
+        }
+        
         tab.addEventListener("click", () => {
             tabContents.forEach((content) =>{
                 content.classList.remove("active");
@@ -142,9 +155,15 @@
             tabs.forEach((tab) => {
                 tab.classList.remove("active");
             });
+            try {
+                sessionStorage.setItem('lastTabIndex', index);
+            } catch (error) {
+                console.log(error);
+            }
             tabContents[index].classList.add("active");
             tabs[index].classList.add("active");
         })
     })
+
 </script>
 {% endblock %}

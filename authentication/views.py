@@ -60,7 +60,6 @@ def authenticate_user(request):
             
         try:   
             user_token = request.session['user_token'] 
-            # print ("AUTHENTICATE:",user_token)
             payload = jwt.decode(user_token, API_SECRET_KEY, algorithms=['HS256'])
 
             # SAVE JWT PAYLOAD INTO SESSIONS
@@ -116,7 +115,6 @@ def success(request, user_hash):
         return HttpResponseRedirect('/signin')
     clear_session(request,'url')
     ########## ANONYMOUS REQUIRED ##########
-    print (user_hash)
     ############################# FOR MAIL ##############################
     html = render_to_string('emails/email_verification.html', {
         'username': username,
@@ -164,9 +162,7 @@ def verify_account(request, user_hash):
         
         response_dict = ast.literal_eval(response.text)
         ###################### https://scholarium.tmtg-clone.click/api/user/verify/[args] ###################### 
-        
-        print(response.text)
-        
+         
         if 'data' in response_dict:
             for data in response_dict['data']:
                 response_message = data.get("success")
@@ -186,7 +182,6 @@ def verify_account(request, user_hash):
         context['domain'] = DOMAIN
         
         if password != '':
-            print(password)
             print ("SUCCESS:", response_message)
             return render(request, template_successful, context)                 
         else:
@@ -222,9 +217,7 @@ def signup(request):
         response = requests.request("POST", API_CREATE_ACCOUNT_URL, headers=headers, data=payload, files=files)
         response_dict = ast.literal_eval(response.text)
         ###################### https://scholarium.tmtg-clone.click/api/user/create ###################### 
-        
-        print(response.text)
-        
+ 
         if 'data' in response_dict:
             for data in response_dict['data']:
                 
@@ -257,7 +250,7 @@ def signup(request):
         return render(request, template_name, context)
     
     except Exception as e:
-        print("1st error",str(e))
+        print(str(e))
         return render(request, template_name, context)
     
 def signin(request): 
@@ -361,7 +354,7 @@ def signout(request):
         for key in list(request.session.keys()):
             del request.session[key]
     except KeyError as e:
-        print (e)
+        print(str(e))
         
     return redirect('home')
 
@@ -379,17 +372,17 @@ def profile(request):
     
     user_token = request.session['user_token']
     
-    # NAKADEFAULT MUNA ITO SA 2 SINCE DICT PA LANG ANG MAY PROGRAMS, PERO SOON, PAPALITAN ITO KAPAG MARAMI NG PROGRAMS
-    context ['program_list'] = get_programs(user_token,2,None)
+    # NAKADEFAULT MUNA ITO SA 2 SINCE DICT PA LANG ANG MAY PROGRAMS
+    context['program_list'] = get_programs(user_token,2,None)
     
-    context ['profile'] = user_profile(user_token)
-    context ['employment'] = user_employment(user_token)
-    context ['education'] = user_education(user_token)
+    context['profile'] = user_profile(user_token)
+    context['employment'] = user_employment(user_token)
+    context['education'] = user_education(user_token)
     
-    print ("PROFILE:", context ['profile'])
-    print ("EMPLOYMENT:", context ['employment'])
-    print ("EDUCATION:", context ['education'])
-    print ("PROGRAM LIST:", context ['program_list'])
+    print ("PROFILE:", context['profile'])
+    print ("EMPLOYMENT:", context['employment'])
+    print ("EDUCATION:", context['education'])
+    print ("PROGRAM LIST:", context['program_list'])
     return render(request, template_name, context)
 
 def edit_profile(request):
@@ -409,7 +402,6 @@ def edit_profile(request):
     if request.method == "POST":
         photo = request.POST.get('photo')
         first_name = request.POST.get('first_name')
-        middle_name = request.POST.get('middle_name')
         last_name = request.POST.get('last_name')
         employ_status = request.POST.get('employ_status')
         industry = request.POST.get('industry')
@@ -431,13 +423,12 @@ def edit_profile(request):
         date_now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         
         clear_session(request,'first_name')
-        clear_session(request,'middle_name')
         clear_session(request,'last_name')
+        
         request.session['first_name']=first_name
-        request.session['middle_name']=middle_name
         request.session['last_name']=last_name
         
-        profile_update, profile_response = update_profile(user_token, photo, first_name, middle_name, 
+        profile_update, profile_response = update_profile(user_token, photo, first_name,
                                             last_name, about, country, region, municipality, 
                                             socials, gender, birthday, contact, date_now,privacy)
         employment_update, employment_response = update_employment(user_token, employ_status, industry, 
@@ -455,9 +446,9 @@ def edit_profile(request):
         
         return redirect("profile")
 
-    context ['profile'] = user_profile(user_token)
-    context ['employment'] = user_employment(user_token)
-    context ['education'] = user_education(user_token)
+    context['profile'] = user_profile(user_token)
+    context['employment'] = user_employment(user_token)
+    context['education'] = user_education(user_token)
     
     # LIST POPULATOR    
     context['employment_status_choices'] = EMPLOYMENT_STATUS
@@ -493,28 +484,26 @@ def partner(request):
         for program in programs_list:
             partner_programs.append(program)
     
-    applicants = get_applicants(user_token,7,None)
-    for applicant in applicants:
-        scholarship_applicants.append(applicant)
-    
-    context ['program_list'] = partner_programs
-    context ['scholarship_applicants'] = scholarship_applicants
-    
     if request.method == "POST":
         user_id = request.POST.get("user_id")
         request_program_id = request.POST.get("program_id")
         if 'approve' in request.POST:
-            print("asdasdwgerw rvre ",user_id, request_program_id)
             response_message = update_applicant(user_token, user_id, request_program_id, 1)
         elif 'waitlist' in request.POST:
             response_message = update_applicant(user_token, user_id, request_program_id, 2)
         elif 'reject' in request.POST:
             response_message = update_applicant(user_token, user_id, request_program_id, 3)
-    
-        print(response_message)
 
-    print(scholarship_applicants)
-    print("##############",partners)
+        print(response_message)
+    
+    # NAKADEFAULT MUNA ITO SA 7 SINCE WALA PANG FILTERING NG APPLICANTS
+    applicants = get_applicants(user_token,7,None)
+    for applicant in applicants:
+        scholarship_applicants.append(applicant)
+        
+    context['program_list'] = partner_programs
+    context['scholarship_applicants'] = scholarship_applicants
+    
     return render(request, template_name, context)
 
 def program(request, partner_id, program_id):
@@ -550,12 +539,11 @@ def program(request, partner_id, program_id):
         return response_message
     ###################### https://scholarium.tmtg-clone.click/api/me/scholarship ######################
     
-    context['programs'] = get_programs(user_token,partner_id,program_id)
-    print(context['programs'])
-    
     if request.method == "POST":
         response = scholar_apply(user_token,program_id)
         print(response)
+    
+    context['programs'] = get_programs(user_token,partner_id,program_id)
     
     return render(request, template_name, context)
 
@@ -594,7 +582,7 @@ def user_profile(bearer_token):
                         profile_data.append(user_data)
                         context[key] = data.get(key)
         except Exception as e:
-            print(e)
+            print(str(e))
     return context
 
 # GET https://scholarium.tmtg-clone.click/api/me/employment 
@@ -620,7 +608,7 @@ def user_employment(bearer_token):
                         employment_data.append(user_data)
                         context[key] = data.get(key)
         except Exception as e:
-            print(e)
+            print(str(e))
     return context
 
 # GET https://scholarium.tmtg-clone.click/api/me/education
@@ -646,7 +634,7 @@ def user_education(bearer_token):
                         education_data.append(user_data)
                         context[key] = data.get(key)
         except Exception as e:
-            print(e)
+            print(str(e))
     
     return context
 
@@ -667,7 +655,7 @@ def get_programs(bearer_token, partner_id,program_id):
                 for data in response_dict['data']:
                     program_list.append(data)
             except Exception as e:
-                print(e)                
+                print(str(e))              
     else:
         response = requests.request("GET", os.path.join(API_PARTNER_PROGRAMS_URL, str(partner_id)), headers=headers, data=payload)
         response_dict = json.loads(response.text)
@@ -676,7 +664,7 @@ def get_programs(bearer_token, partner_id,program_id):
                 for data in response_dict['data']:
                     program_list.append(data)
             except Exception as e:
-                print(e)
+                print(str(e))
 
     return program_list
 
@@ -698,7 +686,7 @@ def get_applicants(bearer_token, program_id, status):
                 for data in response_dict['data']:
                     applicants_list.append(data)
             except Exception as e:
-                print(e)
+                print(str(e))
     else:
         response = requests.request("GET", os.path.join(API_SCHOLAR_UPDATE_URL,str(program_id)), headers=headers, data=payload)
         response_dict = json.loads(response.text)
@@ -707,19 +695,18 @@ def get_applicants(bearer_token, program_id, status):
                 for data in response_dict['data']:
                     applicants_list.append(data)
             except Exception as e:
-                print(e)
+                print(str(e))
                 
     return applicants_list
 
 # POST https://scholarium.tmtg-clone.click/api/me/profile 
-def update_profile (bearer_token, photo, first_name, middle_name, last_name, about, country, region, municipality, socials, gender, birthday, contact, date_now, privacy):
+def update_profile (bearer_token, photo, first_name, last_name, about, country, region, municipality, socials, gender, birthday, contact, date_now, privacy):
     profile_data = []
     context = {}
     
     payload={
         'photo': photo,
         'first_name': first_name,
-        'middle_name': middle_name,
         'last_name': last_name,
         'about': about,
         'country': country,
@@ -755,7 +742,7 @@ def update_profile (bearer_token, photo, first_name, middle_name, last_name, abo
                         profile_data.append(user_data)
                         context[key] = data.get(key)
         except Exception as e:
-            print(e)
+            print(str(e))
             
     return context, response_message
 
@@ -796,7 +783,7 @@ def update_employment (bearer_token, employ_status, industry, employer, occupati
                         employment_data.append(user_data)
                         context[key] = data.get(key)
         except Exception as e:
-            print(e)
+            print(str(e))
 
     return context, response_message
 
@@ -837,7 +824,7 @@ def update_education (bearer_token, degree, school,
                         education_data.append(user_data)
                         context[key] = data.get(key)
         except Exception as e:
-            print(e)
+            print(str(e))
 
     return context, response_message
 

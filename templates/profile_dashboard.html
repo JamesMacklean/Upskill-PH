@@ -132,7 +132,7 @@
         <div class="tab">
             <h4>Profile</h4>
                 {% comment %} {{profile.photo}} {% endcomment %}
-                <p class="profile-full-name">{{profile.first_name}} {{profile.middle_name}} {{profile.last_name}}<p>
+                <p class="profile-full-name">{{profile.first_name}} {{profile.last_name}}<p>
                 <br>
                 <br>
                 <h5>About Me</h5>
@@ -193,7 +193,21 @@
     let subTabs = document.querySelectorAll(".sub-tabs h5");
     let subTabContents = document.querySelectorAll(".sub-tab-content .subtab");
 
-    tabs.forEach((tab,index) => {
+    var lastTabIndex = sessionStorage.getItem('lastTabIndex');
+    var lastSubTabIndex = sessionStorage.getItem('lastSubTabIndex');
+
+    tabs.forEach((tab,index) => {    
+        if (lastTabIndex) {
+            tabContents.forEach((content) =>{
+                content.classList.remove("active");
+            });
+            tabs.forEach((tab) => {
+                tab.classList.remove("active");
+            });
+            tabContents[lastTabIndex].classList.add("active");
+            tabs[lastTabIndex].classList.add("active");
+        }
+        
         tab.addEventListener("click", () => {
             tabContents.forEach((content) =>{
                 content.classList.remove("active");
@@ -201,11 +215,45 @@
             tabs.forEach((tab) => {
                 tab.classList.remove("active");
             });
+            try {
+                sessionStorage.setItem('lastTabIndex', index);
+            } catch (error) {
+                console.log(error);
+            }
             tabContents[index].classList.add("active");
             tabs[index].classList.add("active");
         })
     })
 
+    tabs.forEach((tab,index) => {    
+        if (lastTabIndex) {
+            tabContents.forEach((content) =>{
+                content.classList.remove("active");
+            });
+            tabs.forEach((tab) => {
+                tab.classList.remove("active");
+            });
+            tabContents[lastTabIndex].classList.add("active");
+            tabs[lastTabIndex].classList.add("active");
+        }
+        
+        tab.addEventListener("click", () => {
+            tabContents.forEach((content) =>{
+                content.classList.remove("active");
+            });
+            tabs.forEach((tab) => {
+                tab.classList.remove("active");
+            });
+            try {
+                sessionStorage.setItem('lastTabIndex', index);
+            } catch (error) {
+                console.log(error);
+            }
+            tabContents[index].classList.add("active");
+            tabs[index].classList.add("active");
+        })
+    })
+    
     subTabs.forEach((subtab,index) => {
         subtab.addEventListener("click", () => {
             subTabContents.forEach((subcontent) =>{
