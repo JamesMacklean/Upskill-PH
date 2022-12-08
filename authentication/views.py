@@ -66,8 +66,13 @@ def authenticate_user(request):
             for key,value in payload.items():
                 if key == 'data':
                     for key,value in payload['data'].items():
-                        request.session[key] = value
-        
+                        # if request.session['first_name'] or request.session['last_name']:
+                        if request.session[key]:
+                            pass
+                        else:
+                            request.session[key] = value
+            request.session.modified = True
+
             return True
         
         except jwt.ExpiredSignatureError:
@@ -103,8 +108,7 @@ def success(request, user_hash):
     """"""
     template_name = "success.html"
     context = {}
-                    
-    # user_hash = request.session.get('user_hash')
+
     username = request.session.get('new_username')        
     first_name = request.session.get('new_first_name')
     last_name = request.session.get('new_last_name')
@@ -115,6 +119,7 @@ def success(request, user_hash):
         return HttpResponseRedirect('/signin')
     clear_session(request,'url')
     ########## ANONYMOUS REQUIRED ##########
+    
     ############################# FOR MAIL ##############################
     html = render_to_string('emails/email_verification.html', {
         'username': username,
@@ -374,7 +379,6 @@ def profile(request):
     
     # NAKADEFAULT MUNA ITO SA 2 SINCE DICT PA LANG ANG MAY PROGRAMS
     context['program_list'] = get_programs(user_token,2,None)
-    
     context['profile'] = user_profile(user_token)
     context['employment'] = user_employment(user_token)
     context['education'] = user_education(user_token)
@@ -422,12 +426,10 @@ def edit_profile(request):
         privacy = request.POST.get('details_privacy')
         date_now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         
-        clear_session(request,'first_name')
-        clear_session(request,'last_name')
-        
         request.session['first_name']=first_name
         request.session['last_name']=last_name
-        
+        request.session.modified = True 
+
         profile_update, profile_response = update_profile(user_token, photo, first_name,
                                             last_name, about, country, region, municipality, 
                                             socials, gender, birthday, contact, date_now,privacy)
@@ -475,14 +477,15 @@ def partner(request):
     ########## LOGIN REQUIRED ##########
     
     user_token = request.session['user_token']
-    
-    partners = request.session['partners']    
-    for data in partners:
-        partner_id = data['partner_id']
-        program_id = data['program_id']
-        programs_list = get_programs(user_token,partner_id,program_id)
-        for program in programs_list:
-            partner_programs.append(program)
+
+    partners = request.session['partners'] 
+    if partners:   
+        for data in partners:
+            partner_id = data['partner_id']
+            program_id = data['program_id']
+            programs_list = get_programs(user_token,partner_id,program_id)
+            for program in programs_list:
+                partner_programs.append(program)
     
     if request.method == "POST":
         user_id = request.POST.get("user_id")
@@ -500,7 +503,7 @@ def partner(request):
     applicants = get_applicants(user_token,7,None)
     for applicant in applicants:
         scholarship_applicants.append(applicant)
-        
+
     context['program_list'] = partner_programs
     context['scholarship_applicants'] = scholarship_applicants
     
