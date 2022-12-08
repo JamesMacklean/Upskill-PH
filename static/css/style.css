@@ -800,4 +800,36 @@ table tr th {
 
 table tr td {
   padding: 20px;
+}
+
+.wrapper-filter {
+  width: 95%;
+  margin: 0 auto;
+}
+
+#search-container {
+  margin: 1em 0;
+}
+
+#search-container input {
+  background-color: transparent;
+  width: 40%;
+  border: 0;
+  border-bottom: 2px solid #ececec;
+  padding: 1em 0.3em;
+}
+
+#search-container input:focus {
+  border-bottom: 2px solid #f15a25;
+  transition: 0.5s ease-in-out;
+}
+
+input:focus {
+  outline: none;
+}
+
+#search-container button {
+  padding: 5px;
+  background-color: #f15a25;
+  border-radius: 15px;
 }/*# sourceMappingURL=style.css.map */

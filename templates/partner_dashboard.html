@@ -87,6 +87,19 @@
          <!--THIRD TAB-->
         <div class="tab" id="scholarship-applications">
             <h4>Applications</h4>
+            <div class="wrapper-filter">
+                <div class="search-bar">
+                    <div id="search-container">
+                        <input type="search" placeholder="search...">
+                        <button id="search"><i class="far fa-search"></i></button>
+                    </div>
+                    <div id="filter-buttons">
+                        <button class="btn">All</button>
+                        <button class="btn">Program</button>
+                        <button class="btn">Status</button>
+                    </div>
+                </div>
+            </div>
             {% for applicant in scholarship_applicants %}
             <form action="" class="scholarship-applications" id="apply" method="POST">
                 <div class="action-name">
