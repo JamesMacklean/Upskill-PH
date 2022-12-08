@@ -802,16 +802,16 @@ table tr td {
   padding: 20px;
 }
 
-.wrapper-filter {
+div.wrapper-filter {
   width: 95%;
   margin: 0 auto;
 }
 
-#search-container {
+div#search-container {
   margin: 1em 0;
 }
 
-#search-container input {
+div#search-container input {
   background-color: transparent;
   width: 40%;
   border: 0;
@@ -819,16 +819,16 @@ table tr td {
   padding: 1em 0.3em;
 }
 
-#search-container input:focus {
+div#search-container input#search-input:focus {
   border-bottom: 2px solid #f15a25;
   transition: 0.5s ease-in-out;
 }
 
-input:focus {
+input#search-input:focus {
   outline: none;
 }
 
-#search-container button {
+div#search-container button#search {
   padding: 5px;
   background-color: #f15a25;
   border-radius: 15px;
