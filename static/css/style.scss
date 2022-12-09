@@ -587,6 +587,10 @@ div.card-partner-logo{
     flex-wrap: nowrap;
     flex-direction: row;
 }
+div.card-partner-logo img{
+    max-width: 62px;
+    max-height: 32px;
+}
 div.container-card-title h3{
     text-align: left;
     color: #f15a25;
