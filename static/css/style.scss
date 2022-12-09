@@ -315,8 +315,6 @@ a.gg:hover i{
     }
     .signup-signin{
         width: 100%;
-        left: 50%;
-        top: 95%;
         transform: translate(-50%, -100%);
         transition: 1s 0.8s ease-in-out;
     }
@@ -329,6 +327,7 @@ a.gg:hover i{
         justify-content: space-around;
         align-items: center;
         padding: 2.5rem 8%;
+        margin-top: 100px;
     }
     .panel .content{
         padding-right: 15%;
@@ -532,6 +531,9 @@ div.tabs .active{
     color: #fff;
     border-radius: 5px;
 }
+p.profile-full-name{
+    text-transform: capitalize;
+}
 
 div.sub-tabs{
     display: flex;
@@ -566,7 +568,7 @@ div.card-container{
     width: 250px !important;
     height: 350px !important;
     background-color: #fff;
-    margin: 0 15px;
+    margin: 15px 15px;
 }
 div.card-image{
     height: 130px;
@@ -741,4 +743,32 @@ table tr th{
 }
 table tr td{
     padding: 20px;
+}
+// SEARCH FILTER
+
+div.wrapper-filter{
+    width: 95%;
+    margin: 0 auto;
+}
+div#search-container{
+    margin: 1em 0;
+}
+div#search-container input{
+    background-color: transparent;
+    width: 40%;
+    border: 0;
+    border-bottom: 2px solid #ececec;
+    padding: 1em 0.3em;
+}
+div#search-container input#search-input:focus{
+    border-bottom:2px solid #f15a25;
+    transition: 0.5s ease-in-out;
+}
+input#search-input:focus{
+    outline: none;
+}
+div#search-container button#search{
+    padding: 5px;
+    background-color: #f15a25;
+    border-radius: 15px;
 }

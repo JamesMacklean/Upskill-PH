@@ -108,6 +108,27 @@
             </div>
         </div>           
          <!--THIRD TAB-->
+        {% comment %} <div class="tab" id="scholarship-applications">
+            <h4>Applications</h4>
+            {% for applicant in scholarship_applicants %}
+            <form action="" class="scholarship-applications" id="apply" method="POST">
+                <div class="action-name">
+                    <h4>{{applicant.first_name}} {{applicant.last_name}}</h4>
+                    <p>University</p>
+                    <p>Degree</p>
+                    Application Status: {{applicant.status}}
+                    <input type="hidden" name="user_id" value="{{applicant.user_id}}" />
+                    <input type="hidden" name="program_id" value="{{applicant.program_id}}" />
+                </div>
+                <div class="action-buttons">
+                        {% csrf_token %}
+                    <button class="action-btn green" name='approve'>Approve</button>
+                    <button class="action-btn yellow" name='waitlist'>Waitlist</button>
+                    <button class="action-btn red" name='reject'>Reject</button>
+                </div>
+            </form>
+            {% endfor %}
+        </div> {% endcomment %}
         <div class="tab" id="scholars">
             <h4>Scholars</h4>
             <div class="scholar-list">
