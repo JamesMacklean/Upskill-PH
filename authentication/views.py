@@ -341,9 +341,7 @@ def signin(request):
                 next_page = ""
             
             # IF REDIRECTION SIYA, PUNTA SA NEXT PAGE, PERO KUNG HINDI, SA DASHBOARD
-            if not next_page:
-                return redirect('home')
-            else:
+            if next_page:
                 print(next_page)
                 try:
                     return HttpResponseRedirect(reverse(next_page))
@@ -351,6 +349,8 @@ def signin(request):
                     partner_id = request.session.get('partner_id')
                     program_id = request.session.get('program_id')
                     return HttpResponseRedirect(reverse(next_page,kwargs={'partner_id':partner_id,'program_id':program_id}))
+            else:
+                return redirect('home')
 
         else:
             # LAGYAN ITO NG MESSAGE BOX NA NAGSASABI NG ERROR MESSAGE
