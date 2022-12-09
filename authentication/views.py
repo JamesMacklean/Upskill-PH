@@ -336,15 +336,21 @@ def signin(request):
             
             # CHECK IF THE REQUEST IS REDIRECTION
             try:
-                next_page = request.session['url']
+                next_page = request.session.get('url')
             except:
                 next_page = ""
             
             # IF REDIRECTION SIYA, PUNTA SA NEXT PAGE, PERO KUNG HINDI, SA DASHBOARD
-            if next_page == "":
+            if not next_page:
                 return redirect('home')
             else:
-                return HttpResponseRedirect(reverse(next_page))
+                print(next_page)
+                try:
+                    return HttpResponseRedirect(reverse(next_page))
+                except:
+                    partner_id = request.session.get('partner_id')
+                    program_id = request.session.get('program_id')
+                    return HttpResponseRedirect(reverse(next_page,kwargs={'partner_id':partner_id,'program_id':program_id}))
 
         else:
             # LAGYAN ITO NG MESSAGE BOX NA NAGSASABI NG ERROR MESSAGE
@@ -491,17 +497,20 @@ def partner(request):
     
     return render(request, template_name, context)
 
-def scholar_application(request, partner_id, program_id):
+def application(request, partner_id, program_id):
     """"""
     template_name = "scholar_application.html"
     context = {}
     scholarship_applicants = []
     monitored_partner = []
     monitored_program = []
+    
     ######### LOGIN REQUIRED ##########
     if not authenticate_user(request):
-        request.session['url'] = "application/"+str(partner_id)+"/"+str(program_id)
-        return HttpResponseRedirect('/signin?next=application/'+str(partner_id)+"/"+str(program_id))
+        request.session['url'] = "application"
+        request.session['partner_id'] = partner_id
+        request.session['program_id'] = program_id
+        return HttpResponseRedirect('/signin?next=application/'+str(partner_id)+"/"+str(program_id)+"/")
     clear_session(request,'url')
     ######### LOGIN REQUIRED ##########
     
@@ -511,12 +520,11 @@ def scholar_application(request, partner_id, program_id):
     for data in partners:
             monitored_partner.append(data['partner_id'])
             monitored_program.append(data['program_id'])
-    
     if partner_id not in monitored_partner:
         raise Http404
     if program_id not in monitored_program:
         raise Http404
-    
+
     if request.method == "POST":
         user_id = request.POST.get("user_id")
         request_program_id = request.POST.get("program_id")
@@ -542,11 +550,13 @@ def program(request, partner_id, program_id):
     """"""
     template_name = "scholar_programs.html"
     context = {}
-
+    program_ids = []
     ######### LOGIN REQUIRED ##########
     if not authenticate_user(request):
-        request.session['url'] = "program/"+str(partner_id)+"/"+str(program_id)
-        return HttpResponseRedirect('/signin?next=program/'+str(partner_id)+"/"+str(program_id))
+        request.session['url'] = "program"
+        request.session['partner_id'] = partner_id
+        request.session['program_id'] = program_id
+        return HttpResponseRedirect('/signin?next=program/'+str(partner_id)+"/"+str(program_id)+"/")
     clear_session(request,'url')
     ######### LOGIN REQUIRED ##########
     
@@ -574,6 +584,14 @@ def program(request, partner_id, program_id):
     if request.method == "POST":
         response = scholar_apply(user_token,program_id)
         print(response)
+    
+    all_programs = get_programs(user_token, partner_id, None)
+    for program in all_programs:
+        for key, value in program.items():
+            if key == 'id':
+                program_ids.append(value)
+    if program_id not in program_ids:
+        raise Http404
     
     context['programs'] = get_programs(user_token,partner_id,program_id)
     
