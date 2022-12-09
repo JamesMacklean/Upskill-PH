@@ -9,7 +9,7 @@
         </div>
         <p class="cert-text">This is to certify that</p>
         <div class="certificate-content">
-            <h1 class="certificate-name">{{request.session.first_name}} {{request.session.last_name}}</h1>
+            <h1 class="certificate-name">{{request.session.first_name|title}} {{request.session.last_name|title}}</h1>
         </div>
         <p class="certificate-text">succesfully completed</p>
         <div class="certificate-content">

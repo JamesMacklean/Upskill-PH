@@ -18,11 +18,11 @@
 {% else %}
     {% if request.session.is_partner and request.session.is_scholar %}
         <div class="icons">
-            {{request.session.first_name}} {{request.session.last_name}} <a class="user-dropdown" onclick="submenuToggle()"><i class="fa fa-caret-down orange"></i></a>
+            {{request.session.first_name|title}} {{request.session.last_name|title}} <a class="user-dropdown" onclick="submenuToggle()"><i class="fa fa-caret-down orange"></i></a>
         </div>
         <div class="sub-menu">
             <ul>
-                <li><h3>{{request.session.first_name}} {{request.session.last_name}}</h3></li>
+                <li><h3>{{request.session.first_name|title}} {{request.session.last_name|title}}</h3></li>
                 <a href="{% url 'partner' %}"><li>Partner</li></a>
                 <a href="{% url 'profile' %}"><li>Profile</li></a>
                 <a href="{% url 'signout' %}"><li>Sign out</li></a>
@@ -30,11 +30,11 @@
         </div>
     {% elif request.session.is_partner %}
         <div class="icons">
-            {{request.session.first_name}} {{request.session.last_name}} <a class="user-dropdown" onclick="submenuToggle()"><i class="fa fa-caret-down"></i></a>
+            {{request.session.first_name|title}} {{request.session.last_name|title}} <a class="user-dropdown" onclick="submenuToggle()"><i class="fa fa-caret-down"></i></a>
         </div>
         <div class="sub-menu">
             <ul>
-                <li><h3>{{request.session.first_name}} {{request.session.last_name}}</h3></li>
+                <li><h3>{{request.session.first_name|title}} {{request.session.last_name|title}}</h3></li>
                 <a href="{% url 'partner' %}"><li>Partner</li></a>
                 <a href="{% url 'signout' %}"><li>Sign out</li></a>
             </ul>
@@ -42,11 +42,11 @@
     
     {% else %}
         <div class="icons">
-            {{request.session.first_name}} {{request.session.last_name}} <a class="user-dropdown" onclick="submenuToggle()"><i class="fa fa-caret-down"></i></a>
+            {{request.session.first_name|title}} {{request.session.last_name|title}} <a class="user-dropdown" onclick="submenuToggle()"><i class="fa fa-caret-down"></i></a>
         </div>
         <div class="sub-menu">
             <ul>
-                <li><h3>{{request.session.first_name}} {{request.session.last_name}}</h3></li>
+                <li><h3>{{request.session.first_name|title}} {{request.session.last_name|title}}</h3></li>
                 <a href="{% url 'profile' %}"><li>Profile</li></a>
                 <a href="{% url 'signout' %}"><li>Sign out</li></a>
             </ul>

@@ -17,8 +17,5 @@ urlpatterns = [
     path('application/<int:partner_id>/<int:program_id>/', views.application, name="application"),
     path('program/<int:partner_id>/<int:program_id>/', views.program, name="program"),
     path('partner/', views.partner, name="partner"),
-    path('sampleprogram1/', views.sampleprogram1, name="sampleprogram1"),
-    path('sampleprogram4/', views.sampleprogram4, name="sampleprogram4"),
-    path('sampleprogram5/', views.sampleprogram5, name="sampleprogram5"),
     path('certificate/', views.certificate, name="certificate")
 ]

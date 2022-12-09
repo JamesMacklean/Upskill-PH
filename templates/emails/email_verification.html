@@ -6,7 +6,7 @@
     <td>
         <p style="color: rgba(0,0,0,.75);">
             {% filter force_escape %}
-                This is a routed Account Activation email for {{ first_name }} {{ last_name}}, ({{ email }}): {{ username }}
+                This is a routed Account Activation email for {{ first_name|title }} {{ last_name|title }}, ({{ email }}): {{ username }}
             {% endfilter %}
             <br />
         </p>
@@ -20,7 +20,7 @@
         </h1>
         <p style="color: rgba(0,0,0,.75);">
             {% filter force_escape %}
-                Hello {{ username }}!
+                Hello {{ first_name|title }} {{ last_name|title }}!
             {% endfilter %}
             <br />
         </p>

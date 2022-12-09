@@ -3,7 +3,7 @@
 {% block content %}
 <div style="padding-top: 100px; height:100vh;">    
 <center>
-    <h1>WELCOME, {{ request.session.first_name }} {{ request.session.last_name }}</h1>
+    <h1>WELCOME, {{ request.session.first_name|title }} {{ request.session.last_name|title }}</h1>
     <img src="{% static 'images/welcome.svg'%}">
     </center>
 </div>

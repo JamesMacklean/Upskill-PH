@@ -10,8 +10,8 @@
         <h2 class="profile-label">Profile Data</h2>
         <div class="profile-data">
             <label for="name"> Full name: </label>
-            <input type="text" name="first_name" placeholder="First Name" value="{{profile.first_name}}">
-            <input type="text" name="last_name" placeholder="Last Name" value="{{profile.last_name}}">
+            <input type="text" name="first_name" placeholder="First Name" value="{{profile.first_name|title}}">
+            <input type="text" name="last_name" placeholder="Last Name" value="{{profile.last_name|title}}">
         </div>
 
         <div class="profile-data">

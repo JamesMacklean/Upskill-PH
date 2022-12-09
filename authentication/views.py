@@ -22,28 +22,23 @@ from .variables import *
 import os, requests, ast, jwt
 import json
 class SessionChecker(APIView):
-    def get(self, request):
-        
+    def get(self, request):    
         # CHECK IF USER IS AUTHENTICATED
-        try:            
-            
+        try:                    
             # user_token = request.COOKIES.get('jwt')    
             try:    
                 user_token = request.session['user_token']
-                payload = jwt.decode(user_token, API_SECRET_KEY, algorithms=['HS256'])
-                
+                payload = jwt.decode(user_token, API_SECRET_KEY, algorithms=['HS256'])        
                 # SAVE JWT PAYLOAD INTO SESSIONS
                 for key,value in payload.items():
                     if key == 'data':
                         for key,value in payload['data'].items():
                             request.session[key] = value
-            
                 # DISPLAY SESSION ITEMS
                 for key, value in request.session.items():
-                    print('{}: {}'.format(key, value))
-                      
-                return Response(payload)
-                      
+                    print('{}: {}'.format(key, value))    
+                return Response(payload)      
+                
             except jwt.ExpiredSignatureError:
                 # raise AuthenticationFailed('Unauthenticated!')
                 raise Http404
@@ -57,7 +52,7 @@ def authenticate_user(request):
         # PRINT SESSION ITEMS
         for key, value in request.session.items():
             print('{}: {}'.format(key, value))
-            
+                 
         try:   
             user_token = request.session['user_token'] 
             payload = jwt.decode(user_token, API_SECRET_KEY, algorithms=['HS256'])
@@ -71,8 +66,8 @@ def authenticate_user(request):
                             pass
                         else:
                             request.session[key] = value
+                            
             request.session.modified = True
-
             return True
         
         except jwt.ExpiredSignatureError:
@@ -85,9 +80,10 @@ def authenticate_user(request):
     
 def clear_session(request,key):
     try:
-        del request.session[key]
+        del request.session[key]    
     except KeyError:
         pass
+    
     return HttpResponse(key, "session data cleared")
 
 def home(request):
@@ -95,13 +91,11 @@ def home(request):
     template_anonymous = "authentication/signup.html"
     template_authenticated = "authentication/dashboard.html"
     context = {}
-    
     ########## LOGIN REQUIRED ##########
     if authenticate_user(request):
         return render(request, template_authenticated, context)
     ########## LOGIN REQUIRED ##########
     
-    # PALITAN ITO NG HOME TALAGA
     return render(request,template_anonymous, context)
 
 def success(request, user_hash):
@@ -113,13 +107,13 @@ def success(request, user_hash):
     first_name = request.session.get('new_first_name')
     last_name = request.session.get('new_last_name')
     email = request.session.get('new_email')
-
+    
     ########## ANONYMOUS REQUIRED ##########
     if authenticate_user(request):
         return HttpResponseRedirect('/signin')
     clear_session(request,'url')
     ########## ANONYMOUS REQUIRED ##########
-    
+
     ############################# FOR MAIL ##############################
     html = render_to_string('emails/email_verification.html', {
         'username': username,
@@ -130,17 +124,14 @@ def success(request, user_hash):
         'domain': DOMAIN,
         'link': API_VERIFY_ACCOUNT_URL
     })
-    
     send_mail(
         'Title', 
         'Content of the Message', 
         EMAIL_HOST_USER, 
-        
         ########## ORIGINAL CODE ##########
         [email], 
         ########## FOR TEST CODE ##########
         # [TEST_EMAIL_RECEIVER],
-
         html_message=html,
         fail_silently=False
     )
@@ -154,19 +145,18 @@ def verify_account(request, user_hash):
     """"""
     template_successful = "authentication/verification_successful.html"
     template_failed = "authentication/verification_failed.html"
+    context = {}
+    
+    ###################### https://scholarium.tmtg-clone.click/api/user/verify/[args] ###################### 
     def verify(user_hash):
-        
-        ###################### https://scholarium.tmtg-clone.click/api/user/verify/[args] ###################### 
         payload={}
         files={}
         headers = {
         'Authorization': API_TOKEN
         }
-
         response = requests.request("PUT", os.path.join(API_VERIFY_ACCOUNT_URL, user_hash), headers=headers, data=payload, files=files)
-        
         response_dict = ast.literal_eval(response.text)
-        ###################### https://scholarium.tmtg-clone.click/api/user/verify/[args] ###################### 
+    ###################### https://scholarium.tmtg-clone.click/api/user/verify/[args] ###################### 
          
         if 'data' in response_dict:
             for data in response_dict['data']:
@@ -179,7 +169,6 @@ def verify_account(request, user_hash):
         return password,response_message
     
     try:
-        context = {}
         password, response_message = verify(user_hash)
         
         context['response_message'] = response_message
@@ -202,38 +191,35 @@ def signup(request):
     template_name = "authentication/signup.html"
     context = {}
 
+    ###################### https://scholarium.tmtg-clone.click/api/user/create ###################### 
     def create_account(username,firstname,lastname,email):    
-        ###################### https://scholarium.tmtg-clone.click/api/user/create ###################### 
         payload={
             'username': username,
             'first_name': firstname,
             'last_name': lastname,
             'email': email
             }
-        
         files=[]
         headers = {
         'Authorization': API_TOKEN
         }
-            
+          
         for key, value in payload.items():
             request.session['new_'+key] = value
             
         response = requests.request("POST", API_CREATE_ACCOUNT_URL, headers=headers, data=payload, files=files)
         response_dict = ast.literal_eval(response.text)
-        ###################### https://scholarium.tmtg-clone.click/api/user/create ###################### 
  
         if 'data' in response_dict:
             for data in response_dict['data']:
-                
                 response_message = data.get("success")
                 user_hash = data.get("hash")
-
         else:
             response_message = response_dict.get("error")
-            user_hash = "invalid"         
+            user_hash = ""         
 
         return user_hash, response_message
+    ###################### https://scholarium.tmtg-clone.click/api/user/create ###################### 
         
     try:
         if request.method == "POST":
@@ -244,7 +230,7 @@ def signup(request):
 
             user_hash, response_message = create_account(username,firstname,lastname,email)
             
-            if user_hash != "invalid":
+            if user_hash:
                 context['message'] = "success"
                 request.session['user_hash'] = user_hash
                 return redirect('success', user_hash)
@@ -263,9 +249,8 @@ def signin(request):
     template_name = "authentication/signin.html"
     context = {}
     
+    ###################### https://scholarium.tmtg-clone.click/api/login ######################
     def login_account (username, password):
-
-        ###################### https://scholarium.tmtg-clone.click/api/login ######################
         payload={
             'user': username,
             'pass': password 
@@ -277,20 +262,19 @@ def signin(request):
 
         response = requests.request("POST", API_LOGIN_ACCOUNT_URL, headers=headers, data=payload, files=files)        
         response_dict = ast.literal_eval(response.text)
-        ###################### https://scholarium.tmtg-clone.click/api/login ######################
         
         if 'data' in response_dict:
             for data in response_dict['data']:
                 user_token = data.get("token")
                 expires = data.get("expires")
                 response_message = "Successfully Logged In!"
-
         else:
             user_token = ''
             expires = ''
             response_message = response_dict.get("error")
         
         return user_token, expires, response_message
+    ###################### https://scholarium.tmtg-clone.click/api/login ######################
     
     if request.method == "POST":
         username = request.POST['username']
@@ -298,8 +282,7 @@ def signin(request):
 
         user_token, expires, response_message = login_account(username, password)
         
-        if user_token != '':
-            
+        if user_token:
             # PUT JWT TOKEN TO COOKIES
             # response = Response()
             # response.set_cookie(key='jwt',value=user_token, httponly=True)
@@ -309,27 +292,22 @@ def signin(request):
             
             # print('COOKIE RESPONSE:', response.data)
             
-            ############################# FOR AUTHENTICATION ##############################
             try:    
                 request.session['user_token'] = user_token
                 request.session['expires'] = expires
                 payload = jwt.decode(user_token, API_SECRET_KEY, algorithms=['HS256'])
-            
                 # SAVE JWT PAYLOAD INTO SESSIONS
                 for key,value in payload.items():
                     if key == 'data':
                         for key,value in payload['data'].items():
                             request.session[key] = value
-            
                 # PRINT SESSION ITEMS
                 for key, value in request.session.items():
                     print('{}: {}'.format(key, value))
-                                
+                                        
             except jwt.ExpiredSignatureError:
-                # raise AuthenticationFailed('Unauthenticated!')
                 raise Http404
-            ############################# FOR AUTHENTICATION ##############################
-          
+            
             context['username'] = username
             context['expires'] = expires
             context['user_token'] = user_token
@@ -342,13 +320,19 @@ def signin(request):
             
             # IF REDIRECTION SIYA, PUNTA SA NEXT PAGE, PERO KUNG HINDI, SA DASHBOARD
             if next_page:
-                print(next_page)
                 try:
+                    if next_page == 'application' or next_page == 'program':
+                        partner_id = request.session.get('partner_id')
+                        program_id = request.session.get('program_id')
+                        clear_session(request,'partner_id')
+                        clear_session(request,'program_id')
+                        return HttpResponseRedirect(reverse(next_page,kwargs={'partner_id':partner_id,'program_id':program_id}))
+
                     return HttpResponseRedirect(reverse(next_page))
-                except:
-                    partner_id = request.session.get('partner_id')
-                    program_id = request.session.get('program_id')
-                    return HttpResponseRedirect(reverse(next_page,kwargs={'partner_id':partner_id,'program_id':program_id}))
+            
+                except Exception as e:
+                    print(str(e))
+            
             else:
                 return redirect('home')
 
@@ -373,6 +357,7 @@ def profile(request):
     """"""
     template_name = "profile_dashboard.html"
     context = {}
+    applied_programs = []
     
     ########## LOGIN REQUIRED ##########
     if not authenticate_user(request):
@@ -382,17 +367,21 @@ def profile(request):
     ########## LOGIN REQUIRED ##########
     
     user_token = request.session['user_token']
+    scholarships = request.session['scholarships']
     
+    if scholarships:   
+        for data in scholarships:
+            program_id = data['program_id']
+            applied_programs.append(program_id)
+    
+    print (applied_programs)
+    context['applied_programs'] = applied_programs
     # NAKADEFAULT MUNA ITO SA 2 SINCE DICT PA LANG ANG MAY PROGRAMS
     context['program_list'] = get_programs(user_token,2,None)
     context['profile'] = user_profile(user_token)
     context['employment'] = user_employment(user_token)
     context['education'] = user_education(user_token)
     
-    print ("PROFILE:", context['profile'])
-    print ("EMPLOYMENT:", context['employment'])
-    print ("EDUCATION:", context['education'])
-    print ("PROGRAM LIST:", context['program_list'])
     return render(request, template_name, context)
 
 def edit_profile(request):
@@ -408,7 +397,7 @@ def edit_profile(request):
     ########## LOGIN REQUIRED ##########
     
     user_token = request.session['user_token']
-
+    
     if request.method == "POST":
         photo = request.POST.get('photo')
         first_name = request.POST.get('first_name')
@@ -447,7 +436,7 @@ def edit_profile(request):
         context['profile'] = profile_update
         context['employment'] = employment_update
         context['education'] = education_update
-        
+
         print("PROFILE:",profile_response)
         print("EMPLOYMENT:",employment_response)
         print("EDUCATION:",education_response)
@@ -483,13 +472,14 @@ def partner(request):
     ########## LOGIN REQUIRED ##########
     
     user_token = request.session['user_token']
-
-    partners = request.session['partners'] 
+    partners = request.session['partners']
+    
     if partners:   
         for data in partners:
             partner_id = data['partner_id']
             program_id = data['program_id']
             programs_list = get_programs(user_token,partner_id,program_id)
+            
             for program in programs_list:
                 partner_programs.append(program)
 
@@ -515,11 +505,12 @@ def application(request, partner_id, program_id):
     ######### LOGIN REQUIRED ##########
     
     user_token = request.session['user_token']
+    partners = request.session['partners']
     
-    partners = request.session['partners'] 
     for data in partners:
             monitored_partner.append(data['partner_id'])
             monitored_program.append(data['program_id'])
+            
     if partner_id not in monitored_partner:
         raise Http404
     if program_id not in monitored_program:
@@ -528,6 +519,7 @@ def application(request, partner_id, program_id):
     if request.method == "POST":
         user_id = request.POST.get("user_id")
         request_program_id = request.POST.get("program_id")
+        
         if 'approve' in request.POST:
             response_message = update_applicant(user_token, user_id, request_program_id, 1)
         elif 'waitlist' in request.POST:
@@ -538,6 +530,7 @@ def application(request, partner_id, program_id):
         print(response_message)
 
     applicants = get_applicants(user_token,program_id,None)
+    
     for applicant in applicants:
         scholarship_applicants.append(applicant)
 
@@ -551,6 +544,7 @@ def program(request, partner_id, program_id):
     template_name = "scholar_programs.html"
     context = {}
     program_ids = []
+    
     ######### LOGIN REQUIRED ##########
     if not authenticate_user(request):
         request.session['url'] = "program"
@@ -564,7 +558,6 @@ def program(request, partner_id, program_id):
     
     ###################### https://scholarium.tmtg-clone.click/api/me/scholarship ######################
     def scholar_apply(bearer_token, program_id):
-    
         payload={'program_id': program_id}
         headers = {
         'Authorization': bearer_token,
@@ -586,25 +579,18 @@ def program(request, partner_id, program_id):
         print(response)
     
     all_programs = get_programs(user_token, partner_id, None)
+    
     for program in all_programs:
         for key, value in program.items():
             if key == 'id':
                 program_ids.append(value)
+                
     if program_id not in program_ids:
         raise Http404
     
     context['programs'] = get_programs(user_token,partner_id,program_id)
     
     return render(request, template_name, context)
-
-def sampleprogram1(request):
-    return render(request, "tempPrograms/sample_program1.html")
-
-def sampleprogram4(request):
-    return render(request, "tempPrograms/sample_program4.html")
-
-def sampleprogram5(request):
-    return render(request, "tempPrograms/sample_program5.html")
 
 def certificate(request):
     return render(request, "certificate.html")
@@ -613,7 +599,6 @@ def certificate(request):
 def user_profile(bearer_token):  
     profile_data = []
     context = {}
-    
     payload={}
     headers = {
     'Authorization': bearer_token
@@ -631,15 +616,16 @@ def user_profile(bearer_token):
                         user_data = {key:data.get(key)}
                         profile_data.append(user_data)
                         context[key] = data.get(key)
+                        
         except Exception as e:
             print(str(e))
+            
     return context
 
 # GET https://scholarium.tmtg-clone.click/api/me/employment 
 def user_employment(bearer_token):  
     employment_data = []
-    context = {}
-    
+    context = {}  
     payload={}
     headers = {
     'Authorization': bearer_token
@@ -657,15 +643,16 @@ def user_employment(bearer_token):
                         user_data = {key:data.get(key)}
                         employment_data.append(user_data)
                         context[key] = data.get(key)
+                        
         except Exception as e:
             print(str(e))
+            
     return context
 
 # GET https://scholarium.tmtg-clone.click/api/me/education
 def user_education(bearer_token):  
     education_data = []
     context = {}
-    
     payload={}
     headers = {
     'Authorization': bearer_token
@@ -683,6 +670,7 @@ def user_education(bearer_token):
                         user_data = {key:data.get(key)}
                         education_data.append(user_data)
                         context[key] = data.get(key)
+                        
         except Exception as e:
             print(str(e))
     
@@ -691,7 +679,6 @@ def user_education(bearer_token):
 # GET https://scholarium.tmtg-clone.click/api/partner/programs/[partner_id]/[program_id]
 def get_programs(bearer_token, partner_id,program_id):  
     program_list = []
-    
     payload={}
     headers = {
     'Authorization': bearer_token
@@ -700,15 +687,18 @@ def get_programs(bearer_token, partner_id,program_id):
     if program_id:
         response = requests.request("GET", os.path.join(API_PARTNER_PROGRAMS_URL, str(partner_id)+"/"+str(program_id)), headers=headers, data=payload)
         response_dict = json.loads(response.text)
+        
         if 'data' in response_dict:
             try:
                 for data in response_dict['data']:
                     program_list.append(data)
             except Exception as e:
-                print(str(e))              
+                print(str(e))
+                              
     else:
         response = requests.request("GET", os.path.join(API_PARTNER_PROGRAMS_URL, str(partner_id)), headers=headers, data=payload)
         response_dict = json.loads(response.text)
+        
         if 'data' in response_dict:
             try:
                 for data in response_dict['data']:
@@ -720,9 +710,7 @@ def get_programs(bearer_token, partner_id,program_id):
 
 # GET https://scholarium.tmtg-clone.click/api/partner/scholarship/[program_id]/[status]
 def get_applicants(bearer_token, program_id, status):  
-    context = {}
     applicants_list = []
-    
     payload={}
     headers = {
     'Authorization': bearer_token
@@ -731,15 +719,18 @@ def get_applicants(bearer_token, program_id, status):
     if status:
         response = requests.request("GET", os.path.join(API_SCHOLAR_UPDATE_URL,str(program_id)+"/"+status), headers=headers, data=payload)
         response_dict = json.loads(response.text)
+        
         if 'data' in response_dict:
             try:
                 for data in response_dict['data']:
                     applicants_list.append(data)
             except Exception as e:
                 print(str(e))
+                
     else:
         response = requests.request("GET", os.path.join(API_SCHOLAR_UPDATE_URL,str(program_id)), headers=headers, data=payload)
         response_dict = json.loads(response.text)
+        
         if 'data' in response_dict:
             try:
                 for data in response_dict['data']:
@@ -753,7 +744,6 @@ def get_applicants(bearer_token, program_id, status):
 def update_profile (bearer_token, photo, first_name, last_name, about, country, region, municipality, socials, gender, birthday, contact, date_now, privacy):
     profile_data = []
     context = {}
-    
     payload={
         'photo': photo,
         'first_name': first_name,
@@ -791,6 +781,7 @@ def update_profile (bearer_token, photo, first_name, last_name, about, country, 
                         user_data = {key:data.get(key)}
                         profile_data.append(user_data)
                         context[key] = data.get(key)
+                        
         except Exception as e:
             print(str(e))
             
@@ -800,7 +791,6 @@ def update_profile (bearer_token, photo, first_name, last_name, about, country, 
 def update_employment (bearer_token, employ_status, industry, employer, occupation, experience, date_now, privacy):
     employment_data = []
     context = {}
-    
     payload={
         'employ_status': employ_status,
         'industry': industry,
@@ -832,6 +822,7 @@ def update_employment (bearer_token, employ_status, industry, employer, occupati
                         user_data = {key:data.get(key)}
                         employment_data.append(user_data)
                         context[key] = data.get(key)
+                        
         except Exception as e:
             print(str(e))
 
@@ -842,7 +833,6 @@ def update_education (bearer_token, degree, school,
                         study, date_now, privacy):
     education_data = []
     context = {}
-    
     payload={
         'degree': degree,
         'school': school,
@@ -873,6 +863,7 @@ def update_education (bearer_token, degree, school,
                         user_data = {key:data.get(key)}
                         education_data.append(user_data)
                         context[key] = data.get(key)
+                        
         except Exception as e:
             print(str(e))
 
@@ -880,9 +871,6 @@ def update_education (bearer_token, degree, school,
 
 # PUT https://scholarium.tmtg-clone.click/api/partner/scholarship/[program_id]/[status]
 def update_applicant(bearer_token, user_id, program_id, status):  
-    context = {}
-    applicants_list = []
-    
     payload = json.dumps({
     "data": {
         "user_id": user_id,

@@ -12,10 +12,20 @@
     {% for applicant in scholarship_applicants %}
     <form action="" class="scholarship-applications" id="apply" method="POST">
         <div class="action-name">
-            <h4>{{applicant.first_name}} {{applicant.last_name}}</h4>
+            <h4>{{applicant.first_name|title}} {{applicant.last_name|title}}</h4>
             <p>University</p>
             <p>Degree</p>
-            Application Status: {{applicant.status}}
+            Status: 
+            {% if applicant.status == 0 %}
+            Pending
+            {% elif applicant.status == 1 %}
+            Approved
+            {% elif applicant.status == 2 %}
+            Waitlisted
+            {% elif applicant.status == 3 %}
+            Rejected
+            {% endif %}
+            
             <input type="hidden" name="user_id" value="{{applicant.user_id}}" />
             <input type="hidden" name="program_id" value="{{applicant.program_id}}" />
         </div>
