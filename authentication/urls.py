@@ -1,6 +1,6 @@
 from unicodedata import name
 from django.contrib import admin
-from django.urls import path,include
+from django.urls import path,include, re_path
 from . import views
 from .views import SessionChecker
 
@@ -14,6 +14,8 @@ urlpatterns = [
     path('profile/', views.profile, name="profile"),
     path('edit/', views.edit_profile, name="edit"),
     path('sessions/', SessionChecker.as_view(), name="sessions"),
+    path('application/<int:partner_id>/<int:program_id>/', views.scholar_application, name="scholar_application"),
+    path('application/<int:partner_id>/<int:program_id>', views.scholar_application, name="scholar_application"),
     path('program/<int:partner_id>/<int:program_id>/', views.program, name="program"),
     path('program/<int:partner_id>/<int:program_id>', views.program, name="program"),
     path('partner/', views.partner, name="partner"),

@@ -1,11 +1,11 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load parse_iso %}
 {% block content %}
 <div class="tab-container">
     <div class="tabs">
         <h3 class="active">DASHBOARD</h3>
         <h3>PROGRAMS</h3>
-        <h3>APPLICATIONS</h3>
         <h3>SCHOLARS</h3>
     </div>
     <div class="tab-content">
@@ -64,49 +64,50 @@
         <!--SECOND TAB-->
         <div class="tab" id="scholarship-programs">
             <div class="program-list">
-                <h3>PROGRAMS</h3>
-                <table>
-                    
-                    <tr>
-                        <th>PROGRAM</th>
-                        <th>ACTION</th>
-                    </tr>
-                    {% for program in program_list %}
-                        <tr>
-                            <td>
-                                {{program.name}}
-                            </td>
-                            <td>
-                                <a href="" class="action-btn" style="padding:10px 20px; text-decoration: none;">view</a>
-                            </td>
-                        </tr>
-                    {% endfor%}   
-                </table>
+                <h4>Programs</h4>
+                    <div class="card-wrapper">
+                        {% for program in program_list %}
+                        <a href={% url 'scholar_application' program.partner_id program.id %}/>
+                            <div class="card-container">
+                                <div class="card-image">
+                                    <img src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/sample-background.jpeg">
+                                </div>
+                                <div class="card-partner-logo">
+                                    <img src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/DICT-Logo-nobg.png">
+                                    <img src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/ILCDB+logo_2.png">
+                                    <img src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/coursera-social-logo-brand.png">
+                                </div>
+                                
+                                <div class="card-content">
+                                    <div class="container-card-title">
+                                        <h3>{{program.name}}</h3>
+                                        <p class="card-title-content">
+                                            6 courses <br>
+                                            {% if program.end_date %}
+                                                {{program.start_date|parse_iso|date:"M d"}} - {{program.end_date|parse_iso|date:"M d, Y"}}
+                                            {% else %}
+                                                since {{program.start_date|parse_iso|date:"M d, Y"}}
+                                            {% endif %}
+                                        </p>
+                                        <p class="card-title-footer">
+                                            {% if program.registration_end %}
+                                                Registration closes on <br>
+                                                {{program.registration_end}}
+                                            {% else %}
+                                                Registration is open
+                                            {% endif %}
+                                        </p>
+                                        <a href=""> Edit Program </a>
+                                    </div>
+                                </div>
+                            </div>  
+                        </a>
+                        
+                        {% endfor%}                      
+                    </div>
             </div>
         </div>           
          <!--THIRD TAB-->
-        <div class="tab" id="scholarship-applications">
-            <h4>Applications</h4>
-            {% for applicant in scholarship_applicants %}
-            <form action="" class="scholarship-applications" id="apply" method="POST">
-                <div class="action-name">
-                    <h4>{{applicant.first_name}} {{applicant.last_name}}</h4>
-                    <p>University</p>
-                    <p>Degree</p>
-                    Application Status: {{applicant.status}}
-                    <input type="hidden" name="user_id" value="{{applicant.user_id}}" />
-                    <input type="hidden" name="program_id" value="{{applicant.program_id}}" />
-                </div>
-                <div class="action-buttons">
-                        {% csrf_token %}
-                    <button class="action-btn green" name='approve'>Approve</button>
-                    <button class="action-btn yellow" name='waitlist'>Waitlist</button>
-                    <button class="action-btn red" name='reject'>Reject</button>
-                </div>
-            </form>
-            {% endfor %}
-        </div>
-        <!--FOURTH TAB-->
         <div class="tab" id="scholars">
             <h4>Scholars</h4>
             <div class="scholar-list">
@@ -134,7 +135,7 @@
     let tabs = document.querySelectorAll(".tabs h3");
     let tabContents = document.querySelectorAll(".tab-content .tab");
 
-    var lastTabIndex = sessionStorage.getItem('lastTabIndex');
+    var lastTabIndex = sessionStorage.getItem('partnerLastTabIndex');
 
     tabs.forEach((tab,index) => {    
         if (lastTabIndex) {
@@ -156,7 +157,7 @@
                 tab.classList.remove("active");
             });
             try {
-                sessionStorage.setItem('lastTabIndex', index);
+                sessionStorage.setItem('partnerLastTabIndex', index);
             } catch (error) {
                 console.log(error);
             }

@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+{% for program in programs %}
+<div>
+    <h5><a href ={% url 'partner'%} style="text-decoration:none" color="white"/>Programs</a> > {{program.name}}</h5>
+</div>
+<br>
+
+<div class="tab" id="scholarship-applications">
+    <h3>Applications</h3>
+    {% for applicant in scholarship_applicants %}
+    <form action="" class="scholarship-applications" id="apply" method="POST">
+        <div class="action-name">
+            <h4>{{applicant.first_name}} {{applicant.last_name}}</h4>
+            <p>University</p>
+            <p>Degree</p>
+            Application Status: {{applicant.status}}
+            <input type="hidden" name="user_id" value="{{applicant.user_id}}" />
+            <input type="hidden" name="program_id" value="{{applicant.program_id}}" />
+        </div>
+        <div class="action-buttons">
+                {% csrf_token %}
+            <button class="action-btn green" name='approve'>Approve</button>
+            <button class="action-btn yellow" name='waitlist'>Waitlist</button>
+            <button class="action-btn red" name='reject'>Reject</button>
+        </div>
+    </form>
+    {% endfor %}
+</div>
+{% endfor %}
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.js"></script>
+<script type="text/javascript" src="https://f001.backblazeb2.com/file/buonzz-assets/jquery.ph-locations.js"></script>
+<script type="text/javascript">
+    
+    var my_handlers = {
+
+        fill_provinces:  function(){
+
+            var region_code = $(this).val();
+            $('#province').ph_locations('fetch_list', [{"region_code": region_code}]);
+            
+        },
+
+        fill_cities: function(){
+
+            var province_code = $(this).val();
+            $('#city').ph_locations( 'fetch_list', [{"province_code": province_code}]);
+        },
+
+
+        fill_barangays: function(){
+
+            var city_code = $(this).val();
+            $('#barangay').ph_locations('fetch_list', [{"city_code": city_code}]);
+        }
+    };
+
+    $(function(){
+        $('#region').on('change', my_handlers.fill_provinces);
+        $('#city').on('change', my_handlers.fill_barangays);
+
+        $('#region').ph_locations({'location_type': 'regions'});
+        $('#province').ph_locations({'location_type': 'provinces'});
+        $('#city').ph_locations({'location_type': 'cities'});
+        $('#barangay').ph_locations({'location_type': 'barangays'});
+
+        $('#region').ph_locations('fetch_list');
+    });
+    
+    {% comment %} $( ".select option:selected" ).text(); {% endcomment %}
+</script>
+
+{% endblock %}

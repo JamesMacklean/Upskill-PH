@@ -468,7 +468,7 @@ def partner(request):
     template_name = "partner_dashboard.html"
     context = {}
     partner_programs = []
-    scholarship_applicants = []
+    
     ########## LOGIN REQUIRED ##########
     if not authenticate_user(request):
         request.session['url'] = "partner"
@@ -486,6 +486,36 @@ def partner(request):
             programs_list = get_programs(user_token,partner_id,program_id)
             for program in programs_list:
                 partner_programs.append(program)
+
+    context['program_list'] = partner_programs
+    
+    return render(request, template_name, context)
+
+def scholar_application(request, partner_id, program_id):
+    """"""
+    template_name = "scholar_application.html"
+    context = {}
+    scholarship_applicants = []
+    monitored_partner = []
+    monitored_program = []
+    ######### LOGIN REQUIRED ##########
+    if not authenticate_user(request):
+        request.session['url'] = "application/"+str(partner_id)+"/"+str(program_id)
+        return HttpResponseRedirect('/signin?next=application/'+str(partner_id)+"/"+str(program_id))
+    clear_session(request,'url')
+    ######### LOGIN REQUIRED ##########
+    
+    user_token = request.session['user_token']
+    
+    partners = request.session['partners'] 
+    for data in partners:
+            monitored_partner.append(data['partner_id'])
+            monitored_program.append(data['program_id'])
+    
+    if partner_id not in monitored_partner:
+        raise Http404
+    if program_id not in monitored_program:
+        raise Http404
     
     if request.method == "POST":
         user_id = request.POST.get("user_id")
@@ -498,13 +528,12 @@ def partner(request):
             response_message = update_applicant(user_token, user_id, request_program_id, 3)
 
         print(response_message)
-    
-    # NAKADEFAULT MUNA ITO SA 7 SINCE WALA PANG FILTERING NG APPLICANTS
-    applicants = get_applicants(user_token,7,None)
+
+    applicants = get_applicants(user_token,program_id,None)
     for applicant in applicants:
         scholarship_applicants.append(applicant)
 
-    context['program_list'] = partner_programs
+    context['programs'] = get_programs(user_token,partner_id,program_id)
     context['scholarship_applicants'] = scholarship_applicants
     
     return render(request, template_name, context)
@@ -516,8 +545,8 @@ def program(request, partner_id, program_id):
 
     ######### LOGIN REQUIRED ##########
     if not authenticate_user(request):
-        request.session['url'] = "program/"+partner_id+"/"+program_id
-        return HttpResponseRedirect('/signin?next=program/'+partner_id+"/"+program_id)
+        request.session['url'] = "program/"+str(partner_id)+"/"+str(program_id)
+        return HttpResponseRedirect('/signin?next=program/'+str(partner_id)+"/"+str(program_id))
     clear_session(request,'url')
     ######### LOGIN REQUIRED ##########
     
