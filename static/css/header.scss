@@ -46,6 +46,7 @@
   }
 .header .icons i.orange{
   color: #F15A25;
+  cursor: pointer;
 }
 // a.btn-solid{
 //     width: 120px !important;
@@ -84,7 +85,7 @@
     box-shadow: 1px 2px 4px 0px;
 }
 .sub-menu.active{
-    top: 120px;
+    top: 80px;
     visibility: visible;
     opacity: 1;
 }

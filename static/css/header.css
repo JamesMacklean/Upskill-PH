@@ -53,6 +53,7 @@
 
 .header .icons i.orange {
   color: #F15A25;
+  cursor: pointer;
 }
 
 .sub-menu {
@@ -73,7 +74,7 @@
 }
 
 .sub-menu.active {
-  top: 120px;
+  top: 80px;
   visibility: visible;
   opacity: 1;
 }
