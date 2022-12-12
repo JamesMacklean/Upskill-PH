@@ -31,7 +31,7 @@
             <br />
         </p>
             {% comment %} ORIGINAL CODE {% endcomment %}
-            <a href={{ domain }}{% url 'verify_account' user_hash=user_hash %}>Verify Your Account</a>
+            <a href="{{ domain }}{% url 'verify_account' user_hash=user_hash %}">Verify Your Account</a>
             {% comment %} FOR TEST CODE {% endcomment %}
             {% comment %} <a href=http://127.0.0.1:8000{% url 'verify_account' user_hash=user_hash %}>Verify Your Account</a> {% endcomment %}
 

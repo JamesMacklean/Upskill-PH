@@ -13,7 +13,7 @@
     </nav>
 {% if not request.session.user_token %}
     <div class="icons">
-        <a href="{% url 'signin' %}"><div id="account-btn" class="fas fa-user"></div></a>
+        <a href="{% url 'home' %}"><div id="account-btn" class="fas fa-user"></div></a>
     </div>
 {% else %}
     {% if request.session.is_partner and request.session.is_scholar %}

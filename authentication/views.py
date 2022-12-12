@@ -88,14 +88,108 @@ def clear_session(request,key):
 
 def home(request):
     """"""
-    template_anonymous = "authentication/signup.html"
+    template_anonymous = "authentication/signin.html"
     template_authenticated = "authentication/dashboard.html"
     context = {}
+    
     ########## LOGIN REQUIRED ##########
     if authenticate_user(request):
         return render(request, template_authenticated, context)
     ########## LOGIN REQUIRED ##########
-    
+
+    ###################### https://scholarium.tmtg-clone.click/api/login ######################
+    def login_account (username, password):
+        payload={
+            'user': username,
+            'pass': password 
+        }
+        files=[]
+        headers = {
+        'Authorization': API_TOKEN
+        }
+
+        response = requests.request("POST", API_LOGIN_ACCOUNT_URL, headers=headers, data=payload, files=files)        
+        response_dict = ast.literal_eval(response.text)
+        
+        if 'data' in response_dict:
+            for data in response_dict['data']:
+                user_token = data.get("token")
+                expires = data.get("expires")
+                response_message = "Successfully Logged In!"
+        else:
+            user_token = ''
+            expires = ''
+            response_message = response_dict.get("error")
+        
+        return user_token, expires, response_message
+    ###################### https://scholarium.tmtg-clone.click/api/login ######################
+        
+    if request.method == "POST":
+        username = request.POST['username']
+        password = request.POST['password']
+
+        user_token, expires, response_message = login_account(username, password)
+        
+        if user_token:
+            # PUT JWT TOKEN TO COOKIES
+            # response = Response()
+            # response.set_cookie(key='jwt',value=user_token, httponly=True)
+            # response.data = {
+            #     'jwt': user_token
+            # }
+            
+            # print('COOKIE RESPONSE:', response.data)
+            
+            try:    
+                request.session['user_token'] = user_token
+                request.session['expires'] = expires
+                payload = jwt.decode(user_token, API_SECRET_KEY, algorithms=['HS256'])
+                # SAVE JWT PAYLOAD INTO SESSIONS
+                for key,value in payload.items():
+                    if key == 'data':
+                        for key,value in payload['data'].items():
+                            request.session[key] = value
+                # PRINT SESSION ITEMS
+                for key, value in request.session.items():
+                    print('{}: {}'.format(key, value))
+                                        
+            except jwt.ExpiredSignatureError:
+                raise Http404
+            
+            context['username'] = username
+            context['expires'] = expires
+            context['user_token'] = user_token
+            
+            # CHECK IF THE REQUEST IS REDIRECTION
+            try:
+                next_page = request.session.get('url')
+            except:
+                next_page = ""
+            
+            # IF REDIRECTION SIYA, PUNTA SA NEXT PAGE, PERO KUNG HINDI, SA DASHBOARD
+            if next_page:
+                try:
+                    if next_page == 'application' or next_page == 'program':
+                        partner_id = request.session.get('partner_id')
+                        program_id = request.session.get('program_id')
+                        clear_session(request,'partner_id')
+                        clear_session(request,'program_id')
+                        return HttpResponseRedirect(reverse(next_page,kwargs={'partner_id':partner_id,'program_id':program_id}))
+
+                    return HttpResponseRedirect(reverse(next_page))
+            
+                except Exception as e:
+                    print(str(e))
+            
+            else:
+                return redirect('home')
+
+        else:
+            # LAGYAN ITO NG MESSAGE BOX NA NAGSASABI NG ERROR MESSAGE
+            print ("ERROR:", response_message)
+            # return render(request, template_name, context)
+
+    # return render(request, template_name, context)
     return render(request,template_anonymous, context)
 
 def success(request, user_hash):
@@ -110,7 +204,7 @@ def success(request, user_hash):
     
     ########## ANONYMOUS REQUIRED ##########
     if authenticate_user(request):
-        return HttpResponseRedirect('/signin')
+        return HttpResponseRedirect('/')
     clear_session(request,'url')
     ########## ANONYMOUS REQUIRED ##########
 
