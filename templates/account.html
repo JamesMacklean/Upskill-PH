@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="account-settings">
+<h3>Account Settings</h3>
+<p>
+    First Name Last Name <br>
+    email <br>
+    date joined: <br>
+</p>
+<form method="">
+    <label for="current-pass">Current Password </label> 
+    <input type="password" name="current-pass"></input> <br>
+    
+    <label for="new-pass">New Password </label> 
+    <input type="password" name="new-pass"></input> <br>
+    
+    <label for="confirm-pass">Confirm Password </label> 
+    <input type="password" name="confirm-pass"></input> <br>
+
+    <input type="submit">Update Password</input>
+</form>
+</div>
+
+{% endblock %}

@@ -881,6 +881,9 @@ def update_profile (bearer_token, photo, first_name, last_name, about, country, 
             
     return context, response_message
 
+def account(request):
+    return render(request, "account.html")
+
 # POST https://scholarium.tmtg-clone.click/api/me/employment 
 def update_employment (bearer_token, employ_status, industry, employer, occupation, experience, date_now, privacy):
     employment_data = []

@@ -47,7 +47,8 @@
         <div class="sub-menu">
             <ul>
                 <li><h3>{{request.session.first_name|title}} {{request.session.last_name|title}}</h3></li>
-                <a href="{% url 'profile' %}"><li>Profile</li></a>
+                <a href="{% url 'profile' %}"><li>My Dashboard</li></a>
+                <a href="{% url 'account' %}"><li>Account</li></a>
                 <a href="{% url 'signout' %}"><li>Sign out</li></a>
             </ul>
         </div>
