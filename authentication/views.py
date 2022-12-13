@@ -530,3 +530,10 @@ def certificate(request):
 
 def account(request):
     return render(request, "account.html")
+
+# STATIC TEMPLATES
+def guidelines(request):
+    return render(request, "static_templates/program_guidelines.html")
+
+def privacy(request):
+    return render(request, "static_templates/privacy.html")

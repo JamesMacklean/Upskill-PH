@@ -18,5 +18,8 @@ urlpatterns = [
     path('application/<int:partner_id>/<int:program_id>/', views.application, name="application"),
     path('program/<int:partner_id>/<int:program_id>/', views.program, name="program"),
     path('partner/', views.partner, name="partner"),
-    path('certificate/', views.certificate, name="certificate")
+    path('certificate/', views.certificate, name="certificate"),
+    
+    path('guidelines/',views.guidelines, name="guidelines"),
+    path('privacy/', views.privacy, name="privacy")
 ]
