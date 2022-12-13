@@ -14,6 +14,7 @@ from django.http import HttpResponse, Http404, HttpResponseRedirect
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from .models import *
+from .api import *
 from .forms import *
 from .decorators import *
 from django.template import Library
@@ -92,104 +93,13 @@ def home(request):
     template_authenticated = "authentication/dashboard.html"
     context = {}
     
+    signin(request)
+        
     ########## LOGIN REQUIRED ##########
     if authenticate_user(request):
         return render(request, template_authenticated, context)
     ########## LOGIN REQUIRED ##########
 
-    ###################### https://scholarium.tmtg-clone.click/api/login ######################
-    def login_account (username, password):
-        payload={
-            'user': username,
-            'pass': password 
-        }
-        files=[]
-        headers = {
-        'Authorization': API_TOKEN
-        }
-
-        response = requests.request("POST", API_LOGIN_ACCOUNT_URL, headers=headers, data=payload, files=files)        
-        response_dict = ast.literal_eval(response.text)
-        
-        if 'data' in response_dict:
-            for data in response_dict['data']:
-                user_token = data.get("token")
-                expires = data.get("expires")
-                response_message = "Successfully Logged In!"
-        else:
-            user_token = ''
-            expires = ''
-            response_message = response_dict.get("error")
-        
-        return user_token, expires, response_message
-    ###################### https://scholarium.tmtg-clone.click/api/login ######################
-        
-    if request.method == "POST":
-        username = request.POST['username']
-        password = request.POST['password']
-
-        user_token, expires, response_message = login_account(username, password)
-        
-        if user_token:
-            # PUT JWT TOKEN TO COOKIES
-            # response = Response()
-            # response.set_cookie(key='jwt',value=user_token, httponly=True)
-            # response.data = {
-            #     'jwt': user_token
-            # }
-            
-            # print('COOKIE RESPONSE:', response.data)
-            
-            try:    
-                request.session['user_token'] = user_token
-                request.session['expires'] = expires
-                payload = jwt.decode(user_token, API_SECRET_KEY, algorithms=['HS256'])
-                # SAVE JWT PAYLOAD INTO SESSIONS
-                for key,value in payload.items():
-                    if key == 'data':
-                        for key,value in payload['data'].items():
-                            request.session[key] = value
-                # PRINT SESSION ITEMS
-                for key, value in request.session.items():
-                    print('{}: {}'.format(key, value))
-                                        
-            except jwt.ExpiredSignatureError:
-                raise Http404
-            
-            context['username'] = username
-            context['expires'] = expires
-            context['user_token'] = user_token
-            
-            # CHECK IF THE REQUEST IS REDIRECTION
-            try:
-                next_page = request.session.get('url')
-            except:
-                next_page = ""
-            
-            # IF REDIRECTION SIYA, PUNTA SA NEXT PAGE, PERO KUNG HINDI, SA DASHBOARD
-            if next_page:
-                try:
-                    if next_page == 'application' or next_page == 'program':
-                        partner_id = request.session.get('partner_id')
-                        program_id = request.session.get('program_id')
-                        clear_session(request,'partner_id')
-                        clear_session(request,'program_id')
-                        return HttpResponseRedirect(reverse(next_page,kwargs={'partner_id':partner_id,'program_id':program_id}))
-
-                    return HttpResponseRedirect(reverse(next_page))
-            
-                except Exception as e:
-                    print(str(e))
-            
-            else:
-                return redirect('home')
-
-        else:
-            # LAGYAN ITO NG MESSAGE BOX NA NAGSASABI NG ERROR MESSAGE
-            print ("ERROR:", response_message)
-            # return render(request, template_name, context)
-
-    # return render(request, template_name, context)
     return render(request,template_anonymous, context)
 
 def success(request, user_hash):
@@ -241,27 +151,6 @@ def verify_account(request, user_hash):
     template_failed = "authentication/verification_failed.html"
     context = {}
     
-    ###################### https://scholarium.tmtg-clone.click/api/user/verify/[args] ###################### 
-    def verify(user_hash):
-        payload={}
-        files={}
-        headers = {
-        'Authorization': API_TOKEN
-        }
-        response = requests.request("PUT", os.path.join(API_VERIFY_ACCOUNT_URL, user_hash), headers=headers, data=payload, files=files)
-        response_dict = ast.literal_eval(response.text)
-    ###################### https://scholarium.tmtg-clone.click/api/user/verify/[args] ###################### 
-         
-        if 'data' in response_dict:
-            for data in response_dict['data']:
-                response_message = data.get("success")
-                password = data.get("password")
-        else:
-            response_message = response_dict.get("error")
-            password=''   
-        
-        return password,response_message
-    
     try:
         password, response_message = verify(user_hash)
         
@@ -284,36 +173,6 @@ def signup(request):
     """"""
     template_name = "authentication/signup.html"
     context = {}
-
-    ###################### https://scholarium.tmtg-clone.click/api/user/create ###################### 
-    def create_account(username,firstname,lastname,email):    
-        payload={
-            'username': username,
-            'first_name': firstname,
-            'last_name': lastname,
-            'email': email
-            }
-        files=[]
-        headers = {
-        'Authorization': API_TOKEN
-        }
-          
-        for key, value in payload.items():
-            request.session['new_'+key] = value
-            
-        response = requests.request("POST", API_CREATE_ACCOUNT_URL, headers=headers, data=payload, files=files)
-        response_dict = ast.literal_eval(response.text)
- 
-        if 'data' in response_dict:
-            for data in response_dict['data']:
-                response_message = data.get("success")
-                user_hash = data.get("hash")
-        else:
-            response_message = response_dict.get("error")
-            user_hash = ""         
-
-        return user_hash, response_message
-    ###################### https://scholarium.tmtg-clone.click/api/user/create ###################### 
         
     try:
         if request.method == "POST":
@@ -322,8 +181,7 @@ def signup(request):
             firstname= request.POST['firstname']
             lastname= request.POST['lastname']
 
-            user_hash, response_message = create_account(username,firstname,lastname,email)
-            
+            user_hash, response_message = create_account(request, username, firstname, lastname, email)
             if user_hash:
                 context['message'] = "success"
                 request.session['user_hash'] = user_hash
@@ -337,38 +195,11 @@ def signup(request):
     except Exception as e:
         print(str(e))
         return render(request, template_name, context)
-    
+
 def signin(request): 
     """"""
     template_name = "authentication/signin.html"
     context = {}
-    
-    ###################### https://scholarium.tmtg-clone.click/api/login ######################
-    def login_account (username, password):
-        payload={
-            'user': username,
-            'pass': password 
-        }
-        files=[]
-        headers = {
-        'Authorization': API_TOKEN
-        }
-
-        response = requests.request("POST", API_LOGIN_ACCOUNT_URL, headers=headers, data=payload, files=files)        
-        response_dict = ast.literal_eval(response.text)
-        
-        if 'data' in response_dict:
-            for data in response_dict['data']:
-                user_token = data.get("token")
-                expires = data.get("expires")
-                response_message = "Successfully Logged In!"
-        else:
-            user_token = ''
-            expires = ''
-            response_message = response_dict.get("error")
-        
-        return user_token, expires, response_message
-    ###################### https://scholarium.tmtg-clone.click/api/login ######################
     
     if request.method == "POST":
         username = request.POST['username']
@@ -462,21 +293,19 @@ def profile(request):
     
     user_token = request.session['user_token']
     
-    # IRERESTRUCTURE ITO PANG-GET
-    scholarships = request.session['scholarships']
-    
+    scholarships = user_programs(user_token)
     if scholarships:   
         for data in scholarships:
             program_id = data['program_id']
             applied_programs.append(program_id)
     
-    print (applied_programs)
-    context['applied_programs'] = applied_programs
     # NAKADEFAULT MUNA ITO SA 2 SINCE DICT PA LANG ANG MAY PROGRAMS
     context['program_list'] = get_programs(user_token,2,None)
     context['profile'] = user_profile(user_token)
     context['employment'] = user_employment(user_token)
     context['education'] = user_education(user_token)
+    context['scholarships'] = scholarships
+    context['applied_programs'] = applied_programs
     
     return render(request, template_name, context)
 
@@ -695,302 +524,5 @@ def program(request, partner_id, program_id):
 def certificate(request):
     return render(request, "certificate.html")
 
-# GET https://scholarium.tmtg-clone.click/api/me/profile
-def user_profile(bearer_token):  
-    profile_data = []
-    context = {}
-    payload={}
-    headers = {
-    'Authorization': bearer_token
-    }
-    
-    response = requests.request("GET", API_USER_PROFILE_URL, headers=headers, data=payload)
-    response_dict = json.loads(response.text)
-
-    # AUTO-ADD SA CONTEXT NG MGA KEYS NA NA-GET VIA API
-    if 'data' in response_dict:
-        try:
-            for data in response_dict['data']:
-                for key, value in data.items():
-                    if value is not None:
-                        user_data = {key:data.get(key)}
-                        profile_data.append(user_data)
-                        context[key] = data.get(key)
-                        
-        except Exception as e:
-            print(str(e))
-            
-    return context
-
-# GET https://scholarium.tmtg-clone.click/api/me/employment 
-def user_employment(bearer_token):  
-    employment_data = []
-    context = {}  
-    payload={}
-    headers = {
-    'Authorization': bearer_token
-    }
-    
-    response = requests.request("GET", API_USER_EMPLOYMENT_URL, headers=headers, data=payload)
-    response_dict = json.loads(response.text)
-
-    # AUTO-ADD SA CONTEXT NG MGA KEYS NA NA-GET VIA API
-    if 'data' in response_dict:
-        try:
-            for data in response_dict['data']:
-                for key, value in data.items():
-                    if value is not None:
-                        user_data = {key:data.get(key)}
-                        employment_data.append(user_data)
-                        context[key] = data.get(key)
-                        
-        except Exception as e:
-            print(str(e))
-            
-    return context
-
-# GET https://scholarium.tmtg-clone.click/api/me/education
-def user_education(bearer_token):  
-    education_data = []
-    context = {}
-    payload={}
-    headers = {
-    'Authorization': bearer_token
-    }
-    
-    response = requests.request("GET", API_USER_EDUCATION_URL, headers=headers, data=payload)
-    response_dict = json.loads(response.text)
-
-    # AUTO-ADD SA CONTEXT NG MGA KEYS NA NA-GET VIA API
-    if 'data' in response_dict:
-        try:
-            for data in response_dict['data']:
-                for key, value in data.items():
-                    if value is not None:
-                        user_data = {key:data.get(key)}
-                        education_data.append(user_data)
-                        context[key] = data.get(key)
-                        
-        except Exception as e:
-            print(str(e))
-    
-    return context
-
-# GET https://scholarium.tmtg-clone.click/api/partner/programs/[partner_id]/[program_id]
-def get_programs(bearer_token, partner_id,program_id):  
-    program_list = []
-    payload={}
-    headers = {
-    'Authorization': bearer_token
-    }
-    
-    if program_id:
-        response = requests.request("GET", os.path.join(API_PARTNER_PROGRAMS_URL, str(partner_id)+"/"+str(program_id)), headers=headers, data=payload)
-        response_dict = json.loads(response.text)
-        
-        if 'data' in response_dict:
-            try:
-                for data in response_dict['data']:
-                    program_list.append(data)
-            except Exception as e:
-                print(str(e))
-                              
-    else:
-        response = requests.request("GET", os.path.join(API_PARTNER_PROGRAMS_URL, str(partner_id)), headers=headers, data=payload)
-        response_dict = json.loads(response.text)
-        
-        if 'data' in response_dict:
-            try:
-                for data in response_dict['data']:
-                    program_list.append(data)
-            except Exception as e:
-                print(str(e))
-
-    return program_list
-
-# GET https://scholarium.tmtg-clone.click/api/partner/scholarship/[program_id]/[status]
-def get_applicants(bearer_token, program_id, status):  
-    applicants_list = []
-    payload={}
-    headers = {
-    'Authorization': bearer_token
-    }
-    
-    if status:
-        response = requests.request("GET", os.path.join(API_SCHOLAR_UPDATE_URL,str(program_id)+"/"+status), headers=headers, data=payload)
-        response_dict = json.loads(response.text)
-        
-        if 'data' in response_dict:
-            try:
-                for data in response_dict['data']:
-                    applicants_list.append(data)
-            except Exception as e:
-                print(str(e))
-                
-    else:
-        response = requests.request("GET", os.path.join(API_SCHOLAR_UPDATE_URL,str(program_id)), headers=headers, data=payload)
-        response_dict = json.loads(response.text)
-        
-        if 'data' in response_dict:
-            try:
-                for data in response_dict['data']:
-                    applicants_list.append(data)
-            except Exception as e:
-                print(str(e))
-                
-    return applicants_list
-
-# POST https://scholarium.tmtg-clone.click/api/me/profile 
-def update_profile (bearer_token, photo, first_name, last_name, about, country, region, municipality, socials, gender, birthday, contact, date_now, privacy):
-    profile_data = []
-    context = {}
-    payload={
-        'photo': photo,
-        'first_name': first_name,
-        'last_name': last_name,
-        'about': about,
-        'country': country,
-        'municipality': municipality,
-        'region': region,
-        'socials': socials,
-        'gender': gender,
-        'birthday': birthday,
-        'contact': contact,
-        'last_modified': date_now,
-        'privacy': privacy
-    }
-    files=[]
-    headers = {
-    'Authorization': bearer_token
-    }
-
-    response = requests.request("POST", API_USER_PROFILE_URL, headers=headers, data=payload, files=files)        
-    response_dict = ast.literal_eval(response.text)
-    
-    if 'data' in response_dict:
-            response_message = "User Account Updated!"
-    else:
-        response_message = response_dict.get("error")
-    
-    # AUTO-ADD SA CONTEXT NG MGA KEYS NA NA-UPDATE VIA API
-    if 'data' in response_dict:
-        try:
-            for data in response_dict['data']:
-                for key, value in data.items():
-                    if value is not None:
-                        user_data = {key:data.get(key)}
-                        profile_data.append(user_data)
-                        context[key] = data.get(key)
-                        
-        except Exception as e:
-            print(str(e))
-            
-    return context, response_message
-
 def account(request):
     return render(request, "account.html")
-
-# POST https://scholarium.tmtg-clone.click/api/me/employment 
-def update_employment (bearer_token, employ_status, industry, employer, occupation, experience, date_now, privacy):
-    employment_data = []
-    context = {}
-    payload={
-        'employ_status': employ_status,
-        'industry': industry,
-        'employer': employer,
-        'occupation': occupation,
-        'experience': experience,
-        'last_modified': date_now,
-        'privacy': privacy
-    }
-    files=[]
-    headers = {
-    'Authorization': bearer_token
-    }
-
-    response = requests.request("POST", API_USER_EMPLOYMENT_URL, headers=headers, data=payload, files=files)        
-    response_dict = ast.literal_eval(response.text)
-    
-    if 'data' in response_dict:
-            response_message = "User Account Updated!"
-    else:
-        response_message = response_dict.get("error")
-    
-    # AUTO-ADD SA CONTEXT NG MGA KEYS NA NA-UPDATE VIA API
-    if 'data' in response_dict:
-        try:
-            for data in response_dict['data']:
-                for key, value in data.items():
-                    if value is not None:
-                        user_data = {key:data.get(key)}
-                        employment_data.append(user_data)
-                        context[key] = data.get(key)
-                        
-        except Exception as e:
-            print(str(e))
-
-    return context, response_message
-
-# POST https://scholarium.tmtg-clone.click/api/me/education 
-def update_education (bearer_token, degree, school,
-                        study, date_now, privacy):
-    education_data = []
-    context = {}
-    payload={
-        'degree': degree,
-        'school': school,
-        'study': study,
-        'last_modified': date_now,
-        'privacy': privacy
-    }
-    
-    files=[]
-    headers = {
-    'Authorization': bearer_token
-    }
-    
-    response = requests.request("POST", API_USER_EDUCATION_URL, headers=headers, data=payload, files=files)        
-    response_dict = ast.literal_eval(response.text)
-    
-    if 'data' in response_dict:
-            response_message = "User Account Updated!"
-    else:
-        response_message = response_dict.get("error")
-    
-    # AUTO-ADD SA CONTEXT NG MGA KEYS NA NA-UPDATE VIA API
-    if 'data' in response_dict:
-        try:
-            for data in response_dict['data']:
-                for key, value in data.items():
-                    if value is not None:
-                        user_data = {key:data.get(key)}
-                        education_data.append(user_data)
-                        context[key] = data.get(key)
-                        
-        except Exception as e:
-            print(str(e))
-
-    return context, response_message
-
-# PUT https://scholarium.tmtg-clone.click/api/partner/scholarship/[program_id]/[status]
-def update_applicant(bearer_token, user_id, program_id, status):  
-    payload = json.dumps({
-    "data": {
-        "user_id": user_id,
-        "program_id": program_id,
-        "status": status
-    }
-    })
-    headers = {
-    'Authorization': bearer_token
-    }
-    
-    response = requests.request("PUT", API_SCHOLAR_UPDATE_URL, headers=headers, data=payload)
-    response_dict = json.loads(response.text)
-    
-    if 'data' in response_dict:
-        response_message = "Successfully Updated!"
-    else:
-        response_message = response_dict.get("error")
-    
-    return response_message

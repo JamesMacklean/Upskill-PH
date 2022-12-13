@@ -7,7 +7,7 @@
     <div class="tabs">
         <h3 class="active">SCHOLARSHIPS</h3>
         <h3>PROFILE</h3>
-        <h3>ACHIEVEMENTS</h3>
+        {% comment %} <h3>ACHIEVEMENTS</h3> {% endcomment %}
     </div>
     
     <div class="tab-content">
@@ -23,7 +23,7 @@
                 <div class="subtab opentab" id="available">
                     <div class="card-wrapper">
                         {% for program in program_list %}
-                            {% if program.id not in applied_programs%}   
+                            {% if program.id not in applied_programs %}   
                                 <a href="{% url 'program' program.partner_id program.id %}">
                                     <div class="card-container">
                                         <div class="card-image">
@@ -61,14 +61,15 @@
                                     </div>
                                 </a>    
                             {% endif %}
-                        {% endfor%}                      
+                        {% endfor %}
                     </div>
                 </div>
 
                 <div class="subtab" id="ongoing"> 
                     <div class="card-wrapper">
+                        {% for scholarship in scholarships %}
                         {% for program in program_list %}
-                            {% if program.id in applied_programs%}    
+                            {% if scholarship.program_id == program.id %}    
                                 <a href="{% url 'program' program.partner_id program.id %}">
                                     <div class="card-container">
                                         <div class="card-image">
@@ -94,11 +95,14 @@
                                                     {% endif %}
                                                 </p>
                                                 <p class="card-title-footer">
-                                                    {% if program.registration_end %}
-                                                        Registration closes on <br>
-                                                        {{program.registration_end}}
+                                                    {% if scholarship.status == 1 %}
+
+                                                    {% elif scholarship.status == 2 %}
+                                                        Waitlisted
+                                                    {% elif scholarship.status == 3 %}
+                                                        Rejected
                                                     {% else %}
-                                                        Registration is open
+                                                        Pending
                                                     {% endif %}
                                                 </p>
                                             </div>
@@ -106,7 +110,8 @@
                                     </div>
                                 </a>  
                             {% endif %}      
-                        {% endfor%}      
+                        {% endfor %}   
+                        {% endfor %}   
                     </div>
                 </div>
 
