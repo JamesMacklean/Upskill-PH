@@ -47,46 +47,6 @@ class SessionChecker(APIView):
         except KeyError:
             raise Http404
 
-def authenticate_user(request):
-    try:
-        # user_token = request.COOKIES.get('jwt')    
-        # PRINT SESSION ITEMS
-        for key, value in request.session.items():
-            print('{}: {}'.format(key, value))
-                 
-        try:   
-            user_token = request.session['user_token'] 
-            payload = jwt.decode(user_token, API_SECRET_KEY, algorithms=['HS256'])
-
-            # SAVE JWT PAYLOAD INTO SESSIONS
-            for key,value in payload.items():
-                if key == 'data':
-                    for key,value in payload['data'].items():
-                        # if request.session['first_name'] or request.session['last_name']:
-                        if request.session[key]:
-                            pass
-                        else:
-                            request.session[key] = value
-                            
-            request.session.modified = True
-            return True
-        
-        except jwt.ExpiredSignatureError:
-            signout(request)
-            return False
-        
-    except KeyError:
-        signout(request)
-        return False
-    
-def clear_session(request,key):
-    try:
-        del request.session[key]    
-    except KeyError:
-        pass
-    
-    return HttpResponse(key, "session data cleared")
-
 def home(request):
     """"""
     template_anonymous = "authentication/signin.html"
@@ -182,11 +142,14 @@ def signup(request):
             lastname= request.POST['lastname']
 
             user_hash, response_message = create_account(request, username, firstname, lastname, email)
+            
             if user_hash:
+                #### MODAL RESPONSE KUNG NAGWORK BA ANG SIGN UP
                 context['message'] = "success"
                 request.session['user_hash'] = user_hash
                 return redirect('success', user_hash)
             else:
+                #### MODAL RESPONSE KUNG NAGWORK BA ANG SIGN UP
                 context['message'] = response_message
                 return render(request, template_name, context)
 
@@ -207,6 +170,9 @@ def signin(request):
 
         user_token, expires, response_message = login_account(username, password)
         
+        #### MODAL RESPONSE KUNG NAGWORK BA ANG SIGN IN
+        print(response_message)
+        
         if user_token:
             # PUT JWT TOKEN TO COOKIES
             # response = Response()
@@ -219,6 +185,7 @@ def signin(request):
             
             scholarships = user_programs(user_token)            
             partners = user_partners(user_token)
+            
             try:    
                 request.session['user_token'] = user_token
                 request.session['expires'] = expires
@@ -296,13 +263,16 @@ def profile(request):
     clear_session(request,'url')
     ########## LOGIN REQUIRED ##########
     
-    user_token = request.session['user_token']
-    scholarships = user_programs(user_token)
-    
-    if scholarships:   
-        for data in scholarships:
-            program_id = data['program_id']
-            applied_programs.append(program_id)
+    if request.session['is_scholar']:
+        user_token = request.session['user_token']
+        scholarships = user_programs(user_token)
+        
+        if scholarships:   
+            for data in scholarships:
+                program_id = data['program_id']
+                applied_programs.append(program_id)
+    else:
+        raise Http404
     
     # NAKADEFAULT MUNA ITO SA 2 SINCE DICT PA LANG ANG MAY PROGRAMS
     context['program_list'] = get_programs(user_token,2,None)
@@ -311,7 +281,7 @@ def profile(request):
     context['education'] = user_education(user_token)
     context['scholarships'] = scholarships
     context['applied_programs'] = applied_programs
-    
+        
     return render(request, template_name, context)
 
 def edit_profile(request):
@@ -367,6 +337,7 @@ def edit_profile(request):
         context['employment'] = employment_update
         context['education'] = education_update
 
+        #### MODAL RESPONSE KUNG NAGWORK BA ANG UPDATE NG PROFILE, EMPLOYMENT AT EDUCATION
         print("PROFILE:",profile_response)
         print("EMPLOYMENT:",employment_response)
         print("EDUCATION:",education_response)
@@ -401,20 +372,23 @@ def partner(request):
     clear_session(request,'url')
     ########## LOGIN REQUIRED ##########
     
-    user_token = request.session['user_token']
-    partners = user_partners(user_token)
-    
-    if partners:   
-        for data in partners:
-            partner_id = data['partner_id']
-            program_id = data['program_id']
-            
-            if program_id:
-                programs_list = get_programs(user_token,partner_id,program_id)
+    if request.session['is_partner']:
+        user_token = request.session['user_token']
+        partners = user_partners(user_token)
+        
+        if partners:   
+            for data in partners:
+                partner_id = data['partner_id']
+                program_id = data['program_id']
                 
-                for program in programs_list:
-                    partner_programs.append(program)
-
+                if program_id:
+                    programs_list = get_programs(user_token,partner_id,program_id)
+                    
+                    for program in programs_list:
+                        partner_programs.append(program)
+    else:
+        raise Http404
+    
     context['program_list'] = partner_programs
     
     return render(request, template_name, context)
@@ -435,7 +409,6 @@ def application(request, partner_id, program_id):
         return HttpResponseRedirect('/signin?next=application/'+str(partner_id)+"/"+str(program_id)+"/")
     clear_session(request,'url')
     ######### LOGIN REQUIRED ##########
-    
     
     user_token = request.session['user_token']
     partners = user_partners(user_token)
@@ -460,10 +433,10 @@ def application(request, partner_id, program_id):
         elif 'reject' in request.POST:
             response_message = update_applicant(user_token, user_id, request_program_id, 3)
 
+        #### MODAL RESPONSE KUNG NAGWORK BA ANG APPLICATION
         print(response_message)
 
     applicants = get_applicants(user_token,program_id,None)
-    print("1312312312",applicants)
     for applicant in applicants:
         scholarship_applicants.append(applicant)
 
@@ -477,6 +450,7 @@ def program(request, partner_id, program_id):
     template_name = "scholar_programs.html"
     context = {}
     program_ids = []
+    applied_programs = []
     
     ######### LOGIN REQUIRED ##########
     if not authenticate_user(request):
@@ -488,28 +462,21 @@ def program(request, partner_id, program_id):
     ######### LOGIN REQUIRED ##########
     
     user_token = request.session['user_token']
+    scholarships = user_programs(user_token)
     
-    ###################### https://scholarium.tmtg-clone.click/api/me/scholarship ######################
-    def scholar_apply(bearer_token, program_id):
-        payload={'program_id': program_id}
-        headers = {
-        'Authorization': bearer_token,
-        }
+    if scholarships:   
+        for data in scholarships:
+            scholar_program_id = data['program_id']
+            applied_programs.append(scholar_program_id)
 
-        response = requests.request("POST", API_SCHOLAR_APPLY_URL, headers=headers, data=payload)
-        response_dict = json.loads(response.text)
-        
-        if 'data' in response_dict:
-            response_message = "Successfully Applied!"
-        else:
-            response_message = response_dict.get("error")
-
-        return response_message
-    ###################### https://scholarium.tmtg-clone.click/api/me/scholarship ######################
-    
     if request.method == "POST":
         response = scholar_apply(user_token,program_id)
+        
+        #### MODAL RESPONSE KUNG NAGWORK BA ANG APPLICATION
         print(response)
+        
+        return redirect('profile')
+        
     
     all_programs = get_programs(user_token, partner_id, None)
     
@@ -522,6 +489,8 @@ def program(request, partner_id, program_id):
         raise Http404
     
     context['programs'] = get_programs(user_token,partner_id,program_id)
+    context['scholarships'] = scholarships
+    context['applied_programs'] = applied_programs
     
     return render(request, template_name, context)
 
