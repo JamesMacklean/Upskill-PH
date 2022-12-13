@@ -461,6 +461,8 @@ def profile(request):
     ########## LOGIN REQUIRED ##########
     
     user_token = request.session['user_token']
+    
+    # IRERESTRUCTURE ITO PANG-GET
     scholarships = request.session['scholarships']
     
     if scholarships:   
@@ -566,6 +568,8 @@ def partner(request):
     ########## LOGIN REQUIRED ##########
     
     user_token = request.session['user_token']
+    
+    # IRERESTRUCTURE ITO PANG-GET
     partners = request.session['partners']
     
     if partners:   
@@ -599,6 +603,8 @@ def application(request, partner_id, program_id):
     ######### LOGIN REQUIRED ##########
     
     user_token = request.session['user_token']
+    
+    # IRERESTRUCTURE ITO PANG-GET
     partners = request.session['partners']
     
     for data in partners:
