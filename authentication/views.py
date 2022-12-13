@@ -47,6 +47,48 @@ class SessionChecker(APIView):
         except KeyError:
             raise Http404
 
+# decode JWT user token
+def authenticate_user(request):
+    try:
+        # user_token = request.COOKIES.get('jwt')    
+        # PRINT SESSION ITEMS
+        for key, value in request.session.items():
+            print('{}: {}'.format(key, value))
+                 
+        try:   
+            user_token = request.session['user_token'] 
+            payload = jwt.decode(user_token, API_SECRET_KEY, algorithms=['HS256'])
+
+            # SAVE JWT PAYLOAD INTO SESSIONS
+            for key,value in payload.items():
+                if key == 'data':
+                    for key,value in payload['data'].items():
+                        # if request.session['first_name'] or request.session['last_name']:
+                        if request.session[key]:
+                            pass
+                        else:
+                            request.session[key] = value
+                            
+            request.session.modified = True
+            return True
+        
+        except jwt.ExpiredSignatureError:
+            signout(request)
+            return False
+        
+    except KeyError:
+        signout(request)
+        return False
+
+# clear session key 
+def clear_session(request,key):
+    try:
+        del request.session[key]    
+    except KeyError:
+        pass
+    
+    return HttpResponse(key, "session data cleared")
+
 def home(request):
     """"""
     template_anonymous = "authentication/signin.html"
