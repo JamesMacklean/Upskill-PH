@@ -13,35 +13,80 @@
     </div>
     <div class="program-grid-right">
         {% for program in programs %}
-        <h1>{{ program.name }}</h1>
-        <div class="program-partner-logos">
-            <img src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/DICT-Logo-nobg.png">
-            <img src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/ILCDB+logo_2.png">
-            <img src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/coursera-social-logo-brand.png">
-            <img src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/logo-moocsx.png">
-        </div>
-        <div class="program-description">
-            <hr>
-            <h3>About this Program</h3>
-            {% if program.description%}
-            <p>{{program.description}}</p>
+            {% if program.id in applied_programs %}
+                {% for scholarship in scholarships %}
+                    {% if program.id == scholarship.program_id %}   
+                        <h1>{{ program.name }}</h1>
+                        <div class="program-partner-logos">
+                            <img src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/DICT-Logo-nobg.png">
+                            <img src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/ILCDB+logo_2.png">
+                            <img src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/coursera-social-logo-brand.png">
+                            <img src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/logo-moocsx.png">
+                        </div>
+                        <div class="program-description">
+                            <hr>
+                            <h3>About this Program</h3>
+                            {% if program.description %}
+                            <p>{{program.description}}</p>
+                            {% else %}
+                            <p>No description for this program.</p>
+                            {% endif %}
+                            <h3>Learning Platforms</h3>
+                            <p>
+                                {% comment %} <a href="coursebank.ph">Coursebank</a> {% endcomment %}
+                            </p>
+                            <hr>
+                            <h3>Earning Criteria</h3>
+                            <p>Complete the following courses to earn this program’s digital credential. Click on a course to view its course page.​</p>
+                        </div>
+                        <div class="program-progress">
+                            <form action="" class="program-application" id="apply" method="POST">
+                                {% csrf_token %}
+                                {% if scholarship.status == 1 %}
+                                    <button type="submit" class="btn solid">APPLIED</button>
+                                {% elif scholarship.status == 2 %}
+                                    <button type="submit" class="btn solid">WAITLISTED</button>
+                                {% elif scholarship.status == 3 %}
+                                    <button type="submit" class="btn solid">REJECTED</button>
+                                {% else %}
+                                    <button type="submit" class="btn solid">PENDING</button>
+                                {% endif %}
+                            </form>
+                        </div>
+                    {% endif %}
+                {% endfor %}
             {% else %}
-            <p>No description for this program.</p>
-            {% endif %}
-            <h3>Learning Platforms</h3>
-            <p>
-                {% comment %} <a href="coursebank.ph">Coursebank</a> {% endcomment %}
-            </p>
-            <hr>
-            <h3>Earning Criteria</h3>
-            <p>Complete the following courses to earn this program’s digital credential. Click on a course to view its course page.​</p>
-        </div>
-        <div class="program-progress">
-            <form action="" class="program-application" id="apply" method="POST">
-            {% csrf_token %}
-            <button type="submit" class="btn solid">APPLY NOW</button>
-            </form>
-        </div>
+            <h1>{{ program.name }}</h1>
+            <div class="program-partner-logos">
+                <img src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/DICT-Logo-nobg.png">
+                <img src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/ILCDB+logo_2.png">
+                <img src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/coursera-social-logo-brand.png">
+                <img src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/logo-moocsx.png">
+            </div>
+            <div class="program-description">
+                <hr>
+                <h3>About this Program</h3>
+                {% if program.description %}
+                <p>{{program.description}}</p>
+                {% else %}
+                <p>No description for this program.</p>
+                {% endif %}
+                <h3>Learning Platforms</h3>
+                <p>
+                    {% comment %} <a href="coursebank.ph">Coursebank</a> {% endcomment %}
+                </p>
+                <hr>
+                <h3>Earning Criteria</h3>
+                <p>Complete the following courses to earn this program’s digital credential. Click on a course to view its course page.​</p>
+            </div>
+            <div class="program-progress">
+                <form action="" class="program-application" id="apply" method="POST">
+                    {% csrf_token %}
+                        <button type="submit" class="btn solid">APPLY NOW</button>
+              
+                </form>
+            </div>
+        {% endif %}
         {% endfor %}
     </div>
 </div>
