@@ -393,11 +393,13 @@ a.gg:hover i{
     }
 }
 //VIEW PROFILE PAGE
-span.pass-banner{
-    background-color: #F15A25;
+div.pass-banner{
+    background-color: #F34040;
     color: #fff;
     width: 100%;
-    font-size: 11px;
+    font-size: 12.5px;
+    text-align: center;
+    padding: 2px;
 }
 span.pass-banner a{
     text-decoration: underline;
@@ -797,4 +799,11 @@ div#search-container button#search{
 .passwords-container{
     display: flex;
     align-content: flex-start;
+}
+form.passwords{
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    flex-direction: column;
+    padding: 5rem 0;
 }
