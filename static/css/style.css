@@ -401,14 +401,14 @@ a.gg:hover i {
     padding-top: 150px;
   }
 }
-.pass-banner {
+span.pass-banner {
   background-color: #F15A25;
   color: #fff;
   width: 100%;
   font-size: 11px;
 }
 
-.pass-banner a {
+span.pass-banner a {
   text-decoration: underline;
   color: #fff;
 }
@@ -480,9 +480,7 @@ a.gg:hover i {
 
 .edit-update-profile {
   background-color: #fff;
-  border: solid #000 1px;
-  max-width: 900px;
-  transform: translate(50%);
+  max-width: 100%;
   align-items: flex-start;
 }
 
@@ -849,4 +847,15 @@ div#search-container button#search {
   padding: 5px;
   background-color: #f15a25;
   border-radius: 15px;
+}
+
+.account-settings {
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+}
+
+.passwords-container {
+  display: flex;
+  align-content: flex-start;
 }/*# sourceMappingURL=style.css.map */
