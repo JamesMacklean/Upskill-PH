@@ -13,6 +13,7 @@ urlpatterns = [
     path('verify/<user_hash>/', views.verify_account, name="verify_account"),
     path('profile/', views.profile, name="profile"),
     path('edit/', views.edit_profile, name="edit"),
+    path('account/', views.account, name="account"),
     path('sessions/', SessionChecker.as_view(), name="sessions"),
     path('application/<int:partner_id>/<int:program_id>/', views.application, name="application"),
     path('program/<int:partner_id>/<int:program_id>/', views.program, name="program"),
