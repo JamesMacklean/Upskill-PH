@@ -72,8 +72,7 @@ def user_programs(bearer_token):
 
 # GET https://scholarium.tmtg-clone.click/api/me/partners
 def user_partners(bearer_token):  
-    partner_data = []
-    context = {}
+    partner_list = []
     payload={}
     headers = {
     'Authorization': bearer_token
@@ -82,20 +81,14 @@ def user_partners(bearer_token):
     response = requests.request("GET", API_USER_PARTNERS_URL, headers=headers, data=payload)
     response_dict = json.loads(response.text)
 
-    # AUTO-ADD SA CONTEXT NG MGA KEYS NA NA-GET VIA API
     if 'data' in response_dict:
         try:
             for data in response_dict['data']:
-                for key, value in data.items():
-                    if value is not None:
-                        user_data = {key:data.get(key)}
-                        partner_data.append(user_data)
-                        context[key] = data.get(key)
-                        
+                partner_list.append(data)
         except Exception as e:
             print(str(e))
             
-    return context
+    return partner_list
 
 # GET https://scholarium.tmtg-clone.click/api/me/employment 
 def user_employment(bearer_token):  

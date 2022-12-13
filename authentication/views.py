@@ -217,9 +217,14 @@ def signin(request):
             
             # print('COOKIE RESPONSE:', response.data)
             
+            scholarships = user_programs(user_token)            
+            partners = user_partners(user_token)
             try:    
                 request.session['user_token'] = user_token
                 request.session['expires'] = expires
+                request.session['is_scholar'] = scholarships
+                request.session['is_partner'] = partners
+                
                 payload = jwt.decode(user_token, API_SECRET_KEY, algorithms=['HS256'])
                 # SAVE JWT PAYLOAD INTO SESSIONS
                 for key,value in payload.items():
@@ -292,8 +297,8 @@ def profile(request):
     ########## LOGIN REQUIRED ##########
     
     user_token = request.session['user_token']
-    
     scholarships = user_programs(user_token)
+    
     if scholarships:   
         for data in scholarships:
             program_id = data['program_id']
@@ -397,18 +402,18 @@ def partner(request):
     ########## LOGIN REQUIRED ##########
     
     user_token = request.session['user_token']
-    
-    # IRERESTRUCTURE ITO PANG-GET
-    partners = request.session['partners']
+    partners = user_partners(user_token)
     
     if partners:   
         for data in partners:
             partner_id = data['partner_id']
             program_id = data['program_id']
-            programs_list = get_programs(user_token,partner_id,program_id)
             
-            for program in programs_list:
-                partner_programs.append(program)
+            if program_id:
+                programs_list = get_programs(user_token,partner_id,program_id)
+                
+                for program in programs_list:
+                    partner_programs.append(program)
 
     context['program_list'] = partner_programs
     
@@ -431,10 +436,9 @@ def application(request, partner_id, program_id):
     clear_session(request,'url')
     ######### LOGIN REQUIRED ##########
     
-    user_token = request.session['user_token']
     
-    # IRERESTRUCTURE ITO PANG-GET
-    partners = request.session['partners']
+    user_token = request.session['user_token']
+    partners = user_partners(user_token)
     
     for data in partners:
             monitored_partner.append(data['partner_id'])
@@ -459,7 +463,7 @@ def application(request, partner_id, program_id):
         print(response_message)
 
     applicants = get_applicants(user_token,program_id,None)
-    
+    print("1312312312",applicants)
     for applicant in applicants:
         scholarship_applicants.append(applicant)
 
