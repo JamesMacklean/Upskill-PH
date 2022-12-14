@@ -410,7 +410,7 @@ div.pass-banner {
   padding: 2px;
 }
 
-span.pass-banner a {
+div.pass-banner a {
   text-decoration: underline;
   color: #fff;
 }
