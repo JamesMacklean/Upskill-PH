@@ -1,5 +1,6 @@
 #scholarium-footer {
   background-color: #F15A25;
+  width: 100%;
 }
 
 .footer-link-heading {
@@ -20,7 +21,7 @@
   padding: 0;
 }
 
-.static-link-footer li {
+static-link-footer li {
   padding: 2px;
 }
 
@@ -65,6 +66,11 @@
 .footer-link-footer-social .footer-social-icon:hover {
   text-decoration: none !important;
   background-color: #828282 !important;
+}
+
+.footer-link-footer-social a {
+  text-decoration: none;
+  color: #fff;
 }
 
 .footer-link-footer-social .footer-social-icon i {
