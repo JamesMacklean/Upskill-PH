@@ -512,6 +512,7 @@ def program(request, partner_id, program_id):
     user_token = request.session['user_token']
     scholarships = user_programs(user_token)
     
+    # LOCKED OUT DAPAT ANG OTHER PROGRAMS KAPAG NAGAPPLY SA ISA
     if scholarships:   
         for data in scholarships:
             scholar_program_id = data['program_id']
