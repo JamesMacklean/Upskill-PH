@@ -712,6 +712,10 @@ div.program-grid-right .program-progress {
   padding: 30px 0;
 }
 
+div.static-content {
+  margin: 50px 0;
+}
+
 div.certificate-frame p {
   padding: 0 !important;
   margin: 0 !important;
