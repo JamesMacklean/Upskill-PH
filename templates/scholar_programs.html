@@ -42,14 +42,22 @@
                         <div class="program-progress">
                             <form action="" class="program-application" id="apply" method="POST">
                                 {% csrf_token %}
-                                {% if scholarship.status == 1 %}
-                                    <button type="submit" class="btn solid">APPLIED</button>
-                                {% elif scholarship.status == 2 %}
-                                    <button type="submit" class="btn solid">WAITLISTED</button>
-                                {% elif scholarship.status == 3 %}
-                                    <button type="submit" class="btn solid">REJECTED</button>
+                                {% if atleast_approved_in_a_program %}
+                                    {% if scholarship.status == 1 %}
+                                        <button type="submit" class="btn solid">APPLIED</button>
+                                    {% else %}
+                                        <button type="submit" class="btn solid">CANNOT APPLY TO MORE THAN 1 PROGRAM</button>
+                                    {% endif %}
                                 {% else %}
-                                    <button type="submit" class="btn solid">PENDING</button>
+                                    {% if scholarship.status == 1 %}
+                                        <button type="submit" class="btn solid">APPLIED</button>
+                                    {% elif scholarship.status == 2 %}
+                                        <button type="submit" class="btn solid">WAITLISTED</button>
+                                    {% elif scholarship.status == 3 %}
+                                        <button type="submit" class="btn solid">REJECTED</button>
+                                    {% else %}
+                                        <button type="submit" class="btn solid">PENDING</button>
+                                    {% endif %}
                                 {% endif %}
                             </form>
                         </div>
@@ -82,8 +90,12 @@
             <div class="program-progress">
                 <form action="" class="program-application" id="apply" method="POST">
                     {% csrf_token %}
-                        <button type="submit" class="btn solid">APPLY NOW</button>
-              
+                    {% if atleast_approved_in_a_program %}
+                            <button type="submit" class="btn solid">CANNOT APPLY TO MORE THAN 1 PROGRAM</button>
+                    {% else %}
+                            <button type="submit" class="btn solid">APPLY NOW</button>
+                    {% endif %}
+                        
                 </form>
             </div>
         {% endif %}

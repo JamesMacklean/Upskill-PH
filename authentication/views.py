@@ -35,6 +35,7 @@ class SessionChecker(APIView):
                     if key == 'data':
                         for key,value in payload['data'].items():
                             request.session[key] = value
+                            request.session.modified = True
                 # DISPLAY SESSION ITEMS
                 for key, value in request.session.items():
                     print('{}: {}'.format(key, value))    
@@ -63,13 +64,11 @@ def authenticate_user(request):
             for key,value in payload.items():
                 if key == 'data':
                     for key,value in payload['data'].items():
-                        # if request.session['first_name'] or request.session['last_name']:
                         if request.session[key]:
                             pass
                         else:
                             request.session[key] = value
-                            
-            request.session.modified = True
+                            request.session.modified = True
             return True
         
         except jwt.ExpiredSignatureError:
@@ -83,7 +82,8 @@ def authenticate_user(request):
 # clear session key 
 def clear_session(request,key):
     try:
-        del request.session[key]    
+        del request.session[key]  
+        request.session.modified = True  
     except KeyError:
         pass
     
@@ -189,6 +189,7 @@ def signup(request):
                 #### MODAL RESPONSE KUNG NAGWORK BA ANG SIGN UP
                 context['message'] = "success"
                 request.session['user_hash'] = user_hash
+                request.session.modified = True
                 return redirect('success', user_hash)
             else:
                 #### MODAL RESPONSE KUNG NAGWORK BA ANG SIGN UP
@@ -225,14 +226,15 @@ def signin(request):
             
             # print('COOKIE RESPONSE:', response.data)
             
-            scholarships = user_programs(user_token)            
+            scholarships = user_programs(user_token) 
             partners = user_partners(user_token)
-            
+                             
             try:    
                 request.session['user_token'] = user_token
                 request.session['expires'] = expires
                 request.session['is_scholar'] = scholarships
                 request.session['is_partner'] = partners
+                request.session.modified = True
                 
                 payload = jwt.decode(user_token, API_SECRET_KEY, algorithms=['HS256'])
                 # SAVE JWT PAYLOAD INTO SESSIONS
@@ -240,6 +242,7 @@ def signin(request):
                     if key == 'data':
                         for key,value in payload['data'].items():
                             request.session[key] = value
+                            request.session.modified = True
                 # PRINT SESSION ITEMS
                 for key, value in request.session.items():
                     print('{}: {}'.format(key, value))
@@ -287,6 +290,7 @@ def signout(request):
     try:   
         for key in list(request.session.keys()):
             del request.session[key]
+            request.session.modified = True
     except KeyError as e:
         print(str(e))
         
@@ -297,7 +301,7 @@ def profile(request):
     template_name = "profile_dashboard.html"
     context = {}
     applied_programs = []
-    
+    status_checker = 0
     ########## LOGIN REQUIRED ##########
     if not authenticate_user(request):
         request.session['url'] = "profile"
@@ -305,17 +309,19 @@ def profile(request):
     clear_session(request,'url')
     ########## LOGIN REQUIRED ##########
     
-    if request.session['is_scholar']:
-        user_token = request.session['user_token']
-        scholarships = user_programs(user_token)
-        
-        if scholarships:   
+    user_token = request.session['user_token']
+    scholarships = user_programs(user_token)
+            
+    if scholarships: 
+        try:  
             for data in scholarships:
                 program_id = data['program_id']
                 applied_programs.append(program_id)
-    else:
-        raise Http404
-    
+            
+        except Exception as e:
+            print(str(e)) 
+                                
+
     # NAKADEFAULT MUNA ITO SA 2 SINCE DICT PA LANG ANG MAY PROGRAMS
     context['program_list'] = get_programs(user_token,2,None)
     context['profile'] = user_profile(user_token)
@@ -323,7 +329,7 @@ def profile(request):
     context['education'] = user_education(user_token)
     context['scholarships'] = scholarships
     context['applied_programs'] = applied_programs
-        
+    
     return render(request, template_name, context)
 
 def edit_profile(request):
@@ -493,7 +499,7 @@ def program(request, partner_id, program_id):
     context = {}
     program_ids = []
     applied_programs = []
-    
+    status_checker = 0
     ######### LOGIN REQUIRED ##########
     if not authenticate_user(request):
         request.session['url'] = "program"
@@ -510,7 +516,11 @@ def program(request, partner_id, program_id):
         for data in scholarships:
             scholar_program_id = data['program_id']
             applied_programs.append(scholar_program_id)
-
+            status = data['status']
+                    
+            if status == 1:
+                status_checker = status_checker + 1
+        
     if request.method == "POST":
         response = scholar_apply(user_token,program_id)
         
@@ -519,7 +529,6 @@ def program(request, partner_id, program_id):
         
         return redirect('profile')
         
-    
     all_programs = get_programs(user_token, partner_id, None)
     
     for program in all_programs:
@@ -533,6 +542,7 @@ def program(request, partner_id, program_id):
     context['programs'] = get_programs(user_token,partner_id,program_id)
     context['scholarships'] = scholarships
     context['applied_programs'] = applied_programs
+    context['atleast_approved_in_a_program'] = status_checker
     
     return render(request, template_name, context)
 
