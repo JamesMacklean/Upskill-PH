@@ -15,8 +15,8 @@ urlpatterns = [
     path('edit/', views.edit_profile, name="edit"),
     path('account/', views.account, name="account"),
     path('sessions/', SessionChecker.as_view(), name="sessions"),
-    path('application/<int:partner_id>/<int:program_id>/', views.application, name="application"),
-    path('program/<int:partner_id>/<int:program_id>/', views.program, name="program"),
+    path('application/<partner_id>/<program_id>/', views.application, name="application"),
+    path('program/<partner_id>/<program_id>/', views.program, name="program"),
     path('partner/', views.partner, name="partner"),
     path('certificate/', views.certificate, name="certificate"),
     
