@@ -48,7 +48,6 @@ class SessionChecker(APIView):
         except KeyError:
             raise Http404
 
-# decode JWT user token
 def authenticate_user(request):
     try:
         # user_token = request.COOKIES.get('jwt')    
@@ -79,7 +78,6 @@ def authenticate_user(request):
         signout(request)
         return False
 
-# clear session key 
 def clear_session(request,key):
     try:
         del request.session[key]  
@@ -301,7 +299,6 @@ def profile(request):
     template_name = "profile_dashboard.html"
     context = {}
     applied_programs = []
-    status_checker = 0
     ########## LOGIN REQUIRED ##########
     if not authenticate_user(request):
         request.session['url'] = "profile"
@@ -319,8 +316,7 @@ def profile(request):
                 applied_programs.append(program_id)
             
         except Exception as e:
-            print(str(e)) 
-                                
+            print(str(e))       
 
     # NAKADEFAULT MUNA ITO SA 2 SINCE DICT PA LANG ANG MAY PROGRAMS
     context['program_list'] = get_programs(user_token,2,None)
@@ -482,7 +478,8 @@ def application(request, partner_id, program_id):
             response_message = update_applicant(user_token, user_id, request_program_id, 3)
 
         #### MODAL RESPONSE KUNG NAGWORK BA ANG APPLICATION
-        print(response_message)
+        print (response_message)
+            
 
     applicants = get_applicants(user_token,program_id,None)
     for applicant in applicants:
@@ -551,7 +548,42 @@ def certificate(request):
     return render(request, "certificate.html")
 
 def account(request):
-    return render(request, "account.html")
+    """"""
+    template_name = "account.html"
+    context = {}
+    ########## LOGIN REQUIRED ##########
+    if not authenticate_user(request):
+        request.session['url'] = "account"
+        return HttpResponseRedirect('/signin?next=account')
+    clear_session(request,'url')
+    ########## LOGIN REQUIRED ##########
+    
+    user_token = request.session['user_token']
+    user_data = user_details(user_token)
+    date_joined = user_data['date_joined']
+        
+    if request.method == "POST":
+        current_pass = request.POST.get('current-pass')
+        new_pass = request.POST.get('new-pass')
+        confirm_pass = request.POST.get('confirm-pass')
+    
+        if new_pass == confirm_pass:
+            response = change_password(user_token, current_pass, new_pass)
+            #### MODAL RESPONSE KUNG NAGWORK BA ANG CHANGE PASSWORD
+            if response == 'Successfully Updated Password!':
+                print (response)
+                return redirect ('home')
+            else:
+                print (response)
+                return redirect ('account')
+        else:
+            #### MODAL RESPONSE KUNG NAGWORK BA ANG CHANGE PASSWORD
+            print("password does not match")
+            return redirect ('account')
+        
+    context['date_joined'] = date_joined
+    
+    return render(request, template_name, context)
 
 # STATIC TEMPLATES
 def guidelines(request):

@@ -1,15 +1,17 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load parse_iso %}
 {% block content %}
 
 <div class="account-settings">
     <h3>Account Settings</h3>
     <div class="passwords-container">
-            <form method="" class="passwords">
+            <form action="" method="POST" class="passwords">
+                
                 <p>
-                    First Name Last Name <br>
-                    email <br>
-                    date joined: <br>
+                    {{request.session.first_name|title}} {{request.session.last_name|title}}<br>
+                    {{request.session.email}}<br>
+                    date joined: {{date_joined|parse_iso|date:"F d, Y"}} <br>
                 </p>
                 <label for="current-pass">Current Password </label> 
                 <input type="password" name="current-pass"></input> <br>
@@ -19,7 +21,8 @@
             
                 <label for="confirm-pass">Confirm Password </label> 
                 <input type="password" name="confirm-pass"></input> <br>
-        
+                
+                {% csrf_token %}
                 <input type="submit" value="Update Password"></input>
             </form>
     </div>

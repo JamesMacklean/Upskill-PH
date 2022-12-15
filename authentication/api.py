@@ -23,6 +23,33 @@ from .variables import *
 import os, requests, ast, jwt
 import json
 
+# GET https://scholarium.tmtg-clone.click/api/me
+def user_details(bearer_token):  
+    user_data = []
+    context = {}
+    payload={}
+    headers = {
+    'Authorization': bearer_token
+    }
+    
+    response = requests.request("GET", API_USER_URL, headers=headers, data=payload)
+    response_dict = json.loads(response.text)
+
+    # AUTO-ADD SA CONTEXT NG MGA KEYS NA NA-GET VIA API
+    if 'data' in response_dict:
+        try:
+            for data in response_dict['data']:
+                for key, value in data.items():
+                    if value is not None:
+                        collected_data = {key:data.get(key)}
+                        user_data.append(collected_data)
+                        context[key] = data.get(key)
+                        
+        except Exception as e:
+            print(str(e))
+            
+    return context
+
 # GET https://scholarium.tmtg-clone.click/api/me/profile
 def user_profile(bearer_token):  
     profile_data = []
@@ -174,6 +201,7 @@ def get_programs(bearer_token, partner_id,program_id):
             except Exception as e:
                 print(str(e))
 
+    print("############## PROGRAMS ##############",program_list)
     return program_list
 
 # GET https://scholarium.tmtg-clone.click/api/partner/scholarship/[program_id]/[status]
@@ -352,8 +380,7 @@ def update_employment (bearer_token, employ_status, industry, employer, occupati
     return context, response_message
 
 # POST https://scholarium.tmtg-clone.click/api/me/education 
-def update_education (bearer_token, degree, school,
-                        study, date_now, privacy):
+def update_education (bearer_token, degree, school, study, date_now, privacy):
     education_data = []
     context = {}
     payload={
@@ -392,6 +419,53 @@ def update_education (bearer_token, degree, school,
 
     return context, response_message
 
+# POST https://scholarium.tmtg-clone.click/api/partner/programs 
+def update_program (bearer_token, program_id, name, description, partner_id, logo, image, start_date, end_date, registration_end, badge, certificate, date_now):
+    updated_data = []
+    context = {}
+    payload={
+        'program_id': program_id,
+        'name': name,
+        'description': description,
+        'partner_id': partner_id,
+        'logo': logo,
+        'image': image,
+        'start_date': start_date,
+        'end_date': end_date,
+        'registration_end': registration_end,
+        'badge': badge,
+        'certificate': certificate,
+        'last_modified': date_now
+    }
+    
+    files=[]
+    headers = {
+    'Authorization': bearer_token
+    }
+    
+    response = requests.request("POST", API_PARTNER_PROGRAMS_URL, headers=headers, data=payload, files=files)        
+    response_dict = ast.literal_eval(response.text)
+    
+    if 'data' in response_dict:
+            response_message = "Program Updated!"
+    else:
+        response_message = response_dict.get("error")
+    
+    # AUTO-ADD SA CONTEXT NG MGA KEYS NA NA-UPDATE VIA API
+    if 'data' in response_dict:
+        try:
+            for data in response_dict['data']:
+                for key, value in data.items():
+                    if value is not None:
+                        program_data = {key:data.get(key)}
+                        updated_data.append(program_data)
+                        context[key] = data.get(key)
+                        
+        except Exception as e:
+            print(str(e))
+
+    return context, response_message
+
 # POST https://scholarium.tmtg-clone.click/api/me/scholarship
 def scholar_apply(bearer_token, program_id):
     payload={'program_id': program_id}
@@ -404,6 +478,29 @@ def scholar_apply(bearer_token, program_id):
     
     if 'data' in response_dict:
         response_message = "Successfully Applied!"
+    else:
+        response_message = response_dict.get("error")
+
+    return response_message
+
+# POST https://scholarium.tmtg-clone.click/api/v1/me/password
+def change_password(bearer_token, old_password, new_password):
+    payload={
+        'oldpw': old_password,
+        'newpw': new_password
+    }
+    files=[
+    ]
+    
+    headers = {
+    'Authorization': bearer_token
+    }
+
+    response = requests.request("POST", API_UPDATE_PASSWORD_URL, headers=headers, data=payload, files=files)
+    response_dict = json.loads(response.text)
+    
+    if 'data' in response_dict:
+        response_message = "Successfully Updated Password!"
     else:
         response_message = response_dict.get("error")
 
