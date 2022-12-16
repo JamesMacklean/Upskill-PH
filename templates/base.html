@@ -15,6 +15,10 @@
 <body>
 {% include 'header.html' %}
 
+{% if first_time_login %}
+<div class="pass-banner">You need to change your temporary password to secure your account. <a href="{% url 'account' %}">Change your password</a></div>
+{% endif %}
+
 {% block content %}
 {% endblock %}
 

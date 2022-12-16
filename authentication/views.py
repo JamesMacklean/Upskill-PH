@@ -550,7 +550,6 @@ def certificate(request):
 def account(request):
     """"""
     template_name = "account.html"
-    context = {}
     ########## LOGIN REQUIRED ##########
     if not authenticate_user(request):
         request.session['url'] = "account"
@@ -559,9 +558,7 @@ def account(request):
     ########## LOGIN REQUIRED ##########
     
     user_token = request.session['user_token']
-    user_data = user_details(user_token)
-    date_joined = user_data['date_joined']
-        
+    
     if request.method == "POST":
         current_pass = request.POST.get('current-pass')
         new_pass = request.POST.get('new-pass')
@@ -580,10 +577,8 @@ def account(request):
             #### MODAL RESPONSE KUNG NAGWORK BA ANG CHANGE PASSWORD
             print("password does not match")
             return redirect ('account')
-        
-    context['date_joined'] = date_joined
     
-    return render(request, template_name, context)
+    return render(request, template_name)
 
 # STATIC TEMPLATES
 def guidelines(request):

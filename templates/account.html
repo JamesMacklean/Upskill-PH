@@ -11,7 +11,7 @@
                 <p>
                     {{request.session.first_name|title}} {{request.session.last_name|title}}<br>
                     {{request.session.email}}<br>
-                    date joined: {{date_joined|parse_iso|date:"F d, Y"}} <br>
+                    date joined: {{ user_date_joined|parse_iso|date:"F d, Y" }} <br>
                 </p>
                 <label for="current-pass">Current Password </label> 
                 <input type="password" name="current-pass"> <br>
