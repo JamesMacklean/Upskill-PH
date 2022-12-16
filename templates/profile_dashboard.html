@@ -40,11 +40,10 @@
                                             <div class="container-card-title">
                                                 <h3>{{program.name}}</h3>
                                                 <p class="card-title-content">
-                                                    6 courses <br>
                                                     {% if program.end_date %}
                                                         {{program.start_date|parse_iso|date:"M d"}} - {{program.end_date|parse_iso|date:"M d, Y"}}
                                                     {% else %}
-                                                        since {{program.start_date|parse_iso|date:"M d, Y"}}
+                                                        {{program.start_date|parse_iso|date:"M d, Y"}}
                                                     {% endif %}
                                                 </p>
                                                 <p class="card-title-footer">
@@ -86,11 +85,10 @@
                                             <div class="container-card-title">
                                                 <h3>{{program.name}}</h3>
                                                 <p class="card-title-content">
-                                                    6 courses <br>
                                                     {% if program.end_date %}
                                                         {{program.start_date|parse_iso|date:"M d"}} - {{program.end_date|parse_iso|date:"M d, Y"}}
                                                     {% else %}
-                                                        since {{program.start_date|parse_iso|date:"M d, Y"}}
+                                                        {{program.start_date|parse_iso|date:"M d, Y"}}
                                                     {% endif %}
                                                 </p>
                                                 <p class="card-title-footer">
