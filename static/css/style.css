@@ -933,4 +933,13 @@ h5.overlay-title {
   outline: none;
   border: none;
   text-decoration: none;
+}
+
+[type=submit] {
+  cursor: pointer;
+  border: none;
+  background-color: #f15a25;
+  color: #fff;
+  border-radius: 5px;
+  padding: 5px 8px;
 }/*# sourceMappingURL=style.css.map */

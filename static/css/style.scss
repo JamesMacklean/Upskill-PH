@@ -869,6 +869,17 @@ h5.overlay-title{
     border: none;
     text-decoration: none;
 }
+
+// BUTTONS
+[type=submit]{
+    cursor: pointer;
+    border: none;
+    background-color: #f15a25;
+    color: #fff;
+    border-radius: 5px;
+    padding: 5px 8px;
+}
+
 // CARD BACKGROUNDS
 // .card-image.cybersecurity_image{
 //     max-height: 130px;
