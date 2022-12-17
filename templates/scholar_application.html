@@ -11,9 +11,8 @@
     <h3>Applications</h3>
     {% for applicant in scholarship_applicants %}
     <form action="" class="scholarship-applications" id="apply" method="POST">
-
+        <input type="checkbox">
         <div class="action-name">
-            <input type="checkbox">
             <p><strong>{{applicant.first_name|title}} {{applicant.last_name|title}}</strong></p>
             <p style="font-size: 12px; color: #4C4E52">{{applicant.email}}</p>
             <p style="font-size: 12px; color: #4C4E52">{{applicant.occupation}}</p>
@@ -35,8 +34,13 @@
         <div class="action-buttons">
                 {% csrf_token %}
             <input type="radio" class="" name='approve' value="Approve">
+            <label for="approve"></label>
+
             <input type="radio" class="" name='waitlist' value="Waitlist">
+            <label for="waitlist"></label>
+
             <input type="radio" class="" name='reject' value="Reject">
+            <label for="Reject"></label>
         </div>
     </form>
     {% endfor %}
