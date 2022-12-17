@@ -7,7 +7,64 @@
 </div>
 <br>
 
-<div class="tab" id="scholarship-applications">
+<div class="scholar-applications">
+    <h3>APPLICATIONS</h3>
+    
+    <div class="wrapper-filter">
+        <div class="search-bar">
+            <div id="search-container">
+                <input type="search" placeholder="search...">
+                <button id="search"><i class="fa fa-search"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <table>
+        <tr>
+            <td class="box">
+                <input type="checkbox" name="all" id="all">
+            </td>
+            <td>
+                <div class="action-name">
+                    Select All
+                </div>
+            </td>
+        </tr>
+        {% for applicant in scholarship_applicants %}
+        <form action="" class="scholarship-applications" id="apply" method="POST">
+            <tr>
+                <td>
+                    <input type="checkbox" name="applicant" id="applicant">
+                </td>
+                <td>
+                    <div class="action-name">
+                    <strong>{{applicant.first_name|title}} {{applicant.last_name|title}}</strong>
+                    <br>
+                    {{applicant.email}}
+                    <br>
+                    {{applicant.occupation}}
+                    <br>
+                    {{applicant.degree}}
+                    <br>
+                    Status: 
+                        {% if applicant.status == 0 %}
+                        Pending
+                        {% elif applicant.status == 1 %}
+                        Approved
+                        {% elif applicant.status == 2 %}
+                        Waitlisted
+                        {% elif applicant.status == 3 %}
+                        Rejected
+                        {% endif %}
+                    </div>
+                </td>
+            </tr>
+        {% endfor %}
+        </form>
+    </table>
+</div>
+
+{% comment %} <div class="tab" id="scholarship-applications">
     <h3>Applications</h3>
     {% for applicant in scholarship_applicants %}
     <form action="" class="scholarship-applications" id="apply" method="POST">
@@ -31,20 +88,20 @@
             <input type="hidden" name="user_id" value="{{applicant.user_id}}" />
             <input type="hidden" name="program_id" value="{{applicant.program_id}}" />
         </div>
-        <div class="action-buttons">
+            <div class="action-buttons">
                 {% csrf_token %}
-            <input type="radio" class="" name='approve' value="Approve">
+            <input type="radio" class="radio" name='approve' value="Approve">
             <label for="approve"></label>
 
-            <input type="radio" class="" name='waitlist' value="Waitlist">
+            <input type="radio" class="radio" name='waitlist' value="Waitlist">
             <label for="waitlist"></label>
 
-            <input type="radio" class="" name='reject' value="Reject">
+            <input type="radio" class="radio" name='reject' value="Reject">
             <label for="Reject"></label>
         </div>
     </form>
     {% endfor %}
-</div>
+</div> {% endcomment %}
 {% endfor %}
 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.js"></script>

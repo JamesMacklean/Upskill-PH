@@ -824,6 +824,14 @@ table tr td {
   padding: 20px;
 }
 
+table tr td div.action-name {
+  text-align: left;
+}
+
+table tr td.box {
+  width: 50px;
+}
+
 div.wrapper-filter {
   width: 95%;
   margin: 0 auto;

@@ -765,6 +765,13 @@ table tr th{
 table tr td{
     padding: 20px;
 }
+table tr td div.action-name{
+    text-align: left;
+}
+table tr td.box{
+    width: 50px;
+}
+
 // SEARCH FILTER
 
 div.wrapper-filter{
