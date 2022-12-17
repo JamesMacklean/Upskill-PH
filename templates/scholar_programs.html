@@ -76,19 +76,22 @@
             </div>
             <div class="program-description">
                 <hr>
-                <h3>About this Program</h3>
-                {% if program.description %}
-                <p>{{program.description}}</p>
-                {% else %}
-                <p>No description for this program.</p>
-                {% endif %}
-                <h3>Learning Platforms</h3>
-                <p>
-                    {% comment %} <a href="coursebank.ph">Coursebank</a> {% endcomment %}
-                </p>
-                <hr>
-                <h3>Earning Criteria</h3>
-                <p>Complete the following courses to earn this program’s digital credential. Click on a course to view its course page.​</p>
+                            <h3>About this Program</h3>
+                            {% if program.description %}
+                            <p>{{program.description}}</p> <br>
+                            <p>Click on the Coursera link below to check the collection under this program.</p>
+                            {% else %}
+                            <p>No description for this program.</p>
+                            {% endif %}
+                            <h3>Learning Platform</h3>
+                            <p>
+                                <a href="www.coursera.org" target="_blank" style="color: #000 !important;">Coursera</a>
+                            </p>
+                            <hr>
+                            <h3>Apply to this Program</h3>
+                            <p>By applying to this program, you are agreeing to the program guidelines set forth by the granting organization.</p>
+                            <br>
+                            <p><a href="{% url 'guidelines' %}" target="_blank" style="color: #000 !important;">View program guidelines.</a></p>
             </div>
             <div class="program-progress">
                 <form action="" class="program-application" id="apply" method="POST">
