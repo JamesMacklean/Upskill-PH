@@ -159,7 +159,7 @@ form {
 }
 
 button, button.btn, a.btn {
-  width: 150px !important;
+  min-width: 100px !important;
   height: 49px !important;
   border: none !important;
   outline: none !important;
