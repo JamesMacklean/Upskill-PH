@@ -2,66 +2,71 @@
 {% load static %}
 {% block content %}
 {% for program in programs %}
-<div>
-    <h5><a href ={% url 'partner'%} style="text-decoration:none" color="white"/>Programs</a> > {{program.name}}</h5>
-</div>
-<br>
-
-<div class="scholar-applications">
-    <h3>APPLICATIONS</h3>
-    
-    <div class="wrapper-filter">
-        <div class="search-bar">
-            <div id="search-container">
-                <input type="search" placeholder="search...">
-                <button id="search"><i class="fa fa-search"></i></button>
+<div class="program-grid-container">
+    <div class="program-grid-left">
+        <div>
+            <h5><a href ={% url 'partner'%} style="text-decoration:none" color="white"/>Programs</a> > {{program.name}}</h5>
+        </div>
+        <br>
+    </div>
+    <div class="program-grid-right">
+        <div class="scholar-applications">
+            <h3>APPLICATIONS</h3>
+            
+            <div class="wrapper-filter">
+                <div class="search-bar">
+                    <div id="search-container">
+                        <input type="search" placeholder="search...">
+                        <button id="search"><i class="fa fa-search"></i></button>
+                    </div>
+                </div>
             </div>
+        
+            <table>
+                <tr>
+                    <td class="box">
+                        <input type="checkbox" name="all" id="all">
+                    </td>
+                    <td>
+                        <div class="action-name">
+                            Select All
+                        </div>
+                    </td>
+                </tr>
+                {% for applicant in scholarship_applicants %}
+                <form action="" class="scholarship-applications" id="apply" method="POST">
+                    <tr>
+                        <td>
+                            <input type="checkbox" name="applicant" id="applicant">
+                        </td>
+                        <td>
+                            <div class="action-name">
+                            <strong>{{applicant.first_name|title}} {{applicant.last_name|title}}</strong>
+                            <br>
+                            {{applicant.email}}
+                            <br>
+                            {{applicant.occupation}}
+                            <br>
+                            {{applicant.degree}}
+                            <br>
+                            Status: 
+                                {% if applicant.status == 0 %}
+                                Pending
+                                {% elif applicant.status == 1 %}
+                                Approved
+                                {% elif applicant.status == 2 %}
+                                Waitlisted
+                                {% elif applicant.status == 3 %}
+                                Rejected
+                                {% endif %}
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </form>
+            </table>
         </div>
     </div>
-
-    <table>
-        <tr>
-            <td class="box">
-                <input type="checkbox" name="all" id="all">
-            </td>
-            <td>
-                <div class="action-name">
-                    Select All
-                </div>
-            </td>
-        </tr>
-        {% for applicant in scholarship_applicants %}
-        <form action="" class="scholarship-applications" id="apply" method="POST">
-            <tr>
-                <td>
-                    <input type="checkbox" name="applicant" id="applicant">
-                </td>
-                <td>
-                    <div class="action-name">
-                    <strong>{{applicant.first_name|title}} {{applicant.last_name|title}}</strong>
-                    <br>
-                    {{applicant.email}}
-                    <br>
-                    {{applicant.occupation}}
-                    <br>
-                    {{applicant.degree}}
-                    <br>
-                    Status: 
-                        {% if applicant.status == 0 %}
-                        Pending
-                        {% elif applicant.status == 1 %}
-                        Approved
-                        {% elif applicant.status == 2 %}
-                        Waitlisted
-                        {% elif applicant.status == 3 %}
-                        Rejected
-                        {% endif %}
-                    </div>
-                </td>
-            </tr>
-        {% endfor %}
-        </form>
-    </table>
 </div>
 
 {% comment %} <div class="tab" id="scholarship-applications">
