@@ -43,10 +43,9 @@
                             <div class="action-name">
                             <strong>{{applicant.first_name|title}} {{applicant.last_name|title}}</strong>
                             <br>
-                            {{applicant.email}} |
-                            {{applicant.occupation}} |
-                            {{applicant.degree}} |
-                            Status: 
+                            {{applicant.email}} • 
+                            {{applicant.occupation}} • 
+                            {{applicant.degree}} • 
                                 {% if applicant.status == 0 %}
                                 Pending
                                 {% elif applicant.status == 1 %}
