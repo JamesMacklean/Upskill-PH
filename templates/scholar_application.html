@@ -11,11 +11,13 @@
     <h3>Applications</h3>
     {% for applicant in scholarship_applicants %}
     <form action="" class="scholarship-applications" id="apply" method="POST">
+
         <div class="action-name">
-            <h4>{{applicant.first_name|title}} {{applicant.last_name|title}}</h4>
-            <p>{{applicant.email}}</p>
-            <p>{{applicant.occupation}}</p>
-            <p>{{applicant.degree}}</p>
+            <input type="checkbox">
+            <p><strong>{{applicant.first_name|title}} {{applicant.last_name|title}}</strong></p>
+            <p style="font-size: 12px; color: #4C4E52">{{applicant.email}}</p>
+            <p style="font-size: 12px; color: #4C4E52">{{applicant.occupation}}</p>
+            <p style="font-size: 12px; color: #4C4E52">{{applicant.degree}}</p>
             Status: 
             {% if applicant.status == 0 %}
             Pending
@@ -32,9 +34,9 @@
         </div>
         <div class="action-buttons">
                 {% csrf_token %}
-            <button class="action-btn green" name='approve'>Approve</button>
-            <button class="action-btn yellow" name='waitlist'>Waitlist</button>
-            <button class="action-btn red" name='reject'>Reject</button>
+            <input type="radio" class="" name='approve' value="Approve">
+            <input type="radio" class="" name='waitlist' value="Waitlist">
+            <input type="radio" class="" name='reject' value="Reject">
         </div>
     </form>
     {% endfor %}
