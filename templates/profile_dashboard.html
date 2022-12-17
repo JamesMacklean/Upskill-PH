@@ -70,8 +70,8 @@
                             {% if scholarship.program_id == program.id %}    
                                 <a href="{% url 'program' program.partner_id program.id %}">
                                     <div class="card-container">
-                                        <div class="card-image">
-                                            <img src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/sample-background.jpeg">
+                                        <div class="card-image {{program.image}}">
+                                            
                                         </div>
                                         
                                         <div class="card-partner-logo">

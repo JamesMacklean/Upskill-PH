@@ -581,14 +581,14 @@ div.card-container{
     background-color: #fff;
     margin: 15px 15px;
 }
-div.card-image{
-    height: 130px;
-    width: 250px;
-}
-div.card-image img{
-    width: 248px;
-    height: 130px;
-}
+// div.card-image{
+//     height: 130px;
+//     width: 250px;
+// }
+// div.card-image img{
+//     width: 248px;
+//     height: 130px;
+// }
 div.card-partner-logo{
     display: flex;
     max-width: 248px;
@@ -857,4 +857,37 @@ h5.overlay-title{
     outline: none;
     border: none;
     text-decoration: none;
+}
+// CARD BACKGROUNDS
+// .card-image.cybersecurity_image{
+//     max-height: 130px;
+//     max-width: 250px;
+//     background-image: url(https://scholarium-static.s3.ap-southeast-1.amazonaws.com/cybersecurity.jpg);
+//     background-attachment: scroll, scroll;
+//     background-position: left top, center center;
+//     background-clip: border-box, border-box;
+//     background-origin: padding-box, padding-box;
+//     background-size: auto auto, cover;
+//     background-repeat: no-repeat, no-repeat;
+// }
+// .card-image._image{
+//     max-height: 130px;
+//     max-width: 250px;
+//     background-image: url(https://scholarium-static.s3.ap-southeast-1.amazonaws.com/data-science.jpg);
+//     background-attachment: scroll, scroll;
+//     background-position: left top, center center;
+//     background-clip: border-box, border-box;
+//     background-origin: padding-box, padding-box;
+//     background-size: auto auto, cover;
+//     background-repeat: no-repeat, no-repeat;
+// }
+div.card-image{
+    max-height: 130px;
+    max-width: 250px;
+    // background-attachment: scroll, scroll;
+    // background-position: left top, center center;
+    // background-clip: border-box, border-box;
+    // background-origin: padding-box, padding-box;
+    // background-size: auto auto, cover;
+    // background-repeat: no-repeat, no-repeat;
 }
