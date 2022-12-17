@@ -624,7 +624,7 @@ div.container-card-title p.card-title-footer{
 
 div.program-grid-container{
     display: flex;
-    max-height: 100vh;
+    min-height: 100vh;
     margin: 50px;
 }
 div.program-grid-left{
