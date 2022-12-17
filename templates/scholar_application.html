@@ -33,8 +33,8 @@
                         </div>
                     </td>
                 </tr>
-                {% for applicant in scholarship_applicants %}
                 <form action="" class="scholarship-applications" id="apply" method="POST">
+                {% for applicant in scholarship_applicants %}
                     <tr>
                         <td>
                             <input type="checkbox" name="applicant" id="applicant">
@@ -58,7 +58,10 @@
                             </div>
                         </td>
                     </tr>
-                {% endfor %}
+                    {% endfor %}
+                    <input type="submit" value="Approve">
+                    <input type="submit" value="Waitlist">
+                    <input type="submit" value="Reject">
                 </form>
             </table>
         </div>

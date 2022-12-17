@@ -20,14 +20,12 @@
         <a href="#personal-data"><i class="fa fa-angle-left"></i>Personal Details</a> {% endcomment %}
     </div>
     <div class="program-grid-right">
+        <h2>Edit my profile</h2>
         <form action="" class="edit-update-profile" method="POST" enctype="multipart/form-data">
             {% csrf_token %}
-                <div>
-                    <h2>Edit my profile</h2>
-                </div>
-            
+                
+                <h3 class="profile-label">Profile Data</h3>
                 <div class="profile-container" id="profile-data">
-                    <h2 class="profile-label">Profile Data</h2>
                     <div class="profile-data">
                         <label for="name"> Full name: </label>
                         <input type="text" name="first_name" placeholder="First Name" value="{{profile.first_name|title}}">
@@ -40,9 +38,9 @@
                         <input type="button" value="UPLOAD">
                     </div>
                 </div>
-                
+
+                <h3>Education and Work Experience</h3>
                 <div class="educ-container" id="educ-data">
-                    <h2>Education and Work Experience</h2>
                     <div class="educ-item">
                         <label for="employ_status">Employment Status: </label>
                         
@@ -120,8 +118,8 @@
                     </div>
                 </div>
                 
+                <h3>About</h3>
                 <div class="about-container" id="about-data">
-                    <h2>About</h2>
                 
                     <div class="about">
                         <label for="bio">About Me: </label>
@@ -157,7 +155,7 @@
                 <!--  COUNTRY SELECTION END  -->
                 
                     <div class="about" id="social-data">
-                        <label for="Socials">Social Media Links: </label>
+                        <label for="Socials">Social Media Links: </label> <br>
                         <label for="linkedin">LinkedIn: </label><input type="text" placeholder="linkedin" name="linkedin">
                     </div>
                 

@@ -479,6 +479,9 @@ div.pass-banner a{
 }
 .profile-data, .educ-item, .about{
     margin: 20px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 .profile-picture{
     margin: 20px;
