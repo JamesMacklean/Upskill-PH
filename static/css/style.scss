@@ -568,8 +568,9 @@ h5.opentab{
 
 /* CARDS */
 div.card-wrapper{
-    display: grid;
-    grid-template-columns: auto auto auto auto;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
 }
 div.card-wrapper a{
     text-decoration: none !important;
