@@ -205,7 +205,7 @@ def signup(request):
                 context['message'] = "success"
                 request.session['user_hash'] = user_hash
                 request.session.modified = True
-                return redirect('success', user_hash)
+                # return redirect('success', user_hash)
             else:
                 #### MODAL RESPONSE KUNG NAGWORK BA ANG SIGN UP
                 context['message'] = response_message
