@@ -146,10 +146,14 @@
                         <label for="region">Region: </label>
                         <select id="region" name="region">
                             {% if profile.region %}
-                            <option value="" selected disabled hidden>{{profile.region}}</option>
+                                {% for region_key, region_value in region_choices.items %}
+                                    {% if profile.region == region_key %}
+                                        <option value="{{profile.region}}" selected disabled hidden>{{region_value}}</option>
+                                    {% endif %}
+                                {% endfor %}
                             {% endif %}
-                            {% for region in region_choices %}
-                            <option value="{{region}}">{{region}}</option>
+                            {% for region_key, region_value in region_choices.items %}
+                                <option value="{{region_key}}">{{region_value}}</option>
                             {% endfor %}
                         </select>
                     </div>
@@ -160,8 +164,8 @@
                         {% if profile.municipality %}
                         <option value="" selected disabled hidden>{{profile.municipality}}</option>
                         {% endif %}
-                        {% for municipality in municipality_choices %}
-                        <option value="{{municipality}}">{{municipality}}</option>
+                        {% for municipality_key, municipality_value in municipality_choices.items %}
+                                <option value="{{municipality_value}}" parent={{municipality_key}}>{{municipality_value}}</option>
                         {% endfor %}
                         </select>
                     </div>
@@ -232,6 +236,26 @@
       </div>
   </div>
 </div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+    var document = window.document;
+    $(document).ready(function(){
+
+        var $regionvar=$("#region");
+        var $municipalityvar=$("#municipality");
+
+        var $municipalityoptions=$municipalityvar.find('option');
+
+        $municipalityvar.html($municipalityoptions.filter('[value=""]'));
+
+        $regionvar.on('change',function(){
+            $municipalityvar.html($municipalityoptions.filter('[parent="'+this.value+'"],[value=""]'));
+            $('#municipality option[value=""]').prop('selected', true);
+
+        });
+    });
+</script>
 
 {% comment %} <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.js"></script>
 <script type="text/javascript" src="../../jquery.ph-locations.js">

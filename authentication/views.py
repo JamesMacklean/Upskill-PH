@@ -149,6 +149,12 @@ def verify_account(request, user_hash):
     template_failed = "authentication/verification_failed.html"
     context = {}
     
+    ########## ANONYMOUS REQUIRED ##########
+    if authenticate_user(request):
+        return HttpResponseRedirect('/')
+    clear_session(request,'url')
+    ########## ANONYMOUS REQUIRED ##########
+
     try:
         username, first_name, last_name, email, password, response_message = verify(user_hash)
         
