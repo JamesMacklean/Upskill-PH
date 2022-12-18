@@ -201,16 +201,39 @@ def signup(request):
         if request.method == "POST":
             username = request.POST['username']
             email= request.POST['email']
-            firstname= request.POST['firstname']
-            lastname= request.POST['lastname']
+            first_name= request.POST['firstname']
+            last_name= request.POST['lastname']
 
-            user_hash, response_message = create_account(request, username, firstname, lastname, email)
+            user_hash, response_message = create_account(request, username, first_name, last_name, email)
             
             if user_hash:
                 #### MODAL RESPONSE KUNG NAGWORK BA ANG SIGN UP
                 context['message'] = "success"
                 request.session['user_hash'] = user_hash
                 request.session.modified = True
+                
+                ############################# FOR MAIL ##############################
+                html = render_to_string('emails/email_verification.html', {
+                    'username': username,
+                    'first_name': first_name,
+                    'last_name': last_name,
+                    'email': email,
+                    'user_hash': user_hash,
+                    'domain': DOMAIN,
+                    'link': API_VERIFY_ACCOUNT_URL
+                })
+                send_mail(
+                    'Title', 
+                    'Content of the Message', 
+                    EMAIL_HOST_USER, 
+                    ########## ORIGINAL CODE ##########
+                    # [email], 
+                    ########## FOR TEST CODE ##########
+                    [TEST_EMAIL_RECEIVER],
+                    html_message=html,
+                    fail_silently=False
+                )
+                ############################# FOR MAIL ##############################
                 # return redirect('success', user_hash)
             else:
                 #### MODAL RESPONSE KUNG NAGWORK BA ANG SIGN UP
