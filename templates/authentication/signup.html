@@ -47,9 +47,9 @@
 </div>
 
 <!-- Modal -->
+{% if message == "success" %}
 <div class="modal fade" id="SignupModal" tabindex="-1" data-bs-backdrop="static" aria-labelledby="SignupModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
-        {% if message == "success" %}
         <div class="modal-content">
             <div class="modal-header">
             <h1 class="modal-title fs-5" id="SignupModalLabel">Success! 🎉</h1>
@@ -65,7 +65,12 @@
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
             </div>
         </div>
-        {% else %}
+    </div>
+</div>
+
+{% else %}
+<div class="modal fade" id="SignupModal" tabindex="-1" data-bs-backdrop="static" aria-labelledby="SignupModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
             <h1 class="modal-title fs-5" id="SignupModalLabel">Error! ⚠️</h1>
@@ -80,8 +85,8 @@
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
             </div>
         </div>
-        {% endif %}
     </div>
 </div>
+{% endif %}
 
 {% endblock %}
