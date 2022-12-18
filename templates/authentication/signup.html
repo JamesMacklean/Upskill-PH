@@ -28,8 +28,11 @@
                     <i class="fas fa-envelope"></i>
                     <input type="text" id="email"  name="email" placeholder="email" required>
                 </div>
-
-                    <button type="submit" class="btn solid" data-bs-toggle="modal" data-bs-target="#SignupModal">sign up</button>
+                    {% if message == 'success' %}
+                    <button type="submit" class="btn solid" data-bs-toggle="modal" data-bs-target="#SuccessModal">sign up</button>
+                    {% else %}
+                    <button type="submit" class="btn solid" data-bs-toggle="modal" data-bs-target="#ErrorModal">sign up</button>
+                    {% endif %}
             </form>
         </div>
     </div>
@@ -47,12 +50,11 @@
 </div>
 
 <!-- Modal -->
-{% if message == "success" %}
-<div class="modal fade" id="SignupModal" tabindex="-1" data-bs-backdrop="static" aria-labelledby="SignupModalLabel" aria-hidden="true">
+<div class="modal fade" id="SuccessModal" tabindex="-1" data-bs-backdrop="static" aria-labelledby="SuccessModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-            <h1 class="modal-title fs-5" id="SignupModalLabel">Success! 🎉</h1>
+            <h1 class="modal-title fs-5" id="SuccessModalLabel">Success! 🎉</h1>
             </div>
             <div class="modal-body">
                 <img src="{% static 'images/success.svg'%}" class="modal-image">
@@ -68,12 +70,11 @@
     </div>
 </div>
 
-{% else %}
-<div class="modal fade" id="SignupModal" tabindex="-1" data-bs-backdrop="static" aria-labelledby="SignupModalLabel" aria-hidden="true">
+<div class="modal fade" id="ErrorModal" tabindex="-1" data-bs-backdrop="static" aria-labelledby="ErrorModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-            <h1 class="modal-title fs-5" id="SignupModalLabel">Error! ⚠️</h1>
+            <h1 class="modal-title fs-5" id="ErrorModalLabel">Error! ⚠️</h1>
             </div>
             <div class="modal-body">
                 <img src="https://scholarium-static.s3.ap-southeast-1.amazonaws.com/undraw_feeling_blue_-4-b7q.svg" class="modal-image">
@@ -87,6 +88,5 @@
         </div>
     </div>
 </div>
-{% endif %}
 
 {% endblock %}
