@@ -235,10 +235,6 @@ def signup(request):
                 )
                 ############################# FOR MAIL ##############################
                 # return redirect('success', user_hash)
-            else:
-                #### MODAL RESPONSE KUNG NAGWORK BA ANG SIGN UP
-                context['message'] = response_message
-                return render(request, template_name, context)
 
         return render(request, template_name, context)
     
