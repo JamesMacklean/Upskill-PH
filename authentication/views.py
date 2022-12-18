@@ -423,42 +423,7 @@ def edit_profile(request):
     context['field_of_study_choices'] = FIELD_OF_STUDY
     context['country_choices'] = COUNTRY
     context['region_choices'] = REGION
-
-    if region == 'REGION I (ILOCOS REGION)':
-        context['municipality_choices'] = REGION1
-    elif region == 'REGION II (CAGAYAN VALLEY)':
-        context['municipality_choices'] = REGION2
-    elif region == 'REGION III (CENTRAL LUZON)':
-        context['municipality_choices'] = REGION3
-    elif region == 'REGION IV-A (CALABARZON)':
-        context['municipality_choices'] = REGION4A
-    elif region == 'REGION IV-B (MIMAROPA)':
-        context['municipality_choices'] = REGION4B
-    elif region == 'REGION V (BICOL REGION)':
-        context['municipality_choices'] = REGION5
-    elif region == 'REGION VI (WESTERN VISAYAS)':
-        context['municipality_choices'] = REGION6
-    elif region == 'REGION VII (CENTRAL VISAYAS)':
-        context['municipality_choices'] = REGION7
-    elif region == 'REGION VIII (EASTERN VISAYAS)':
-        context['municipality_choices'] = REGION8
-    elif region == 'REGION IX (ZAMBOANGA PENINSULA)':
-        context['municipality_choices'] = REGION9
-    elif region == 'REGION X (NORTHERN MINDANAO)':
-        context['municipality_choices'] = REGION10
-    elif region == 'REGION XI (DAVAO REGION)':
-        context['municipality_choices'] = REGION11
-    elif region == 'REGION XII (SOCCSKSARGEN)':
-        context['municipality_choices'] = REGION12
-    elif region == 'NATIONAL CAPITAL REGION (NCR)':
-        context['municipality_choices'] = NCR
-    elif region == 'CORDILLERA ADMINISTRATIVE REGION (CAR)':
-        context['municipality_choices'] = CAR
-    elif region == 'AUTONOMOUS REGION IN MUSLIM MINDANAO (ARMM)':
-        context['municipality_choices'] = ARMM
-    elif region == 'REGION XIII (Caraga)':
-        context['municipality_choices'] = REGION13
-
+    context['municipality_choices'] = MUNICIPALITIES
     context['gender_choices'] = GENDER
     
     return render(request, template_name, context)
