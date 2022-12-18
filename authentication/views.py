@@ -133,16 +133,14 @@ def success(request, user_hash):
         'Content of the Message', 
         EMAIL_HOST_USER, 
         ########## ORIGINAL CODE ##########
-        [email], 
+        # [email], 
         ########## FOR TEST CODE ##########
-        # [TEST_EMAIL_RECEIVER],
+        [TEST_EMAIL_RECEIVER],
         html_message=html,
         fail_silently=False
     )
     ############################# FOR MAIL ##############################
-    
-    context['email'] = email
-    
+
     return render(request,template_name, context)
 
 def verify_account(request, user_hash):
@@ -152,13 +150,32 @@ def verify_account(request, user_hash):
     context = {}
     
     try:
-        password, response_message = verify(user_hash)
+        username, first_name, last_name, email, password, response_message = verify(user_hash)
+        
+        ############################# FOR MAIL ##############################
+        html = render_to_string('emails/welcome_email.html', {
+            'username': username,
+            'first_name': first_name,
+            'last_name': last_name,
+            'email': email,
+            'password': password,
+        })
+        send_mail(
+            'Title', 
+            'Content of the Message', 
+            EMAIL_HOST_USER, 
+            ########## ORIGINAL CODE ##########
+            # [email], 
+            ########## FOR TEST CODE ##########
+            [TEST_EMAIL_RECEIVER],
+            html_message=html,
+            fail_silently=False
+        )
+        ############################# FOR MAIL ##############################
         
         context['response_message'] = response_message
-        context['password'] = password
-        context['domain'] = DOMAIN
         
-        if password != '':
+        if password:
             print ("SUCCESS:", response_message)
             return render(request, template_successful, context)                 
         else:

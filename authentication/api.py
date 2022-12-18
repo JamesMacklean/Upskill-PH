@@ -543,8 +543,16 @@ def verify(user_hash):
         for data in response_dict['data']:
             response_message = data.get("success")
             password = data.get("password")
+            username = data.get("username")
+            first_name = data.get("first_name")
+            last_name = data.get("last_name")
+            email = data.get("email")
     else:
         response_message = response_dict.get("error")
-        password=''   
+        password = ''
+        first_name = ''
+        last_name = ''
+        username = ''
+        email = ''
     
-    return password,response_message
+    return username, first_name, last_name, email, password, response_message

@@ -26,14 +26,17 @@
         </p>
         <p style="color: rgba(0,0,0,.75);">
             {% filter force_escape %}
-                You're almost there! Click the button below to verify your account to access {{ domain }} courses. Note that you will NOT be able to log back into your account until you have activated it.
+                You're account is now activated! To make use of it, use this as your log in password:
+                {{password}}
             {% endfilter %}
             <br />
         </p>
-            {% comment %} ORIGINAL CODE {% endcomment %}
-            <a href="{{ domain }}{% url 'verify_account' user_hash %}">Verify Your Account</a>
-            {% comment %} FOR TEST CODE {% endcomment %}
-            {% comment %} <a href=http://127.0.0.1:8000{% url 'verify_account' user_hash=user_hash %}>Verify Your Account</a> {% endcomment %}
+        <p style="color: rgba(0,0,0,.75);">
+            {% filter force_escape %}
+                It is highly recommended that you change your password after your first login. Enjoy SCHOLARIUM!
+            {% endfilter %}
+            <br />
+        </p>
 
     </td>
 </tr>
