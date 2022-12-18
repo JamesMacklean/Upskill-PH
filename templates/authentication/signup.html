@@ -29,16 +29,8 @@
                     <input type="text" id="email"  name="email" placeholder="email" required>
                 </div>
 
-                    <button type="submit" class="btn solid" data-bs-toggle="modal" onclick="modalToggle()">sign up</button>
+                    <button type="submit" class="btn solid" data-bs-toggle="modal" data-bs-target="#SignupModal">sign up</button>
             </form>
-                {% if message == "success" %}
-                <script>
-                    function modalToggle(){
-                        const toggleMenu = document.querySelector('.modal');
-                        toggleMenu.classList.toggle('.show')
-                    }
-                </script>
-                {% endif %}
         </div>
     </div>
 </div>
@@ -54,29 +46,42 @@
     </div>
 </div>
 
-<!--MODAL START-->
-<div class="modal" tabindex="-1" id="SuccessModal" aria-hidden ="true">
+<!-- Modal -->
+<div class="modal fade" id="SignupModal" tabindex="-1" data-bs-backdrop="static" aria-labelledby="SignupModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Success 🎉</h5>
-        </div>
-        <div class="modal-body">
-            <center>
-                <img src="{% static 'images/success.svg'%}">
-                <h5>You have successfully created your <h5 class="schol-heading" style="color: #F15A25; text-transfom: uppercase; font-weight: 500px;">Scholarium</h5>account!
+        {% if {{message}} == "success" %}
+        <div class="modal-content">
+            <div class="modal-header">
+            <h1 class="modal-title fs-5" id="SignupModalLabel">Success! 🎉</h1>
+            </div>
+            <div class="modal-body">
+                <img src="{% static 'images/success.svg'%}" class="modal-image">
+                <p>You have successfully created your <span class="schol-heading" style="color: #F15A25; text-transform: uppercase; font-weight: 500px;">Scholarium</span> account!
                 <br>kindly check your inbox in your email: {{ myuser.email }} for verification. Thank You!
                 <br> <em>  Note: also check on your SPAM folder </em> 
-                </h5>
-                </center>
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        {% else %}
+        <div class="modal-content">
+            <div class="modal-header">
+            <h1 class="modal-title fs-5" id="SignupModalLabel">Error! ⚠️</h1>
+            </div>
+            <div class="modal-body">
+                <img src="https://scholarium-static.s3.ap-southeast-1.amazonaws.com/undraw_feeling_blue_-4-b7q.svg" class="modal-image">
+                <p>
+                    to be replaced by error message
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
         </div>
-      </div>
+        {% endif %}
     </div>
-  </div>
-<!--MODAL END-->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+30JU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+</div>
 
 {% endblock %}

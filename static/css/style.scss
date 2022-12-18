@@ -54,9 +54,15 @@ div.landing-page center .landing-photo{
     transition: 1.8s ease-in-out;
 }
 //modal
-.show{
-    display:block !important;
+.modal-image{
+    width: 150px;
+    height: 150px;
 }
+.modal-body {
+    text-align: center !important;
+    max-width: max-content !important;
+}
+
 .forms-container{
     position: absolute;
     width: 100%;
