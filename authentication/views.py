@@ -399,6 +399,43 @@ def edit_profile(request):
     context['degree_choices'] = DEGREE
     context['field_of_study_choices'] = FIELD_OF_STUDY
     context['country_choices'] = COUNTRY
+    context['region_choices'] = REGION
+
+    if REGION == 'REGION I (ILOCOS REGION)':
+        context['municipality_choices'] = REGION1
+    elif REGION == 'REGION II (CAGAYAN VALLEY)':
+        context['municipality_choices'] = REGION2
+    elif REGION == 'REGION III (CENTRAL LUZON)':
+        context['municipality_choices'] = REGION3
+    elif REGION == 'REGION IV-A (CALABARZON)':
+        context['municipality_choices'] = REGION4A
+    elif REGION == 'REGION IV-B (MIMAROPA)':
+        context['municipality_choices'] = REGION4B
+    elif REGION == 'REGION V (BICOL REGION)':
+        context['municipality_choices'] = REGION5
+    elif REGION == 'REGION VI (WESTERN VISAYAS)':
+        context['municipality_choices'] = REGION6
+    elif REGION == 'REGION VII (CENTRAL VISAYAS)':
+        context['municipality_choices'] = REGION7
+    elif REGION == 'REGION VIII (EASTERN VISAYAS)':
+        context['municipality_choices'] = REGION8
+    elif REGION == 'REGION IX (ZAMBOANGA PENINSULA)':
+        context['municipality_choices'] = REGION9
+    elif REGION == 'REGION X (NORTHERN MINDANAO)':
+        context['municipality_choices'] = REGION10
+    elif REGION == 'REGION XI (DAVAO REGION)':
+        context['municipality_choices'] = REGION11
+    elif REGION == 'REGION XII (SOCCSKSARGEN)':
+        context['municipality_choices'] = REGION12
+    elif REGION == 'NATIONAL CAPITAL REGION (NCR)':
+        context['municipality_choices'] = NCR
+    elif REGION == 'CORDILLERA ADMINISTRATIVE REGION (CAR)':
+        context['municipality_choices'] = CAR
+    elif REGION == 'AUTONOMOUS REGION IN MUSLIM MINDANAO (ARMM)':
+        context['municipality_choices'] = ARMM
+    elif REGION == 'REGION XIII (Caraga)':
+        context['municipality_choices'] = REGION13
+
     context['gender_choices'] = GENDER
     
     return render(request, template_name, context)

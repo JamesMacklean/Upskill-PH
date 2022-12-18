@@ -145,12 +145,24 @@
                     <div class="about">
                         <label for="region">Region: </label>
                         <select id="region" name="region">
+                            {% if profile.region %}
+                            <option value="" selected disabled hidden>{{profile.region}}</option>
+                            {% endif %}
+                            {% for region in region_choices %}
+                            <option value="{{region}}">{{region}}</option>
+                            {% endfor %}
                         </select>
                     </div>
             
                     <div class="about">
                         <label for="municipality">Municipality: </label>
                         <select id="municipality" name="municipality">
+                        {% if profile.municipality %}
+                        <option value="" selected disabled hidden>{{profile.municipality}}</option>
+                        {% endif %}
+                        {% for municipality in municipality_choices %}
+                        <option value="{{municipality}}">{{municipality}}</option>
+                        {% endfor %}
                         </select>
                     </div>
                 
@@ -221,8 +233,8 @@
   </div>
 </div>
 
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.js"></script>
-{% comment %} <script type="text/javascript" src="../../jquery.ph-locations.js"> {% endcomment %}
+{% comment %} <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.js"></script>
+<script type="text/javascript" src="../../jquery.ph-locations.js">
 <script type="text/javascript" src="https://f001.backblazeb2.com/file/buonzz-assets/jquery.ph-locations.js"></script>
 <script type="text/javascript">
     
@@ -261,8 +273,8 @@
         $('#region').ph_locations('fetch_list');
     });
     
-    {% comment %} $( ".select option:selected" ).text(); {% endcomment %}
-</script>
+    $( ".select option:selected" ).text();
+</script> {% endcomment %}
 
 {% endblock %}
 <!--  COUNTRY SELECTION STOP  -->
