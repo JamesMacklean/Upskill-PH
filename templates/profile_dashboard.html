@@ -124,41 +124,37 @@
                 <br>
                 <h5>About Me</h5>
                 <hr>
-                    {{profile.about}}
+                {% if profile.privacy == 0%}
+                    <p>
+                        {{profile.about}}
+                    </p>
                     <br>
-                    <br>
-                    Gender: {{profile.gender}}
-                    <br>
-                    Socials: {{profile.socials}}
-                    <br>
-                    Country: {{profile.country}}
-                    <br>
-                    Birthday: {{profile.birthday}}
-                    <br>
-                    Contact: {{profile.contact}}
-                    <br>
-                    Privacy:
-                        {% if profile.privacy == 0 %}
-                            Public on the Web
-                        {% elif profile.privacy == 1 %}
-                            Scholarium Community
+                    <br>                
+                    <h5>Work Experience and Education</h5>
+                    <hr>
+                    <p>
+                        {% if employment.experience %}
+                        {{employment.experience}} | {{employment.employ_status}}
                         {% else %}
-                            Only Me
+                        N/A
                         {% endif %}
-                <br>
-                <br>                
-                <h5>Work Experience and Education</h5>
-                <hr>
-                {% if employment.experience %}
-                {{employment.experience}} | {{employment.employ_status}}
+                        <br>
+                        <br>
+                        {% if education.degree %}
+                        Education Level | {{education.degree}}
+                        {% else %}
+                        N/A
+                        {% endif %}
+                    </p>
                 {% else %}
-                No employment experience
-                {% endif %}
-                <br>
-                {% if education.degree %}
-                Education Level | {{education.degree}}
-                {% else %}
-                No educational attainment
+                    <p>
+                        Bio is Private 🔒
+                    </p>
+                    <h5>Work Experience and Education</h5>
+                    <hr>
+                    <p>
+                        Work Experience and Education is Private 🔒
+                    </p>
                 {% endif %}
                 <br>
                 <br>
