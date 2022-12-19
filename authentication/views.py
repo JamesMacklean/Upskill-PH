@@ -196,6 +196,7 @@ def signup(request):
     """"""
     template_name = "authentication/signup.html"
     context = {}
+    # response_message = ''
         
     try:
         if request.method == "POST":
@@ -208,7 +209,7 @@ def signup(request):
             
             if user_hash:
                 #### MODAL RESPONSE KUNG NAGWORK BA ANG SIGN UP
-                context['message'] = "success"
+                response_message = "success"
                 request.session['user_hash'] = user_hash
                 request.session.modified = True
                 
@@ -234,13 +235,13 @@ def signup(request):
                     fail_silently=False
                 )
                 ############################# FOR MAIL ##############################
-                # return redirect('success', user_hash)
-
-        return render(request, template_name, context)
-    
+        
     except Exception as e:
         print(str(e))
-        return render(request, template_name, context)
+
+    context['message'] = response_message
+    print(response_message)
+    return render(request, template_name, context)
 
 def signin(request): 
     """"""

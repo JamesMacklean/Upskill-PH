@@ -26,14 +26,16 @@
         </p>
         <p style="color: rgba(0,0,0,.75);">
             {% filter force_escape %}
-                You're almost there! Click the button below to verify your account to access {{ domain }} courses. Note that you will NOT be able to log back into your account until you have activated it.
+                You're almost there! Click the button below to verify your {{ domain }} account. 
+            {% endfilter %}
+        </p>
+        <p style="color: rgba(0,0,0,.75);">
+            {% filter force_escape %}
+                Note that you will not be able to log into your account until you have activated it.
             {% endfilter %}
             <br />
         </p>
-            {% comment %} ORIGINAL CODE {% endcomment %}
-            <a href="{{ domain }}{% url 'verify_account' user_hash %}">Verify Your Account</a>
-            {% comment %} FOR TEST CODE {% endcomment %}
-            {% comment %} <a href=http://127.0.0.1:8000{% url 'verify_account' user_hash=user_hash %}>Verify Your Account</a> {% endcomment %}
+            <a href="{{ domain }}{% url 'verify_account' user_hash %}">Verify Account</a>
 
     </td>
 </tr>

@@ -1,9 +1,19 @@
 {% autoescape off %}
 
-VERIFICATION SUCCESS!
-
-{{ response_message }}
-
-You're account has been verified. A copy of this welcome message has been sent to your email containing your password.
+<h1>
+    VERIFICATION SUCCESS!
+</h1>
+<p style="color: rgba(0,0,0,.75);">
+    {% filter force_escape %}
+        You're account has been verified.
+    {% endfilter %}
+    <br />
+</p>
+<p style="color: rgba(0,0,0,.75);">
+    {% filter force_escape %}
+        A copy of this message has been sent to your email with your temporary password.
+    {% endfilter %}
+    <br />
+</p>
 
 {% endautoescape %}

@@ -26,14 +26,23 @@
         </p>
         <p style="color: rgba(0,0,0,.75);">
             {% filter force_escape %}
-                You're account is now activated! To make use of it, use this as your log in password:
-                {{password}}
+                Your account is now ACTIVE! Here are your login credentials:
+            {% endfilter %}
+        </p>
+        <p style="color: rgba(0,0,0,.75);">
+            {% filter force_escape %}
+                USERNAME: {{username}}
+            {% endfilter %}
+        </p>
+        <p style="color: rgba(0,0,0,.75);">
+            {% filter force_escape %}
+                PASSWORD: {{password}}
             {% endfilter %}
             <br />
         </p>
         <p style="color: rgba(0,0,0,.75);">
             {% filter force_escape %}
-                It is highly recommended that you change your password after your first login. Enjoy SCHOLARIUM!
+                We recommend changing your password after your first login. Enjoy SCHOLARIUM!
             {% endfilter %}
             <br />
         </p>
