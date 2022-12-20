@@ -196,7 +196,6 @@ def signup(request):
     """"""
     template_name = "authentication/signup.html"
     context = {}
-    # response_message = ''
         
     try:
         if request.method == "POST":
@@ -235,12 +234,14 @@ def signup(request):
                     fail_silently=False
                 )
                 ############################# FOR MAIL ##############################
-        
+            
+            context['message'] = response_message
+            messages.info(request, response_message)
+            print(response_message)
+            
     except Exception as e:
         print(str(e))
-
-    context['message'] = response_message
-    print(response_message)
+    
     return render(request, template_name, context)
 
 def signin(request): 
