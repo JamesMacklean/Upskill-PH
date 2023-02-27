@@ -23,7 +23,7 @@ from .variables import *
 import os, requests, ast, jwt
 import json
 
-# GET https://scholarium.tmtg-clone.click/api/me
+# GET https://scholarium.io/api/me
 def user_details(bearer_token):  
     user_data = []
     context = {}
@@ -50,7 +50,7 @@ def user_details(bearer_token):
             
     return context
 
-# GET https://scholarium.tmtg-clone.click/api/me/profile
+# GET https://scholarium.io/api/me/profile
 def user_profile(bearer_token):  
     profile_data = []
     context = {}
@@ -77,7 +77,7 @@ def user_profile(bearer_token):
             
     return context
 
-# GET https://scholarium.tmtg-clone.click/api/me/scholarship
+# GET https://scholarium.io/api/me/scholarship
 def user_programs(bearer_token):
     program_list = []
     payload={}
@@ -97,7 +97,7 @@ def user_programs(bearer_token):
             
     return program_list
 
-# GET https://scholarium.tmtg-clone.click/api/me/partners
+# GET https://scholarium.io/api/me/partners
 def user_partners(bearer_token):  
     partner_list = []
     payload={}
@@ -117,7 +117,7 @@ def user_partners(bearer_token):
             
     return partner_list
 
-# GET https://scholarium.tmtg-clone.click/api/me/employment 
+# GET https://scholarium.io/api/me/employment 
 def user_employment(bearer_token):  
     employment_data = []
     context = {}  
@@ -144,7 +144,7 @@ def user_employment(bearer_token):
             
     return context
 
-# GET https://scholarium.tmtg-clone.click/api/me/education
+# GET https://scholarium.io/api/me/education
 def user_education(bearer_token):  
     education_data = []
     context = {}
@@ -171,7 +171,7 @@ def user_education(bearer_token):
     
     return context
 
-# GET https://scholarium.tmtg-clone.click/api/partner/programs/[partner_id]/[program_id]
+# GET https://scholarium.io/api/partner/programs/[partner_id]/[program_id]
 def get_programs(bearer_token, partner_id,program_id):  
     program_list = []
     payload={}
@@ -204,7 +204,7 @@ def get_programs(bearer_token, partner_id,program_id):
     print("############## PROGRAMS ##############",program_list)
     return program_list
 
-# GET https://scholarium.tmtg-clone.click/api/partner/scholarship/[program_id]/[status]
+# GET https://scholarium.io/api/partner/scholarship/[program_id]/[status]
 def get_applicants(bearer_token, program_id, status):  
     applicants_list = []
     payload={}
@@ -236,7 +236,7 @@ def get_applicants(bearer_token, program_id, status):
                 
     return applicants_list
 
-# POST https://scholarium.tmtg-clone.click/api/login
+# POST https://scholarium.io/api/login
 def login_account (username, password):
     payload={
         'user': username,
@@ -262,7 +262,7 @@ def login_account (username, password):
     
     return user_token, expires, response_message
 
-# POST https://scholarium.tmtg-clone.click/api/user/create
+# POST https://scholarium.io/api/user/create
 def create_account(request, username, firstname, lastname, email):    
     payload={
         'username': username,
@@ -291,7 +291,7 @@ def create_account(request, username, firstname, lastname, email):
 
     return user_hash, response_message
 
-# POST https://scholarium.tmtg-clone.click/api/me/profile 
+# POST https://scholarium.io/api/me/profile 
 def update_profile (bearer_token, photo, first_name, last_name, about, country, region, municipality, socials, gender, birthday, contact, date_now, privacy):
     profile_data = []
     context = {}
@@ -338,7 +338,7 @@ def update_profile (bearer_token, photo, first_name, last_name, about, country, 
             
     return context, response_message
 
-# POST https://scholarium.tmtg-clone.click/api/me/employment 
+# POST https://scholarium.io/api/me/employment 
 def update_employment (bearer_token, employ_status, industry, employer, occupation, experience, date_now, privacy):
     employment_data = []
     context = {}
@@ -379,7 +379,7 @@ def update_employment (bearer_token, employ_status, industry, employer, occupati
 
     return context, response_message
 
-# POST https://scholarium.tmtg-clone.click/api/me/education 
+# POST https://scholarium.io/api/me/education 
 def update_education (bearer_token, degree, school, study, date_now, privacy):
     education_data = []
     context = {}
@@ -419,7 +419,7 @@ def update_education (bearer_token, degree, school, study, date_now, privacy):
 
     return context, response_message
 
-# POST https://scholarium.tmtg-clone.click/api/partner/programs 
+# POST https://scholarium.io/api/partner/programs 
 def update_program (bearer_token, program_id, name, description, partner_id, logo, image, start_date, end_date, registration_end, badge, certificate, date_now):
     updated_data = []
     context = {}
@@ -466,7 +466,7 @@ def update_program (bearer_token, program_id, name, description, partner_id, log
 
     return context, response_message
 
-# POST https://scholarium.tmtg-clone.click/api/me/scholarship
+# POST https://scholarium.io/api/me/scholarship
 def scholar_apply(bearer_token, program_id):
     payload={'program_id': program_id}
     headers = {
@@ -483,7 +483,7 @@ def scholar_apply(bearer_token, program_id):
 
     return response_message
 
-# POST https://scholarium.tmtg-clone.click/api/v1/me/password
+# POST https://scholarium.io/api/v1/me/password
 def change_password(bearer_token, old_password, new_password):
     payload={
         'oldpw': old_password,
@@ -506,7 +506,7 @@ def change_password(bearer_token, old_password, new_password):
 
     return response_message
 
-# PUT https://scholarium.tmtg-clone.click/api/partner/scholarship/[program_id]/[status]
+# PUT https://scholarium.io/api/partner/scholarship/[program_id]/[status]
 def update_applicant(bearer_token, user_id, program_id, status):  
     payload = json.dumps({
     "data": {
@@ -529,7 +529,7 @@ def update_applicant(bearer_token, user_id, program_id, status):
     
     return response_message
 
-# PUT https://scholarium.tmtg-clone.click/api/user/verify/[args]
+# PUT https://scholarium.io/api/user/verify/[args]
 def verify(user_hash):
     payload={}
     files={}

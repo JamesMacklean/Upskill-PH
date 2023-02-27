@@ -12,21 +12,21 @@ TEST_EMAIL_RECEIVER = 'jamesmacklean27@gmail.com'
 # API
 API_SECRET_KEY = "5af375913e149630a4dd18e2ac1548cf9bdcde9c9e03eb24e1a1f3cb5e540c4a"
 
-API_LOGIN_ACCOUNT_URL = "https://scholarium.tmtg-clone.click/api/v1/login"
-API_CREATE_ACCOUNT_URL = "https://scholarium.tmtg-clone.click/api/v1/user/add"
-API_VERIFY_ACCOUNT_URL = "https://scholarium.tmtg-clone.click/api/v1/user/verify/"
+API_LOGIN_ACCOUNT_URL = "https://scholarium.io/api/v1/login"
+API_CREATE_ACCOUNT_URL = "https://scholarium.io/api/v1/user/add"
+API_VERIFY_ACCOUNT_URL = "https://scholarium.io/api/v1/user/verify/"
 
-API_USER_URL = "https://scholarium.tmtg-clone.click/api/v1/me"
-API_USER_PROFILE_URL = "https://scholarium.tmtg-clone.click/api/v1/me/profile"
-API_USER_EMPLOYMENT_URL = "https://scholarium.tmtg-clone.click/api/v1/me/employment"
-API_USER_EDUCATION_URL = "https://scholarium.tmtg-clone.click/api/v1/me/education"
-API_USER_PROGRAMS_URL = "https://scholarium.tmtg-clone.click/api/v1/me/scholarship"
-API_USER_PARTNERS_URL = "https://scholarium.tmtg-clone.click/api/v1/me/partners"
-API_SCHOLAR_APPLY_URL = "https://scholarium.tmtg-clone.click/api/v1/me/scholarship"
-API_UPDATE_PASSWORD_URL = "https://scholarium.tmtg-clone.click/api/v1/me/password"
+API_USER_URL = "https://scholarium.io/api/v1/me"
+API_USER_PROFILE_URL = "https://scholarium.io/api/v1/me/profile"
+API_USER_EMPLOYMENT_URL = "https://scholarium.io/api/v1/me/employment"
+API_USER_EDUCATION_URL = "https://scholarium.io/api/v1/me/education"
+API_USER_PROGRAMS_URL = "https://scholarium.io/api/v1/me/scholarship"
+API_USER_PARTNERS_URL = "https://scholarium.io/api/v1/me/partners"
+API_SCHOLAR_APPLY_URL = "https://scholarium.io/api/v1/me/scholarship"
+API_UPDATE_PASSWORD_URL = "https://scholarium.io/api/v1/me/password"
 
-API_PARTNER_PROGRAMS_URL = "https://scholarium.tmtg-clone.click/api/v1/partner/programs/"
-API_SCHOLAR_UPDATE_URL = "https://scholarium.tmtg-clone.click/api/v1/partner/scholarship/"
+API_PARTNER_PROGRAMS_URL = "https://scholarium.io/api/v1/partner/programs/"
+API_SCHOLAR_UPDATE_URL = "https://scholarium.io/api/v1/partner/scholarship/"
 
 
 ########## ORIGINAL CODE ##########
