@@ -143,8 +143,8 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-CORS_ORIGIN_ALLOW_ALL = True
+# CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True
+CORS_ORIGIN_WHITELIST = ['https://scholarium.io']
 SESSION_SAVE_EVERY_REQUEST = True
 
-CORS_ORIGIN_WHITELIST = ['https://scholarium.io']
