@@ -37,7 +37,7 @@ SECRET_KEY = 'django-insecure-k(i3^c+t7zkamnk@nut1x_inn)p_^s)sfrq(o61=i@uu6@uv&6
 DEBUG = True
 
 # ALLOWED_HOSTS = ['54.249.25.89', 'scholarium.io','127.0.0.1','185.229.113.4']
-ALLOWED_HOSTS = ['54.249.25.89', 'scholarium.io','127.0.0.1']
+ALLOWED_HOSTS = ['54.249.25.89', 'scholarium.io','127.0.0.1', 'scholarium.tmtg-clone.click']
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 # Application definition
