@@ -5,8 +5,8 @@
     <div class="forms-container">
         <div class="signup-signin">
             <form action="" class="sign-in-form" id="signin" method="POST">
-                <h2 class="title">Sign in</h2>
                 {% csrf_token %}
+                <h2 class="title">Sign in</h2>
                 <div class="input-field">
                     <i class="fas fa-user"></i>
                     <input type="text" name="username" placeholder="username or email">
