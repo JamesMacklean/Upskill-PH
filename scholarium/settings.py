@@ -36,7 +36,7 @@ SECRET_KEY = 'django-insecure-k(i3^c+t7zkamnk@nut1x_inn)p_^s)sfrq(o61=i@uu6@uv&6
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['54.249.25.89', 'scholarium.io','127.0.0.1', 'api.scholarium.io', '185.229.113.4']
+ALLOWED_HOSTS = ['54.249.25.89', 'scholarium.io','127.0.0.1']
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
