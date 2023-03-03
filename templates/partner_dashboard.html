@@ -1,0 +1,191 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load parse_iso %}
+{% block content %}
+<div class="tab-container">
+    <div class="tabs">
+        <h3 class="active">DASHBOARD</h3>
+        <h3>PROGRAMS</h3>
+        <h3>SCHOLARS</h3>
+    </div>
+    <div class="tab-content">
+        <!--FIRST TAB-->
+        <div class="tab active" id="partner-dashboard">
+            <div class="dashboard">
+                <h3>SCHOLARSHIP APPLICATION REPORT</h3>
+                <table>
+                    <tr>
+                        <th>PENDING</th>
+                        <th>WAITLIST</th>
+                        <th>APPROVED</th>
+                        <th>REJECTED</th>
+                    </tr>
+                    <tr>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="scholar-progress">
+                <h3>PROGRESS REPORT</h3>
+                <table>
+                    <tr>
+                        <th>SCHOLAR</th>
+                        <th>PROGRAM</th>
+                        <th>PROGRESS</th>
+                    </tr>
+                    <tr>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="programs-partner">
+                <h3>ANNOUNCEMENTS</h3>
+                <table>
+                    <tr>
+                        <th>ANNOUNCEMENT</th>
+                        <th>ACTION</th>
+                    </tr>
+                    <tr>
+                        <td> announcement 1 </td>
+                        <td>
+                            <button class="action-btn">update</button>
+                            <button class="action-btn">delete</button>
+                        </td>
+                    </tr>
+                </table>
+                <button class="action-btn">Add +</button>
+            </div>
+        </div>
+        <!--SECOND TAB-->
+        <div class="tab" id="scholarship-programs">
+            <div class="program-list">
+                <h4>Programs</h4>
+                    <div class="card-wrapper">
+                        {% for program in program_list %}
+                        <a href="{% url 'application' program.partner_id program.id %}"/>
+                            <div class="card-container">
+                                <div class="card-image">
+                                    <img src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/sample-background.jpeg">
+                                </div>
+                                
+                                <div class="card-partner-logo">
+                                    <img src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/DICT-Logo-nobg.png">
+                                    <img src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/ILCDB+logo_2.png">
+                                    <img src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/coursera-social-logo-brand.png">
+                                    <img src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/logo-moocsx.png">
+                                </div>
+                                
+                                <div class="card-content">
+                                    <div class="container-card-title">
+                                        <h3>{{program.name}}</h3>
+                                        <p class="card-title-content">
+                                            6 courses <br>
+                                            {% if program.end_date %}
+                                                {{program.start_date|parse_iso|date:"M d"}} - {{program.end_date|parse_iso|date:"M d, Y"}}
+                                            {% else %}
+                                                since {{program.start_date|parse_iso|date:"M d, Y"}}
+                                            {% endif %}
+                                        </p>
+                                        <p class="card-title-footer">
+                                            {% if program.registration_end %}
+                                                Registration closes on <br>
+                                                {{program.registration_end}}
+                                            {% else %}
+                                                Registration is open
+                                            {% endif %}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                     </a>    
+                    {% endfor%}                      
+                </div>
+            </div>
+        </div>           
+         <!--THIRD TAB-->
+        {% comment %} <div class="tab" id="scholarship-applications">
+            <h4>Applications</h4>
+            {% for applicant in scholarship_applicants %}
+            <form action="" class="scholarship-applications" id="apply" method="POST">
+                <div class="action-name">
+                    <h4>{{applicant.first_name}} {{applicant.last_name}}</h4>
+                    <p>University</p>
+                    <p>Degree</p>
+                    Application Status: {{applicant.status}}
+                    <input type="hidden" name="user_id" value="{{applicant.user_id}}" />
+                    <input type="hidden" name="program_id" value="{{applicant.program_id}}" />
+                </div>
+                <div class="action-buttons">
+                        {% csrf_token %}
+                    <button class="action-btn green" name='approve'>Approve</button>
+                    <button class="action-btn yellow" name='waitlist'>Waitlist</button>
+                    <button class="action-btn red" name='reject'>Reject</button>
+                </div>
+            </form>
+            {% endfor %}
+        </div> {% endcomment %}
+        <div class="tab" id="scholars">
+            <h4>Scholars</h4>
+            <div class="scholar-list">
+                <h3>SCHOLARS</h3>
+                <table>
+                    <tr>
+                        <th>SCHOLAR</th>
+                        <th>PROGRAM</th>
+                        <th>ACTION</th>
+                    </tr>
+                    <tr>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>
+                            <button class="action-btn">view</button>
+                            <button class="action-btn">update</button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    let tabs = document.querySelectorAll(".tabs h3");
+    let tabContents = document.querySelectorAll(".tab-content .tab");
+
+    var lastTabIndex = sessionStorage.getItem('partnerLastTabIndex');
+
+    tabs.forEach((tab,index) => {    
+        if (lastTabIndex) {
+            tabContents.forEach((content) =>{
+                content.classList.remove("active");
+            });
+            tabs.forEach((tab) => {
+                tab.classList.remove("active");
+            });
+            tabContents[lastTabIndex].classList.add("active");
+            tabs[lastTabIndex].classList.add("active");
+        }
+        
+        tab.addEventListener("click", () => {
+            tabContents.forEach((content) =>{
+                content.classList.remove("active");
+            });
+            tabs.forEach((tab) => {
+                tab.classList.remove("active");
+            });
+            try {
+                sessionStorage.setItem('partnerLastTabIndex', index);
+            } catch (error) {
+                console.log(error);
+            }
+            tabContents[index].classList.add("active");
+            tabs[index].classList.add("active");
+        })
+    })
+
+</script>
+{% endblock %}

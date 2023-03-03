@@ -1,19 +1,65 @@
 {% load static %}
 <link rel="stylesheet" href="{% static 'css/header.css' %}">
+<link rel="stylesheet" href="{% static 'js/header.js' %}">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
 <header class="header">
 
-    <a href="#" class="logo"><img src="{% static 'images/logo.png' %}" alt=""></a>
+    <a href="{% url 'home' %}" class="logo"><img src="{% static 'images/logo.png' %}" alt=""></a>
  
     <nav class="navbar">
-       <a href="#">home</a>
-       <a href="#">about</a>
+       {% comment %} <a class="nav-bar-link" href="#">home</a>
+       <a class="nav-bar-link" href="#">about</a> {% endcomment %}
     </nav>
- 
+{% if not request.session.user_token %}
     <div class="icons">
-       <a href="/signup"><div id="account-btn" class="fas fa-user"></div></a>
-       <div id="menu-btn" class="fas fa-bars"></div>
+        <a href="{% url 'home' %}"><div id="account-btn" class="fas fa-user"></div></a>
     </div>
- 
+{% else %}
+    {% if request.session.is_partner and request.session.is_scholar %}
+        <div class="icons">
+            {{request.session.first_name|title}} {{request.session.last_name|title}} <a class="user-dropdown" onclick="submenuToggle()"><i class="fa fa-caret-down orange"></i></a>
+        </div>
+        <div class="sub-menu">
+            <ul>
+                <li><h3>{{request.session.first_name|title}} {{request.session.last_name|title}}</h3></li>
+                <a href="{% url 'partner' %}"><li>Partner</li></a>
+                <a href="{% url 'profile' %}"><li>My Dashboard</li></a>
+                <a href="{% url 'account' %}"><li>Account</li></a>
+                <a href="{% url 'signout' %}"><li>Sign out</li></a>
+            </ul>
+        </div>
+    {% elif request.session.is_partner %}
+        <div class="icons">
+            {{request.session.first_name|title}} {{request.session.last_name|title}} <a class="user-dropdown" onclick="submenuToggle()"><i class="fa fa-caret-down"></i></a>
+        </div>
+        <div class="sub-menu">
+            <ul>
+                <li><h3>{{request.session.first_name|title}} {{request.session.last_name|title}}</h3></li>
+                <a href="{% url 'partner' %}"><li>Partner</li></a>
+                <a href="{% url 'account' %}"><li>Account</li></a>
+                <a href="{% url 'signout' %}"><li>Sign out</li></a>
+            </ul>
+        </div>
+    
+    {% else %}
+        <div class="icons">
+            {{request.session.first_name|title}} {{request.session.last_name|title}} <a class="user-dropdown" onclick="submenuToggle()"><i class="fa fa-caret-down"></i></a>
+        </div>
+        <div class="sub-menu">
+            <ul>
+                <li><h3>{{request.session.first_name|title}} {{request.session.last_name|title}}</h3></li>
+                <a href="{% url 'profile' %}"><li>My Dashboard</li></a>
+                <a href="{% url 'account' %}"><li>Account</li></a>
+                <a href="{% url 'signout' %}"><li>Sign out</li></a>
+            </ul>
+        </div>
+    {% endif %}
+  <script>
+      function submenuToggle(){
+          const toggleMenu = document.querySelector('.sub-menu');
+          toggleMenu.classList.toggle('active')
+      }
+  </script>
+{% endif %}
  </header>

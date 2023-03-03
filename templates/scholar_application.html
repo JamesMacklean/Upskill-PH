@@ -1,0 +1,153 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+{% for program in programs %}
+<div class="program-grid-container">
+    <div class="program-grid-left">
+        <div>
+            <h5><a href ={% url 'partner'%} style="text-decoration:none" color="white"/>Programs</a> > {{program.name}}</h5>
+        </div>
+        <br>
+    </div>
+    <div class="program-grid-right">
+        <div class="scholar-applications">
+            <h3>APPLICATIONS</h3>
+            
+            <div class="wrapper-filter">
+                <div class="search-bar">
+                    <div id="search-container">
+                        <input type="search" placeholder="search...">
+                        <button id="search"><i class="fa fa-search"></i></button>
+                    </div>
+                </div>
+            </div>
+        
+            <table>
+                <tr>
+                    <td class="box">
+                        <input type="checkbox" name="all" id="all">
+                    </td>
+                    <td>
+                        <div class="action-name">
+                            Select All
+                        </div>
+                    </td>
+                </tr>
+                <form action="" class="scholarship-applications" id="apply" method="POST">
+                {% for applicant in scholarship_applicants %}
+                    <tr>
+                        <td>
+                            <input type="checkbox" name="applicant" id="applicant">
+                        </td>
+                        <td>
+                            <div class="action-name">
+                            <strong>{{applicant.first_name|title}} {{applicant.last_name|title}}</strong>
+                            <br>
+                            {{applicant.email}} • 
+                            {{applicant.occupation}} • 
+                            {{applicant.degree}} • 
+                                {% if applicant.status == 0 %}
+                                Pending
+                                {% elif applicant.status == 1 %}
+                                Approved
+                                {% elif applicant.status == 2 %}
+                                Waitlisted
+                                {% elif applicant.status == 3 %}
+                                Rejected
+                                {% endif %}
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    <input type="submit" value="Approve">
+                    <input type="submit" value="Waitlist">
+                    <input type="submit" value="Reject">
+                </form>
+            </table>
+        </div>
+    </div>
+</div>
+
+{% comment %} <div class="tab" id="scholarship-applications">
+    <h3>Applications</h3>
+    {% for applicant in scholarship_applicants %}
+    <form action="" class="scholarship-applications" id="apply" method="POST">
+        <input type="checkbox">
+        <div class="action-name">
+            <p><strong>{{applicant.first_name|title}} {{applicant.last_name|title}}</strong></p>
+            <p style="font-size: 12px; color: #4C4E52">{{applicant.email}}</p>
+            <p style="font-size: 12px; color: #4C4E52">{{applicant.occupation}}</p>
+            <p style="font-size: 12px; color: #4C4E52">{{applicant.degree}}</p>
+            Status: 
+            {% if applicant.status == 0 %}
+            Pending
+            {% elif applicant.status == 1 %}
+            Approved
+            {% elif applicant.status == 2 %}
+            Waitlisted
+            {% elif applicant.status == 3 %}
+            Rejected
+            {% endif %}
+            
+            <input type="hidden" name="user_id" value="{{applicant.user_id}}" />
+            <input type="hidden" name="program_id" value="{{applicant.program_id}}" />
+        </div>
+            <div class="action-buttons">
+                {% csrf_token %}
+            <input type="radio" class="radio" name='approve' value="Approve">
+            <label for="approve"></label>
+
+            <input type="radio" class="radio" name='waitlist' value="Waitlist">
+            <label for="waitlist"></label>
+
+            <input type="radio" class="radio" name='reject' value="Reject">
+            <label for="Reject"></label>
+        </div>
+    </form>
+    {% endfor %}
+</div> {% endcomment %}
+{% endfor %}
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.js"></script>
+<script type="text/javascript" src="https://f001.backblazeb2.com/file/buonzz-assets/jquery.ph-locations.js"></script>
+<script type="text/javascript">
+    
+    var my_handlers = {
+
+        fill_provinces:  function(){
+
+            var region_code = $(this).val();
+            $('#province').ph_locations('fetch_list', [{"region_code": region_code}]);
+            
+        },
+
+        fill_cities: function(){
+
+            var province_code = $(this).val();
+            $('#city').ph_locations( 'fetch_list', [{"province_code": province_code}]);
+        },
+
+
+        fill_barangays: function(){
+
+            var city_code = $(this).val();
+            $('#barangay').ph_locations('fetch_list', [{"city_code": city_code}]);
+        }
+    };
+
+    $(function(){
+        $('#region').on('change', my_handlers.fill_provinces);
+        $('#city').on('change', my_handlers.fill_barangays);
+
+        $('#region').ph_locations({'location_type': 'regions'});
+        $('#province').ph_locations({'location_type': 'provinces'});
+        $('#city').ph_locations({'location_type': 'cities'});
+        $('#barangay').ph_locations({'location_type': 'barangays'});
+
+        $('#region').ph_locations('fetch_list');
+    });
+    
+    {% comment %} $( ".select option:selected" ).text(); {% endcomment %}
+</script>
+
+{% endblock %}

@@ -1,0 +1,53 @@
+{% load static %}
+{% block content %}
+<table width="100%" align="left" border="0" cellpadding="0" cellspacing="0" role="presentation">
+{% if route_enabled %}
+<tr>
+    <td>
+        <p style="color: rgba(0,0,0,.75);">
+            {% filter force_escape %}
+                This is a routed Account Activation email for {{ first_name|title }} {{ last_name|title }}, ({{ email }}): {{ username }}
+            {% endfilter %}
+            <br />
+        </p>
+    </td>
+</tr>
+{% endif %}
+<tr>
+    <td>
+        <h1>
+            WELCOME TO SCHOLARIUM!
+        </h1>
+        <p style="color: rgba(0,0,0,.75);">
+            {% filter force_escape %}
+                Hello {{ first_name|title }} {{ last_name|title }}!
+            {% endfilter %}
+            <br />
+        </p>
+        <p style="color: rgba(0,0,0,.75);">
+            {% filter force_escape %}
+                Your account is now ACTIVE! Here are your login credentials:
+            {% endfilter %}
+        </p>
+        <p style="color: rgba(0,0,0,.75);">
+            {% filter force_escape %}
+                USERNAME: {{username}}
+            {% endfilter %}
+        </p>
+        <p style="color: rgba(0,0,0,.75);">
+            {% filter force_escape %}
+                PASSWORD: {{password}}
+            {% endfilter %}
+            <br />
+        </p>
+        <p style="color: rgba(0,0,0,.75);">
+            {% filter force_escape %}
+                We recommend changing your password after your first login. Enjoy SCHOLARIUM!
+            {% endfilter %}
+            <br />
+        </p>
+
+    </td>
+</tr>
+</table>
+{% endblock %}
