@@ -68,7 +68,6 @@ div.landing-page center .landing-photo {
 
 .modal-body {
   text-align: center !important;
-  max-width: -webkit-max-content !important;
   max-width: -moz-max-content !important;
   max-width: max-content !important;
 }
@@ -152,11 +151,6 @@ form {
 }
 
 .input-field input::-moz-placeholder {
-  color: #aaa;
-  font-weight: 500;
-}
-
-.input-field input:-ms-input-placeholder {
   color: #aaa;
   font-weight: 500;
 }
@@ -378,7 +372,7 @@ a.gg:hover i {
     right: initial;
   }
   .container.sign-in-mode .left-panel .image,
-.container.sign-in-mode .left-panel .content {
+  .container.sign-in-mode .left-panel .content {
     transform: translateY(-300px);
   }
   .container.sign-in-mode .signup-signin {
