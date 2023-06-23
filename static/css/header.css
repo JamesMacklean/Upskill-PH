@@ -11,8 +11,9 @@
   height: 90px;
 }
 
-.header img {
+.header .logo {
   width: 160px;
+  margin-right: auto;
 }
 
 .header .navbar {
