@@ -1,70 +1,9 @@
-#scholarium-footer{
-  background-color: #000;
-  width: 100%;
+footer{
+  background-color: rgb(48, 48, 48);
+  height: 350px;
 }
-.footer-link-heading{
-  font-size: 1.25rem;
-  font-weight: 500;
-  color: #fff;
-}
-.footer-container-row{
-  font-size: 0.8rem;
-  padding: 25px 40px;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  justify-content: center;
-}
-.footer-link-footer-static .static-link-footer{
+.footer-links, .footer-links li a, .footer-links li a:active{
   list-style: none;
-  padding: 0;
-}
-static-link-footer li{
-  padding: 2px;
-}
-.static-link-footer li a{
-  text-decoration: none !important;
-  color: #fff !important;
-}
-.static-link-footer li a:hover{ 
-  text-decoration: none !important;
-  color: #000 !important;
-}
-.static-link-footer li a:visited, .static-link-footer li a:active{ 
+  color: #FFF;
   text-decoration: none;
-  color: #fff;
-}
-.footer-container-col-left{
-    display: inline-block;
-    text-align: left;
-    justify-content: left;
-}
-.footer-container-col-right{
-  display: inline-block;
-  text-align: right;
-  justify-content: right;
-}
-.footer-link-footer-social{
-  padding: 0px 0px 15px 0px;
-}
-.footer-link-footer-social .footer-social-icon{
-  display: inline-flex; 
-  padding: 10px; 
-  background-color: #515356; 
-  border-radius: 50%;
-}
-.footer-link-footer-social .footer-social-icon:hover{
-  text-decoration: none !important;
-  background-color: #828282 !important;
-}
-.footer-link-footer-social a{
-  text-decoration: none;
-  color: #fff;
-}
-.footer-link-footer-social .footer-social-icon i{
-  font-style: normal;
-  color: #fff;
-  font-weight: 500 !important;
-  width: 15px !important;
-  height: 15px !important;
-  font-size: 1.25rem !important;
 }

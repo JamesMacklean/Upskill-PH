@@ -1,24 +1,20 @@
 {% load static %}
 <link rel="stylesheet" href="{% static 'css/footer.css' %}">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-<footer id="scholarium-footer">
-    <div class="footer-container-row">
-        <div class="footer-container-col-left">
-          <section>
-            <h2 class="footer-link-heading">Scholarium</h2>
-          </section>
-          <div class="footer-link-footer-static">
-            <ul class="static-link-footer">
-              <p>Duis aute irure dolor in reprehenderit <br>
-                in voluptate velit esse cillum</p>
-            </ul>
-          </div>
-        </div>
-        <div class="footer-container-col-right">
-          <li><a href="#">Help and FAQ</a></li>
-          <li><a href="#">Terms of Service</a></li>
-          <li><a href="#">Honor Code</a></li>
-          <li><a href="{% url 'privacy' %}">Privacy Policy</a></li>
-        </div>
-      </div>
+<footer>
+  <div class="row">
+    <div class="col-10">
+      <h2 class="text-white">Scholarium</h2>
+      <p class="text-white">Duis aute irure dolor in reprehenderit
+        in voluptate velit esse cillum</p>
+    </div>
+    <div class="col-10">
+      <ul class="footer-links">
+        <li><a>Help and FAQ</a></li>
+        <li><a>Terms of Service</a></li>
+        <li><a>Honor Code</a></li>
+        <li><a>Privacy Policy</a></li>
+      </ul>
+    </div>
+  </div>
 </footer>
