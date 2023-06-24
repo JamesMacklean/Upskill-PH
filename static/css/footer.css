@@ -3,7 +3,7 @@ footer {
   height: 350px;
 }
 
-.footer-links, .footer-links li a, .footer-links li a:active {
+.footer-links, .footer-links li a {
   list-style: none;
   color: #FFF;
   text-decoration: none;
