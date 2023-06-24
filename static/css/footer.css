@@ -2,8 +2,14 @@ footer {
   background-color: rgb(48, 48, 48);
   height: 350px;
 }
+
 .footer-links, .footer-links li a {
   list-style: none;
   color: #FFF;
   text-decoration: none;
+}
+
+.container {
+  margin: 0 20px;
+  max-width: 1400px;
 }/*# sourceMappingURL=footer.css.map */
