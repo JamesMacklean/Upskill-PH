@@ -4,7 +4,9 @@
 
 <header class="header">
 
-    <a href="{% url 'home' %}" class="logo"><img src="{% static 'images/schol-header-logo.png' %}" alt=""></a>
+    <a href="{% url 'home' %}">
+        <img src="{% static 'images/schol-header-logo.png' %}" class="logo" alt="Scholarium">
+    </a>
  
 {% if not request.session.user_token %}
     <nav>
