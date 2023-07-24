@@ -3,4 +3,8 @@
   margin: 0;
   box-sizing: border-box;
   font-family: "Poppins", "Font Awesome", "Montserrat";
+}
+
+.fs-height {
+  height: 100vh;
 }/*# sourceMappingURL=style.css.map */
