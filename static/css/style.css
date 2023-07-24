@@ -3,6 +3,7 @@
   margin: 0;
   box-sizing: border-box;
   font-family: "Poppins", "Font Awesome", "Montserrat";
+  scroll-behavior: smooth;
 }
 
 .custom-container {
