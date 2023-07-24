@@ -12,7 +12,24 @@
 }
 
 .hero-banner {
-  background: linear-gradient(90deg, rgb(236, 113, 70) 0%, rgb(242, 90, 37) 35%, rgba(255, 255, 255, 0) 100%), url(../images/hero-banner.jpg);
+  background: linear-gradient(70deg, rgb(242, 90, 37) 36%, rgba(241, 190, 172, 0.1615021008) 73%, rgba(255, 255, 255, 0) 100%), url("../images/hero-banner.jpg");
+  height: calc(100vh - 90px);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center right;
+}
+
+.about {
+  background: linear-gradient(90deg, rgba(242, 90, 37, 0.5004376751) 25%, rgb(255, 255, 255) 67%), url("../images/about-banner.jpg");
+  height: calc(100vh - 90px);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center right;
+  color: #f25a25;
+}
+
+.partner {
+  background: linear-gradient(70deg, rgb(242, 90, 37) 36%, rgba(241, 190, 172, 0.1615021008) 73%, rgba(255, 255, 255, 0) 100%), url("../images/partner-banner.jpg");
   height: calc(100vh - 90px);
   background-size: cover;
   background-repeat: no-repeat;
