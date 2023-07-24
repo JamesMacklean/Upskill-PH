@@ -13,9 +13,11 @@
           </p>
         </div>
         {% if not request.session.user_token %}
-        <a href="{% url 'signup' %}" class="btn">
-          Join Our Community
-        </a>
+        <div class="mt-3">
+          <a href="{% url 'signup' %}" class="btn">
+            Join Our Community
+          </a>
+        </div>
         {% endif %}
       </div>
       <div class="col">
