@@ -12,8 +12,8 @@
     <nav>
         <a href="#">About</a>
         <a href="#">Contact Us</a>
-        <a href="#">Login</a>
-        <a href="#" class="btn">Sign Up</a>
+        <a href="{% url 'signin' %}">Login</a>
+        <a href="{% url 'signup' %}" class="btn">Sign Up</a>
     </nav>
 {% else %}
     <nav>
