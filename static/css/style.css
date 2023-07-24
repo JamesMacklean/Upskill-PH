@@ -5,6 +5,8 @@
   font-family: "Poppins", "Font Awesome", "Montserrat";
 }
 
-.fs-height {
-  height: 100vh;
+.custom-container {
+  padding: 0 20px;
+  margin: 0 auto;
+  max-width: 1400px;
 }/*# sourceMappingURL=style.css.map */
