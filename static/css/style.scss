@@ -10,7 +10,11 @@
     max-width: 1400px;
 }
 .hero-banner{
-    background: linear-gradient(90deg, rgba(255,169,139,1) 0%, rgba(242,90,37,1) 35%, rgba(255,255,255,1) 100%), url("../images/hero-banner.jpg");
+    background: linear-gradient(90deg, rgb(236 113 70) 0%, rgba(242,90,37,1) 35%, rgba(255,255,255,0) 100%), url(../images/hero-banner.jpg);
+    height: calc(100vh - 90px);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center right;
 }
 // body{
 //     background-color: #fff !important;
