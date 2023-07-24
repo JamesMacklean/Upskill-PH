@@ -89,7 +89,7 @@ def clear_session(request,key):
 
 def home(request):
     """"""
-    template_anonymous = "authentication/signin.html"
+    template_anonymous = "index.html"
     template_authenticated = "authentication/dashboard.html"
     context = {}
     
