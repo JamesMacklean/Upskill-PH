@@ -9,4 +9,8 @@
   padding: 0 20px;
   margin: 0 auto;
   max-width: 1400px;
+}
+
+.hero-banner {
+  background: linear-gradient(90deg, rgb(255, 169, 139) 0%, rgb(242, 90, 37) 35%, rgb(255, 255, 255) 100%), url("../images/hero-banner.jpg");
 }/*# sourceMappingURL=style.css.map */
