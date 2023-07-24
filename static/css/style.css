@@ -12,7 +12,7 @@
 }
 
 .hero-banner {
-  background: linear-gradient(70deg, rgb(242, 90, 37) 36%, rgba(241, 190, 172, 0.1615021008) 73%, rgba(255, 255, 255, 0) 100%), url("../images/hero-banner.jpg");
+  background: linear-gradient(70deg, rgba(242, 90, 37, 0.92) 36%, rgba(241, 190, 172, 0.1615021008) 73%, rgba(255, 255, 255, 0) 100%), url("../images/hero-banner.jpg");
   height: calc(100vh - 90px);
   background-size: cover;
   background-repeat: no-repeat;
