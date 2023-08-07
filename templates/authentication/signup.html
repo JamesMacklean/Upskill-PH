@@ -3,8 +3,8 @@
 {% block content %}
 
 <div class="container d-flex flex-column justify-content-center" style="height: calc(100vh - 90px);">
-    <div class="row gx-5 py-5">
-        <div class="col-12 col-md-6">
+    <div class="row gx-5 py-5 h-100">
+        <div class="col-12 col-md-6 d-flex flex-column justify-content-center">
             <form method="post" action="" class="sign-up-form" id="signup">
                 {% csrf_token %}
                 <h2 class="title pb-5">Create an Account</h2>
@@ -28,9 +28,9 @@
                     <button type="submit" class="btn solid">Sign Up</button>
             </form>
         </div>
-        <div class="col-12 col-md-6 d-flex flex-column justify-content-center">
+        <div class="col-12 col-md-6 d-flex flex-column justify-content-center" style="background-color: #f15a25;">
             <div class="content">
-                <h3>Have an account?</h3>
+                <h3 class="text-white">Have an account?</h3>
                 <a class="schol-link" href="/signup">Login</a>
             </div>
         </div>
