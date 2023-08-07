@@ -7,25 +7,25 @@
         <div class="col-12 col-md-6">
             <form method="post" action="" class="sign-up-form" id="signup">
                 {% csrf_token %}
-                <h2 class="title">Create an Account</h2>
+                <h2 class="title pb-5">Create an Account</h2>
                 
-                <div class="input-field">
+                <div class="input-field pb-3">
                     <i class="fas fa-address-card"></i>
-                    <input type="text" id="firstname" name="firstname" placeholder="first name" required>
-                    <input type="text" id="lastname" name="lastname" placeholder="last name" required>
+                    <input type="text" id="firstname" name="firstname" placeholder="First Name" required class="px-2">
+                    <input type="text" id="lastname" name="lastname" placeholder="Last Name" required class="px-2">
                 </div>
 
-                <div class="input-field">
+                <div class="input-field pb-3">
                     <i class="fas fa-user"></i>
-                    <input type="text" id="username" name="username" placeholder="username" required>
+                    <input type="text" id="username" name="username" placeholder="Username" required class="px-2">
                 </div>
                 
-                <div class="input-field">
+                <div class="input-field pb-5">
                     <i class="fas fa-envelope"></i>
-                    <input type="text" id="email"  name="email" placeholder="email" required>
+                    <input type="text" id="email"  name="email" placeholder="Email" required class="px-2">
                 </div>
 
-                    <button type="submit" class="btn solid">sign up</button>
+                    <button type="submit" class="btn solid">Sign Up</button>
             </form>
         </div>
         <div class="col-12 col-md-6">
