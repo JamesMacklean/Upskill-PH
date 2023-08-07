@@ -12,7 +12,7 @@ TEST_EMAIL_RECEIVER = 'jamesmacklean27@gmail.com'
 # API
 API_SECRET_KEY = "5af375913e149630a4dd18e2ac1548cf9bdcde9c9e03eb24e1a1f3cb5e540c4a"
 API_URL = "https://scholarium.tmtg-clone.click/v1/"
-
+COURSEBANK_URL = "https://discovery.tmtg-clone.click/api/v1/"
 API_LOGIN_ACCOUNT_URL = API_URL+"login"
 API_CREATE_ACCOUNT_URL = API_URL+"user/add"
 API_VERIFY_ACCOUNT_URL = API_URL+"user/verify/"
@@ -29,6 +29,7 @@ API_UPDATE_PASSWORD_URL = API_URL+"me/password"
 API_PARTNER_PROGRAMS_URL = API_URL+"partner/programs/"
 API_SCHOLAR_UPDATE_URL = API_URL+"partner/scholarship/"
 
+COURSEBANK_COURSES_URL = COURSEBANK_URL+"courses/?limit=6&"
 
 ########## ORIGINAL CODE ##########
 API_TOKEN = 'TMTG tujyBpbgtum3xcctFvXZgr4ZnaRsddVRpvkwJuq8B3KEwfd4BZQtrRaj5r4vdtDm'
