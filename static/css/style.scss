@@ -33,11 +33,11 @@
     background-position: center right;
 }
 a {
-    text-decoration: none;
-    color: #000;
+    text-decoration: none !important;
+    color: #000 !important;
 }
 a:hover{
-    color: #fff;
+    color: #fff !important;
 }
 // body{
 //     background-color: #fff !important;

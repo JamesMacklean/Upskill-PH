@@ -3,7 +3,7 @@
 {% block content %}
 
 <div class="container d-flex flex-column justify-content-center" style="height: calc(100vh - 90px);">
-    <div class="row gx-5 py-5 h-100">
+    <div class="row gx-5 h-100">
         <div class="col-12 col-md-6 d-flex flex-column justify-content-center">
             <form method="post" action="" class="sign-up-form" id="signup">
                 {% csrf_token %}
@@ -29,7 +29,7 @@
             </form>
         </div>
         <div class="col-12 col-md-6 d-flex flex-column justify-content-center" style="background-color: #f15a25;">
-            <div class="content">
+            <div class="content px-5">
                 <h3 class="text-white">Have an account?</h3>
                 <a class="schol-link" href="/signup">Login</a>
             </div>
