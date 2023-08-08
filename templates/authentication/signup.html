@@ -7,7 +7,7 @@
         <div class="col-12 col-md-6 d-flex flex-column justify-content-center">
             <form method="post" action="" class="sign-up-form px-5" id="signup">
                 {% csrf_token %}
-                <h2 class="title pb-5">Create an Account</h2>
+                <h1 class="title pb-5">Create an Account</h1>
                 
                 <div class="input-field pb-3">
                     <i class="fas fa-address-card"></i>
@@ -34,8 +34,8 @@
         </div>
         <div class="col-12 col-md-6 d-flex flex-column justify-content-center signup-panel" style="background: linear-gradient(90deg, rgba(241,90,37,1) 0%, rgba(37,188,241,0.5004595588235294) 100%),url({% static 'images/signup-panel.jpg' %});height: calc(100vh - 90px);background-size: cover;background-repeat: no-repeat;background-position: center right;">
             <div class="content px-5">
-                <h3 class="fw-semibold text-white">Have an account?</h3>
-                <a class="schol-link fw-bold" href="/signup">Login</a>
+                <h2 class="fw-semibold text-white">Have an account?</h2>
+                <a class="schol-link fs-4" href="/signin">Login</a>
             </div>
         </div>
     </div>
