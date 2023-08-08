@@ -42,6 +42,6 @@ a.schol-link {
   color: #000 !important;
 }
 
-a.schol-link {
+a.schol-link:hover {
   color: #fff !important;
 }/*# sourceMappingURL=style.css.map */
