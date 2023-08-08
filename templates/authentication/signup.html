@@ -4,6 +4,11 @@
 
 <div class="mx-0 d-flex flex-column justify-content-center" style="height: calc(100vh - 90px);">
     <div class="row gx-5 h-100">
+
+        <div class="col-12 col-md-6 d-flex flex-column justify-content-center signup-panel" style="background: linear-gradient(90deg, rgba(241,90,37,1) 0%, rgba(37,188,241,0.5004595588235294) 100%),url({% static 'images/signup-panel.jpg' %});height: calc(100vh - 90px);background-size: cover;background-repeat: no-repeat;background-position: center right;">
+            
+        </div>
+
         <div class="col-12 col-md-6 d-flex flex-column justify-content-center">
             <form method="post" action="" class="sign-up-form px-5" id="signup">
                 {% csrf_token %}
@@ -31,13 +36,15 @@
 
                     <button type="submit" class="btn solid">Sign Up</button>
             </form>
-        </div>
-        <div class="col-12 col-md-6 d-flex flex-column justify-content-center signup-panel" style="background: linear-gradient(90deg, rgba(241,90,37,1) 0%, rgba(37,188,241,0.5004595588235294) 100%),url({% static 'images/signup-panel.jpg' %});height: calc(100vh - 90px);background-size: cover;background-repeat: no-repeat;background-position: center right;">
+
             <div class="content px-5">
-                <h2 class="fw-semibold text-white">Have an account?</h2>
-                <a class="schol-link fs-4" href="/signin">Login</a>
+                <h4 class="fw-semibold">Have an account? <a class="schol-link" href="/signin">Login</a></h4>
             </div>
+
         </div>
+        
+        
+
     </div>
 </div>
 
