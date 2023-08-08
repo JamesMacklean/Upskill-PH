@@ -39,9 +39,16 @@
 
 a.schol-link {
   text-decoration: none !important;
-  color: #25bcf1 !important;
+  color: #f15a25 !important;
 }
 
 a.schol-link:hover {
-  color: #9de1f9 !important;
+  color: #25bcf1 !important;
+}
+
+form.signup-form {
+  outline: 1px solid rgb(219, 219, 219);
+  width: 400px;
+  height: 400px;
+  border-radius: 5px;
 }/*# sourceMappingURL=style.css.map */

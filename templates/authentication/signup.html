@@ -8,28 +8,24 @@
         <div class="col-12 col-md-6 d-flex flex-column justify-content-center signup-panel" style="background: linear-gradient(90deg, rgba(241,90,37,1) 0%, rgba(37,188,241,0.5004595588235294) 100%),url({% static 'images/signup-panel.jpg' %});height: calc(100vh - 90px);background-size: cover;background-repeat: no-repeat;background-position: center right;">
         </div>
 
-        <div class="col-12 col-md-6 d-flex flex-column justify-content-center">
-            <form method="post" action="" class="sign-up-form px-5" id="signup">
+        <div class="col-12 col-md-6 d-flex flex-column justify-content-center align-items-center">
+            <form method="post" action="" class="sign-up-form p-3 d-flex flex-column align-items-center justify-content-center" id="signup">
                 {% csrf_token %}
-                <h1 class="title pb-5">Create an Account</h1>
+                <h5 class="title p-3">Create an Account</h5>
                 
                 <div class="input-field pb-3">
-                    <i class="fas fa-address-card"></i>
                     <input type="text" id="firstname" name="firstname" placeholder="First Name" required class="px-2">
                 </div>
 
                 <div class="input-field pb-3">
-                    <i class="fas fa-address-card"></i>
                     <input type="text" id="lastname" name="lastname" placeholder="Last Name" required class="px-2">
                 </div>
 
                 <div class="input-field pb-3">
-                    <i class="fas fa-user"></i>
                     <input type="text" id="username" name="username" placeholder="Username" required class="px-2">
                 </div>
                 
                 <div class="input-field pb-5">
-                    <i class="fas fa-envelope"></i>
                     <input type="text" id="email"  name="email" placeholder="Email" required class="px-2">
                 </div>
 
@@ -37,7 +33,7 @@
             </form>
 
             <div class="content pt-5">
-                <h4 class="fw-semibold">Have an account? <a class="schol-link" href="/signin">Login</a></h4>
+                <p class="fw-semibold">Have an account? <a class="schol-link" href="/signin">Log in</a></p>
             </div>
 
         </div>
