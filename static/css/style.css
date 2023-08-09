@@ -62,10 +62,11 @@ form .input-field input {
   width: 300px !important;
   border-radius: 3px;
   border: 0.5px solid #ececec;
+  transition: box-shadow 0.3s;
 }
 
-form .input-field input:active {
-  border: 0.5px solid #f15a25;
+form .input-field input:focus {
+  box-shadow: 0 0 2px #f15a25;
 }
 
 form button {
