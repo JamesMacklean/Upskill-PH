@@ -58,6 +58,7 @@ form .input-field input{
 }
 form .input-field input:focus{
     box-shadow: 0 0 2px  #f15a25;
+    outline: none;
 }
 
 form button{
