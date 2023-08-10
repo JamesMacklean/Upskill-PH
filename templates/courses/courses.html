@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Courses</h1>
+    
+    <div class="course-cards">
+        {% for course in courses %}
+            <div class="course-card">
+                <img src="{{ course.image.src }}" alt="{{ course.title }}">
+                <h2>{{ course.title }}</h2>
+                {% for owners in course.owners %}
+                    <p>{{ owners.key }}</p>
+                {% endfor %}
+                {% for topic in course.topics %}
+                    <p>{{ topic }}</p>
+                {% endfor %}
+                <a href="{{ course.course_runs.0.marketing_url }}">Enroll Now</a>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

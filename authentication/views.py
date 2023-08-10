@@ -626,6 +626,23 @@ def account(request):
     
     return render(request, template_name)
 
+def courses(request):
+    """"""
+    template_name = "courses/courses.html"
+    context = {}
+
+    ########## LOGIN REQUIRED ##########
+    if not authenticate_user(request):
+        request.session['url'] = "courses"
+        return HttpResponseRedirect('/signin?next=courses')
+    clear_session(request,'url')
+    ########## LOGIN REQUIRED ##########
+    
+    # Fetch course data from the API
+
+    context['courses'] = get_courses()
+    return render(request,template_name, context)
+    
 # STATIC TEMPLATES
 def guidelines(request):
     return render(request, "static_templates/program_guidelines.html")

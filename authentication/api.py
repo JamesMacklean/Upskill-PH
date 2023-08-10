@@ -556,3 +556,20 @@ def verify(user_hash):
         email = ''
     
     return username, first_name, last_name, email, password, response_message
+
+# GET https://discovery.coursebank.ph/api/v1/courses/?limit=6&
+def get_courses():  
+    courses = []
+    response = requests.get(COURSEBANK_COURSES_URL)
+    
+    if response.status_code == 200:
+        courses_data = response.json()
+        
+        if 'results' in courses_data:
+            try:
+                for data in courses_data['results']:
+                    courses.append(data)
+            except Exception as e:
+                print(str(e))
+    
+    return courses

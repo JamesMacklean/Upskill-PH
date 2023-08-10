@@ -20,6 +20,8 @@ urlpatterns = [
     path('partner/', views.partner, name="partner"),
     path('certificate/', views.certificate, name="certificate"),
     
+    path('courses/',views.courses, name="courses"),
+    
     path('guidelines/',views.guidelines, name="guidelines"),
     path('privacy/', views.privacy, name="privacy")
 ]
