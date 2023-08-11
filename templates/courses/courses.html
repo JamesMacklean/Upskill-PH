@@ -1,18 +1,18 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/courses.css' %}"/>
     <h1>Courses</h1>
     
     <div class="course-cards">
         {% for course in courses %}
             <div class="course-card">
+                <div class="topic-badge">{{ course.topics.0 }}</div>
                 <img src="{{ course.image.src }}" alt="{{ course.title }}">
                 <h2>{{ course.title }}</h2>
                 {% for owners in course.owners %}
                     <p>{{ owners.key }}</p>
-                {% endfor %}
-                {% for topic in course.topics %}
-                    <p>{{ topic }}</p>
                 {% endfor %}
                 <a href="{{ course.course_runs.0.marketing_url }}">Enroll Now</a>
             </div>

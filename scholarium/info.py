@@ -29,7 +29,7 @@ API_UPDATE_PASSWORD_URL = API_URL+"me/password"
 API_PARTNER_PROGRAMS_URL = API_URL+"partner/programs/"
 API_SCHOLAR_UPDATE_URL = API_URL+"partner/scholarship/"
 
-COURSEBANK_COURSES_URL = COURSEBANK_URL+"courses/?limit=6&"
+COURSEBANK_COURSES_URL = COURSEBANK_URL+"courses/?limit=9&"
 
 ########## ORIGINAL CODE ##########
 API_TOKEN = 'TMTG tujyBpbgtum3xcctFvXZgr4ZnaRsddVRpvkwJuq8B3KEwfd4BZQtrRaj5r4vdtDm'
