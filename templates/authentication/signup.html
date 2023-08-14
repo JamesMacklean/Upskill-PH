@@ -2,146 +2,41 @@
 {% load static %}
 {% block content %}
 
-{% comment %} <script>
-    alert('{{ message }}');
-</script> {% endcomment %}
-    
-{% comment %} {% if messages %}
-<ul class="messages">
-    {% for message in messages %}
-    <div id="message_container" {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</div>
-    {% endfor %}
-</ul>
-{% endif %} {% endcomment %}
+<div class="mx-0 d-flex flex-column justify-content-center" style="height: calc(100vh - 90px);">
+    <div class="row gx-5 h-100">
 
-{% if message %}
-<div class="modal fade" id="SignupModal" tabindex="-1" data-bs-backdrop="static" aria-labelledby="SignupModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        {% if message == "success" %}
-        <div class="modal-content">
-            <div class="modal-header">
-            <h1 class="modal-title fs-5" id="SignupModalLabel">Success! 🎉</h1>
-            </div>
-            <div class="modal-body">
-                <img src="{% static 'images/success.svg'%}" class="modal-image">
-                <p>You have successfully created your <span class="schol-heading" style="color: #F15A25; text-transform: uppercase; font-weight: 500px;">Scholarium</span> account!
-                <br>kindly check your inbox in your email: {{ request.session.new_email }} for verification. Thank You!
-                <br> <em>  Note: also check on your SPAM folder </em> 
-                </p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            </div>
+        <div class="col-12 col-md-6 d-flex flex-column justify-content-center signup-panel" style="background: linear-gradient(90deg, rgba(241,90,37,1) 0%, rgba(37,188,241,0.5004595588235294) 100%),url({% static 'images/signup-panel.jpg' %});height: calc(100vh - 90px);background-size: cover;background-repeat: no-repeat;background-position: center right;">
         </div>
-        {% else %}
-        <div class="modal-content">
-            <div class="modal-header">
-            <h1 class="modal-title fs-5" id="SignupModalLabel">Error! ⚠️</h1>
-            </div>
-            <div class="modal-body">
-                <img src="https://scholarium-static.s3.ap-southeast-1.amazonaws.com/undraw_feeling_blue_-4-b7q.svg" class="modal-image">
-                <p>
-                    {{ message }}
-                </p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            </div>
-        </div>
-        {% endif %}
-    </div>
-</div>
-{% endif %}      
 
-<div class="container-signup">
-    <div class="forms-container">
-        <div class="signup-signin">
-            <form method="post" action="" class="sign-up-form" id="signup">
+        <div class="col-12 col-md-6 d-flex flex-column justify-content-center align-items-center">
+            <form method="post" action="" class="sign-up-form p-3 d-flex flex-column align-items-center justify-content-center" id="signup">
                 {% csrf_token %}
-                <h2 class="title">Create an Account</h2>
-                <br>
-                <div class="input-field">
-                    <i class="fas fa-user"></i>
-                    <input type="text" id="username" name="username" placeholder="username" required>
-                </div>
+                <h5 class="title p-2 mb-4">Create an Account</h5>
                 
-                <div class="input-field">
-                    <i class="fas fa-address-card"></i>
-                    <input type="text" id="firstname" name="firstname" placeholder="first name" required>
-                </div>
-                
-                <div class="input-field">
-                    <i class="fas fa-address-card"></i>
-                    <input type="text" id="lastname" name="lastname" placeholder="last name" required>
-                </div>
-                
-                <div class="input-field">
-                    <i class="fas fa-envelope"></i>
-                    <input type="text" id="email"  name="email" placeholder="email" required>
+                <div class="input-field pb-2">
+                    <input type="text" id="firstname" name="firstname" placeholder="First Name" required class="px-2">
                 </div>
 
-                    {% comment %} <button type="submit" class="btn solid" data-bs-toggle="modal" data-bs-target="#SignupModal">sign up</button> {% endcomment %}
-                    <button type="submit" class="btn solid">sign up</button>
+                <div class="input-field pb-2">
+                    <input type="text" id="lastname" name="lastname" placeholder="Last Name" required class="px-2">
+                </div>
+
+                <div class="input-field pb-2">
+                    <input type="text" id="username" name="username" placeholder="Username" required class="px-2">
+                </div>
+                
+                <div class="input-field pb-4">
+                    <input type="text" id="email"  name="email" placeholder="Email" required class="px-2">
+                </div>
+
+                    <button type="submit" class="btn solid">Sign Up</button>
             </form>
+
+            <div class="content pt-5">
+                <p class="fw-semibold">Have an account? <a class="schol-link" href="/signin">Log in</a></p>
+            </div>
         </div>
     </div>
 </div>
-
-<div class="panels-container">
-    <div class="panel left-panel">
-        <div class="content">
-            <h3>Already have an account?</h3>
-            <p></p>
-            <a class="btn-transparent" href="/signin">Sign in</a>
-        </div>
-        <img src="{% static 'images/signup.svg'%}" class="image" alt=""/>
-    </div>
-</div>
-
-<!-- Modal -->
-<div class="modal fade" id="SignupModal" tabindex="-1" data-bs-backdrop="static" aria-labelledby="SignupModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        {% if message == "success" %}
-        <div class="modal-content">
-            <div class="modal-header">
-            <h1 class="modal-title fs-5" id="SignupModalLabel">Success! 🎉</h1>
-            </div>
-            <div class="modal-body">
-                <img src="{% static 'images/success.svg'%}" class="modal-image">
-                <p>You have successfully created your <span class="schol-heading" style="color: #F15A25; text-transform: uppercase; font-weight: 500px;">Scholarium</span> account!
-                <br>kindly check your inbox in your email: {{ request.session.new_email }} for verification. Thank You!
-                <br> <em>  Note: also check on your SPAM folder </em> 
-                </p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            </div>
-        </div>
-        {% else %}
-        <div class="modal-content">
-            <div class="modal-header">
-            <h1 class="modal-title fs-5" id="SignupModalLabel">Error! ⚠️</h1>
-            </div>
-            <div class="modal-body">
-                <img src="https://scholarium-static.s3.ap-southeast-1.amazonaws.com/undraw_feeling_blue_-4-b7q.svg" class="modal-image">
-                <p>
-                    {{ message }}
-                </p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            </div>
-        </div>
-        {% endif %}
-    </div>
-</div>
-
-<script>
-    var message_ele = document.getElementById("message_container");
-    
-    setTimeout(function(){ 
-    message_ele.style.display = "none"; 
-    }, 10000);
-</script>
 
 {% endblock %}
