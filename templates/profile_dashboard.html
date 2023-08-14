@@ -2,253 +2,39 @@
 {% load static %}
 {% load parse_iso %}
 {% block content %}
-<div class="tab-container">
-    <div class="tabs">
-        <h3 class="active">SCHOLARSHIPS</h3>
-        <h3>PROFILE</h3>
-        {% comment %} <h3>ACHIEVEMENTS</h3> {% endcomment %}
+
+<div class="container h-100">
+<div class="d-flex">
+    <div class="col">
+        <img src="" alt="">
+        <h5>{{request.session.firstname}}</h5>
+        <p>Member since 2023</p>
     </div>
-    
-    <div class="tab-content">
-        {% comment %} FIRST TAB {% endcomment %}
-        <div class="tab active">
-            <h4>Scholarships</h4>
-            <div class="sub-tabs">
-                <h5 class="opentab">AVAILABLE</h5>
-                <h5>IN PROGRESS</h5>
-            </div>
-
-            <div class="sub-tab-content">
-                <div class="subtab opentab" id="available">
-                    <div class="card-wrapper">
-                        {% for program in program_list %}
-                            {% if program.id not in applied_programs %}   
-                                <a href="{% url 'program' program.partner_id program.id %}">
-                                    <div class="card-container">
-                                        <div class="card-image">
-                                            <img src="{{program.image}}">
-                                        </div>
-                                        
-                                        <div class="card-partner-logo">
-                                            <img src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/DICT-Logo-nobg.png">
-                                            <img src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/ILCDB+logo_2.png">
-                                            <img src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/coursera-social-logo-brand.png">
-                                            <img src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/logo-moocsx.png">
-                                        </div>
-                                        
-                                        <div class="card-content">
-                                            <div class="container-card-title">
-                                                <h3>{{program.name}}</h3>
-                                                <p class="card-title-content">
-                                                    {% if program.end_date %}
-                                                        {{program.start_date|parse_iso|date:"M d"}} - {{program.end_date|parse_iso|date:"M d, Y"}}
-                                                    {% else %}
-                                                        {{program.start_date|parse_iso|date:"M d, Y"}}
-                                                    {% endif %}
-                                                </p>
-                                                <p class="card-title-footer">
-                                                    {% if program.registration_end %}
-                                                        Registration closes on <br>
-                                                        {{program.registration_end}}
-                                                    {% else %}
-                                                        Registration is open
-                                                    {% endif %}
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </a>    
-                            {% endif %}
-                        {% endfor %}
-                    </div>
-                </div>
-
-                <div class="subtab" id="ongoing"> 
-                    <div class="card-wrapper">
-                        {% for scholarship in scholarships %}
-                        {% for program in program_list %}
-                            {% if scholarship.program_id == program.id %}    
-                                <a href="{% url 'program' program.partner_id program.id %}">
-                                    <div class="card-container">
-                                        <div class="card-image">
-                                            <img src="{{program.image}}">
-                                        </div>
-                                        
-                                        <div class="card-partner-logo">
-                                            <img src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/DICT-Logo-nobg.png">
-                                            <img src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/ILCDB+logo_2.png">
-                                            <img src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/coursera-social-logo-brand.png">
-                                            <img src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/logo-moocsx.png">
-                                        </div>
-                                        
-                                        <div class="card-content">
-                                            <div class="container-card-title">
-                                                <h3>{{program.name}}</h3>
-                                                <p class="card-title-content">
-                                                    {% if program.end_date %}
-                                                        {{program.start_date|parse_iso|date:"M d"}} - {{program.end_date|parse_iso|date:"M d, Y"}}
-                                                    {% else %}
-                                                        {{program.start_date|parse_iso|date:"M d, Y"}}
-                                                    {% endif %}
-                                                </p>
-                                                <p class="card-title-footer">
-                                                    {% if scholarship.status == 1 %}
-
-                                                    {% elif scholarship.status == 2 %}
-                                                        Waitlisted
-                                                    {% elif scholarship.status == 3 %}
-                                                        Rejected
-                                                    {% else %}
-                                                        Pending
-                                                    {% endif %}
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </a>  
-                            {% endif %}      
-                        {% endfor %}   
-                        {% endfor %}   
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    
-        {% comment %} SECOND TAB {% endcomment %}
-        <div class="tab">
-                <h4>Profile</h4>
-                {% comment %} {{profile.photo}} {% endcomment %}
-                <p class="profile-full-name">{{profile.first_name|title}} {{profile.last_name|title}}</p>
-                <br>
-                <br>
-                <h5>About Me</h5>
-                <hr>
-                {% if profile.privacy == 0%}
-                    <p>
-                        {{profile.about}}
-                    </p>
-                    <br>
-                    <br>                
-                    <h5>Work Experience and Education</h5>
-                    <hr>
-                    <p>
-                        {% if employment.experience %}
-                        {{employment.experience}} | {{employment.employ_status}}
-                        {% else %}
-                        N/A
-                        {% endif %}
-                        <br>
-                        <br>
-                        {% if education.degree %}
-                        Education Level | {{education.degree}}
-                        {% else %}
-                        N/A
-                        {% endif %}
-                    </p>
-                {% else %}
-                    <p>
-                        Bio is Private 🔒
-                    </p>
-                    <h5>Work Experience and Education</h5>
-                    <hr>
-                    <p>
-                        Work Experience and Education is Private 🔒
-                    </p>
-                {% endif %}
-                <br>
-                <br>
-                <br>
-                <a href="{% url 'edit' %}" class="btn"> Edit Profile</a>
-        </div>  
-
-        {% comment %} THIRD TAB
-        <div class="tab">
-            <h4>Achievements</h4>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio labore, excepturi assumenda quo mollitia dignissimos odit beatae illo. Error, velit molestiae repellat dolore explicabo facilis harum qui rem libero deleniti.</p>
-        </div>         {% endcomment %}
+    <div class="col">
+        <table>
+            <tr>
+                <td>Total learning hours</td>
+                <td>123</td>
+            </tr>
+            <tr>
+                <td>Professional Certificates earned</td>
+                <td>123</td>
+            </tr>
+            <tr>
+                <td>Specializations completed</td>
+                <td>123</td>
+            </tr>
+            <tr>
+                <td>Courses completed</td>
+                <td>123</td>
+            </tr>
+            <tr>
+                <td>Total Credits earned</td>
+                <td>123</td>
+            </tr>
+        </table>
     </div>
 </div>
+</div>
 
-<script>
-    let tabs = document.querySelectorAll(".tabs h3");
-    let tabContents = document.querySelectorAll(".tab-content .tab");
-
-    let subTabs = document.querySelectorAll(".sub-tabs h5");
-    let subTabContents = document.querySelectorAll(".sub-tab-content .subtab");
-
-    var lastTabIndex = sessionStorage.getItem('lastTabIndex');
-    var lastSubTabIndex = sessionStorage.getItem('lastSubTabIndex');
-
-    tabs.forEach((tab,index) => {    
-        if (lastTabIndex) {
-            tabContents.forEach((content) =>{
-                content.classList.remove("active");
-            });
-            tabs.forEach((tab) => {
-                tab.classList.remove("active");
-            });
-            tabContents[lastTabIndex].classList.add("active");
-            tabs[lastTabIndex].classList.add("active");
-        }
-        
-        tab.addEventListener("click", () => {
-            tabContents.forEach((content) =>{
-                content.classList.remove("active");
-            });
-            tabs.forEach((tab) => {
-                tab.classList.remove("active");
-            });
-            try {
-                sessionStorage.setItem('profileLastTabIndex', index);
-            } catch (error) {
-                console.log(error);
-            }
-            tabContents[index].classList.add("active");
-            tabs[index].classList.add("active");
-        })
-    })
-
-    tabs.forEach((tab,index) => {    
-        if (lastTabIndex) {
-            tabContents.forEach((content) =>{
-                content.classList.remove("active");
-            });
-            tabs.forEach((tab) => {
-                tab.classList.remove("active");
-            });
-            tabContents[lastTabIndex].classList.add("active");
-            tabs[lastTabIndex].classList.add("active");
-        }
-        
-        tab.addEventListener("click", () => {
-            tabContents.forEach((content) =>{
-                content.classList.remove("active");
-            });
-            tabs.forEach((tab) => {
-                tab.classList.remove("active");
-            });
-            try {
-                sessionStorage.setItem('profileLastTabIndex', index);
-            } catch (error) {
-                console.log(error);
-            }
-            tabContents[index].classList.add("active");
-            tabs[index].classList.add("active");
-        })
-    })
-    
-    subTabs.forEach((subtab,index) => {
-        subtab.addEventListener("click", () => {
-            subTabContents.forEach((subcontent) =>{
-                subcontent.classList.remove("opentab");
-            });
-            subTabs.forEach((subtab) => {
-                subtab.classList.remove("opentab");
-            });
-            subTabContents[index].classList.add("opentab");
-            subTabs[index].classList.add("opentab");
-        })
-    })
-</script>
 {% endblock %}
