@@ -35,7 +35,7 @@
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center right;
-}/*# sourceMappingURL=style.css.map */
+}
 
 a.schol-link {
   text-decoration: none !important;
@@ -72,4 +72,13 @@ form .input-field input:focus {
 
 form button {
   width: 300px !important;
+}
+
+table {
+  width: 90%;
+}
+
+table tr td {
+  padding: 10px 2px;
+  border-bottom: 1px solid #dee2e6;
 }/*# sourceMappingURL=style.css.map */
