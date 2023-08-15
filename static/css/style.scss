@@ -64,6 +64,13 @@ form .input-field input:focus{
 form button{
     width: 300px !important ;
 }
+table{
+    width: 90%;
+}
+table tr td{
+    padding: 10px 2px;
+    border-bottom: 1px solid #dee2e6;
+}
 
 // body{
 //     background-color: #fff !important;
