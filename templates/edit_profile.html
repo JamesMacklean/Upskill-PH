@@ -108,16 +108,16 @@
                 </div>
                 
                 <h3>About</h3>
-                <div class="about-container" id="about-data">
+                <div class=" -container" id=" -data">
                 
-                    <div class="about">
-                        <label for="bio">About Me: </label>
-                        <textarea name="bio" id="bio" cols="30" rows="3">{{profile.about}}</textarea>
+                    <div class=" ">
+                        <label for="bio">  Me: </label>
+                        <textarea name="bio" id="bio" cols="30" rows="3">{{profile. }}</textarea>
                     </div>
                 
                 <!--  COUNTRY SELECTION START  -->
                 
-                    <div class="about" id="address-data">
+                    <div class=" " id="address-data">
                         <label for="country">Country: </label>
                         <select name="country" id="country">
                             {% if profile.country %}
@@ -129,7 +129,7 @@
                         </select>
                     </div>
                 
-                    <div class="about">
+                    <div class=" ">
                         <label for="region">Region: </label>
                         <select id="region" name="region">
                             {% if profile.region %}
@@ -145,7 +145,7 @@
                         </select>
                     </div>
             
-                    <div class="about">
+                    <div class=" ">
                         <label for="municipality">Municipality: </label>
                         <select id="municipality" name="municipality">
                         {% if profile.municipality %}
@@ -161,12 +161,12 @@
                 
                 <!--  COUNTRY SELECTION END  -->
                 
-                    <div class="about" id="social-data">
+                    <div class="" id="social-data">
                         <label for="Socials">Social Media Links: </label> <br>
                         <label for="linkedin">LinkedIn: </label><input type="text" placeholder="linkedin" name="linkedin">
                     </div>
                 
-                    <div class="about" id="personal-data">
+                    <div class="" id="personal-data">
                         <label for="gender">Gender: </label>
                             <select id="gender" name="gender">
                                 {% if profile.gender %}
@@ -178,17 +178,17 @@
                         </select>
                     </div>
                 
-                    <div class="about">
+                    <div class="">
                         <label for="birthday">Date of Birth:</label>
                         <input type="date" value="{{profile.birthday}}" name="birthday">
                     </div>
                 
-                    <div class="about">
+                    <div class="">
                         <label for="mobile">Mobile Number: </label>
                         <input type="text" name="mobile" value="{{profile.contact}}">
                     </div>
                 
-                    <div class="about">
+                    <div class="">
                         <label for="details_privacy">Details Privacy: </label>
                         <select name="details_privacy" id="details-privacy">
                                 <option value="2" {% if profile.privacy == 2 %}selected{% endif %}>Only Me</option>
@@ -219,8 +219,8 @@
       </div>
       <div class="overlay-buttons">
         <center>
-        <a href="{% url 'profile' %}" class="btn">Yes(Cancel)</a>
-        <a href="#" class="btn">No(Continue editing)</a>
+        <a href="{% url 'profile' %}" class="btn">Yes</a>
+        <a href="#" class="btn">No</a>
         </center>
       </div>
   </div>
