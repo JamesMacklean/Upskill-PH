@@ -86,4 +86,27 @@ table tr td {
 .content-container {
   margin: 10px 12%;
   max-width: 1400px;
+}
+
+.form-group.horizontal-box.wrap {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+}
+
+label.body-2-text.color-primary-text.form-label {
+  min-width: 115px;
+  margin-right: 20px;
+  text-align: right;
+}
+
+.cds-9.css-0.cds-11.cds-grid-item.cds-56.cds-58 {
+  max-width: 560px;
+  width: 100%;
+}
+
+textarea#about_me_text {
+  height: 158px;
+  width: 100%;
+  padding: 10px;
 }/*# sourceMappingURL=style.css.map */
