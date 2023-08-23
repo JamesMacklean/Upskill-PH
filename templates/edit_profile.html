@@ -40,15 +40,15 @@
 </div>
 
 <div class="content-container bg-light px-5 pt-5 pb-1">
-    <h5 class="pb-5">Introduction</h5>
+    <h5 class="pb-5">Work Experience and Education</h5>
     <div>
-        <div class="rc-ProfilePhotoUploader form-horizontal">
+        <div class="rc-ProfilePhotoUploader form-horizontal align-items-center">
             <div class="form-group horizontal-box wrap my-3">
-                <label for="photo-uploader" class="body-2-text color-primary-text form-label">Employment Status</label>
-                <div class="css-1kgnfh8">
+                <label for="emp-status" class="body-2-text color-primary-text form-label">Employment Status</label>
+                <div class="form-control-custom">
                     <div class="css-1cq002f">
                         <div class="css-ek3fxo">
-                            <select name="employ_status" id="empstatus">
+                            <select name="employ_status" id="empstatus" class="input-ctrl">
                                 {% if employment.employ_status %}
                                     <option value="" selected disabled hidden>{{employment.employ_status}}</option>
                                 {% endif %}

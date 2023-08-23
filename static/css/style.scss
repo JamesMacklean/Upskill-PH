@@ -81,7 +81,7 @@ table tr td{
     flex-direction: row;
 }
 label.body-2-text.color-primary-text.form-label {
-    min-width: 115px;
+    min-width: 200px;
     margin-right: 20px;
     text-align: right;
 }
@@ -94,6 +94,15 @@ textarea#about_me_text {
     width: 100%;
     padding: 10px;
     font-size: 12px;
+}
+.form-control-custom{
+    width: 480px;
+}
+.input-ctrl {
+    padding: 10px;
+    font-size: 12px;
+    width: 100%;
+    border-radius: 3px;
 }
 // body{
 //     background-color: #fff !important;
