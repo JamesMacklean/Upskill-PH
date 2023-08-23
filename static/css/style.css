@@ -121,4 +121,11 @@ textarea#about_me_text {
   font-size: 12px;
   width: 100%;
   border-radius: 3px;
+  border: 0.5px solid #ececec;
+  transition: box-shadow 0.3s;
+}
+
+.input-ctrl input:focus {
+  box-shadow: 0 0 5px #f15a25;
+  outline: none;
 }/*# sourceMappingURL=style.css.map */
