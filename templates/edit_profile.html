@@ -25,7 +25,7 @@
         </div>
         <div class="form-group horizontal-box wrap mb-3">
             <div class="cds-9 css-1hsf5wl cds-11 cds-grid-item cds-56 cds-58">
-                <label for="about_me_text" class="body-2-text color-primary-text form-label">About Me</label>
+                <label for="about_me_text" class="body-2-text color-primary-text form-label">Bio</label>
             </div>
             <div class="cds-9 css-0 cds-11 cds-grid-item cds-56 cds-58">
                 <div class="css-1yx31u8">
@@ -42,6 +42,7 @@
 <div class="content-container bg-light px-5 pt-5 pb-1">
     <h5 class="pb-5">Work Experience and Education</h5>
     <div>
+        {% comment %} EMPLOYMENT STATUS {% endcomment %}
         <div class="rc-ProfilePhotoUploader form-horizontal align-items-center">
             <div class="form-group horizontal-box wrap my-3">
                 <label for="emp-status" class="body-2-text color-primary-text form-label">Employment Status</label>
@@ -61,6 +62,133 @@
                 </div>
             </div>
         </div>
+
+        {% comment %} INDUSTRY {% endcomment %}
+        <div class="rc-ProfilePhotoUploader form-horizontal align-items-center">
+            <div class="form-group horizontal-box wrap my-3">
+                <label for="emp-status" class="body-2-text color-primary-text form-label">Industry</label>
+                <div class="form-control-custom">
+                    <div class="css-1cq002f">
+                        <div class="css-ek3fxo">
+                            <select name="industry" id="industry" class="input-ctrl">
+                                {% if employment.industry %}
+                                    <option value="" selected disabled hidden>{{employment.industry}}</option>
+                                {% endif %}
+                                {% for industry in industry_choices %}
+                                    <option value="{{industry}}">{{industry}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {% comment %} EMPLOYER {% endcomment %}
+        <div class="rc-ProfilePhotoUploader form-horizontal align-items-center">
+            <div class="form-group horizontal-box wrap my-3">
+                <label for="employer" class="body-2-text color-primary-text form-label">Employer</label>
+                <div class="form-control-custom">
+                    <div class="css-1cq002f">
+                        <div class="css-ek3fxo">
+                            <input type="text" placeholder="Employer" name="employer" value="{{employment.employer}}" class="input-ctrl">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {% comment %} OCCUPATION {% endcomment %}
+        <div class="rc-ProfilePhotoUploader form-horizontal align-items-center">
+            <div class="form-group horizontal-box wrap my-3">
+                <label for="occupation" class="body-2-text color-primary-text form-label">Occupation</label>
+                <div class="form-control-custom">
+                    <div class="css-1cq002f">
+                        <div class="css-ek3fxo">
+                            <input type="text" placeholder="Occupation" name="occupation" value="{{employment.occupation}}" class="input-ctrl">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {% comment %} EXPERIENCE LEVEL {% endcomment %}
+        <div class="rc-ProfilePhotoUploader form-horizontal align-items-center">
+            <div class="form-group horizontal-box wrap my-3">
+                <label for="emp-status" class="body-2-text color-primary-text form-label">Experience Level</label>
+                <div class="form-control-custom">
+                    <div class="css-1cq002f">
+                        <div class="css-ek3fxo">
+                            <select name="exp_level" id="experience" class="input-ctrl">
+                                {% if employment.experience %}
+                                    <option value="" selected disabled hidden>{{employment.experience}}</option>
+                                {% endif %}
+                                {% for experience in experience_choices %}
+                                    <option value="{{experience}}" >{{experience}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {% comment %} DEGREE {% endcomment %}
+        <div class="rc-ProfilePhotoUploader form-horizontal align-items-center">
+            <div class="form-group horizontal-box wrap my-3">
+                <label for="degree" class="body-2-text color-primary-text form-label">Degree</label>
+                <div class="form-control-custom">
+                    <div class="css-1cq002f">
+                        <div class="css-ek3fxo">
+                            <select name="degree" id="degree" class="input-ctrl">
+                                {% if education.degree %}
+                                    <option value="" selected disabled hidden>{{education.degree}}</option>
+                                {% endif %}
+                                {% for degree in degree_choices %}
+                                    <option value="{{degree}}">{{degree}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {% comment %} UNIVERSITY {% endcomment %}
+        <div class="rc-ProfilePhotoUploader form-horizontal align-items-center">
+            <div class="form-group horizontal-box wrap my-3">
+                <label for="university" class="body-2-text color-primary-text form-label">University</label>
+                <div class="form-control-custom">
+                    <div class="css-1cq002f">
+                        <div class="css-ek3fxo">
+                            <input type="text" name = "university" placeholder="University" value="{{education.school}}" class="input-ctrl">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {% comment %} FOS {% endcomment %}
+        <div class="rc-ProfilePhotoUploader form-horizontal align-items-center">
+            <div class="form-group horizontal-box wrap my-3">
+                <label for="study" class="body-2-text color-primary-text form-label">Field of Study</label>
+                <div class="form-control-custom">
+                    <div class="css-1cq002f">
+                        <div class="css-ek3fxo">
+                            <select name="study" id="field" class="input-ctrl">
+                                {% if education.study %}
+                                    <option value="" selected disabled hidden>{{education.study}}</option>
+                                {% endif %}
+                                {% for field_of_study in field_of_study_choices %}
+                                    <option value="{{field_of_study}}">{{field_of_study}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 </div>
 
