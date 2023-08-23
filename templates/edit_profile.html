@@ -38,6 +38,32 @@
         </div>
     </div>
 </div>
+
+<div class="content-container bg-light px-5 pt-5 pb-1">
+    <h5 class="pb-5">Introduction</h5>
+    <div>
+        <div class="rc-ProfilePhotoUploader form-horizontal">
+            <div class="form-group horizontal-box wrap my-3">
+                <label for="photo-uploader" class="body-2-text color-primary-text form-label">Employment Status</label>
+                <div class="css-1kgnfh8">
+                    <div class="css-1cq002f">
+                        <div class="css-ek3fxo">
+                            <select name="employ_status" id="empstatus">
+                                {% if employment.employ_status %}
+                                    <option value="" selected disabled hidden>{{employment.employ_status}}</option>
+                                {% endif %}
+                                {% for employment_status in employment_status_choices %}
+                                    <option value="{{employment_status}}">{{employment_status}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 {% comment %} 
 <div class="program-grid-container">
     <div class="program-grid-left">
