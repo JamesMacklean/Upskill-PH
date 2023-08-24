@@ -192,120 +192,167 @@
     </div>
 </div>
 
-{% comment %} 
-<div class="program-grid-container">
-    <div class="program-grid-left">
-        <a href="#back" style="font-size: 15px; color:black; text-decoration: none"><i class="fa fa-angle-left"></i>Back</a>
-    </div>
-    <div class="program-grid-right">
-        <h2>Edit my profile</h2>
-        <form action="" class="edit-update-profile" method="POST" enctype="multipart/form-data">
-            {% csrf_token %}
-                
-                <h3 class="profile-label">Profile Data</h3>
-                <div class="profile-container" id="profile-data">
-                    <div class="profile-data">
-                        <label for="name"> Full name: </label>
-                        <input type="text" name="first_name" placeholder="First Name" value="{{profile.first_name|title}}">
-                        <input type="text" name="last_name" placeholder="Last Name" value="{{profile.last_name|title}}">
-                    </div>
-            
-                    <div class="profile-data">
-                        <p>
-                        <label for="profile_pic">Upload/ Update your Profile Picture: </label>
-                        <input type="file" id="profile_pic" name="profile_pic" accept="image/*">
-                        </p>
-                        <input type="button" value="UPLOAD">
+<div class="content-container bg-light px-5 pt-5 pb-1">
+    <h5 class="pb-5">About</h5>
+    <div>
+        {% comment %} COUNTRY {% endcomment %}
+        <div class="rc-ProfilePhotoUploader form-horizontal">
+            <div class="form-group horizontal-box wrap my-3 align-items-center">
+                <label for="country" class="body-2-text color-primary-text form-label">Country</label>
+                <div class="form-control-custom">
+                    <div class="css-1cq002f">
+                        <div class="css-ek3fxo">
+                            <select name="country" id="country" class="input-ctrl">
+                                {% if profile.country %}
+                                    <option value="" selected disabled hidden>{{profile.country}}</option>
+                                {% endif %}
+                                {% for country in country_choices %}
+                                    <option value="{{country}}">{{country}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
                     </div>
                 </div>
+            </div>
+        </div>
 
-                <h3>Education and Work Experience</h3>
-                <div class="educ-container" id="educ-data">
-                    <div class="educ-item">
-                        <label for="employ_status">Employment Status: </label>
-                        
-                        <select name="employ_status" id="empstatus">
-                            {% if employment.employ_status %}
-                                <option value="" selected disabled hidden>{{employment.employ_status}}</option>
-                            {% endif %}
-                            {% for employment_status in employment_status_choices %}
-                                <option value="{{employment_status}}">{{employment_status}}</option>
-                            {% endfor %}
-                        </select>
+        {% comment %} REGION {% endcomment %}
+        <div class="rc-ProfilePhotoUploader form-horizontal">
+            <div class="form-group horizontal-box wrap my-3 align-items-center">
+                <label for="region" class="body-2-text color-primary-text form-label">Region</label>
+                <div class="form-control-custom">
+                    <div class="css-1cq002f">
+                        <div class="css-ek3fxo">
+                            <select id="region" name="region" class="input-ctrl">
+                                {% if profile.region %}
+                                    {% for region_key, region_value in region_choices.items %}
+                                        {% if profile.region == region_key %}
+                                            <option value="{{profile.region}}" selected disabled hidden>{{region_value}}</option>
+                                        {% endif %}
+                                    {% endfor %}
+                                {% endif %}
+                                {% for region_key, region_value in region_choices.items %}
+                                    <option value="{{region_key}}">{{region_value}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
                     </div>
-                
-                    <div class="educ-item">
-                        <label for="industry">Industry: </label>
-                        <select name="industry" id="industry">
-                            {% if employment.industry %}
-                                <option value="" selected disabled hidden>{{employment.industry}}</option>
-                            {% endif %}
-                            {% for industry in industry_choices %}
-                                <option value="{{industry}}">{{industry}}</option>
-                            {% endfor %}
-                        </select>
+                </div>
+            </div>
+        </div>
+
+        {% comment %} MUNICIPALITY {% endcomment %}
+        <div class="rc-ProfilePhotoUploader form-horizontal">
+            <div class="form-group horizontal-box wrap my-3 align-items-center">
+                <label for="municipality" class="body-2-text color-primary-text form-label">Municipality</label>
+                <div class="form-control-custom">
+                    <div class="css-1cq002f">
+                        <div class="css-ek3fxo">
+                            <select id="municipality" name="municipality" class="input-ctrl">
+                                {% if profile.municipality %}
+                                <option value="" selected disabled hidden>{{profile.municipality}}</option>
+                                {% endif %}
+                                {% for municipality_key, municipality_value in municipality_choices.items %}
+                                    {% for municipality in municipality_value %}
+                                        <option value="{{municipality}}" parent={{municipality_key}}>{{municipality}}</option>
+                                    {% endfor %}
+                                {% endfor %}
+                            </select>
+                        </div>
                     </div>
-                
-                    <div class="educ-item">
-                        <label for="employer">Employer: </label>
-                        <input type="text" placeholder="Employer" name="employer" value="{{employment.employer}}">
+                </div>
+            </div>
+        </div>
+
+        {% comment %} LINKEDIN {% endcomment %}
+        <div class="rc-ProfilePhotoUploader form-horizontal">
+            <div class="form-group horizontal-box wrap my-3 align-items-center">
+                <label for="linkedin" class="body-2-text color-primary-text form-label">LinkedIn</label>
+                <div class="form-control-custom">
+                    <div class="css-1cq002f">
+                        <div class="css-ek3fxo">
+                            <label for="linkedin">LinkedIn: </label><input type="text" placeholder="linkedin" name="linkedin" class="input-ctrl">
+                        </div>
                     </div>
-                
-                    <div class="educ-item">
-                        <label for="occupation">Occupation: </label>
-                        <input type="text" placeholder="Occupation" name="occupation" value="{{employment.occupation}}">
-                    </div>
-                
-                    <div class="educ-item">
-                        <label for="exp_level">Experience Level: </label>
-                        <select name="exp_level" id="experience">
-                            {% if employment.experience %}
-                                <option value="" selected disabled hidden>{{employment.experience}}</option>
-                            {% endif %}
-                            {% for experience in experience_choices %}
-                                <option value="{{experience}}" >{{experience}}</option>
-                            {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        {% comment %} GENDER {% endcomment %}
+        <div class="rc-ProfilePhotoUploader form-horizontal">
+            <div class="form-group horizontal-box wrap my-3 align-items-center">
+                <label for="gender" class="body-2-text color-primary-text form-label">Gender</label>
+                <div class="form-control-custom">
+                    <div class="css-1cq002f">
+                        <div class="css-ek3fxo">
+                            <select id="gender" name="gender" class="input-ctrl">
+                                {% if profile.gender %}
+                                <option value="" selected disabled hidden>{{profile.gender}}</option>
+                                {% endif %}
+                                {% for gender in gender_choices %}
+                                    <option value="{{gender}}">{{gender}}</option>
+                                {% endfor %}
                         </select>
                         </div>
-                
-                    <div class="educ-item">
-                        <label for="degree">Degree: </label>
-                        <select name="degree" id="degree">
-                            {% if education.degree %}
-                                <option value="" selected disabled hidden>{{education.degree}}</option>
-                            {% endif %}
-                            {% for degree in degree_choices %}
-                                <option value="{{degree}}">{{degree}}</option>
-                            {% endfor %}
-                        </select>
                     </div>
-            
-                    <div class="educ-item">
-                        <label for="university">University: </label>
-                        <input type="text" name = "university" placeholder="University" value="{{education.school}}">
+                </div>
+            </div>
+        </div>
+
+        {% comment %} DATE OF BIRTH {% endcomment %}   
+        <div class="rc-ProfilePhotoUploader form-horizontal">
+            <div class="form-group horizontal-box wrap my-3 align-items-center">
+                <label for="date" class="body-2-text color-primary-text form-label">Date of Birth</label>
+                <div class="form-control-custom">
+                    <div class="css-1cq002f">
+                        <div class="css-ek3fxo">
+                            <input type="date" value="{{profile.birthday}}" name="birthday" class="input-ctrl">
+                        </div>
                     </div>
-            
-                    <div class="educ-item">
-                        <label for="study">Field of Study: </label>
-                        <select name="study" id="field">
-                            {% if education.study %}
-                                <option value="" selected disabled hidden>{{education.study}}</option>
-                            {% endif %}
-                            {% for field_of_study in field_of_study_choices %}
-                                <option value="{{field_of_study}}">{{field_of_study}}</option>
-                            {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        {% comment %} MOBILE NUMBER {% endcomment %}
+        <div class="rc-ProfilePhotoUploader form-horizontal">
+            <div class="form-group horizontal-box wrap my-3 align-items-center">
+                <label for="mobile" class="body-2-text color-primary-text form-label">Mobile Number</label>
+                <div class="form-control-custom">
+                    <div class="css-1cq002f">
+                        <div class="css-ek3fxo">
+                            <input type="text" name="mobile" value="{{profile.contact}}" class="input-ctrl">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="content-container bg-light px-5 pt-1 pb-5">
+    {% comment %} FOS {% endcomment %}
+    <div class="rc-ProfilePhotoUploader form-horizontal">
+        <div class="form-group horizontal-box wrap my-3 align-items-center">
+            <label for="study" class="body-2-text color-primary-text form-label">Details Privacy</label>
+            <div class="form-control-custom">
+                <div class="css-1cq002f">
+                    <div class="css-ek3fxo">
+                        <select name="details_privacy" id="details-privacy" class="input-ctrl">
+                            <option value="2" {% if profile.privacy == 2 %}selected{% endif %}>Only Me</option>
+                            <option value="1" {% if profile.privacy == 1 %}selected{% endif %}>Scholarium Community</option>
+                            <option value="0" {% if profile.privacy == 0 %}selected{% endif %}>Public on the Web</option>
                         </select>
                     </div>
                 </div>
-                
-                <h3>About</h3>
-                <div class=" -container" id=" -data">
-                
-                    <div class=" ">
-                        <label for="bio">  Me: </label>
-                        <textarea name="bio" id="bio" cols="30" rows="3">{{profile. }}</textarea>
-                    </div>
-                
+            </div>
+        </div>
+    </div>
+
+    <div class="save-changes d-flex align-items-center">
+        <input type="submit btn btn-primary" value="SAVE CHANGES">
+    </div>
+</div>
+
+{% comment %} 
                 <!--  COUNTRY SELECTION START  -->
                 
                     <div class=" " id="address-data">
