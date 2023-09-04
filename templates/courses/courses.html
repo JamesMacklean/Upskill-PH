@@ -12,12 +12,12 @@
             <div class="course-card">
                 <div class="topic-badge">{{ course.topics.0 }}</div>
                 <img src="{{ course.image.src }}" alt="{{ course.title }}">
-                <div class="course-details">
+                <div class="course-details p-3">
                     <p class="text-dark">{{ course.title }}<p>
                     {% for owners in course.owners %}
-                </div>
-                <p class="partner-card mt-3">{{ owners.key }}</p>
+                    <p class="partner-card mt-3">{{ owners.key }}</p>
                     {% endfor %}
+                </div>
             </div>
         {% endfor %}
         </div>
