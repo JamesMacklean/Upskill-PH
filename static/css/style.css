@@ -129,4 +129,8 @@ textarea#about_me_text {
 .input-ctrl input:focus {
   box-shadow: 0 0 5px #f15a25;
   outline: none;
+}
+
+.program-partner-logos img {
+  max-width: 200px;
 }/*# sourceMappingURL=style.css.map */
