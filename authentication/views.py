@@ -638,8 +638,10 @@ def courses(request):
     clear_session(request,'url')
     ########## LOGIN REQUIRED ##########
     
+    user_token = request.session['user_token']
     # Fetch course data from the API
 
+    context['program_list'] = get_programs(user_token,2,None)
     context['courses'] = get_courses()
     return render(request,template_name, context)
     
