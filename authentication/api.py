@@ -573,3 +573,20 @@ def get_courses():
                 print(str(e))
     
     return courses
+
+# GET https://coursebank.ph/api/users/
+def get_coursebank_users():  
+    users = []
+    response = requests.get(COURSEBANK_USERS_URL)
+    
+    if response.status_code == 200:
+        user_data = response.json()
+        
+        if 'results' in user_data:
+            try:
+                for data in user_data['results']:
+                    users.append(data)
+            except Exception as e:
+                print(str(e))
+    
+    return users
