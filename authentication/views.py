@@ -628,7 +628,7 @@ def account(request):
 
 def courses(request):
     """"""
-    template_name = "courses/courses.html"
+    template_name = "coursebank/courses.html"
     context = {}
 
     ########## LOGIN REQUIRED ##########
@@ -642,7 +642,7 @@ def courses(request):
 
     context['courses'] = get_courses()
     return render(request,template_name, context)
-    
+
 # STATIC TEMPLATES
 def guidelines(request):
     return render(request, "static_templates/program_guidelines.html")
