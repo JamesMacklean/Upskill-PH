@@ -72,6 +72,9 @@ p.partner-card {
     display: flex;
     flex-wrap: wrap;
 }
+.partner-card-image img{
+    width: 420px;
+}
 .card-partner-logo {
     width: 420px;
     display: flex;
