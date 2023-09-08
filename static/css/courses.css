@@ -64,8 +64,14 @@
 p.partner-card {
     font-size: 12px;
 }
+.partner-cards{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
 .partner-card-container {
     max-width: 420px;
+    outline: 1px solid lightgray;
 }
 .partner-card-image {
     width: 450px;
@@ -88,4 +94,8 @@ p.partner-card {
 }
 .partner-cards a{
     text-decoration: none;
+}
+.partner-cards p{
+    font-size: 14px;
+    color: #666;
 }
