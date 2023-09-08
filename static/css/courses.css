@@ -64,3 +64,22 @@
 p.partner-card {
     font-size: 12px;
 }
+.partner-card-container {
+    max-width: 420px;
+}
+.partner-card-image {
+    width: 450px;
+    display: flex;
+    flex-wrap: wrap;
+}
+.card-partner-logo {
+    width: 420px;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+}
+.partner-cards a{
+    text-decoration: none;
+}

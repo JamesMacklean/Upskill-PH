@@ -25,13 +25,11 @@
 
     <div class="container my-5">
         <h3>Programs</h3>
-        <div class="">
-            <div class="">
-                <div class="">
+                <div class="partner-cards my-5">
                     {% for program in program_list %} 
                             <a href="{% url 'program' program.partner_id program.id %}">
-                                <div class="card-container">
-                                    <div class="card-image">
+                                <div class="partner-card-container">
+                                    <div class="partner-card-image">
                                         <img src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/sample-background.jpeg">
                                     </div>
                                     
@@ -42,9 +40,9 @@
                                         <img src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/logo-moocsx.png">
                                     </div>
                                     
-                                    <div class="card-content">
+                                    <div class="card-content p-5 bg-light">
                                         <div class="container-card-title">
-                                            <h3>{{program.name}}</h3>
+                                            <h5 class="text-dark">{{program.name}}</h5>
                                             <p class="card-title-content">
                                                 6 courses <br>
                                                 {% if program.end_date %}
@@ -67,6 +65,4 @@
                             </a>    
                     {% endfor %}
                 </div>
-            </div>
-    </div>
 {% endblock %}
