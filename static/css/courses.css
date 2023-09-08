@@ -88,6 +88,8 @@ p.partner-card {
     flex-direction: row;
     align-items: center;
     justify-content: space-evenly;
+    height: 60px;
+    align-content: center;
 }
 .card-partner-logo img{
     width: 75px;
