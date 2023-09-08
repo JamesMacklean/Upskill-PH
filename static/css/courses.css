@@ -80,6 +80,9 @@ p.partner-card {
     align-items: center;
     justify-content: space-evenly;
 }
+.card-partner-logo img{
+    width: 75px;
+}
 .partner-cards a{
     text-decoration: none;
 }
