@@ -16,40 +16,52 @@
                             {{request.session.email}}<br>
                             date joined: {{ user_date_joined|parse_iso|date:"F d, Y" }} <br>
                         </p>
-                        <label for="current-pass">Current Password </label> 
-                        <input type="password" name="current-pass"> <br>
-                    
-                        <label for="new-pass">New Password </label> 
-                        <input type="password" name="new-pass"> <br>
-                    
-                        <label for="confirm-pass">Confirm Password </label> 
-                        <input type="password" name="confirm-pass"> <br>
+                        {% comment %} CURRENT PASSWORD {% endcomment %}
+                        <div class="rc-ProfilePhotoUploader form-horizontal">
+                            <div class="form-group horizontal-box wrap my-3 align-items-center">
+                                <label for="current-pass" class="body-2-text color-primary-text form-label">Current Password</label>
+                                <div class="form-control-custom">
+                                    <div class="css-1cq002f">
+                                        <div class="css-ek3fxo">
+                                            <input type="password" placeholder="Current Password" name="current-pass" class="input-ctrl">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {% comment %} NEW PASSWORD {% endcomment %}
+                        <div class="rc-ProfilePhotoUploader form-horizontal">
+                            <div class="form-group horizontal-box wrap my-3 align-items-center">
+                                <label for="new-pass" class="body-2-text color-primary-text form-label">New Password</label>
+                                <div class="form-control-custom">
+                                    <div class="css-1cq002f">
+                                        <div class="css-ek3fxo">
+                                            <input type="password" placeholder="New Password" name="new-pass" class="input-ctrl">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {% comment %} PASSWORD CONFIRMATION {% endcomment %}
+                        <div class="rc-ProfilePhotoUploader form-horizontal">
+                            <div class="form-group horizontal-box wrap my-3 align-items-center">
+                                <label for="new-pass" class="body-2-text color-primary-text form-label">Confirm Password</label>
+                                <div class="form-control-custom">
+                                    <div class="css-1cq002f">
+                                        <div class="css-ek3fxo">
+                                            <input type="password" placeholder="Confirm Password" name="confirm-pass" class="input-ctrl">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         {% csrf_token %}
-                        <input type="submit" value="Update Password">
+                        <input type="submit" value="Update Password" class="btn btn-primary">
                     </form>
             </div>
         </div>
     </div>
 </div>
-{% comment %} MODAL {% endcomment %}
-<div class="overlay" tabindex="-1" id="back">
-    <div class="overlay-content">
-      <div class="overlay-header">
-        <h5 class="overlay-title">Quit editing?</h5>
-      </div>
-      <div class="overlay-body"> 
-          <p>
-              Are you sure you want to go back and cancel editing your profile? <br>
-              Changes you made so far will NOT be saved.
-          </p>
-      </div>
-      <div class="overlay-buttons">
-        <center>
-        <a href="{% url 'profile' %}" class="btn">Yes(Cancel)</a>
-        <a href="#" class="btn">No(Continue editing)</a>
-        </center>
-      </div>
-  </div>
-</div>
-
 {% endblock %}
