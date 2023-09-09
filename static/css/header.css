@@ -24,12 +24,12 @@ nav a {
 }
 
 nav a:hover {
-  color: #F25A25;
+  color: #ff7300;
 }
 
 .btn {
   padding: 8px 16px;
-  background-color: #F25A25;
+  background-color: #ff7300;
   color: #fff;
   border: none;
   border-radius: 4px;
@@ -85,7 +85,7 @@ nav a:hover {
 
 .dropdown-content a:hover {
   background-color: #f1f1f1;
-  color: #F25A25;
+  color: #ff7300;
 }
 
 .user-dropdown:hover .dropdown-content {
