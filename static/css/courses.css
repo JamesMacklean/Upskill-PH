@@ -15,8 +15,8 @@
 }
 
 .course-card img {
-    max-width: 100%;
-    height: auto;
+    width: 300px;
+    height: 200px;
     border-radius: 5px;
     margin-bottom: 10px;
 }
@@ -60,4 +60,44 @@
     padding: 5px 10px;
     border-radius: 5px;
     font-size: 13px;
+}
+p.partner-card {
+    font-size: 12px;
+}
+.partner-cards{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+.partner-card-container {
+    max-width: 420px;
+    outline: 1px solid lightgray;
+}
+.partner-card-image {
+    width: 450px;
+    display: flex;
+    flex-wrap: wrap;
+}
+.partner-card-image img{
+    width: 420px;
+}
+.card-partner-logo {
+    width: 420px;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+    height: 60px;
+    align-content: center;
+}
+.card-partner-logo img{
+    width: 75px;
+}
+.partner-cards a{
+    text-decoration: none;
+}
+.partner-cards p{
+    font-size: 14px;
+    color: #666;
 }

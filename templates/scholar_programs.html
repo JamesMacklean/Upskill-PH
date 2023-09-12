@@ -1,48 +1,39 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-<div class="program-grid-container">
-    <div class="program-grid-left">
-        {% comment %} <h5>
-            Credentials earned:
-        </h5>
-        <div class="credential-container">
-            <a href="{% url 'certificate' %}"><img src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/certificate.svg" alt="certificate"></a>
-            <img src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/badge.svg" alt="badge">
-        </div> {% endcomment %}
-    </div>
-    <div class="program-grid-right">
+<div class="container my-5">
+    <div class="container">
         {% for program in programs %}
             {% if program.id in applied_programs %}
                 {% for scholarship in scholarships %}
                     {% if program.id == scholarship.program_id %}   
-                        <h1>{{ program.name }}</h1>
+                        <h3>{{ program.name }}</h3>
                         <div class="program-partner-logos">
                             <img src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/DICT-Logo-nobg.png">
                             <img src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/ILCDB+logo_2.png">
                             <img src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/coursera-social-logo-brand.png">
                             <img src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/logo-moocsx.png">
                         </div>
-                        <div class="program-description">
+                        <div class="container program">
                             <hr>
-                            <h3>About this Program</h3>
+                            <h5>About this Program</h5>
                             {% if program.description %}
                             <p>{{program.description}}</p> <br>
                             <p>Click on the Coursera link below to check the collection under this program.</p>
                             {% else %}
                             <p>No description for this program.</p>
                             {% endif %}
-                            <h3>Learning Platform</h3>
+                            <h5>Learning Platform</h5>
                             <p>
                                 <a href="https://www.coursera.org/" target="_blank" style="color: #000 !important;">Coursera</a>
                             </p>
                             <hr>
-                            <h3>Apply to this Program</h3>
+                            <h5>Apply to this Program</h5>
                             <p>By applying to this program, you are agreeing to the program guidelines set forth by the granting organization.</p>
                             <br>
                             <p><a href="{% url 'guidelines' %}" target="_blank" style="color: #000 !important;">View program guidelines.</a></p>
                         </div>
-                        <div class="program-progress">
+                        <div class="container">
                             <form action="" class="program-application" id="apply" method="POST">
                                 {% csrf_token %}
                                 {% if atleast_approved_in_a_program %}
@@ -67,31 +58,31 @@
                     {% endif %}
                 {% endfor %}
             {% else %}
-            <h1>{{ program.name }}</h1>
+            <h3>{{ program.name }}</h3>
             <div class="program-partner-logos">
                 <img src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/DICT-Logo-nobg.png">
                 <img src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/ILCDB+logo_2.png">
                 <img src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/coursera-social-logo-brand.png">
                 <img src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/logo-moocsx.png">
             </div>
-            <div class="program-description">
+            <div class="container program">
                 <hr>
-                            <h3>About this Program</h3>
+                            <h5>About this Program</h5>
                             {% if program.description %}
                             <p>{{program.description}}</p> <br>
                             <p>Click on the Coursera link below to check the collection under this program.</p>
                             {% else %}
                             <p>No description for this program.</p>
                             {% endif %}
-                            <h3>Learning Platform</h3>
+                            <h5>Learning Platform</h4>
                             <p>
                                 <a href="https://www.coursera.org/" target="_blank" style="color: #000 !important;">Coursera</a>
                             </p>
                             <hr>
-                            <h3>Apply to this Program</h3>
+                            <h5>Apply to this Program</h5>
                             <p>By applying to this program, you are agreeing to the program guidelines set forth by the granting organization.</p>
                             <br>
-                            <p><a href="{% url 'guidelines' %}" target="_blank" style="color: #000 !important;">View program guidelines.</a></p>
+                            <p><a href="{% url 'guidelines' %}" target="_blank" class="text-dark">View program guidelines.</a></p>
             </div>
             <div class="program-progress">
                 <form action="" class="program-application" id="apply" method="POST">

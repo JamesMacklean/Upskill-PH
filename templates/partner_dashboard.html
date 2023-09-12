@@ -2,13 +2,8 @@
 {% load static %}
 {% load parse_iso %}
 {% block content %}
-<div class="tab-container">
-    <div class="tabs">
-        <h3 class="active">DASHBOARD</h3>
-        <h3>PROGRAMS</h3>
-        <h3>SCHOLARS</h3>
-    </div>
-    <div class="tab-content">
+<div class="container">
+    <div class="content">
         <!--FIRST TAB-->
         <div class="tab active" id="partner-dashboard">
             <div class="dashboard">
@@ -152,40 +147,4 @@
         </div>
     </div>
 </div>
-<script>
-    let tabs = document.querySelectorAll(".tabs h3");
-    let tabContents = document.querySelectorAll(".tab-content .tab");
-
-    var lastTabIndex = sessionStorage.getItem('partnerLastTabIndex');
-
-    tabs.forEach((tab,index) => {    
-        if (lastTabIndex) {
-            tabContents.forEach((content) =>{
-                content.classList.remove("active");
-            });
-            tabs.forEach((tab) => {
-                tab.classList.remove("active");
-            });
-            tabContents[lastTabIndex].classList.add("active");
-            tabs[lastTabIndex].classList.add("active");
-        }
-        
-        tab.addEventListener("click", () => {
-            tabContents.forEach((content) =>{
-                content.classList.remove("active");
-            });
-            tabs.forEach((tab) => {
-                tab.classList.remove("active");
-            });
-            try {
-                sessionStorage.setItem('partnerLastTabIndex', index);
-            } catch (error) {
-                console.log(error);
-            }
-            tabContents[index].classList.add("active");
-            tabs[index].classList.add("active");
-        })
-    })
-
-</script>
 {% endblock %}
