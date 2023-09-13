@@ -17,10 +17,8 @@
     </nav>
 {% else %}
     <nav>
-        <a href="#">Home</a>
-        <a href="{% url 'courses' %}">
-            Courses
-        </a>
+        <a href="{% url 'home' %}">Home</a>
+        {% comment %} <a href="{% url 'courses' %}">Courses</a> {% endcomment %}
         <a href="{% url 'partner' %}">Dashboard</a>
         <div class="user-dropdown">
             <a href="#" class="username">{{request.session.username}} <i class="fas fa-caret-down caret-down"></i></a>

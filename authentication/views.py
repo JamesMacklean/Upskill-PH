@@ -89,18 +89,29 @@ def clear_session(request,key):
 
 def home(request):
     """"""
-    template_anonymous = "index.html"
-    template_authenticated = "authentication/dashboard.html"
+    template_name = "courses/courses.html"
     context = {}
-    
-    signin(request)
-        
-    ########## LOGIN REQUIRED ##########
-    if authenticate_user(request):
-        return render(request, template_authenticated, context)
-    ########## LOGIN REQUIRED ##########
 
-    return render(request,template_anonymous, context)
+    ########## LOGIN REQUIRED ##########
+    if not authenticate_user(request):
+        request.session['url'] = "home"
+        return HttpResponseRedirect('/signin?next=home')
+    clear_session(request,'url')
+    ########## LOGIN REQUIRED ##########
+    
+    user_token = request.session['user_token']
+    # Fetch course data from the API
+
+    context['program_list'] = get_programs(user_token,2,None)
+    context['courses'] = get_courses()
+    return render(request,template_name, context)
+    
+# STATIC TEMPLATES
+def guidelines(request):
+    return render(request, "static_templates/program_guidelines.html")
+
+def privacy(request):
+    return render(request, "static_templates/privacy.html")
 
 def success(request, user_hash):
     """"""
@@ -626,28 +637,28 @@ def account(request):
     
     return render(request, template_name)
 
-def courses(request):
-    """"""
-    template_name = "courses/courses.html"
-    context = {}
+# def courses(request):
+#     """"""
+#     template_name = "courses/courses.html"
+#     context = {}
 
-    ########## LOGIN REQUIRED ##########
-    if not authenticate_user(request):
-        request.session['url'] = "courses"
-        return HttpResponseRedirect('/signin?next=courses')
-    clear_session(request,'url')
-    ########## LOGIN REQUIRED ##########
+#     ########## LOGIN REQUIRED ##########
+#     if not authenticate_user(request):
+#         request.session['url'] = "courses"
+#         return HttpResponseRedirect('/signin?next=courses')
+#     clear_session(request,'url')
+#     ########## LOGIN REQUIRED ##########
     
-    user_token = request.session['user_token']
-    # Fetch course data from the API
+#     user_token = request.session['user_token']
+#     # Fetch course data from the API
 
-    context['program_list'] = get_programs(user_token,2,None)
-    context['courses'] = get_courses()
-    return render(request,template_name, context)
+#     context['program_list'] = get_programs(user_token,2,None)
+#     context['courses'] = get_courses()
+#     return render(request,template_name, context)
     
-# STATIC TEMPLATES
-def guidelines(request):
-    return render(request, "static_templates/program_guidelines.html")
+# # STATIC TEMPLATES
+# def guidelines(request):
+#     return render(request, "static_templates/program_guidelines.html")
 
-def privacy(request):
-    return render(request, "static_templates/privacy.html")
+# def privacy(request):
+#     return render(request, "static_templates/privacy.html")
