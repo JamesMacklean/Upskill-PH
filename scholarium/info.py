@@ -1,12 +1,6 @@
 DOMAIN = 'scholarium.io'
 
 # MAILER
-EMAIL_HOST = 'smtp.hostinger.com' 
-EMAIL_HOST_USER = 'mailer@scholarium.io' 
-EMAIL_HOST_PASSWORD = 'hnVw35UEvflyXYPzJI7IWk2AmZkIpL8-'
-EMAIL_PORT = 465
-EMAIL_USE_TLS = False
-EMAIL_USE_SSL = True
 TEST_EMAIL_RECEIVER = 'jamesmacklean27@gmail.com'
 
 # API

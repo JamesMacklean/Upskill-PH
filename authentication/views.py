@@ -89,7 +89,7 @@ def clear_session(request,key):
 
 def home(request):
     """"""
-    template_name = "courses/courses.html"
+    template_name = "coursebank/courses.html"
     context = {}
 
     ########## LOGIN REQUIRED ##########
@@ -210,25 +210,22 @@ def signup(request):
         
     try:
         if request.method == "POST":
-            username = request.POST['username']
-            email= request.POST['email']
-            first_name= request.POST['firstname']
-            last_name= request.POST['lastname']
+            email = request.POST['email']
+            password = request.POST['password']
 
-            user_hash, response_message = create_account(request, username, first_name, last_name, email)
-            
+            user_hash, response_message = create_account(request, email, password)
+                        
             if user_hash:
                 #### MODAL RESPONSE KUNG NAGWORK BA ANG SIGN UP
                 response_message = "success"
                 request.session['user_hash'] = user_hash
                 request.session.modified = True
-                
+
+                                
                 ############################# FOR MAIL ##############################
                 html = render_to_string('emails/email_verification.html', {
-                    'username': username,
-                    'first_name': first_name,
-                    'last_name': last_name,
                     'email': email,
+                    'password': password,
                     'user_hash': user_hash,
                     'domain': DOMAIN,
                     'link': API_VERIFY_ACCOUNT_URL
@@ -244,13 +241,19 @@ def signup(request):
                     html_message=html,
                     fail_silently=False
                 )
+                print(email, password)
                 ############################# FOR MAIL ##############################
             
             context['message'] = response_message
+            print("===========MESSAGE===========")
             messages.info(request, response_message)
+            print("===========USER_HASH===========")
+            print(user_hash)
+            print("===========RESPONSE===========")
             print(response_message)
             
     except Exception as e:
+        print("===========EXCEPTION===========")
         print(str(e))
     
     return render(request, template_name, context)
