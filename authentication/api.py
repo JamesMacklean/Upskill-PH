@@ -263,12 +263,10 @@ def login_account (username, password):
     return user_token, expires, response_message
 
 # POST https://scholarium.tmtg-clone.click/v1/user/create
-def create_account(request, username, firstname, lastname, email):    
+def create_account(request, email, password):    
     payload={
-        'username': username,
-        'first_name': firstname,
-        'last_name': lastname,
-        'email': email
+        'email': email,
+        'password': password
         }
     files=[]
     headers = {
