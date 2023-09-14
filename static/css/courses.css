@@ -20,6 +20,10 @@
     border-radius: 5px;
     margin-bottom: 10px;
 }
+.course-title{
+    font-size: 18px;
+    font-weight: 400;
+}
 
 .course-card h2 {
     font-size: 1.2rem;
