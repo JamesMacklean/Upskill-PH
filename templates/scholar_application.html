@@ -30,7 +30,7 @@
             <table class="my-5">
                 <tr>
                     <td class="box">
-                        <input type="checkbox" name="all" id="all">
+                        <input type="checkbox" name="all" id="selectAll">
                     </td>
                     <td>
                         <div class="action-name">
@@ -153,6 +153,17 @@
     });
     
     {% comment %} $( ".select option:selected" ).text(); {% endcomment %}
+    // Get references to the "Select All" checkbox and the checkboxes to be selected/deselected
+    const selectAllCheckbox = document.getElementById("selectAll");
+    const checkboxes = document.querySelectorAll('.checkbox');
+
+    // Add an event listener to the "Select All" checkbox
+    selectAllCheckbox.addEventListener("change", function () {
+    // Loop through all other checkboxes and set their checked state to match the "Select All" checkbox
+    checkboxes.forEach(function (checkbox) {
+    checkbox.checked = selectAllCheckbox.checked;
+    });
+});
 </script>
 
 {% endblock %}
