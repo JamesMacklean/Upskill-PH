@@ -166,4 +166,17 @@ textarea#about_me_text {
 
 .w-100 {
   width: 100% !important;
+}
+
+.section-courses-container .course-item .course-details-container .course-description {
+  font-weight: 500;
+  font-size: 18px;
+  color: black;
+  word-wrap: break-word;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  text-overflow: ellipsis;
+  height: 60px;
+  display: -webkit-box;
+  overflow: hidden;
 }/*# sourceMappingURL=style.css.map */
