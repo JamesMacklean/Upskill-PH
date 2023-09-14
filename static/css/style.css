@@ -179,4 +179,8 @@ textarea#about_me_text {
   height: 60px;
   display: -webkit-box;
   overflow: hidden;
+}
+
+.col-12 a {
+  text-decoration: none !important;
 }/*# sourceMappingURL=style.css.map */
