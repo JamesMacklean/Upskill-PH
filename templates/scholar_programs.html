@@ -48,7 +48,9 @@
                                     {% elif scholarship.status == 2 %}
                                         <button type="submit" class="btn solid">WAITLISTED</button>
                                     {% elif scholarship.status == 3 %}
-                                        <button type="submit" class="btn solid">REJECTED</button>
+                                    <input type="text" name="license_code" id="license_code" placeholder="Enter License Code" required>
+                                    <button type="button" class="btn solid" onclick="promptForLicenseCode()">REJECTED</button>
+                                        {% comment %} <button type="submit" class="btn solid">REJECTED</button> {% endcomment %}
                                     {% else %}
                                         <button type="submit" class="btn solid">PENDING</button>
                                     {% endif %}
@@ -88,11 +90,11 @@
                 <form action="" class="program-application" id="apply" method="POST">
                     {% csrf_token %}
                     {% if atleast_approved_in_a_program %}
-                            <button type="submit" class="btn solid">CANNOT APPLY TO MORE THAN 1 PROGRAM</button>
+                        <button type="submit" class="btn solid">CANNOT APPLY TO MORE THAN 1 PROGRAM</button>
                     {% else %}
-                            <button type="submit" class="btn solid">APPLY NOW</button>
+                        <input type="text" name="license_code" id="license_code" placeholder="Enter License Code" required>
+                        <button type="button" class="btn solid" onclick="promptForLicenseCode()">APPLY NOW</button>
                     {% endif %}
-                        
                 </form>
             </div>
         {% endif %}
@@ -100,3 +102,11 @@
     </div>
 </div>
 {% endblock %}
+
+function promptForLicenseCode() {
+    var licenseCode = prompt("Please enter your license code:");
+    if (licenseCode) {
+        document.getElementById('license_code').value = licenseCode;
+        document.getElementById('apply').submit();
+    }
+}

@@ -220,8 +220,7 @@ def signup(request):
                 response_message = "success"
                 request.session['user_hash'] = user_hash
                 request.session.modified = True
-
-                                
+         
                 ############################# FOR MAIL ##############################
                 html = render_to_string('emails/email_verification.html', {
                     'email': email,
@@ -233,7 +232,7 @@ def signup(request):
                 send_mail(
                     'Title', 
                     'Content of the Message', 
-                    EMAIL_HOST_USER, 
+                    settings.EMAIL_HOST_USER, 
                     ########## ORIGINAL CODE ##########
                     # [email], 
                     ########## FOR TEST CODE ##########
@@ -245,15 +244,9 @@ def signup(request):
                 ############################# FOR MAIL ##############################
             
             context['message'] = response_message
-            print("===========MESSAGE===========")
             messages.info(request, response_message)
-            print("===========USER_HASH===========")
-            print(user_hash)
-            print("===========RESPONSE===========")
-            print(response_message)
             
     except Exception as e:
-        print("===========EXCEPTION===========")
         print(str(e))
     
     return render(request, template_name, context)
@@ -306,7 +299,7 @@ def signin(request):
             except jwt.ExpiredSignatureError:
                 raise Http404
             
-            context['username'] = username
+            # context['username'] = username
             context['expires'] = expires
             context['user_token'] = user_token
             
