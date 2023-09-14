@@ -5,8 +5,8 @@
 <div class="container">
     <div class="content">
         <!--FIRST TAB-->
-        <div class="tab active" id="partner-dashboard">
-            <div class="dashboard">
+        <div class="tab" id="partner-dashboard">
+            <div class="dashboard my-4">
                 <h3>SCHOLARSHIP APPLICATION REPORT</h3>
                 <table>
                     <tr>
@@ -23,7 +23,7 @@
                     </tr>
                 </table>
             </div>
-            <div class="scholar-progress">
+            <div class="scholar-progress my-4">
                 <h3>PROGRESS REPORT</h3>
                 <table>
                     <tr>
@@ -38,7 +38,7 @@
                     </tr>
                 </table>
             </div>
-            <div class="programs-partner">
+            <div class="programs-partner my-4">
                 <h3>ANNOUNCEMENTS</h3>
                 <table>
                     <tr>
@@ -127,8 +127,7 @@
             </form>
             {% endfor %}
         </div> {% endcomment %}
-        <div class="tab" id="scholars">
-            <h4>Scholars</h4>
+        <div class="tab my-4" id="scholars">
             <div class="scholar-list">
                 <h3>SCHOLARS</h3>
                 <table>
@@ -154,7 +153,7 @@
     <div class="container pt-6 pb-6">
       <section class="section-courses-container">
         <div class="section-header d-flex align-items-center">
-          <h3 class="section-title me-auto">Programs</h3>
+          <h3 class="section-title me-auto py-4">Programs</h3>
         </div>
         <div class="row pt-3 gutter-2rem">
             {% for program in program_list %}
