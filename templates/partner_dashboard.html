@@ -48,12 +48,12 @@
                     <tr>
                         <td> announcement 1 </td>
                         <td>
-                            <button class="action-btn">update</button>
-                            <button class="action-btn">delete</button>
+                            <button class="btn btn-primary">update</button>
+                            <button class="btn btn-primary">delete</button>
                         </td>
                     </tr>
                 </table>
-                <button class="action-btn">Add +</button>
+                <button class="btn btn-primary">Add +</button>
             </div>
         </div>
         <!--SECOND TAB-->
@@ -117,9 +117,9 @@
                 </div>
                 <div class="action-buttons">
                         {% csrf_token %}
-                    <button class="action-btn green" name='approve'>Approve</button>
-                    <button class="action-btn yellow" name='waitlist'>Waitlist</button>
-                    <button class="action-btn red" name='reject'>Reject</button>
+                    <button class="btn btn-primary green" name='approve'>Approve</button>
+                    <button class="btn btn-primary yellow" name='waitlist'>Waitlist</button>
+                    <button class="btn btn-primary red" name='reject'>Reject</button>
                 </div>
             </form>
             {% endfor %}
@@ -138,8 +138,8 @@
                         <td>-</td>
                         <td>-</td>
                         <td>
-                            <button class="action-btn">view</button>
-                            <button class="action-btn">update</button>
+                            <button class="btn btn-primary">view</button>
+                            <button class="btn btn-primary">update</button>
                         </td>
                     </tr>
                 </table>
