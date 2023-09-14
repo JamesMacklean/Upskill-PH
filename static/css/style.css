@@ -137,4 +137,33 @@ textarea#about_me_text {
 
 .program p {
   font-size: 14px;
+}
+
+.section-courses-container .course-item-row {
+  position: relative;
+  display: flex;
+  flex-direction: row !important;
+}
+
+.section-courses-container .course-item {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.section-courses-container .course-item .img-item {
+  -o-object-fit: cover;
+  object-fit: cover;
+  height: 257px;
+}
+
+.section-courses-container .course-item .course-details-container {
+  background: #ffffff;
+  border: 1px solid #ededed;
+  border-radius: 4px;
+  padding: 16px;
+}
+
+.w-100 {
+  width: 100% !important;
 }/*# sourceMappingURL=style.css.map */
