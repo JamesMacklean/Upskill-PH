@@ -2,7 +2,8 @@
 {% load static %}
 {% block content %}
 {% for program in programs %}
-<div class="program-grid-container">
+
+<div class="container h-100">
     <div class="program-grid-left">
         <div>
             <h5><a href ={% url 'partner'%} style="text-decoration:none" color="white"/>Programs</a> > {{program.name}}</h5>
