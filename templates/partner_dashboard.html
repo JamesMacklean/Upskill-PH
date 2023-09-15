@@ -2,7 +2,7 @@
 {% load static %}
 {% load parse_iso %}
 {% block content %}
-<div class="container">
+{% comment %} <div class="container">
     <div class="content">
         <!--FIRST TAB-->
         <div class="tab" id="partner-dashboard">
@@ -55,7 +55,7 @@
                 </table>
                 <button class="btn btn-primary">Add +</button>
             </div>
-        </div>
+        </div> {% endcomment %}
         <!--SECOND TAB-->
 
 {% comment %} 
@@ -127,7 +127,7 @@
             </form>
             {% endfor %}
         </div> {% endcomment %}
-        <div class="tab my-4" id="scholars">
+        {% comment %} <div class="tab my-4" id="scholars">
             <div class="scholar-list">
                 <h3>SCHOLARS</h3>
                 <table>
@@ -148,6 +148,9 @@
             </div>
         </div>
     </div>
+</div> {% endcomment %}
+<div class="container">
+    <h3>Partner Dashboard</h3>
 </div>
 <div class="bg-light py-5" id="courses">
     <div class="container pb-5">
