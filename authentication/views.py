@@ -582,7 +582,7 @@ def program(request, partner_id, program_id):
         #### MODAL RESPONSE KUNG NAGWORK BA ANG APPLICATION
         print(response)
         
-        return redirect('profile')
+        return redirect('partner')
         
     all_programs = get_programs(user_token, partner_id, None)
     

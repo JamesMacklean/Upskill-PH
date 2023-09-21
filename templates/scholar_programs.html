@@ -144,6 +144,7 @@ function verifyLicenseCode() {
     var messageElement = document.getElementById('message');
     if (isCodeValid) {
         messageElement.innerText = 'License code is valid.';
+        document.getElementById('apply').submit(); // Submit the form to redirect
     } else {
         messageElement.innerText = 'Invalid license code. Please try again.';
     }
