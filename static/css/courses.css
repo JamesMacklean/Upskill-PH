@@ -20,6 +20,10 @@
     border-radius: 5px;
     margin-bottom: 10px;
 }
+.course-title{
+    font-size: 18px;
+    font-weight: 400;
+}
 
 .course-card h2 {
     font-size: 1.2rem;
@@ -72,6 +76,7 @@ p.partner-card {
 .partner-card-container {
     max-width: 420px;
     outline: 1px solid lightgray;
+    background-color: #fff;
 }
 .partner-card-image {
     width: 450px;

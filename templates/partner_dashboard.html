@@ -2,11 +2,11 @@
 {% load static %}
 {% load parse_iso %}
 {% block content %}
-<div class="container">
+{% comment %} <div class="container">
     <div class="content">
         <!--FIRST TAB-->
-        <div class="tab active" id="partner-dashboard">
-            <div class="dashboard">
+        <div class="tab" id="partner-dashboard">
+            <div class="dashboard my-4">
                 <h3>SCHOLARSHIP APPLICATION REPORT</h3>
                 <table>
                     <tr>
@@ -23,7 +23,7 @@
                     </tr>
                 </table>
             </div>
-            <div class="scholar-progress">
+            <div class="scholar-progress my-4">
                 <h3>PROGRESS REPORT</h3>
                 <table>
                     <tr>
@@ -38,7 +38,7 @@
                     </tr>
                 </table>
             </div>
-            <div class="programs-partner">
+            <div class="programs-partner my-4">
                 <h3>ANNOUNCEMENTS</h3>
                 <table>
                     <tr>
@@ -48,15 +48,17 @@
                     <tr>
                         <td> announcement 1 </td>
                         <td>
-                            <button class="action-btn">update</button>
-                            <button class="action-btn">delete</button>
+                            <button class="btn btn-primary">update</button>
+                            <button class="btn btn-primary">delete</button>
                         </td>
                     </tr>
                 </table>
-                <button class="action-btn">Add +</button>
+                <button class="btn btn-primary">Add +</button>
             </div>
-        </div>
+        </div> {% endcomment %}
         <!--SECOND TAB-->
+
+{% comment %} 
         <div class="tab" id="scholarship-programs">
             <div class="program-list">
                 <h4>Programs</h4>
@@ -102,6 +104,7 @@
                 </div>
             </div>
         </div>           
+ {% endcomment %}
          <!--THIRD TAB-->
         {% comment %} <div class="tab" id="scholarship-applications">
             <h4>Applications</h4>
@@ -117,15 +120,14 @@
                 </div>
                 <div class="action-buttons">
                         {% csrf_token %}
-                    <button class="action-btn green" name='approve'>Approve</button>
-                    <button class="action-btn yellow" name='waitlist'>Waitlist</button>
-                    <button class="action-btn red" name='reject'>Reject</button>
+                    <button class="btn btn-primary green" name='approve'>Approve</button>
+                    <button class="btn btn-primary yellow" name='waitlist'>Waitlist</button>
+                    <button class="btn btn-primary red" name='reject'>Reject</button>
                 </div>
             </form>
             {% endfor %}
         </div> {% endcomment %}
-        <div class="tab" id="scholars">
-            <h4>Scholars</h4>
+        {% comment %} <div class="tab my-4" id="scholars">
             <div class="scholar-list">
                 <h3>SCHOLARS</h3>
                 <table>
@@ -138,13 +140,54 @@
                         <td>-</td>
                         <td>-</td>
                         <td>
-                            <button class="action-btn">view</button>
-                            <button class="action-btn">update</button>
+                            <button class="btn btn-primary">view</button>
+                            <button class="btn btn-primary">update</button>
                         </td>
                     </tr>
                 </table>
             </div>
         </div>
     </div>
+</div> {% endcomment %}
+<div class="container mb-5">
+    <h3>Partner Dashboard</h3>
 </div>
+<div class="bg-light py-5" id="courses">
+    <div class="container pb-5">
+      <section class="section-courses-container">
+        <div class="section-header d-flex align-items-center">
+          <h3 class="section-title me-auto py-4">Programs</h3>
+        </div>
+        <div class="row pt-3 gutter-2rem">
+            {% for program in program_list %}
+            <div class="col-12 mb-4">
+                <a href="{% url 'application' program.partner_id program.id %}"></a>
+                <div class="course-item course-item-row"><a href="{% url 'application' program.partner_id program.id %}">
+                    <img class="img-item" height="100%" width="320px" src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/sample-background.jpeg">
+                    </a>
+                <div class="course-details-container w-100">
+                    <a href="{% url 'application' program.partner_id program.id %}">
+                    <p class="course-description mb-1 mt-2">
+                        {{program.name}}
+                    </p>
+                    <p class="text-dark mb-1">
+                        {{program.description}}
+                    </p>
+                    <div class="d-flex align-items-center pb-3">
+                        <img width="50px"src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/DICT-Logo-nobg.png">
+                        <img width="50px"src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/ILCDB+logo_2.png">
+                        <img width="50px"src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/coursera-social-logo-brand.png">
+                        <img width="50px"src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/logo-moocsx.png">
+                    </div>
+                    </a>
+                    </div>
+            </div>
+          </div>  
+          {% endfor %}          
+          </div>
+        </div>
+
+      </section>
+    </div>
+  </div>
 {% endblock %}

@@ -2,10 +2,11 @@
 {% load static %}
 {% block content %}
 {% for program in programs %}
-<div class="program-grid-container">
+
+<div class="container h-100">
     <div class="program-grid-left">
         <div>
-            <h5><a href ={% url 'partner'%} style="text-decoration:none" color="white"/>Programs</a> > {{program.name}}</h5>
+            <h5><a style="color:#ff7300; text-decoration:none;" href ={% url 'partner'%} style="text-decoration:none" color="white"/>Programs</a> > {{program.name}}</h5>
         </div>
         <br>
     </div>
@@ -13,19 +14,23 @@
         <div class="scholar-applications">
             <h3>APPLICATIONS</h3>
             
-            <div class="wrapper-filter">
-                <div class="search-bar">
-                    <div id="search-container">
-                        <input type="search" placeholder="search...">
-                        <button id="search"><i class="fa fa-search"></i></button>
+            <div class="rc-ProfilePhotoUploader form-horizontal">
+                <div class="form-group horizontal-box wrap my-3 align-items-center">
+                    <div class="form-control-custom">
+                        <div class="css-1cq002f">
+                            <div class="css-ek3fxo d-flex">
+                                <input type="search" placeholder="search..." class="input-ctrl mx-1">
+                                <button class="btn btn-primary" id="search"><i class="fa fa-search"></i></button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         
-            <table>
+            <table class="my-5">
                 <tr>
                     <td class="box">
-                        <input type="checkbox" name="all" id="all">
+                        <input type="checkbox" name="all" id="selectAll">
                     </td>
                     <td>
                         <div class="action-name">
@@ -37,7 +42,7 @@
                 {% for applicant in scholarship_applicants %}
                     <tr>
                         <td>
-                            <input type="checkbox" name="applicant" id="applicant">
+                            <input class="checkbox" type="checkbox" name="applicant" id="applicant">
                         </td>
                         <td>
                             <div class="action-name">
@@ -59,9 +64,9 @@
                         </td>
                     </tr>
                     {% endfor %}
-                    <input type="submit" value="Approve">
-                    <input type="submit" value="Waitlist">
-                    <input type="submit" value="Reject">
+                    <input class="btn btn-primary mx-1" type="submit" value="Approve">
+                    <input class="btn btn-primary mx-1" type="submit" value="Waitlist">
+                    <input class="btn btn-primary mx-1" type="submit" value="Reject">
                 </form>
             </table>
         </div>
@@ -148,6 +153,17 @@
     });
     
     {% comment %} $( ".select option:selected" ).text(); {% endcomment %}
+    // Get references to the "Select All" checkbox and the checkboxes to be selected/deselected
+    const selectAllCheckbox = document.getElementById("selectAll");
+    const checkboxes = document.querySelectorAll('.checkbox');
+
+    // Add an event listener to the "Select All" checkbox
+    selectAllCheckbox.addEventListener("change", function () {
+    // Loop through all other checkboxes and set their checked state to match the "Select All" checkbox
+    checkboxes.forEach(function (checkbox) {
+    checkbox.checked = selectAllCheckbox.checked;
+    });
+});
 </script>
 
 {% endblock %}

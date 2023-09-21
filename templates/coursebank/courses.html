@@ -4,7 +4,7 @@
 {% block content %}
 <link rel="stylesheet" type="text/css" href="{% static 'css/courses.css' %}"/>
     
-    <div class="container my-5">
+    {% comment %} <div class="container my-5">
         <h3>Courses</h3>
         <div class="course-cards my-5">
 
@@ -13,7 +13,7 @@
                 <div class="topic-badge">{{ course.topics.0 }}</div>
                 <img src="{{ course.image.src }}" alt="{{ course.title }}">
                 <div class="course-details p-3">
-                    <p class="text-dark">{{ course.title }}<p>
+                    <p class="text-dark course-title">{{ course.title }}<p>
                     {% for owners in course.owners %}
                     <p class="partner-card mt-3">{{ owners.key }}</p>
                     {% endfor %}
@@ -21,49 +21,51 @@
             </div>
         {% endfor %}
         </div>
-    </div>
+    </div> {% endcomment %}
 
-    <div class="container my-5">
-        <h3>Programs</h3>
-                <div class="partner-cards my-5">
-                    {% for program in program_list %} 
-                            <a href="{% url 'program' program.partner_id program.id %}">
-                                <div class="partner-card-container">
-                                    <div class="partner-card-image">
-                                        <img src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/sample-background.jpeg">
-                                    </div>
-                                    
-                                    <div class="card-partner-logo">
-                                        <img src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/DICT-Logo-nobg.png">
-                                        <img src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/ILCDB+logo_2.png">
-                                        <img src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/coursera-social-logo-brand.png">
-                                        <img src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/logo-moocsx.png">
-                                    </div>
-                                    
-                                    <div class="card-content p-3 bg-light">
-                                        <div class="container-card-title pt-3">
-                                            <h5 class="text-dark">{{program.name}}</h5>
-                                            <p class="card-title-content">
-                                                6 courses <br>
-                                                {% if program.end_date %}
-                                                    {{program.start_date|parse_iso|date:"M d"}} - {{program.end_date|parse_iso|date:"M d, Y"}}
-                                                {% else %}
-                                                    since {{program.start_date|parse_iso|date:"M d, Y"}}
-                                                {% endif %}
-                                            </p>
-                                            <p class="card-title-footer">
-                                                {% if program.registration_end %}
-                                                    Registration closes on <br>
-                                                    {{program.registration_end}}
-                                                {% else %}
-                                                    Registration is open
-                                                {% endif %}
-                                            </p>
+    <div class="bg-light">
+        <div class="container my-5 py-5">
+            <h3>Programs</h3>
+                    <div class="partner-cards my-5">
+                        {% for program in program_list %} 
+                                <a href="{% url 'program' program.partner_id program.id %}">
+                                    <div class="partner-card-container">
+                                        <div class="partner-card-image">
+                                            <img src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/sample-background.jpeg">
+                                        </div>
+                                        
+                                        <div class="card-partner-logo">
+                                            <img src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/DICT-Logo-nobg.png">
+                                            <img src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/ILCDB+logo_2.png">
+                                            <img src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/coursera-social-logo-brand.png">
+                                            <img src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/logo-moocsx.png">
+                                        </div>
+                                        
+                                        <div class="card-content p-3">
+                                            <div class="container-card-title pt-3">
+                                                <h5 class="text-dark">{{program.name}}</h5>
+                                                <p class="card-title-content">
+                                                    6 courses <br>
+                                                    {% if program.end_date %}
+                                                        {{program.start_date|parse_iso|date:"M d"}} - {{program.end_date|parse_iso|date:"M d, Y"}}
+                                                    {% else %}
+                                                        since {{program.start_date|parse_iso|date:"M d, Y"}}
+                                                    {% endif %}
+                                                </p>
+                                                <p class="card-title-footer">
+                                                    {% if program.registration_end %}
+                                                        Registration closes on <br>
+                                                        {{program.registration_end}}
+                                                    {% else %}
+                                                        Registration is open
+                                                    {% endif %}
+                                                </p>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </a>    
-                    {% endfor %}
-                </div>
+                                </a>    
+                        {% endfor %}
+                    </div>
+        </div>
     </div>
 {% endblock %}
