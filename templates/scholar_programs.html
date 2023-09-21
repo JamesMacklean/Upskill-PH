@@ -48,9 +48,14 @@
                                     {% elif scholarship.status == 2 %}
                                         <button type="submit" class="btn solid">WAITLISTED</button>
                                     {% elif scholarship.status == 3 %}
-                                    <input type="text" name="license_code" id="license_code" placeholder="Enter License Code" required>
-                                    <button type="button" class="btn solid" onclick="promptForLicenseCode()">REJECTED</button>
+                                        <input type="text" name="license_code" id="license_code" placeholder="Enter License Code" required>
+                                        {% if user_details.username and user_details.first_name and user_details.last_name and user_details.email %}
+                                            <button type="button" class="btn solid" onclick="verifyLicenseCode()">REJECTED</button>
+                                        {% else %}
+                                            <button type="button" class="btn disabled solid" onclick="verifyLicenseCode()">REJECTED</button>
+                                        {% endif %}
                                         {% comment %} <button type="submit" class="btn solid">REJECTED</button> {% endcomment %}
+                                        <p id="message">MESSAGE</p>
                                     {% else %}
                                         <button type="submit" class="btn solid">PENDING</button>
                                     {% endif %}
@@ -92,8 +97,12 @@
                     {% if atleast_approved_in_a_program %}
                         <button type="submit" class="btn solid">CANNOT APPLY TO MORE THAN 1 PROGRAM</button>
                     {% else %}
-                        <input type="text" name="license_code" id="license_code" placeholder="Enter License Code" required>
-                        <button type="button" class="btn solid" onclick="promptForLicenseCode()">APPLY NOW</button>
+                        {% comment %} <input type="text" name="license_code" id="license_code" placeholder="Enter License Code" required>
+                        {% if user_details.username and user_details.first_name and user_details.last_name and user_details.email %}
+                            <button type="button" class="btn solid" onclick="verifyLicenseCode()">APPLY NOW</button>
+                        {% else %}
+                            <button type="button" class="btn solid" disabled title="Please complete all user details">APPLY NOW</button>
+                        {% endif %} {% endcomment %}
                     {% endif %}
                 </form>
             </div>
@@ -101,12 +110,45 @@
         {% endfor %}
     </div>
 </div>
-{% endblock %}
 
-function promptForLicenseCode() {
-    var licenseCode = prompt("Please enter your license code:");
-    if (licenseCode) {
-        document.getElementById('license_code').value = licenseCode;
-        document.getElementById('apply').submit();
+<script>
+function verifyLicenseCode() {
+    var licenseCode = document.getElementById('license_code').value;
+    var programId = "{{ program_id }}";
+    var jsonData = {
+        "data": [
+            {
+                "license_code": "AbCdEfG12345",
+                "expiration_date": "2023-12-31",
+                "program_id": "0000000000000007"
+            },
+            {
+                "license_code": "HgFtYiJ67890",
+                "expiration_date": "2023-12-31",
+                "program_id": "0000000000000007"
+            }
+        ]
+    };
+
+    var filteredData = jsonData.data.filter(function(item) {
+        return item.program_id === programId;
+    });
+
+    var isCodeValid = false;
+    filteredData.forEach(function(item) {
+        if (item.license_code === licenseCode) {
+            isCodeValid = true;
+        }
+    });
+
+    var messageElement = document.getElementById('message');
+    if (isCodeValid) {
+        messageElement.innerText = 'License code is valid.';
+    } else {
+        messageElement.innerText = 'Invalid license code. Please try again.';
     }
 }
+</script>
+    
+{% endblock %}
+
