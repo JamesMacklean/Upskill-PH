@@ -183,4 +183,33 @@ textarea#about_me_text {
 
 .col-12 a {
   text-decoration: none !important;
+}
+
+.card-image.cybersecurity_image {
+  background-image: url(https://scholarium-static.s3.ap-southeast-1.amazonaws.com/cybersecurity.jpg);
+  background-attachment: scroll, scroll;
+  background-position: left top, center center;
+  background-clip: border-box, border-box;
+  background-origin: padding-box, padding-box;
+  background-size: auto auto, cover;
+  background-repeat: no-repeat, no-repeat;
+}
+
+.card-image._image {
+  background-image: url(https://scholarium-static.s3.ap-southeast-1.amazonaws.com/data-science.jpg);
+  background-attachment: scroll, scroll;
+  background-position: left top, center center;
+  background-clip: border-box, border-box;
+  background-origin: padding-box, padding-box;
+  background-size: auto auto, cover;
+  background-repeat: no-repeat, no-repeat;
+}
+
+div.card-image {
+  background-attachment: scroll, scroll;
+  background-position: left top, center center;
+  background-clip: border-box, border-box;
+  background-origin: padding-box, padding-box;
+  background-size: auto auto, cover;
+  background-repeat: no-repeat, no-repeat;
 }/*# sourceMappingURL=style.css.map */
