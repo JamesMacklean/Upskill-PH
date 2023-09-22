@@ -161,21 +161,48 @@ textarea#about_me_text {
 // PROGRAM RENDERING
 .bg_0000000000000007_image{
     background: linear-gradient(90deg, rgba(255,115,0,1) 36%, rgba(255,255,255,0) 100%),url("https://s3.ap-southeast-1.amazonaws.com/scholarium/upload/image-0d11ac79ae9b0d7d33fe59f14f78ac1ac52b6e19.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: right;
+    height: 350px;
 }
 .bg_0000000000000008_image{
     background: linear-gradient(90deg, rgba(255,115,0,1) 36%, rgba(255,255,255,0) 100%),url("https://s3.ap-southeast-1.amazonaws.com/scholarium/upload/image-4799e75a62331ade2576fbbf1b8181490b99b5fa.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: right;
+    height: 350px;
 }
 .bg_0000000000000009_image{
     background: linear-gradient(90deg, rgba(255,115,0,1) 36%, rgba(255,255,255,0) 100%),url("https://s3.ap-southeast-1.amazonaws.com/scholarium/upload/image-3e91d0126cdd129529cc09f52bd846c8b2a5ad6c.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: right;
+    height: 350px;
 }
 .bg_0000000000000010_image{
     background: linear-gradient(90deg, rgba(255,115,0,1) 36%, rgba(255,255,255,0) 100%),url("https://s3.ap-southeast-1.amazonaws.com/scholarium/upload/image-5ba69998dad202a14c53d8e2aaa1846819c073f4.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: right;
+    height: 350px;
 }
 .bg_0000000000000011_image{
     background: linear-gradient(90deg, rgba(255,115,0,1) 36%, rgba(255,255,255,0) 100%),url("https://s3.ap-southeast-1.amazonaws.com/scholarium/upload/image-3e68cc2600fb2ecfcdb53b3d22eccbf8fed7ad52.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: right;
+    height: 350px;
 }
 .bg_0000000000000012_image{
     background: linear-gradient(90deg, rgba(255,115,0,1) 36%, rgba(255,255,255,0) 100%),url({{program.image}});
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: right;
+    height: 350px;
+}
+.section.program-title {
+    max-width: 600px;
 }
 // body{
 //     background-color: #fff !important;

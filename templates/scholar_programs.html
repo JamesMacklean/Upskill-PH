@@ -8,8 +8,8 @@
                     {% if program.id == scholarship.program_id %}   
                     <div class="bg_{{program.id}}_image p-5">
                     <div class="container">
-                        <section class="program-title">
-                            <h3>{{ program.name }}</h3>
+                        <section class="program-title text-white">
+                            <h1 class="pb-3">{{ program.name }}</h1>
                             <h5>About this Program</h5>
                             {% if program.description %}
                             <p>{{program.description}}</p> <br>
@@ -71,8 +71,8 @@
             {% else %}
             <div class="bg_{{program.id}}_image p-5">
                 <div class="container">
-                    <section class="program-title">
-                        <h3>{{ program.name }}</h3>
+                    <section class="program-title text-white">
+                        <h1 class="pb-3">{{ program.name }}</h1>
                         <h5>About this Program</h5>
                         {% if program.description %}
                         <p>{{program.description}}</p> <br>
