@@ -9,11 +9,11 @@
         <div class="bg-light content-container px-5 pt-5 pb-1 mb-5 h-100">
             <div class="passwords-container">
                     <form action="" method="POST" class="passwords">
-                        <p>
+                        {% comment %} <p>
                             {{request.session.first_name|title}} {{request.session.last_name|title}}<br>
                             {{request.session.email}}<br>
                             date joined: {{ user_date_joined|parse_iso|date:"F d, Y" }} <br>
-                        </p>
+                        </p> {% endcomment %}
                         {% comment %} CURRENT PASSWORD {% endcomment %}
                         <div class="rc-ProfilePhotoUploader form-horizontal">
                             <div class="form-group horizontal-box wrap my-3 align-items-center">
