@@ -1,13 +1,12 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-<div class="container my-5">
-    <div class="container">
+
         {% for program in programs %}
             {% if program.id in applied_programs %}
                 {% for scholarship in scholarships %}
                     {% if program.id == scholarship.program_id %}   
-                    <div class="bg_{{program.id}}_image">
+                    <div class="bg_{{program.id}}_image p-5">
                     <div class="container">
                         <section class="program-title">
                             <h3>{{ program.name }}</h3>
@@ -21,6 +20,8 @@
                         </section>
                     </div>
                     </div>
+                    <div class="container my-5">
+                        <div class="container">
                         <div class="program-partner-logos">
                             <img src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/DICT-Logo-nobg.png">
                             <img src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/ILCDB+logo_2.png">
@@ -63,50 +64,76 @@
                                 {% endif %}
                             </form>
                         </div>
+                    </div>
+                </div>
                     {% endif %}
                 {% endfor %}
             {% else %}
-            <h3>{{ program.name }}</h3>
-            <div class="program-partner-logos">
-                <img src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/DICT-Logo-nobg.png">
-                <img src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/ILCDB+logo_2.png">
-                <img src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/coursera-social-logo-brand.png">
-                <img src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/logo-moocsx.png">
-            </div>
-            <div class="container program">
-                <hr>
-                            <h5>About this Program</h5>
-                            {% if program.description %}
-                            <p>{{program.description}}</p> <br>
-                            <p>Click on the Coursera link below to check the collection under this program.</p>
+            <div class="bg_{{program.id}}_image p-5">
+                <div class="container">
+                    <section class="program-title">
+                        <h3>{{ program.name }}</h3>
+                        <h5>About this Program</h5>
+                        {% if program.description %}
+                        <p>{{program.description}}</p> <br>
+                        <p>Click on the Coursera link below to check the collection under this program.</p>
+                        {% else %}
+                        <p>No description for this program.</p>
+                        {% endif %}
+                    </section>
+                </div>
+                </div>
+                <div class="container my-5">
+                    <div class="container">
+                    <div class="program-partner-logos">
+                        <img src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/DICT-Logo-nobg.png">
+                        <img src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/ILCDB+logo_2.png">
+                        <img src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/coursera-social-logo-brand.png">
+                        <img src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/logo-moocsx.png">
+                    </div>
+                    <div class="container program">
+                        <hr>
+                        <h5>Learning Platform</h5>
+                        <p>
+                            <a href="https://www.coursera.org/" target="_blank" style="color: #000 !important;">Coursera</a>
+                        </p>
+                        <hr>
+                        <h5>Apply to this Program</h5>
+                        <p>By applying to this program, you are agreeing to the program guidelines set forth by the granting organization.</p>
+                        <br>
+                        <p><a href="{% url 'guidelines' %}" target="_blank" style="color: #000 !important;">View program guidelines.</a></p>
+                    </div>
+                    <div class="container">
+                        <form action="" class="program-application" id="apply" method="POST">
+                            {% csrf_token %}
+                            {% if atleast_approved_in_a_program %}
+                                {% if scholarship.status == 1 %}
+                                    <button type="submit" class="btn solid">APPLIED</button>
+                                {% else %}
+                                    <button type="submit" class="btn solid">CANNOT APPLY TO MORE THAN 1 PROGRAM</button>
+                                {% endif %}
                             {% else %}
-                            <p>No description for this program.</p>
+                                {% if scholarship.status == 1 %}
+                                    <button type="submit" class="btn solid">ALREADY APPLIED</button>
+                                {% elif scholarship.status == 2 %}
+                                    <button type="submit" class="btn solid">WAITLISTED</button>
+                                {% elif scholarship.status == 3 %}
+                                <input type="text" name="license_code" id="license_code" placeholder="Enter License Code" required>
+                                <button type="button" class="btn solid" onclick="promptForLicenseCode()">REJECTED</button>
+                                    {% comment %} <button type="submit" class="btn solid">REJECTED</button> {% endcomment %}
+                                {% else %}
+                                    <button type="submit" class="btn solid">PENDING</button>
+                                {% endif %}
                             {% endif %}
-                            <h5>Learning Platform</h4>
-                            <p>
-                                <a href="https://www.coursera.org/" target="_blank" style="color: #000 !important;">Coursera</a>
-                            </p>
-                            <hr>
-                            <h5>Apply to this Program</h5>
-                            <p>By applying to this program, you are agreeing to the program guidelines set forth by the granting organization.</p>
-                            <br>
-                            <p><a href="{% url 'guidelines' %}" target="_blank" class="text-dark">View program guidelines.</a></p>
+                        </form>
+                    </div>
+                </div>
             </div>
-            <div class="program-progress">
-                <form action="" class="program-application" id="apply" method="POST">
-                    {% csrf_token %}
-                    {% if atleast_approved_in_a_program %}
-                        <button type="submit" class="btn solid">CANNOT APPLY TO MORE THAN 1 PROGRAM</button>
-                    {% else %}
-                        <input type="text" name="license_code" id="license_code" placeholder="Enter License Code" required>
-                        <button type="button" class="btn solid" onclick="promptForLicenseCode()">APPLY NOW</button>
-                    {% endif %}
-                </form>
-            </div>
+                {% endif %}
+            {% endfor %}
         {% endif %}
         {% endfor %}
-    </div>
-</div>
+
 {% endblock %}
 
 function promptForLicenseCode() {
