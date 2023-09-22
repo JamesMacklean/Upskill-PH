@@ -95,7 +95,7 @@ def home(request):
     ########## LOGIN REQUIRED ##########
     if not authenticate_user(request):
         request.session['url'] = "home"
-        return HttpResponseRedirect('/signin?next=home')
+        return render(request, "index.html")
     clear_session(request,'url')
     ########## LOGIN REQUIRED ##########
     
@@ -103,7 +103,7 @@ def home(request):
     # Fetch course data from the API
 
     context['program_list'] = get_programs(user_token,2,None)
-    context['courses'] = get_courses()
+    context['courses'] = get_courses(request, "static_templates/privacy.html")
     return render(request,template_name, context)
     
 # STATIC TEMPLATES

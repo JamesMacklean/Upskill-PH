@@ -158,7 +158,25 @@ textarea#about_me_text {
 .col-12 a{
     text-decoration: none !important;
 }
-
+// PROGRAM RENDERING
+.bg_0000000000000007_image{
+    background: linear-gradient(90deg, rgba(255,115,0,1) 36%, rgba(255,255,255,0) 100%),url({{program.image}});
+}
+.bg_0000000000000008_image{
+    background: linear-gradient(90deg, rgba(255,115,0,1) 36%, rgba(255,255,255,0) 100%),url({{program.image}});
+}
+.bg_0000000000000009_image{
+    background: linear-gradient(90deg, rgba(255,115,0,1) 36%, rgba(255,255,255,0) 100%),url({{program.image}});
+}
+.bg_0000000000000010_image{
+    background: linear-gradient(90deg, rgba(255,115,0,1) 36%, rgba(255,255,255,0) 100%),url({{program.image}});
+}
+.bg_0000000000000011_image{
+    background: linear-gradient(90deg, rgba(255,115,0,1) 36%, rgba(255,255,255,0) 100%),url({{program.image}});
+}
+.bg_0000000000000012_image{
+    background: linear-gradient(90deg, rgba(255,115,0,1) 36%, rgba(255,255,255,0) 100%),url({{program.image}});
+}
 // body{
 //     background-color: #fff !important;
 // }
