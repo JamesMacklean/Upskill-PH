@@ -11,6 +11,13 @@
                     <div class="container">
                         <section class="program-title">
                             <h3>{{ program.name }}</h3>
+                            <h5>About this Program</h5>
+                            {% if program.description %}
+                            <p>{{program.description}}</p> <br>
+                            <p>Click on the Coursera link below to check the collection under this program.</p>
+                            {% else %}
+                            <p>No description for this program.</p>
+                            {% endif %}
                         </section>
                     </div>
                     </div>
@@ -22,13 +29,6 @@
                         </div>
                         <div class="container program">
                             <hr>
-                            <h5>About this Program</h5>
-                            {% if program.description %}
-                            <p>{{program.description}}</p> <br>
-                            <p>Click on the Coursera link below to check the collection under this program.</p>
-                            {% else %}
-                            <p>No description for this program.</p>
-                            {% endif %}
                             <h5>Learning Platform</h5>
                             <p>
                                 <a href="https://www.coursera.org/" target="_blank" style="color: #000 !important;">Coursera</a>

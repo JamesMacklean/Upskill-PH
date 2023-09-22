@@ -103,7 +103,7 @@ def home(request):
     # Fetch course data from the API
 
     context['program_list'] = get_programs(user_token,2,None)
-    context['courses'] = get_courses(request, "static_templates/privacy.html")
+    # context['courses'] = get_courses(request, "static_templates/privacy.html")
     return render(request,template_name, context)
     
 # STATIC TEMPLATES
