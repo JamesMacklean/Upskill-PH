@@ -97,12 +97,12 @@
                     {% if atleast_approved_in_a_program %}
                         <button type="submit" class="btn solid">CANNOT APPLY TO MORE THAN 1 PROGRAM</button>
                     {% else %}
-                        {% comment %} <input type="text" name="license_code" id="license_code" placeholder="Enter License Code" required>
+                        <input type="text" name="license_code" id="license_code" placeholder="Enter License Code" required>
                         {% if user_details.username and user_details.first_name and user_details.last_name and user_details.email %}
                             <button type="button" class="btn solid" onclick="verifyLicenseCode()">APPLY NOW</button>
                         {% else %}
                             <button type="button" class="btn solid" disabled title="Please complete all user details">APPLY NOW</button>
-                        {% endif %} {% endcomment %}
+                        {% endif %}
                     {% endif %}
                 </form>
             </div>
