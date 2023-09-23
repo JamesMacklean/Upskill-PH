@@ -226,7 +226,15 @@ textarea#about_me_text {
 }
 
 .bg_0000000000000012_image {
-  background: linear-gradient(90deg, rgb(255, 115, 0) 36%, rgba(255, 255, 255, 0) 100%), url({{program.image}});
+  background: linear-gradient(90deg, rgb(255, 115, 0) 36%, rgba(255, 255, 255, 0) 100%), url("https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/spiral_ict_model-768x415.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: right;
+  height: 350px;
+}
+
+.bg_0000000000000013_image {
+  background: linear-gradient(90deg, rgb(255, 115, 0) 36%, rgba(255, 255, 255, 0) 100%), url("https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/mspiral_djph_model-768x417.jpg");
   background-size: cover;
   background-repeat: no-repeat;
   background-position: right;
