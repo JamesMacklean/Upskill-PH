@@ -588,3 +588,30 @@ def get_coursebank_users():
                 print(str(e))
     
     return users
+
+# PUT https://scholarium.tmtg-clone.click/v1/me/enroll/code
+def enroll_code(bearer_token, code):  
+    # payload = json.dumps({
+    # "data": {
+    #     "code": code,
+    # }
+    # })
+    payload = f'{{\r\n    "data": \r\n        {{\r\n            "code":"{code}\r\n        }}\r\n}}'
+    headers = {
+        'Content-Type': 'text/plain',
+        'Authorization': bearer_token
+    }
+    
+    response = requests.request("PUT", API_ENROLL_CODE_URL, headers=headers, data=payload)
+    response_dict = json.loads(response.text)
+    
+    if 'data' in response_dict:
+        response_message = "License Code Verified!"
+    else:
+        response_message = response_dict.get("error")
+    
+    return response_message
+
+import requests
+
+url = "https://scholarium.tmtg-clone.click/v1/me/enroll/code"

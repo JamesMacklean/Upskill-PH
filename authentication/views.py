@@ -190,8 +190,6 @@ def verify_account(request, user_hash):
         )
         ############################# FOR MAIL ##############################
         
-        context['response_message'] = response_message
-        
         if password:
             print ("SUCCESS:", response_message)
             return render(request, template_successful, context)                 
@@ -243,7 +241,6 @@ def signup(request):
                 print(email, password)
                 ############################# FOR MAIL ##############################
             
-            context['message'] = response_message
             messages.info(request, response_message)
             
     except Exception as e:
@@ -577,12 +574,14 @@ def program(request, partner_id, program_id):
                 status_checker = status_checker + 1
         
     if request.method == "POST":
-        response = scholar_apply(user_token,program_id)
+        # response = scholar_apply(user_token,program_id)
+        license_code = request.POST.get('license_code')
+        response = enroll_code(user_token,license_code)
         
         #### MODAL RESPONSE KUNG NAGWORK BA ANG APPLICATION
         print(response)
-        
-        return redirect('partner')
+        context['message'] = response
+        # return render(request, template_name, context)
         
     all_programs = get_programs(user_token, partner_id, None)
     
