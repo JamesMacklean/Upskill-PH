@@ -142,7 +142,7 @@ def success(request, user_hash):
     send_mail(
         'Title', 
         'Content of the Message', 
-        EMAIL_HOST_USER, 
+        settings.EMAIL_HOST_USER, 
         ########## ORIGINAL CODE ##########
         # [email], 
         ########## FOR TEST CODE ##########
@@ -180,7 +180,7 @@ def verify_account(request, user_hash):
         send_mail(
             'Title', 
             'Content of the Message', 
-            EMAIL_HOST_USER, 
+            settings.EMAIL_HOST_USER, 
             ########## ORIGINAL CODE ##########
             # [email], 
             ########## FOR TEST CODE ##########
@@ -189,8 +189,6 @@ def verify_account(request, user_hash):
             fail_silently=False
         )
         ############################# FOR MAIL ##############################
-        
-        context['response_message'] = response_message
         
         if password:
             print ("SUCCESS:", response_message)
@@ -243,7 +241,6 @@ def signup(request):
                 print(email, password)
                 ############################# FOR MAIL ##############################
             
-            context['message'] = response_message
             messages.info(request, response_message)
             
     except Exception as e:
@@ -560,6 +557,10 @@ def program(request, partner_id, program_id):
     ######### LOGIN REQUIRED ##########
     
     user_token = request.session['user_token']
+    username = request.session.get('username')        
+    first_name = request.session.get('first_name')
+    last_name = request.session.get('last_name')
+    email = request.session.get('email')
     scholarships = user_programs(user_token)
     
     # LOCKED OUT DAPAT ANG OTHER PROGRAMS KAPAG NAGAPPLY SA ISA
@@ -573,12 +574,14 @@ def program(request, partner_id, program_id):
                 status_checker = status_checker + 1
         
     if request.method == "POST":
-        response = scholar_apply(user_token,program_id)
+        # response = scholar_apply(user_token,program_id)
+        license_code = request.POST.get('license_code')
+        response = enroll_code(user_token,license_code)
         
         #### MODAL RESPONSE KUNG NAGWORK BA ANG APPLICATION
         print(response)
-        
-        return redirect('profile')
+        context['message'] = response
+        # return render(request, template_name, context)
         
     all_programs = get_programs(user_token, partner_id, None)
     
@@ -590,6 +593,14 @@ def program(request, partner_id, program_id):
     if program_id not in program_ids:
         raise Http404
     
+    context['user_details'] = {
+        'username': username,
+        'first_name': first_name,
+        'last_name': last_name,
+        'email': email,
+    }
+    
+    context['program_id'] = program_id
     context['programs'] = get_programs(user_token,partner_id,program_id)
     context['scholarships'] = scholarships
     context['applied_programs'] = applied_programs
@@ -635,7 +646,7 @@ def account(request):
 
 # def courses(request):
 #     """"""
-#     template_name = "courses/courses.html"
+#     template_name = "coursebank/courses.html"
 #     context = {}
 
 #     ########## LOGIN REQUIRED ##########
@@ -648,6 +659,13 @@ def account(request):
 #     user_token = request.session['user_token']
 #     # Fetch course data from the API
 
+    context['program_list'] = get_programs(user_token,2,None)
+    context['courses'] = get_courses()
+    return render(request,template_name, context)
+
+# STATIC TEMPLATES
+def guidelines(request):
+    return render(request, "static_templates/program_guidelines.html")
 #     context['program_list'] = get_programs(user_token,2,None)
 #     context['courses'] = get_courses()
 #     return render(request,template_name, context)

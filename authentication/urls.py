@@ -19,7 +19,7 @@ urlpatterns = [
     path('program/<partner_id>/<program_id>/', views.program, name="program"),
     path('partner/', views.partner, name="partner"),
     path('certificate/', views.certificate, name="certificate"),
-    
+
     # path('courses/',views.courses, name="courses"),
     
     path('guidelines/',views.guidelines, name="guidelines"),

@@ -24,6 +24,8 @@ API_UPDATE_PASSWORD_URL = API_URL+"me/password"
 API_PARTNER_PROGRAMS_URL = API_URL+"partner/programs/"
 API_SCHOLAR_UPDATE_URL = API_URL+"partner/scholarship/"
 
+API_ENROLL_CODE_URL = API_URL+"me/enroll/code"
+
 COURSEBANK_COURSES_URL = COURSEBANK_DISCOVERY_URL+"courses/?limit=9&"
 COURSEBANK_USERS_URL = COURSEBANK_LMS_URL+"users"
 
@@ -32,7 +34,7 @@ API_TOKEN = 'TMTG tujyBpbgtum3xcctFvXZgr4ZnaRsddVRpvkwJuq8B3KEwfd4BZQtrRaj5r4vdt
 ########## FOR TEST CODE ##########
 # API_TOKEN = 'LOC_TEST b3vg5vz5t6QJqRccTTysUtaYzF9bmUUrZXDNP54hxyF3Nr6azNdmAHXRrYjSQXA5'
 
-# Engr_James
-# e84c2f7ab568bbf073ec619aee9bb0d189651e05
-# qwerty
-# {%csrf_token%}
+# Engr_James 
+# dff9f99e0898a7ff0a7f22758182ef4f230de4d3
+# qwerty 
+# 07dbcbe6c2252f946e7c46c526b9bc43828b560b

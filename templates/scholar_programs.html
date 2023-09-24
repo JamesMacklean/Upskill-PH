@@ -55,9 +55,7 @@
                                     {% elif scholarship.status == 2 %}
                                         <button type="submit" class="btn solid">WAITLISTED</button>
                                     {% elif scholarship.status == 3 %}
-                                    <input type="text" name="license_code" id="license_code" placeholder="Enter License Code" required>
-                                    <button type="button" class="btn solid" onclick="promptForLicenseCode()">REJECTED</button>
-                                        {% comment %} <button type="submit" class="btn solid">REJECTED</button> {% endcomment %}
+                                        <button type="submit" class="btn solid">REJECTED</button>
                                     {% else %}
                                         <button type="submit" class="btn solid">PENDING</button>
                                     {% endif %}
@@ -69,75 +67,48 @@
                     {% endif %}
                 {% endfor %}
             {% else %}
-            <div class="bg_{{program.id}}_image p-5">
-                <div class="container">
-                    <section class="program-title text-white">
-                        <h1 class="pb-3">{{ program.name }}</h1>
-                        <h5>About this Program</h5>
-                        {% if program.description %}
-                        <p>{{program.description}}</p> <br>
-                        <p>Click on the Coursera link below to check the collection under this program.</p>
-                        {% else %}
-                        <p>No description for this program.</p>
-                        {% endif %}
-                    </section>
-                </div>
-                </div>
-                <div class="container my-5">
-                    <div class="container">
-                    <div class="program-partner-logos">
-                        <img src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/DICT-Logo-nobg.png">
-                        <img src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/ILCDB+logo_2.png">
-                        <img src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/coursera-social-logo-brand.png">
-                        <img src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/logo-moocsx.png">
-                    </div>
-                    <div class="container program">
-                        <hr>
-                        <h5>Learning Platform</h5>
-                        <p>
-                            <a href="https://www.coursera.org/" target="_blank" style="color: #000 !important;">Coursera</a>
-                        </p>
-                        <hr>
-                        <h5>Apply to this Program</h5>
-                        <p>By applying to this program, you are agreeing to the program guidelines set forth by the granting organization.</p>
-                        <br>
-                        <p><a href="{% url 'guidelines' %}" target="_blank" style="color: #000 !important;">View program guidelines.</a></p>
-                    </div>
-                    <div class="container">
-                        <form action="" class="program-application" id="apply" method="POST">
-                            {% csrf_token %}
-                            {% if atleast_approved_in_a_program %}
-                                {% if scholarship.status == 1 %}
-                                    <button type="submit" class="btn solid">APPLIED</button>
-                                {% else %}
-                                    <button type="submit" class="btn solid">CANNOT APPLY TO MORE THAN 1 PROGRAM</button>
-                                {% endif %}
+            <h3>{{ program.name }}</h3>
+            <div class="program-partner-logos">
+                <img src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/DICT-Logo-nobg.png">
+                <img src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/ILCDB+logo_2.png">
+                <img src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/coursera-social-logo-brand.png">
+                <img src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/logo-moocsx.png">
+            </div>
+            <div class="container program">
+                <hr>
+                            <h5>About this Program</h5>
+                            {% if program.description %}
+                            <p>{{program.description}}</p> <br>
+                            <p>Click on the Coursera link below to check the collection under this program.</p>
                             {% else %}
-                                {% if scholarship.status == 1 %}
-                                    <button type="submit" class="btn solid">ALREADY APPLIED</button>
-                                {% elif scholarship.status == 2 %}
-                                    <button type="submit" class="btn solid">WAITLISTED</button>
-                                {% elif scholarship.status == 3 %}
-                                <input type="text" name="license_code" id="license_code" placeholder="Enter License Code" required>
-                                <button type="button" class="btn solid" onclick="promptForLicenseCode()">REJECTED</button>
-                                    {% comment %} <button type="submit" class="btn solid">REJECTED</button> {% endcomment %}
-                                {% else %}
-                                    <button type="submit" class="btn solid">PENDING</button>
-                                {% endif %}
+                            <p>No description for this program.</p>
                             {% endif %}
-                        </form>
-                    </div>
-                </div>
+                            <h5>Learning Platform</h4>
+                            <p>
+                                <a href="https://www.coursera.org/" target="_blank" style="color: #000 !important;">Coursera</a>
+                            </p>
+                            <hr>
+                            <h5>Apply to this Program</h5>
+                            <p>By applying to this program, you are agreeing to the program guidelines set forth by the granting organization.</p>
+                            <br>
+                            <p><a href="{% url 'guidelines' %}" target="_blank" class="text-dark">View program guidelines.</a></p>
+            </div>
+            <div class="program-progress">
+                <form action="" class="program-application" id="apply" method="POST">
+                    {% csrf_token %}
+                    <input type="text" name="license_code" id="license_code" placeholder="Enter License Code" required>
+                    {% if user_details.username and user_details.first_name and user_details.last_name and user_details.email %}
+                        <input type="hidden" name="program_id" value="{{ program_id }}">
+                        <button type="submit" class="btn solid">APPLY NOW</button>
+                    {% else %}
+                        <p>COMPLETE YOUR PROFILE FIRST!</p>
+                    {% endif %}
+                    <p>{{ message }}</p>
+                </form>
             </div>
         {% endif %}
         {% endfor %}
-
+    </div>
+</div>
+    
 {% endblock %}
-
-function promptForLicenseCode() {
-    var licenseCode = prompt("Please enter your license code:");
-    if (licenseCode) {
-        document.getElementById('license_code').value = licenseCode;
-        document.getElementById('apply').submit();
-    }
-}
