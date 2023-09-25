@@ -576,7 +576,7 @@ def program(request, partner_id, program_id):
     if request.method == "POST":
         # response = scholar_apply(user_token,program_id)
         license_code = request.POST.get('license_code')
-        response = enroll_code(user_token,license_code)
+        response = enroll_code(user_token, program_id, license_code)
         
         #### MODAL RESPONSE KUNG NAGWORK BA ANG APPLICATION
         print(response)
