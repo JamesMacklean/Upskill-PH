@@ -97,7 +97,7 @@
                 <form action="" class="program-application" id="apply" method="POST">
                     {% csrf_token %}
                     <input type="text" name="license_code" id="license_code" placeholder="Enter License Code" required>
-                    {% if user_details.username and user_details.first_name and user_details.last_name and user_details.email %}
+                    {% if user_details.first_name and user_details.last_name and user_details.email %}
                         <input type="hidden" name="program_id" value="{{ program_id }}">
                         <button type="submit" class="btn solid">APPLY NOW</button>
                     {% else %}
