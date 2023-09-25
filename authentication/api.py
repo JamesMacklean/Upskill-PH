@@ -590,13 +590,14 @@ def get_coursebank_users():
     return users
 
 # PUT https://scholarium.tmtg-clone.click/v1/me/enroll/code
-def enroll_code(bearer_token, code):  
+def enroll_code(bearer_token, program_id, code):  
     # payload = json.dumps({
     # "data": {
     #     "code": code,
     # }
     # })
-    payload = f'{{\r\n    "data": \r\n        {{\r\n            "code":"{code}\r\n        }}\r\n}}'
+    
+    payload = f'{{\r\n    "data": \r\n        {{\r\n            "program_id\":{program_id,},\r\n             "code":"{code}\r\n        }}\r\n}}'
     headers = {
         'Content-Type': 'text/plain',
         'Authorization': bearer_token
@@ -611,7 +612,3 @@ def enroll_code(bearer_token, code):
         response_message = response_dict.get("error")
     
     return response_message
-
-import requests
-
-url = "https://scholarium.tmtg-clone.click/v1/me/enroll/code"
