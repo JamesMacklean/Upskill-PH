@@ -597,7 +597,7 @@ def enroll_code(bearer_token, program_id, code):
     # }
     # })
     
-    payload = f'{{\r\n    "data": \r\n        {{\r\n            "program_id\":{program_id,},\r\n             "code":"{code}\r\n        }}\r\n}}'
+    payload = f'{{\r\n    "data": \r\n        {{\r\n            "program_id\":{program_id},\r\n             "code":"{code}\r\n        }}\r\n}}'
     headers = {
         'Content-Type': 'text/plain',
         'Authorization': bearer_token
