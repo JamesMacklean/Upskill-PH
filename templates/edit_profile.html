@@ -12,14 +12,14 @@
         <div>
             <div class="rc-ProfilePhotoUploader form-horizontal">
                 <div class="form-group horizontal-box wrap my-3">
-                    <label for="photo-uploader" class="body-2-text color-primary-text form-label">Profile Photo</label>
-                    <div class="css-1kgnfh8">
-                        <div class="css-1qkjctd">
-                            <img src="" alt="">
-                        </div>
+                    <label for="photo-uploader" class="body-2-text color-primary-text form-label">Full Name</label>
+                    <div class="form-control-custom">
                         <div class="css-1cq002f">
+                            <div class="css-ek3fxo mb-2">
+                                <input type="text" name = "firstname" placeholder="First Name" value="{{profile.first_name}}" class="input-ctrl">
+                            </div>
                             <div class="css-ek3fxo">
-                                <input type="button" class="btn btn-primary" value="UPLOAD">
+                                <input type="text" name = "lastname" placeholder="Last Name" value="{{profile.last_name}}" class="input-ctrl">
                             </div>
                         </div>
                     </div>
