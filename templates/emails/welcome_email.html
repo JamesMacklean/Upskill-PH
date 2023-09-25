@@ -20,29 +20,27 @@
         </h1>
         <p style="color: rgba(0,0,0,.75);">
             {% filter force_escape %}
-                Hello {{ first_name|title }} {{ last_name|title }}!
+                Hello
             {% endfilter %}
             <br />
         </p>
         <p style="color: rgba(0,0,0,.75);">
             {% filter force_escape %}
-                Your account is now ACTIVE! Here are your login credentials:
+                Your account is now ACTIVE!
             {% endfilter %}
         </p>
         <p style="color: rgba(0,0,0,.75);">
             {% filter force_escape %}
-                USERNAME: {{username}}
             {% endfilter %}
         </p>
         <p style="color: rgba(0,0,0,.75);">
             {% filter force_escape %}
-                PASSWORD: {{password}}
             {% endfilter %}
             <br />
         </p>
         <p style="color: rgba(0,0,0,.75);">
             {% filter force_escape %}
-                We recommend changing your password after your first login. Enjoy SCHOLARIUM!
+                Enjoy SCHOLARIUM!
             {% endfilter %}
             <br />
         </p>

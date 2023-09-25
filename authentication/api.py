@@ -262,7 +262,7 @@ def login_account (username, password):
     
     return user_token, expires, response_message
 
-# POST https://scholarium.tmtg-clone.click/v1/user/create
+# POST https://scholarium.tmtg-clone.click/v1/user/add
 def create_account(request, email, password):    
     payload={
         'email': email,
@@ -540,20 +540,13 @@ def verify(user_hash):
     if 'data' in response_dict:
         for data in response_dict['data']:
             response_message = data.get("success")
-            password = data.get("password")
-            username = data.get("username")
-            first_name = data.get("first_name")
-            last_name = data.get("last_name")
             email = data.get("email")
     else:
         response_message = response_dict.get("error")
-        password = ''
-        first_name = ''
-        last_name = ''
-        username = ''
         email = ''
+        password = ''
     
-    return username, first_name, last_name, email, password, response_message
+    return email, response_message
 
 # GET https://discovery.coursebank.ph/api/v1/courses/?limit=6&
 def get_courses():  

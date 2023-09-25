@@ -1,7 +1,7 @@
 DOMAIN = 'scholarium.io'
 
 # MAILER
-TEST_EMAIL_RECEIVER = 'jamesmacklean27@gmail.com'
+TEST_EMAIL_RECEIVER = 'tmtcoredev@gmail.com'
 
 # API
 API_SECRET_KEY = "5af375913e149630a4dd18e2ac1548cf9bdcde9c9e03eb24e1a1f3cb5e540c4a"
