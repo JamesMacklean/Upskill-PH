@@ -117,9 +117,8 @@
                         </p>
                         <hr>
                         <h5>Apply to this Program</h5>
-                        <p>By applying to this program, you are agreeing to the program guidelines set forth by the granting organization.</p>
-                        <br>
-                        <p><a href="{% url 'guidelines' %}" target="_blank" style="color: #000 !important;">View program guidelines.</a></p>
+                        <input type="checkbox" class="mr-3" id="agreeCheckbox">
+                        <p>By checking this box, you are agreeing to the <a href="#">program guidelines</a>  set forth by the granting organization.</p>
                     </div>
                     <div class="container">
                         <form action="" class="program-application" id="apply" method="POST">
@@ -129,14 +128,14 @@
                                     <div class="form-control-custom" id="lc-custom">
                                         <div class="css-1cq002f">
                                             <div class="css-ek3fxo">
-                                                <input type="text" name="license_code" id="license_code" placeholder="Enter License Code" required class="input-ctrl">
+                                                <input type="text" name="license_code" id="license_code" placeholder="Enter License Code" required class="input-ctrl" disabled>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="form-control-custom">
                                         <div class="css-1cq002f">
                                             <div class="css-ek3fxo">
-                                                <button type="submit" class="btn solid">APPLIED</button>
+                                                <button type="submit" class="btn solid" id="applyBtn" disabled>APPLIED</button>
                                             </div>
                                         </div>
                                     </div>
@@ -157,4 +156,20 @@
             </div>
         {% endif %}
     {% endfor %}
+
+    <script>
+        var checkbox = document.getElementById("agreeCheckbox");
+        var licensetext = document.getElementById("license_code");
+        var applybtn = document.getElementById("applyBtn");
+
+        checkbox.addEventListener("click", function() {
+            if (checkbox.checked) {
+                applybtn.removeAttribute("disabled");
+                licensetext.removeAttribute("disabled");
+            } else {
+                applybtn.setAttribute("disabled", "true");
+                licensetext.setAttribute("disabled", "true");
+            }
+        });
+    </script>
 {% endblock %}
