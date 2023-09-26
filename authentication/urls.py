@@ -19,6 +19,8 @@ urlpatterns = [
     path('program/<partner_id>/<program_id>/', views.program, name="program"),
     path('partner/', views.partner, name="partner"),
     path('certificate/', views.certificate, name="certificate"),
+    path('partner/', views.partner, name="partner"),
+    path('dashboard/', views.applied_programs, name="dashboard"),
 
     # path('courses/',views.courses, name="courses"),
     
