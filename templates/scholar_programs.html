@@ -46,10 +46,10 @@
 
                                 <div class="rc-ProfilePhotoUploader form-horizontal">
                                     <div class="form-group horizontal-box wrap my-3 align-items-center">
-                                        <div class="form-control-custom">
+                                        <div class="form-control-custom" id="lc-custom">
                                             <div class="css-1cq002f">
                                                 <div class="css-ek3fxo">
-                                                    <input type="text" name="license_code" id="license_code" placeholder="Enter License Code" required>
+                                                    <input type="text" name="license_code" id="license_code" placeholder="Enter License Code" required class="input-ctrl">
                                                 </div>
                                             </div>
                                         </div>
@@ -142,7 +142,7 @@
                                     </div>
                                 </div>
                             </div>
-                            
+
                             <input type="text" name="license_code" id="license_code" placeholder="Enter License Code" required>
                             {% if user_details.first_name and user_details.last_name and user_details.email %}
                                 <input type="hidden" name="program_id" value="{{ program_id }}">
