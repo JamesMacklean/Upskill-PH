@@ -171,7 +171,7 @@ def user_education(bearer_token):
     
     return context
 
-# GET https://scholarium.tmtg-clone.click/v1/partner/programs/[partner_id]/[program_id]
+# GET https://scholarium.tmtg-clone.click/v1/partner/[partner_id]/programs/[program_id]
 def get_programs(bearer_token, partner_id,program_id):  
     program_list = []
     payload={}
@@ -180,7 +180,7 @@ def get_programs(bearer_token, partner_id,program_id):
     }
     
     if program_id:
-        response = requests.request("GET", os.path.join(API_PARTNER_PROGRAMS_URL, str(partner_id)+"/"+str(program_id)), headers=headers, data=payload)
+        response = requests.request("GET", os.path.join(API_PARTNER_URL, str(partner_id)+"/programs/"+str(program_id)), headers=headers, data=payload)
         response_dict = json.loads(response.text)
         
         if 'data' in response_dict:
@@ -191,7 +191,7 @@ def get_programs(bearer_token, partner_id,program_id):
                 print(str(e))
                               
     else:
-        response = requests.request("GET", os.path.join(API_PARTNER_PROGRAMS_URL, str(partner_id)), headers=headers, data=payload)
+        response = requests.request("GET", os.path.join(API_PARTNER_URL, str(partner_id)), headers=headers, data=payload)
         response_dict = json.loads(response.text)
         
         if 'data' in response_dict:
@@ -204,8 +204,8 @@ def get_programs(bearer_token, partner_id,program_id):
     print("############## PROGRAMS ##############",program_list)
     return program_list
 
-# GET https://scholarium.tmtg-clone.click/v1/partner/scholarship/[program_id]/[status]
-def get_applicants(bearer_token, program_id, status):  
+# GET https://scholarium.tmtg-clone.click/v1/partner/[partner_id]/scholarship/[program_id]/status/[status]
+def get_applicants(bearer_token, partner_id, program_id, status):  
     applicants_list = []
     payload={}
     headers = {
@@ -213,7 +213,7 @@ def get_applicants(bearer_token, program_id, status):
     }
     
     if status:
-        response = requests.request("GET", os.path.join(API_SCHOLAR_UPDATE_URL,str(program_id)+"/"+status), headers=headers, data=payload)
+        response = requests.request("GET", os.path.join(API_PARTNER_URL,str(partner_id)+"/scholarship/"+str(program_id)+"/status/"+status), headers=headers, data=payload)
         response_dict = json.loads(response.text)
         
         if 'data' in response_dict:
@@ -224,7 +224,7 @@ def get_applicants(bearer_token, program_id, status):
                 print(str(e))
                 
     else:
-        response = requests.request("GET", os.path.join(API_SCHOLAR_UPDATE_URL,str(program_id)), headers=headers, data=payload)
+        response = requests.request("GET", os.path.join(API_PARTNER_URL,str(partner_id)+"/scholarship/"+str(program_id)), headers=headers, data=payload)
         response_dict = json.loads(response.text)
         
         if 'data' in response_dict:

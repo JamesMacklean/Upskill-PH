@@ -21,8 +21,9 @@ API_USER_PARTNERS_URL = API_URL+"me/partners"
 API_SCHOLAR_APPLY_URL = API_URL+"me/scholarship"
 API_UPDATE_PASSWORD_URL = API_URL+"me/password"
 
-API_PARTNER_PROGRAMS_URL = API_URL+"partner/programs/"
-API_SCHOLAR_UPDATE_URL = API_URL+"partner/scholarship/"
+API_PARTNER_URL = API_URL+"partner/"
+API_PARTNER_PROGRAMS_URL = API_PARTNER_URL+"programs"
+API_SCHOLAR_UPDATE_URL = API_PARTNER_URL+"scholarship/"
 
 API_ENROLL_CODE_URL = API_URL+"me/enroll/code"
 

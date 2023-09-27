@@ -519,7 +519,7 @@ def application(request, partner_id, program_id):
         print (response_message)
             
 
-    applicants = get_applicants(user_token,program_id,None)
+    applicants = get_applicants(user_token,partner_id,program_id,None)
     for applicant in applicants:
         scholarship_applicants.append(applicant)
 
