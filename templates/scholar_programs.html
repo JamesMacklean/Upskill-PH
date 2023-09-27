@@ -117,8 +117,8 @@
                         </p>
                         <hr>
                         <h5>Apply to this Program</h5>
-                        <input type="checkbox" class="mr-3" id="agreeCheckbox">
-                        <p>By checking this box, you are agreeing to the <a href="#">program guidelines</a>  set forth by the granting organization.</p>
+                        
+                        <p><input type="checkbox" class="mr-3" id="agreeCheckbox">  By checking this box, you are agreeing to the <a href="#" id="programGuidelinesLink">program guidelines</a>  set forth by the granting organization.</p>
                     </div>
                     <div class="container">
                         <form action="" class="program-application" id="apply" method="POST">
@@ -157,19 +157,65 @@
         {% endif %}
     {% endfor %}
 
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>DIGITAL LITERACY COURSERA TRAINING PROGRAM</h2>
+            <p>ACCEPTANCE AND UNDERTAKING</p>
+            <p>
+                Congratulations! You have been selected as one of the learners for the DICT ILCDB Coursera Digital Literacy Training Program as part of the “Enhancing Information and 
+                <br>Communications Technology Upskilling Ecosystem Through Massive Open Online Courses” project, jointly led by the DICT, MOOCSX PH, 
+                <br>and Coursera. The DICT shall cover the training expenses for the duration of the program.
+            </p>
+            <p>
+                As a grantee, you are expected to perform, and be guided with the following:
+            </p>
+            <p>
+                1. Complete your selected learning track within the approved duration of the program which is from the date of your invitation to December 31, 2022;
+                <br>2. Devote the necessary amount of time and carry out the activities as stated in the plan of activities;
+                <br>3. Conduct oneself professionally and use the knowledge gained in this training in the interest of the public good;
+                <br>4. Acknowledge the support of the DICT in all reports and any publication arising from the training, a copy of which should be provided to DICT;
+                <br>5. Learners who are inactive for seven (7) days or those who voluntarily withdraw from the program without justifiable reason shall have their license to access Coursera revoked and shall be banned from participating in any DICT training program;
+                <br>6. Participate in the training monitoring and evaluation survey to be conducted by the organizers;
+                <br>7. The learners who complete the courses may be tapped as resource person for related activities of the DICT in the future in a one-time free of charge service.
+            </p>
+            <p>
+                Should you accept the above-cited conditions, kindly accomplish the agreement form below. By accomplishing the agreement below, you acknowledge reading and agreeing to the terms stated in our Privacy Policy.
+            </p>
+            <p>
+                For inquiries, you may contact us at <a href="mailto:inquire@moocs.ph">inquire@moocs.ph</a>
+            </p>
+        </div>
+    </div>
+
     <script>
         var checkbox = document.getElementById("agreeCheckbox");
         var licensetext = document.getElementById("license_code");
         var applybtn = document.getElementById("applyBtn");
+        var modal = document.getElementById("myModal");
+        var programGuidelinesLink = document.getElementById("programGuidelinesLink");
+        var closeButton = document.querySelector(".close");
 
         checkbox.addEventListener("click", function() {
             if (checkbox.checked) {
                 applybtn.removeAttribute("disabled");
                 licensetext.removeAttribute("disabled");
+                modal.style.display = "block";
             } else {
                 applybtn.setAttribute("disabled", "true");
                 licensetext.setAttribute("disabled", "true");
+                modal.style.display = "none";
             }
         });
+
+        programGuidelinesLink.addEventListener("click", function(event) {
+            event.preventDefault();
+            modal.style.display = "block";
+        });
+
+        closeButton.addEventListener("click", function() {
+            modal.style.display = "none";
+        });
+
     </script>
 {% endblock %}
