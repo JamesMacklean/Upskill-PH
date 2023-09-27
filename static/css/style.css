@@ -238,6 +238,11 @@ textarea#about_me_text {
   max-width: 600px;
 }
 
+#lc-custom {
+  width: 300px;
+  margin-right: 15px;
+}
+
 .card-image.cybersecurity_image {
   background-image: url(https://scholarium-static.s3.ap-southeast-1.amazonaws.com/cybersecurity.jpg);
   background-attachment: scroll, scroll;

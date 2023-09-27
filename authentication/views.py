@@ -330,6 +330,39 @@ def signout(request):
         
     return redirect('home')
 
+def applied_programs(request):
+    """"""
+    template_name = "program_dashboard.html"
+    context = {}
+    applied_programs = []
+    ########## LOGIN REQUIRED ##########
+    if not authenticate_user(request):
+        request.session['url'] = "dashboard"
+        return HttpResponseRedirect('/signin?next=dashboard')
+    clear_session(request,'url')
+    ########## LOGIN REQUIRED ##########
+    
+    user_token = request.session['user_token']
+    scholarships = user_programs(user_token)
+            
+    if scholarships: 
+        try:  
+            for data in scholarships:
+                program_id = data['program_id']
+                applied_programs.append(program_id)
+            
+        except Exception as e:
+            print(str(e))       
+
+    # NAKADEFAULT MUNA ITO SA 2 SINCE DICT PA LANG ANG MAY PROGRAMS
+    context['program_list'] = get_programs(user_token,2,None)
+    context['profile'] = user_profile(user_token)
+    context['scholarships'] = scholarships
+    context['applied_programs'] = applied_programs
+    
+    return render(request, template_name, context)
+
+
 def profile(request):
     """"""
     template_name = "profile_dashboard.html"
