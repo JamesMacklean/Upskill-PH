@@ -191,7 +191,7 @@ def get_programs(bearer_token, partner_id,program_id):
                 print(str(e))
                               
     else:
-        response = requests.request("GET", os.path.join(API_PARTNER_URL, str(partner_id)), headers=headers, data=payload)
+        response = requests.request("GET", os.path.join(API_PARTNER_URL, str(partner_id)+"/programs"), headers=headers, data=payload)
         response_dict = json.loads(response.text)
         
         if 'data' in response_dict:
