@@ -208,7 +208,8 @@ def signup(request):
             password = request.POST['password']
 
             user_hash, response_message = create_account(request, email, password)
-               
+            context['response_message'] = response_message
+            
             if user_hash:
                 #### MODAL RESPONSE KUNG NAGWORK BA ANG SIGN UP
                 response_message = "success"
@@ -315,6 +316,7 @@ def signin(request):
         else:
             # LAGYAN ITO NG MESSAGE BOX NA NAGSASABI NG ERROR MESSAGE
             print ("ERROR:", response_message)
+            context['response_message'] = response_message
             return render(request, template_name, context)
 
     return render(request, template_name, context)
