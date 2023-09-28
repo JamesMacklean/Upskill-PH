@@ -35,10 +35,10 @@
                                 <a href="https://www.coursera.org/" target="_blank" style="color: #000 !important;">Coursera</a>
                             </p>
                             <hr>
-                            <h5>Apply to this Program</h5>
+                            {% comment %} <h5>Apply to this Program</h5>
                             <p>By applying to this program, you are agreeing to the program guidelines set forth by the granting organization.</p>
                             <br>
-                            <p><a href="{% url 'guidelines' %}" target="_blank" style="color: #000 !important;">View program guidelines.</a></p>
+                            <p><a href="{% url 'guidelines' %}" target="_blank" style="color: #000 !important;">View program guidelines.</a></p> {% endcomment %}
                         </div>
                         <div class="container">
                             <form action="" class="program-application" id="apply" method="POST">
@@ -46,13 +46,6 @@
 
                                 <div class="rc-ProfilePhotoUploader form-horizontal">
                                     <div class="form-group horizontal-box wrap my-3 align-items-center">
-                                        <div class="form-control-custom" id="lc-custom">
-                                            <div class="css-1cq002f">
-                                                <div class="css-ek3fxo">
-                                                    <input type="text" name="license_code" id="license_code" placeholder="Enter License Code" required class="input-ctrl">
-                                                </div>
-                                            </div>
-                                        </div>
                                         <div class="form-control-custom">
                                             <div class="css-1cq002f">
                                                 <div class="css-ek3fxo">
@@ -136,7 +129,7 @@
                                     <div class="form-control-custom">
                                         <div class="css-1cq002f">
                                             <div class="css-ek3fxo">
-                                                <button type="submit" class="btn solid" id="applyBtn" disabled>APPLIED</button>
+                                                <button type="submit" class="btn solid" id="applyBtn" disabled>APPLY NOW</button>
                                             </div>
                                         </div>
                                     </div>
