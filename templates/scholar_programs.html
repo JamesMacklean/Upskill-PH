@@ -56,30 +56,29 @@
                                         <div class="form-control-custom">
                                             <div class="css-1cq002f">
                                                 <div class="css-ek3fxo">
-                                                    <button type="submit" class="btn solid">APPLIED</button>
+                                                    {% if atleast_approved_in_a_program %}
+                                                        {% if scholarship.status == 1 %}
+                                                            <a href="#" class="btn btn-primary">Go to Program</a>
+                                                            {% comment %} <button type="submit" class="btn solid">APPLIED</button> {% endcomment %}
+                                                        {% else %}
+                                                            <p>You cannot apply to more than 1 Program</p>
+                                                        {% endif %}
+                                                    {% else %}
+                                                        {% if scholarship.status == 1 %}
+                                                            <button type="submit" class="btn btn-primary"disabled>ALREADY APPLIED</button>
+                                                        {% elif scholarship.status == 2 %}
+                                                            <button type="submit" class="btn btn-primary"disabled>WAITLISTED</button>
+                                                        {% elif scholarship.status == 3 %}
+                                                            <button type="submit" class="btn btn-primary"disabled>REJECTED</button>
+                                                        {% else %}
+                                                            <button type="submit" class="btn btn-primary"disabled>PENDING</button>
+                                                        {% endif %}
+                                                    {% endif %}
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-
-                                {% if atleast_approved_in_a_program %}
-                                    {% if scholarship.status == 1 %}
-                                        <button type="submit" class="btn solid">APPLIED</button>
-                                    {% else %}
-                                        <button type="submit" class="btn solid">CANNOT APPLY TO MORE THAN 1 PROGRAM</button>
-                                    {% endif %}
-                                {% else %}
-                                    {% if scholarship.status == 1 %}
-                                        <button type="submit" class="btn solid">ALREADY APPLIED</button>
-                                    {% elif scholarship.status == 2 %}
-                                        <button type="submit" class="btn solid">WAITLISTED</button>
-                                    {% elif scholarship.status == 3 %}
-                                        <button type="submit" class="btn solid">REJECTED</button>
-                                    {% else %}
-                                        <button type="submit" class="btn solid">PENDING</button>
-                                    {% endif %}
-                                {% endif %}
                             </form>
                         </div>
                     </div>
@@ -129,6 +128,8 @@
                                         <div class="css-1cq002f">
                                             <div class="css-ek3fxo">
                                                 <input type="text" name="license_code" id="license_code" placeholder="Enter License Code" required class="input-ctrl" disabled>
+                                                {% if user_details.first_name and user_details.last_name and user_details.email %}
+                                                <input type="hidden" name="program_id" value="{{ program_id }}">
                                             </div>
                                         </div>
                                     </div>
@@ -141,15 +142,19 @@
                                     </div>
                                 </div>
                             </div>
+                            {% else %}
+                                <p>COMPLETE YOUR PROFILE FIRST!</p>
+                            {% endif %}
+                            <p>{{ message }}</p>
 
-                            <input type="text" name="license_code" id="license_code" placeholder="Enter License Code" required>
+                            {% comment %} <input type="text" name="license_code" id="license_code" placeholder="Enter License Code" required>
                             {% if user_details.first_name and user_details.last_name and user_details.email %}
                                 <input type="hidden" name="program_id" value="{{ program_id }}">
                                 <button type="submit" class="btn solid">APPLY NOW</button>
                             {% else %}
                                 <p>COMPLETE YOUR PROFILE FIRST!</p>
                             {% endif %}
-                            <p>{{ message }}</p>
+                            <p>{{ message }}</p> {% endcomment %}
                         </form>
                     </div>
                 </div>
