@@ -115,14 +115,14 @@
                     <div class="container">
                         <form action="" class="program-application" id="apply" method="POST">
                             {% csrf_token %}
+                            {% if user_details.first_name and user_details.last_name and user_details.email %}
                             <div class="rc-ProfilePhotoUploader form-horizontal">
                                 <div class="form-group horizontal-box wrap my-3 align-items-center">
                                     <div class="form-control-custom" id="lc-custom">
                                         <div class="css-1cq002f">
                                             <div class="css-ek3fxo">
                                                 <input type="text" name="license_code" id="license_code" placeholder="Enter License Code" required class="input-ctrl" disabled>
-                                                {% if user_details.first_name and user_details.last_name and user_details.email %}
-                                                <input type="hidden" name="program_id" value="{{ program_id }}">
+                                                {% comment %} <input type="hidden" name="program_id" value="{{ program_id }}"> {% endcomment %}
                                             </div>
                                         </div>
                                     </div>
@@ -136,7 +136,25 @@
                                 </div>
                             </div>
                             {% else %}
-                                <p>COMPLETE YOUR PROFILE FIRST!</p>
+                            <div class="rc-ProfilePhotoUploader form-horizontal">
+                                <div class="form-group horizontal-box wrap my-3 align-items-center">
+                                    <div class="form-control-custom" id="lc-custom">
+                                        <div class="css-1cq002f">
+                                            <div class="css-ek3fxo">
+                                                <input type="hidden" name="program_id" value="{{ program_id }}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-control-custom">
+                                        <div class="css-1cq002f">
+                                            <div class="css-ek3fxo">
+                                                <button type="submit" class="btn solid" id="applyBtn" disabled>APPLY NOW</button> <br>
+                                                <p>COMPLETE YOUR PROFILE FIRST!</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             {% endif %}
                             <p>{{ message }}</p>
 
