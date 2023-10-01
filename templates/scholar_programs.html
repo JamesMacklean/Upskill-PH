@@ -142,14 +142,16 @@
                                         <div class="css-1cq002f">
                                             <div class="css-ek3fxo">
                                                 <input type="hidden" name="program_id" value="{{ program_id }}">
-                                                <p>COMPLETE YOUR PROFILE FIRST!</p>
+                                                <p>You need to update your profile to apply to this Program. <br>
+                                                <a href="{% url 'edit_profile' %}">Update Profile</a>
+                                                </p>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="form-control-custom">
                                         <div class="css-1cq002f">
                                             <div class="css-ek3fxo">
-                                                <button type="hidden" class="btn solid" id="applyBtn" disabled>APPLY NOW</button>
+                                                {% comment %} <button type="submit" class="btn solid" id="applyBtn" disabled>APPLY NOW</button> {% endcomment %}
                                             </div>
                                         </div>
                                     </div>
