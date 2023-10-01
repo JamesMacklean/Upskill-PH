@@ -144,9 +144,9 @@ def success(request, user_hash):
         'Content of the Message', 
         settings.EMAIL_HOST_USER, 
         ########## ORIGINAL CODE ##########
-        # [email], 
+        [email], 
         ########## FOR TEST CODE ##########
-        [TEST_EMAIL_RECEIVER],
+        # [TEST_EMAIL_RECEIVER],
         html_message=html,
         fail_silently=False
     )
@@ -168,24 +168,7 @@ def verify_account(request, user_hash):
 
     try:
         email, response_message = verify(user_hash)
-        
-        # ############################# FOR MAIL ##############################
-        # html = render_to_string('emails/welcome_email.html', {
-        #     'email': email
-        # })
-        # send_mail(
-        #     'Title', 
-        #     'Content of the Message', 
-        #     settings.EMAIL_HOST_USER, 
-        #     ########## ORIGINAL CODE ##########
-        #     # [email], 
-        #     ########## FOR TEST CODE ##########
-        #     [TEST_EMAIL_RECEIVER],
-        #     html_message=html,
-        #     fail_silently=False
-        # )
-        # ############################# FOR MAIL ##############################
-        
+                
         if email:
             print ("SUCCESS:", response_message)
             return render(request, template_successful, context)                 
@@ -230,9 +213,9 @@ def signup(request):
                     'Content of the Message', 
                     settings.EMAIL_HOST_USER, 
                     ########## ORIGINAL CODE ##########
-                    # [email], 
+                    [email], 
                     ########## FOR TEST CODE ##########
-                    [TEST_EMAIL_RECEIVER],
+                    # [TEST_EMAIL_RECEIVER],
                     html_message=html,
                     fail_silently=False
                 )
