@@ -21,7 +21,11 @@
         {% comment %} <a href="{% url 'courses' %}">Courses</a> {% endcomment %}
         <a href="{% url 'dashboard' %}">Dashboard</a>
         <div class="user-dropdown">
-            <a href="#" class="username">{{request.session.username}} <i class="fas fa-caret-down caret-down"></i></a>
+            {% if requet.session.username %}
+                <a href="#" class="username">{{request.session.username}} <i class="fas fa-caret-down caret-down"></i></a>
+            {% else %}
+                <a href="#" class="username">{{request.session.email}} <i class="fas fa-caret-down caret-down"></i></a>
+            {% endif %}
             <div class="dropdown-content">
                 <a href="{% url 'profile' %}">Profile</a>
                 <a href="{% url 'account' %}">Account</a>

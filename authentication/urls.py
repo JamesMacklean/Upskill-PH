@@ -25,5 +25,8 @@ urlpatterns = [
     # path('courses/',views.courses, name="courses"),
     
     path('guidelines/',views.guidelines, name="guidelines"),
-    path('privacy/', views.privacy, name="privacy")
+    path('privacy/', views.privacy, name="privacy"),
+    
+    # COURSERA
+    path('refresh/', views.refresh_token, name="refresh"),
 ]

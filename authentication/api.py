@@ -23,6 +23,7 @@ from .variables import *
 import os, requests, ast, jwt
 import json
 
+
 # GET https://scholarium.tmtg-clone.click/v1/me
 def user_details(bearer_token):  
     user_data = []
@@ -201,7 +202,27 @@ def get_programs(bearer_token, partner_id,program_id):
             except Exception as e:
                 print(str(e))
 
-    print("############## PROGRAMS ##############",program_list)
+    return program_list
+
+# GET https://api.coursera.org/api/businesses.v1/PigzUIPvRnWQ-YVaCKAmCw/programs
+def get_dict_programs(bearer_token):
+    program_list = []
+    payload = {}
+    headers = {
+    'Authorization': 'Bearer '+ bearer_token
+    }
+
+    response = requests.request("GET", DICT_PROGRAMS_URL, headers=headers, data=payload)
+    response_dict = json.loads(response.text)
+    
+    # 'id', 'name', 'tagline', 'url', 'contentIds': [{'contentId', 'contentType'}]}
+    if 'elements' in response_dict:
+        try:
+            for data in response_dict['elements']:
+                program_list.append(data)
+        except Exception as e:
+            print(str(e))
+
     return program_list
 
 # GET https://scholarium.tmtg-clone.click/v1/partner/[partner_id]/scholarship/[program_id]/status/[status]
@@ -602,3 +623,84 @@ def enroll_code(bearer_token, program_id, code):
         response_message = response_dict.get("error")
     
     return response_message
+
+# GET INITIAL CODE
+def get_initial_code():
+    try:
+        code = CourseraToken.objects.get(item='initial_code')
+        return code.value
+    except CourseraToken.DoesNotExist:
+        return None
+    
+def get_refresh_token_from_django():
+    try:
+        token = CourseraToken.objects.get(item='refresh_token')
+        return token.value
+    except CourseraToken.DoesNotExist:
+        return None
+    
+# POST https://accounts.coursera.org/oauth2/v1/token
+def get_refresh_token():  
+
+    payload = 'redirect_uri=http%3A%2F%2Flocalhost%3A9876%2Fcallback&client_id=' + COURSERA_CLIENT_ID + "&client_secret=" + COURSERA_CLIENT_SECRET + "&access_type=offline&code=" + get_initial_code() + "&Content-Type=application%2Fx-www-form-urlencoded&grant_type=authorization_code"
+    
+    headers = {
+    'Content-Type': 'application/x-www-form-urlencoded',
+    }
+
+    response = requests.request("POST", COURSERA_TOKEN_URL, headers=headers, data=payload)
+    response_dict = json.loads(response.text)
+    
+    if 'refresh_token' in response_dict:
+        new_refresh_token =  response_dict.get("refresh_token")
+        new_access_token =  response_dict.get("access_token")
+        
+        try:
+            refresh_token_entry = CourseraToken.objects.get(item='refresh_token')
+            access_token_entry = CourseraToken.objects.get(item='access_token')
+        except CourseraToken.DoesNotExist:
+            refresh_token_entry = CourseraToken(item='refresh_token', value=new_refresh_token)
+            refresh_token_entry.save()
+            access_token_entry = CourseraToken(item='access_token', value=new_access_token)
+            access_token_entry.save()
+        else:
+            refresh_token_entry.value = new_refresh_token
+            refresh_token_entry.save()
+            access_token_entry.value = new_access_token
+            access_token_entry.save()
+
+    return (response.text)
+
+# POST https://accounts.coursera.org/oauth2/v1/token
+def get_access_token():
+    
+    access_token = CourseraToken.objects.get(item='access_token')
+    
+    if access_token.is_access_token_expired():
+        payload = 'redirect_uri=http%3A%2F%2Flocalhost%3A9876%2Fcallback&client_id=' + COURSERA_CLIENT_ID + '&client_secret=' + COURSERA_CLIENT_SECRET + '&access_type=offline&Content-Type=application%2Fx-www-form-urlencoded&grant_type=refresh_token&refresh_token=' + get_refresh_token_from_django()
+
+        headers = {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        }
+
+        response = requests.request("POST", COURSERA_TOKEN_URL, headers=headers, data=payload)
+        response_dict = json.loads(response.text)
+        if 'access_token' in response_dict:
+            new_access_token =  response_dict.get("access_token")
+            access_token = new_access_token
+            try:
+                access_token_entry = CourseraToken.objects.get(item='access_token')
+            except CourseraToken.DoesNotExist:
+                access_token_entry = CourseraToken(item='access_token', value=new_access_token)
+                access_token_entry.save()
+            else:
+                access_token_entry.value = new_access_token
+                access_token_entry.save()
+        
+        access_token = CourseraToken.objects.get(item='access_token')
+        print(response.text)
+    
+    else:
+        print(f'access token: {access_token.value} is modified last {access_token.last_modified} and is not yet expired.')
+    
+    return access_token.value

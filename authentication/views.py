@@ -562,6 +562,7 @@ def program(request, partner_id, program_id):
     clear_session(request,'url')
     ######### LOGIN REQUIRED ##########
     
+    bearer_token = get_access_token()    
     user_token = request.session['user_token']
     username = request.session.get('username')        
     first_name = request.session.get('first_name')
@@ -608,6 +609,7 @@ def program(request, partner_id, program_id):
     
     context['program_id'] = program_id
     context['programs'] = get_programs(user_token,partner_id,program_id)
+    context['dict_programs'] = get_dict_programs(bearer_token)
     context['scholarships'] = scholarships
     context['applied_programs'] = applied_programs
     context['atleast_approved_in_a_program'] = status_checker
@@ -682,3 +684,14 @@ def guidelines(request):
 
 # def privacy(request):
 #     return render(request, "static_templates/privacy.html")
+
+def refresh_token(request):
+    """"""
+    template_name = "coursera/refresh_token.html"
+    context = {}
+    
+    response = get_refresh_token()
+    
+    context['response'] = response
+    
+    return render(request, template_name, context)
