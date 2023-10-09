@@ -21,12 +21,7 @@
 }
 
 .about {
-  background: linear-gradient(90deg, rgba(242, 90, 37, 0.5004376751) 25%, rgb(255, 255, 255) 67%), url("../images/about-banner.jpg");
-  height: 100vh;
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center right;
-  color: #f15a25;
+  background-color: #F5F5F5;
 }
 
 .partner {
