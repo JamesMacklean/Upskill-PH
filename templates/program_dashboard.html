@@ -14,9 +14,9 @@
       <div class="container my-5 py-5">
           <h3>Enrolled Programs</h3>
                   <div class="partner-cards my-5">
-                    {% if not scholarship %}
+                    {% comment %} {% if not scholarship %}
                         <p>You are not yet enrolled in any Scholarship Programs.</p>  
-                        {% else %}
+                        {% else %} {% endcomment %}
                       {% for scholarship in scholarships %}
                           {% for program in program_list %}
                               {% if scholarship.program_id == program.id %}    
@@ -51,7 +51,7 @@
                               {% endif %}      
                           {% endfor %}   
                           {% endfor %}  
-                          {% endif %}
+                          {% comment %} {% endif %} {% endcomment %}
                       </div> 
                   </div>
           </div>
