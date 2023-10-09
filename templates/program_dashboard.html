@@ -7,59 +7,10 @@
 
 <div>
     <div class="container mt-5 mb-3">
-        <h3>Scholarship Programs</h3>
+        <h3>My Scholarship Programs</h3>
     </div>
-    <div class="bg-light">
-      <div class="container my-5 py-5">
-          <h3>Available Programs</h3>
-                  <div class="partner-cards my-5">
-                      {% for program in program_list %}
-                              {% if program.id not in applied_programs %}   
-                              <a href="{% url 'program' program.partner_id program.id %}">
-                                  <div class="partner-card-container">
-                                      <div class="partner-card-image">
-                                        {% if program.image %}
-                                        <img class="img-item" src="{{program.image}}">
-                                        {% else %}
-                                        <img class="img-item" src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/spiral_ict_model-768x415.jpg">
-                                        {% endif %} 
-                                      </div>
-                                      
-                                      <div class="card-partner-logo">
-                                          <img src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/DICT-Logo-nobg.png">
-                                          <img src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/ILCDB+logo_2.png">
-                                          <img src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/coursera-social-logo-brand.png">
-                                          <img src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/logo-moocsx.png">
-                                      </div>
-                                      
-                                      <div class="card-content p-3">
-                                          <div class="container-card-title pt-3">
-                                              <h5 class="text-dark">{{program.name}}</h5>
-                                              <p class="card-title-content">
-                                                  {% if program.end_date %}
-                                                      {{program.start_date|parse_iso|date:"M d"}} - {{program.end_date|parse_iso|date:"M d, Y"}}
-                                                  {% else %}
-                                                      since {{program.start_date|parse_iso|date:"M d, Y"}}
-                                                  {% endif %}
-                                                  {% if program.registration_end %}
-                                                      <br>Registration closes on <br>
-                                                      {{program.registration_end}}
-                                                  {% else %}
-                                                      <br>Registration is open
-                                                  {% endif %}
-                                              </p>
-                                          </div>
-                                      </div>
-                                  </div>
-                              </a>    
-                              {% endif %}
-                          {% endfor %}
-                  </div>
-          </div>
-      </div>
-  </div>
   
-  <div class="bg-white">
+    <div class="bg-white">
       <div class="container my-5 py-5">
           <h3>Enrolled Programs</h3>
                   <div class="partner-cards my-5">
@@ -100,6 +51,57 @@
                   </div>
           </div>
       </div>
-  </div>
+    </div>
+    <div class="bg-light">
+        <div class="container my-5 py-5">
+            <h3>Available Programs</h3>
+                    <div class="partner-cards my-5">
+                        {% for program in program_list %}
+                                {% if program.id not in applied_programs %}   
+                                <a href="{% url 'program' program.partner_id program.id %}">
+                                    <div class="partner-card-container">
+                                        <div class="partner-card-image">
+                                          {% if program.image %}
+                                          <img class="img-item" src="{{program.image}}">
+                                          {% else %}
+                                          <img class="img-item" src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/spiral_ict_model-768x415.jpg">
+                                          {% endif %} 
+                                        </div>
+                                        
+                                        <div class="card-partner-logo">
+                                            <img src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/DICT-Logo-nobg.png">
+                                            <img src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/ILCDB+logo_2.png">
+                                            <img src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/coursera-social-logo-brand.png">
+                                            <img src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/logo-moocsx.png">
+                                        </div>
+                                        
+                                        <div class="card-content p-3">
+                                            <div class="container-card-title pt-3">
+                                                <h5 class="text-dark">{{program.name}}</h5>
+                                                <p class="card-title-content">
+                                                    {% if program.end_date %}
+                                                        {{program.start_date|parse_iso|date:"M d"}} - {{program.end_date|parse_iso|date:"M d, Y"}}
+                                                    {% else %}
+                                                        since {{program.start_date|parse_iso|date:"M d, Y"}}
+                                                    {% endif %}
+                                                    {% if program.registration_end %}
+                                                        <br>Registration closes on <br>
+                                                        {{program.registration_end}}
+                                                    {% else %}
+                                                        <br>Registration is open
+                                                    {% endif %}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>  
+                                {% else %}
+                                <p>You are not yet enrolled in any Scholarship Programs.</p>
+                                {% endif %}
+                            {% endfor %}
+                    </div>
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock %}
