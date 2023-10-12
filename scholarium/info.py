@@ -1,5 +1,5 @@
 DOMAIN = 'scholarium.io'
-TEST_EMAIL_RECEIVER = 'tmtcoredev@gmail.com'
+TEST_EMAIL_RECEIVER = 'jamesmacklean27@gmail.com'
 
 ########## ORIGINAL CODE ##########
 API_TOKEN = 'TMTG tujyBpbgtum3xcctFvXZgr4ZnaRsddVRpvkwJuq8B3KEwfd4BZQtrRaj5r4vdtDm'

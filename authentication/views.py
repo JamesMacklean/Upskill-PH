@@ -18,6 +18,7 @@ from .api import *
 from .forms import *
 from .decorators import *
 from django.template import Library
+from .api import InvitationsAPI
 
 from .variables import *
 import os, requests, ast, jwt
@@ -568,6 +569,8 @@ def program(request, partner_id, program_id):
     first_name = request.session.get('first_name')
     last_name = request.session.get('last_name')
     email = request.session.get('email')
+    user_id = request.session.get('id')
+    
     scholarships = user_programs(user_token)
     
     # LOCKED OUT DAPAT ANG OTHER PROGRAMS KAPAG NAGAPPLY SA ISA
@@ -583,12 +586,21 @@ def program(request, partner_id, program_id):
     if request.method == "POST":
         # response = scholar_apply(user_token,program_id)
         license_code = request.POST.get('license_code')
+        coursera_program_id = request.POST.get('coursera_program_id')
+        full_name = first_name + last_name
+        
+        access_token = get_access_token()
+        api = InvitationsAPI(access_token, coursera_program_id)
+
         response = enroll_code(user_token, program_id, license_code)
         
+        if response == "License Code Verified!":
+            invitation_response = api.invite_user(user_id, full_name, email, True)
+            print(invitation_response)
+            
         #### MODAL RESPONSE KUNG NAGWORK BA ANG APPLICATION
-        print(response)
         context['message'] = response
-        # return render(request, template_name, context)
+        return render(request, template_name, context)
         
     all_programs = get_programs(user_token, partner_id, None)
     

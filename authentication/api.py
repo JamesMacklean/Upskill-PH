@@ -704,3 +704,34 @@ def get_access_token():
         print(f'access token: {access_token.value} is modified last {access_token.last_modified} and is not yet expired.')
     
     return access_token.value
+
+# POST https://api.coursera.org/api/businesses.v1/{{ORG_ID}}/programs/{{PROGRAM_ID}}/invitations
+class InvitationsAPI:
+    def __init__(self, access_token, program_id):
+        self.base_url = DICT_PROGRAMS_URL+"/" + program_id + "/invitations"
+        self.bearer_token = access_token
+
+    def invite_user(self, external_id, full_name, email, send_email, contract_id=None):
+        params = {}
+        if contract_id:
+            params["contractId"] = contract_id
+
+        headers = {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + self.bearer_token
+        }
+        
+        payload = json.dumps({
+            "externalId": external_id,
+            "fullName": full_name,
+            "email": email,
+            "sendEmail": send_email
+        })
+
+        response = requests.request("POST", self.base_url, headers=headers, data=payload, params=params)
+
+        if response.status_code == 201:
+            return response.json()
+        else:
+            raise Exception(f"Error inviting user: {response.status_code} - {response.text}")
+
