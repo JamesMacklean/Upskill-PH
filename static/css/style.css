@@ -7,17 +7,31 @@
 }
 
 .custom-container {
-  padding: 0 20px;
+  padding: 0 10%;
   margin: 0 auto;
   max-width: 1400px;
 }
 
 .hero-banner {
-  background: linear-gradient(70deg, rgba(242, 90, 37, 0.92) 36%, rgba(241, 190, 172, 0.1615021008) 73%, rgba(255, 255, 255, 0) 100%), url("../images/hero-banner.jpg");
+  background: url("https://scholarium-static.s3.ap-southeast-1.amazonaws.com/schol-hero-banner.jpg");
   height: calc(100vh - 90px);
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center right;
+}
+
+.hero-color {
+  color: #433A3F;
+}
+
+.btn-sec {
+  padding: 12px 25px;
+  border-radius: 5px;
+  background-color: #433A3F;
+}
+
+.btn-sec:hover {
+  background-color: #ff7300;
 }
 
 .about {
