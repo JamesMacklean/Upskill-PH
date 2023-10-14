@@ -50,16 +50,9 @@
                                                 <div class="form-control-custom">
                                                     <div class="css-1cq002f">
                                                         <div class="css-ek3fxo">
-                                                            {% if atleast_approved_in_a_program %}
                                                                 {% if scholarship.status == 1 %}
                                                                     <a href={{dict_program.url}} class="btn btn-primary">Go to Program</a>
                                                                     {% comment %} <button type="submit" class="btn solid">APPLIED</button> {% endcomment %}
-                                                                {% else %}
-                                                                    <p>You cannot apply to more than 1 Program</p>
-                                                                {% endif %}
-                                                            {% else %}
-                                                                {% if scholarship.status == 1 %}
-                                                                    <button type="submit" class="btn btn-primary"disabled>ALREADY APPLIED</button>
                                                                 {% elif scholarship.status == 2 %}
                                                                     <button type="submit" class="btn btn-primary"disabled>WAITLISTED</button>
                                                                 {% elif scholarship.status == 3 %}
@@ -67,7 +60,6 @@
                                                                 {% else %}
                                                                     <button type="submit" class="btn btn-primary"disabled>PENDING</button>
                                                                 {% endif %}
-                                                            {% endif %}
                                                         </div>
                                                     </div>
                                                 </div>
@@ -113,8 +105,11 @@
                                     <a href="https://www.coursera.org/" target="_blank" style="color: #000 !important;">Coursera</a>
                                 </p>
                                 <hr>
-                                <h5>Apply to this Program</h5>
                                 
+                                <h5>Apply to this Program</h5>
+                                {% if atleast_approved_in_a_program %}
+                                <p>You cannot apply to more than 1 program</p>
+                                {% else %}
                                 <p><input type="checkbox" class="mr-3" id="agreeCheckbox">  By checking this box, you are agreeing to the <a href="#" id="programGuidelinesLink">program guidelines</a>  set forth by the granting organization.</p>
                             </div>
                             <div class="container">
@@ -164,6 +159,7 @@
                                         </div>
                                     {% endif %}
                                     <p>{{ message }}</p>
+                                    {% endif %}
 
                                     {% comment %} <input type="text" name="license_code" id="license_code" placeholder="Enter License Code" required>
                                     {% if user_details.first_name and user_details.last_name and user_details.email %}
