@@ -27,10 +27,14 @@
 .btn-sec {
   padding: 12px 25px;
   border-radius: 5px;
-  background-color: #433A3F;
+  background-color: #433A3F !important;
 }
 
 .btn-sec:hover {
+  background-color: #ff7300;
+}
+
+.btn-secondary:hover {
   background-color: #ff7300;
 }
 
