@@ -172,6 +172,57 @@ def user_education(bearer_token):
     
     return context
 
+# GET https://scholarium.tmtg-clone.click/v1/admin/users/[user_id]/[endpoint]
+def get_user_details(bearer_token, user_id, endpoint):
+    payload={}
+    context = {}
+    headers = {
+    'Authorization': bearer_token
+    }
+
+    url = ADMIN_URL + f"users/{user_id}/{endpoint}"
+    
+    response = requests.request("GET", url, headers=headers, data=payload)
+    response_dict = json.loads(response.text)
+
+    
+    if 'data' in response_dict:
+        try:
+            for data in response_dict['data']:
+                for key, value in data.items():
+                    if value is not None:
+                        context[key] = data.get(key)
+                        
+        except Exception as e:
+            print(str(e))
+    
+    return context
+
+
+# GET https://scholarium.tmtg-clone.click/v1/admin/users
+def users_list(bearer_token, user_id=None, endpoint=None):  
+    if user_id and endpoint:
+        return get_user_details(bearer_token, user_id, endpoint)
+    
+    users = []
+    payload={}
+    headers = {
+    'Authorization': bearer_token
+    }
+    
+    response = requests.request("GET", ADMIN_URL + "users/", headers=headers, data=payload)
+    response_dict = json.loads(response.text)
+
+    print(response)
+    if 'data' in response_dict:
+        try:
+            for data in response_dict['data']:
+                users.append(data)
+        except Exception as e:
+            print(str(e))
+            
+    return users
+
 # GET https://scholarium.tmtg-clone.click/v1/partner/[partner_id]/programs/[program_id]
 def get_programs(bearer_token, partner_id,program_id):  
     program_list = []

@@ -19,10 +19,11 @@ from .forms import *
 from .decorators import *
 from django.template import Library
 from .api import InvitationsAPI
+from django.core.paginator import Paginator
 
 from .variables import *
-import os, requests, ast, jwt
-import json
+import os, requests, ast, jwt, csv
+
 class SessionChecker(APIView):
     def get(self, request):    
         # CHECK IF USER IS AUTHENTICATED
@@ -348,6 +349,85 @@ def applied_programs(request):
     
     return render(request, template_name, context)
 
+def admin_dashboard(request):
+    """"""
+    template_name = "admin/admin_dashboard.html"
+    context = {}
+
+    ########## LOGIN REQUIRED ##########
+    if not authenticate_user(request):
+        request.session['url'] = "home"
+        return render(request, "index.html")
+    clear_session(request,'url')
+    ########## LOGIN REQUIRED ##########
+    is_admin = request.session['is_admin']
+    if not is_admin:
+        raise Http404
+    
+    user_token = request.session['user_token']
+    users = users_list(user_token)
+    
+    search_term = request.GET.get('search', '')
+    filtered_users = [user for user in users if search_term.lower() in str(user).lower()]
+    if search_term:
+        for user in users:
+            for key, value in user.items():
+                if isinstance(value, str) and search_term.lower() in value.lower():
+                    filtered_users.append(user)
+                    break
+    else:
+        filtered_users = users
+
+    paginator = Paginator(filtered_users, 50)  # Show 50 users per page
+    
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    
+    if 'generate_csv' in request.GET:
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename="users.csv"'
+
+        writer = csv.DictWriter(response, fieldnames=filtered_users[0].keys())
+        writer.writeheader()
+        for user in filtered_users:
+            writer.writerow(user)
+        return response
+    
+    context = {
+        'users': page_obj,
+        'paginator': paginator,
+        'search_query': search_term,  # Add the search query to the context
+    }
+    return render(request,template_name, context)
+
+def user_details(request, user_id):
+    
+    template_name = "admin/user_details.html"
+    context = {}
+
+    ########## LOGIN REQUIRED ##########
+    if not authenticate_user(request):
+        request.session['url'] = "home"
+        return render(request, "index.html")
+    clear_session(request,'url')
+    ########## LOGIN REQUIRED ##########
+    is_admin = request.session['is_admin']
+    if not is_admin:
+        raise Http404
+    
+    user_token = request.session['user_token']
+    profile_details = users_list(user_token, user_id, 'profile')
+    education_details = users_list(user_token, user_id, 'education')
+    employment_details = users_list(user_token, user_id, 'employment')
+    # Add error handling here if needed
+    context = {
+        'profile_details': profile_details,
+        'education_details': education_details,
+        'employment_details': employment_details,
+    }
+    print('!!!!!!!!!!!!!!!!')
+    print(profile_details)
+    return render(request, template_name, context)
 
 def profile(request):
     """"""
