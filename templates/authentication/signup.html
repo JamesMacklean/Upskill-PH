@@ -18,10 +18,12 @@
                         <div>
                             <p class="m-1 label">Email</p>
                         </div>
+                        {% if response_message %}
                         <div class="d-flex flex-row align-items-center">
-                            <i class="fas fa-circle-xmark label"></i>
-                            <p class="m-1 label">{{ response_message }}</p>
+                            <i class="fas fa-circle-xmark label text-danger"></i>
+                            <p class="m-1 label text-danger">{{ response_message }}</p>
                         </div>
+                        {% endif %}
                     </div>
                     <input type="text" id="email"  name="email" placeholder="Email" required class="px-2">
                 </div>
