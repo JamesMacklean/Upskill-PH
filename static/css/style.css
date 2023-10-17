@@ -44,10 +44,13 @@
 }
 
 .partner {
-  height: 100vh;
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center right;
+}
+
+.bg-sec {
+  background-color: #433A3F;
 }
 
 a.schol-link {
