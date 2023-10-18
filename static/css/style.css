@@ -24,6 +24,10 @@
   color: #433A3F;
 }
 
+.section-image img {
+  max-width: 100%;
+}
+
 .btn-sec {
   padding: 12px 25px;
   border-radius: 5px;
