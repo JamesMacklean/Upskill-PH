@@ -1,142 +1,371 @@
-{% load static %}
-{% block content %}
-{% comment %} <table width="100%" align="left" border="0" cellpadding="0" cellspacing="0" role="presentation">
+<!DOCTYPE html>
+<html lang="en" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:v="urn:schemas-microsoft-com:vml">
+<head>
+	<title>Account Verification</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><!--[if mso]><xml><o:OfficeDocumentSettings><o:PixelsPerInch>96</o:PixelsPerInch><o:AllowPNG/></o:OfficeDocumentSettings></xml><![endif]-->
+	<style type="text/css">* {
+			box-sizing: border-box;
+		}
+
+		body {
+			margin: 0;
+			padding: 0;
+		}
+
+		a[x-apple-data-detectors] {
+			color: inherit !important;
+			text-decoration: inherit !important;
+		}
+
+		#MessageViewBody a {
+			color: inherit;
+			text-decoration: none;
+		}
+
+		p {
+			line-height: inherit
+		}
+
+		.desktop_hide,
+		.desktop_hide table {
+			mso-hide: all;
+			display: none;
+			max-height: 0px;
+			overflow: hidden;
+		}
+
+		@media (max-width:660px) {
+
+			.image_block img.big,
+			.row-content {
+				width: 100% !important;
+			}
+
+			.mobile_hide {
+				display: none;
+			}
+
+			.stack .column {
+				width: 100%;
+				display: block;
+			}
+
+			.mobile_hide {
+				min-height: 0;
+				max-height: 0;
+				max-width: 0;
+				overflow: hidden;
+				font-size: 0px;
+			}
+
+			.desktop_hide,
+			.desktop_hide table {
+				display: table !important;
+				max-height: none !important;
+			}
+		}
+	</style>
+</head>
+<body data-gr-ext-installed="" data-new-gr-c-s-check-loaded="9.65.0" style="background-color: #FFFFFF; margin: 0; padding: 0; -webkit-text-size-adjust: none; text-size-adjust: none;">
 {% if route_enabled %}
-<tr>
-    <td>
-        <p style="color: rgba(0,0,0,.75);">
-            {% filter force_escape %}
-                This is a routed Account Activation email for {{ email }}
-            {% endfilter %}
-            <br />
-        </p>
-    </td>
-</tr>
+<p style="color: rgba(0,0,0,.75);">
+	{% filter force_escape %}
+		This is a routed Account Activation email for {{ email }}
+	{% endfilter %}
+	<br />
+</p>
 {% endif %}
-<tr>
-    <td>
-        <h1>
-            WELCOME TO SCHOLARIUM!
-        </h1>
-        <p style="color: rgba(0,0,0,.75);">
-            {% filter force_escape %}
-                Hello {{ email }}!
-            {% endfilter %}
-            <br />
-        </p>
-        <p style="color: rgba(0,0,0,.75);">
-            {% filter force_escape %}
-                You're almost there! Click the button below to verify your {{ domain }} account. 
-            {% endfilter %}
-        </p>
-        <p style="color: rgba(0,0,0,.75);">
-            {% filter force_escape %}
-                Note that you will not be able to log into your account until you have activated it.
-            {% endfilter %}
-            <br />
-        </p>
-            <a href="{{ domain }}{% url 'verify_account' user_hash %}">Verify Account</a>
-    </td>
-</tr>
-</table> {% endcomment %}
-<style>
-    .email-bg{
-        background-color: #aeadad;
-        min-height: 100vh;
-    }
-    .content-wrapper{
-        background-color: #fff;
-        max-width: 900px;
-    }
-    .email-header{
-        display: flex;
-        flex-direction: row;
-        padding: 10px;
-    }
-    .border{
-        background-color: #ff7300;
-        height: 5px;
-        width: 100%;
-    }
-    .email-banner{
-        background: url(https://scholarium-static.s3.ap-southeast-1.amazonaws.com/email-header+trial.jpg);
-        background-size: cover;
-        background-repeat: no-repeat;
-        background-position: center right;
-        width: 100%;
-        height: 200px;
-    }
-    .banner-message{
-        display: flex;
-        height: 100%;
-        width: 100%;
-        align-items: center;
-        justify-content: center;
-        flex-wrap: wrap;
-        color: #fff;
-    }
-    .content{
-        height: 100vh;
-    }
-    .email{
-        display: flex;
-        flex-direction: column;
-        padding: 0 10%;
-    }
-    .email{
-        text-align: start;
-    }
-</style>
-{% if route_enabled %}
-    <p style="color: rgba(0,0,0,.75);">
-        {% filter force_escape %}
-            This is a routed Account Activation email for {{ email }}
-        {% endfilter %}
-        <br />
-    </p>
-{% endif %}
-    <center>
-        <div class="email-bg">
-            <div class="content-wrapper">
-                <div class="border"></div>
-                <div class="email-header">
-                    <a href="https://www.scholarium.io">
-                        <img src="https://scholarium.io/static/images/schol-header-logo.png" 
-                        alt="Scholarium" 
-                        title="Scholarium"
-                        width="200px">
-                    </a>
-                </div>
-                <div class="content">
-                    <div class="email-banner">
-                        <div class="banner-message">
-                            <h1>ONE MORE STEP...</h1>
-                        </div>
-                    </div>
-                    <div class="email">
-                        <h3 class="px-3">
-                            {% filter force_escape %}Hello, {{ email }}!{% endfilter %}
-                        </h3>
-                        <p>
-                            {% filter force_escape %}You're almost there! Click the button below to verify your {{ domain }} account. {% endfilter %}
-                        </p>
-                        <p>
-                            {% filter force_escape %}Note that you will not be able to log into your account until you have activated it.{% endfilter %}
-                        </p>
-                        <center>
-                            <a href="{{ domain }}{% url 'verify_account' user_hash %}" class="btn btn-primary">Verify your Account</a>
-                        </center>
-                    </div>
-                </div>
-                <div class="email-footer bg-dark">
-                    <p class="text-white">
-                        SCHOLARIUM <br>
-                        TMTGROUP INCORPORATED<br>
-                        GLOBAL CITY, TAGUIG
-                    </p>
-                </div>
-                <div class="border"></div>
-            </div>
-        </div>
-    </center>
-{% endblock %}
+<table border="0" cellpadding="0" cellspacing="0" class="nl-container" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-color: #FFFFFF;" width="100%">
+	<tbody>
+		<tr>
+			<td>
+			<table align="center" border="0" cellpadding="0" cellspacing="0" class="row row-1" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
+				<tbody>
+					<tr>
+						<td>
+						<table align="center" border="0" cellpadding="0" cellspacing="0" class="row-content stack" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; color: #000000; width: 640px;" width="640">
+							<tbody>
+								<tr>
+									<td class="column column-1" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; vertical-align: top; padding-top: 5px; padding-bottom: 0px; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;" width="100%">
+									
+									<table border="0" cellpadding="0" cellspacing="0" class="image_block block-2" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
+										<tbody>
+											<tr>
+												<td class="pad" style="width:100%;padding-right:0px;padding-left:0px;">
+												<div align="center" class="alignment" style="line-height:10px">
+													<span style="font-size:18px;">
+														<a href="https://schlarium.io/" target="_blank">
+															<img alt="Scholarium" class="big " src="https://scholarium-static.s3.ap-southeast-1.amazonaws.com/schol-header-logo.png" style="display: block; border: 0px; width: 200px; max-width: 100%; margin: 20px 0;" />
+														</a>
+													</span>
+												</div>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+
+									<table border="0" cellpadding="0" cellspacing="0" class="image_block block-1" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
+										<tbody>
+											<tr>
+												<td class="pad" style="width:100%;padding-right:0px;padding-left:0px;">
+												<div align="center" class="alignment" style="line-height:10px">
+													<span style="font-size:18px;">
+														<a href="https://scholarium.io" target="_blank">
+															<img alt="Scholarium" class="big" src="https://scholarium-static.s3.ap-southeast-1.amazonaws.com/email-header+trial.jpg" style="display: block; border: 0px; width: 640px; max-width: 100%; max-height: 300px; object-fit: cover;" />
+														</a>
+													</span>
+												</div>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+
+									<table border="0" cellpadding="10" cellspacing="0" class="divider_block block-3" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
+										<tbody>
+											<tr>
+												<td class="pad">
+												<div align="center" class="alignment">
+												<table border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
+													<tbody>
+														<tr>
+															<td class="divider_inner" style="font-size: 1px; line-height: 1px; border-top: 2px solid #FFFFFF;"><span style="font-size:18px;"> </span></td>
+														</tr>
+													</tbody>
+												</table>
+												</div>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+
+									<table border="0" cellpadding="0" cellspacing="0" class="text_block block-4" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word;" width="100%">
+										<tbody>
+											<tr>
+												<td class="pad" style="padding-bottom:40px;padding-left:10px;padding-right:10px;padding-top:10px;">
+												<div style="font-family: sans-serif">
+												<div class="txtTinyMce-wrapper" style="font-size: 14px; mso-line-height-alt: 21px; color: #8f8f8f; line-height: 1.5; font-family: Lato, Tahoma, Verdana, Segoe, sans-serif;">
+												<p style="margin: 0; text-align: left; mso-line-height-alt: 25.5px;">
+													<span style="font-size:26px;">
+														<strong>
+															<span style="color:#000000;">{% filter force_escape %}Hello, {{ email }}!{% endfilter %}</span>
+														</strong>
+													</span>
+												</p>
+
+												<p style="margin: 0; text-align: left; mso-line-height-alt: 21px;">&nbsp;&nbsp;</p>
+
+												<p paraeid="{1b4cc704-c191-43b8-97cf-436dff91fda5}{136}" paraid="2054846623">
+													<span style="color:#000000;">{% filter force_escape %}You're almost there! Click the button below to verify your {{ domain }} account. {% endfilter %}<br>
+														<em>{% filter force_escape %}Note that you will not be able to log into your account until you have activated it.{% endfilter %}</em>
+													</span>
+												</p>
+												<p>
+													<span style="color:#000000;">&nbsp;&nbsp;</span>
+												</p>
+												<span>
+													<center>
+														<a href="{{ domain }}{% url 'verify_account' user_hash %}" style="background-color: #ff7300; padding: 10px 20px; color: #FFFFFF; text-decoration: none; border-radius: 5px;">Verify your Account</a>
+													</center>
+												</span>
+
+												<p><span style="color:#000000;">&nbsp;&nbsp;</span></p>
+
+												<p><span style="color:#000000;">Best regards,&nbsp;</span></p>
+
+												<p><strong><span style="color:#000000;">The Scholarium Team&nbsp;</span></strong></p>
+
+												<p style="text-align: center;">&nbsp;</p>
+
+												</div>
+												</div>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+
+
+									<table border="0" cellpadding="10" cellspacing="0" class="divider_block block-6" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
+										<tbody>
+											<tr>
+												<td class="pad">
+												<div align="center" class="alignment">
+												<table border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
+													<tbody>
+														<tr>
+															<td class="divider_inner" style="font-size: 1px; line-height: 1px; border-top: 2px dashed #B0B4BE;"><span> </span></td>
+														</tr>
+													</tbody>
+												</table>
+												</div>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+
+									<table border="0" cellpadding="0" cellspacing="0" class="social_block block-7" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
+										<tbody>
+											<tr>
+												<td class="pad" style="text-align:center;padding-right:0px;padding-left:0px;">
+												<div class="alignment" style="text-align:center;">
+												<table border="0" cellpadding="0" cellspacing="0" class="social-table" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; display: inline-block;" width="210px">
+													<tbody>
+														<tr>
+															<!-- SOCIAL MEDIA LINKS -->
+															<td style="padding:0 5px 0 5px;"><a href="#" target="_blank"><img alt="Facebook" src="https://app-rsrc.getbee.io/public/resources/social-networks-icon-sets/t-only-logo-dark-gray/facebook@2x.png" style="display: block; height: 45px; border: 0px; width: 45px;" title="facebook" /></a></td>
+															<td style="padding:0 5px 0 5px;"><a href="#" target="_blank"><img alt="Linkedin" src="https://app-rsrc.getbee.io/public/resources/social-networks-icon-sets/t-only-logo-dark-gray/linkedin@2x.png" style="display: block; height: 45px; border: 0px; width: 45px;" title="linkedin" /></a></td>
+															<td style="padding:0 5px 0 5px;"><a href="#" target="_blank"><img alt="Instagram" src="https://app-rsrc.getbee.io/public/resources/social-networks-icon-sets/t-only-logo-dark-gray/instagram@2x.png" style="display: block; height: 45px; border: 0px; width: 45px;" title="instagram" /></a></td>
+															<td style="padding:0 5px 0 5px;"><a href="#" target="_blank"><img alt="Website" src="https://app-rsrc.getbee.io/public/resources/social-networks-icon-sets/t-only-logo-dark-gray/website@2x.png" style="display: block; height: 45px; border: 0px; width: 45px;" title="Web Site" /></a></td>
+															<td style="padding:0 5px 0 5px;"><a href="#" target="_blank"><img alt="E-Mail" src="https://app-rsrc.getbee.io/public/resources/social-networks-icon-sets/t-only-logo-dark-gray/mail@2x.png" style="display: block; height: 45px; border: 0px; width: 45px;" title="E-Mail" /></a></td>
+														</tr>
+													</tbody>
+												</table>
+												</div>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+
+									<table border="0" cellpadding="10" cellspacing="0" class="divider_block block-8" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
+										<tbody>
+											<tr>
+												<td class="pad">
+												<div align="center" class="alignment">
+												<table border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
+													<tbody>
+														<tr>
+															<td class="divider_inner" style="font-size: 1px; line-height: 1px; border-top: 2px dashed #B0B4BE;"><span> </span></td>
+														</tr>
+													</tbody>
+												</table>
+												</div>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+
+			<table align="center" border="0" cellpadding="0" cellspacing="0" class="row row-2" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-color: #ff7300;" width="100%">
+				<tbody>
+					<tr>
+						<td>
+						<table align="center" border="0" cellpadding="0" cellspacing="0" class="row-content stack" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; color: #000000; width: 640px;" width="640">
+							<tbody>
+								<tr>
+									<td class="column column-1" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; vertical-align: top; padding-top: 5px; padding-bottom: 5px; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;" width="100%">
+									<div class="spacer_block" style="height:30px;line-height:30px;font-size:1px;"> </div>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+
+			<table align="center" border="0" cellpadding="0" cellspacing="0" class="row row-3" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-color: #ff7300;" width="100%">
+				<tbody>
+					<tr>
+						<td>
+						<table align="center" border="0" cellpadding="0" cellspacing="0" class="row-content stack" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; color: #000000; width: 640px;" width="640">
+							<tbody>
+								<tr>
+									<td class="column column-1" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; vertical-align: top; padding-top: 5px; padding-bottom: 5px; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;" width="100%">
+									<table border="0" cellpadding="0" cellspacing="0" class="image_block block-1" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
+										<tbody>
+											<tr>
+												<td class="pad" style="width:100%;padding-right:0px;padding-left:0px;">
+												<div align="center" class="alignment" style="line-height:10px"><a href="https://scholarium.io/" target="_blank">
+													<img src="https://scholarium-static.s3.ap-southeast-1.amazonaws.com/scholarium-white.png" style="display: block; border: 0px; width: 200px; max-width: 100%;" /></a></div>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+
+									<table border="0" cellpadding="0" cellspacing="0" class="text_block block-2" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word;" width="100%">
+										<tbody>
+											<tr>
+												<td class="pad" style="padding-bottom:5px;padding-left:10px;padding-right:10px;padding-top:10px;">
+												<div style="font-family: sans-serif">
+												<div class="txtTinyMce-wrapper" style="font-size: 14px; mso-line-height-alt: 16.8px; color: #ffffff; line-height: 1.2; font-family: Lato, Tahoma, Verdana, Segoe, sans-serif;">
+												<p style="margin: 0; font-size: 14px; text-align: center;"><span style="font-size:12px;">TMTG INCORPORATED</span></p>
+												</div>
+												</div>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+
+									<table border="0" cellpadding="0" cellspacing="0" class="text_block block-3" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word;" width="100%">
+										<tbody>
+											<tr>
+												<td class="pad" style="padding-bottom:10px;padding-left:10px;padding-right:10px;">
+												<div style="font-family: sans-serif">
+												<div class="txtTinyMce-wrapper" style="font-size: 14px; mso-line-height-alt: 21px; color: #ffffff; line-height: 1.5; font-family: Lato, Tahoma, Verdana, Segoe, sans-serif;">
+												<p style="margin: 0; font-size: 14px; text-align: center; mso-line-height-alt: 18px;"><span style="font-size:12px;">Global City, Taguig</span></p>
+												</div>
+												</div>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+
+			<table align="center" border="0" cellpadding="0" cellspacing="0" class="row row-4" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-color: #ff7300;" width="100%">
+				<tbody>
+					<tr>
+						<td>
+						<table align="center" border="0" cellpadding="0" cellspacing="0" class="row-content stack" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; color: #000000; width: 640px;" width="640">
+							<tbody>
+								<tr>
+									<td class="column column-1" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; vertical-align: top; padding-top: 5px; padding-bottom: 5px; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;" width="100%">
+									<table border="0" cellpadding="10" cellspacing="0" class="divider_block block-1" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
+										<tbody>
+											<tr>
+												<td class="pad">
+												<div align="center" class="alignment">
+												<table border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
+													<tbody>
+														<tr>
+															<td class="divider_inner" style="font-size: 1px; line-height: 1px; border-top: 1px solid #B0B4BE;"><span> </span></td>
+														</tr>
+													</tbody>
+												</table>
+												</div>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			</td>
+		</tr>
+	</tbody>
+</table>
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+</body>
+</html>
