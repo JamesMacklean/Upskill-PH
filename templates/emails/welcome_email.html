@@ -1,6 +1,6 @@
 {% load static %}
 {% block content %}
-<table width="100%" align="left" border="0" cellpadding="0" cellspacing="0" role="presentation">
+{% comment %} <table width="100%" align="left" border="0" cellpadding="0" cellspacing="0" role="presentation">
 {% if route_enabled %}
 <tr>
     <td>
@@ -47,5 +47,99 @@
 
     </td>
 </tr>
-</table>
+</table> {% endcomment %}
+<style>
+    .email-bg{
+        background-color: #aeadad;
+        min-height: 100vh;
+    }
+    .content-wrapper{
+        background-color: #fff;
+        max-width: 900px;
+    }
+    .email-header{
+        display: flex;
+        flex-direction: row;
+        padding: 10px;
+    }
+    .border{
+        background-color: #ff7300;
+        height: 5px;
+        width: 100%;
+    }
+    .email-banner{
+        background: url(https://scholarium-static.s3.ap-southeast-1.amazonaws.com/email-header+trial.jpg);
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center right;
+        width: 100%;
+        height: 200px;
+    }
+    .banner-message{
+        display: flex;
+        height: 100%;
+        width: 100%;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+        color: #fff;
+    }
+    .content{
+        height: 100vh;
+    }
+    .email{
+        display: flex;
+        flex-direction: column;
+        padding: 0 10%;
+    }
+    .email{
+        text-align: start;
+    }
+</style>
+{% if route_enabled %}
+    <p style="color: rgba(0,0,0,.75);">
+        {% filter force_escape %}
+            This is a routed Account Activation email for {{ first_name|title }} {{ last_name|title }}, ({{ email }}): {{ username }}
+        {% endfilter %}
+        <br />
+    </p>
+{% endif %}
+<center>
+    <div class="email-bg">
+        <div class="content-wrapper">
+            <div class="border"></div>
+            <div class="email-header">
+                <a href="https://www.scholarium.io">
+                    <img src="https://scholarium.io/static/images/schol-header-logo.png" 
+                    alt="Scholarium" 
+                    title="Scholarium"
+                    width="200px">
+                </a>
+            </div>
+            <div class="content">
+                <div class="email-banner">
+                    <div class="banner-message">
+                        <h1>WELCOME TO SCHOLARIUM</h1>
+                    </div>
+                </div>
+                <div class="email">
+                    <h3 class="px-3">Hello, [Name,fallback=]!</h3>
+                    <p>Congratulations on activating your account! You now have access to a wide range of programs we offer.</p>
+                    <p>Log in to your account and apply to a Scholarship Program using the button below:</p>
+                    <center>
+                        <a href="https://scholarium.io/signin/" class="btn btn-primary my-5">Log in to Scholarium</a>
+                    </center>
+                </div>
+            </div>
+            <div class="email-footer bg-dark">
+                <p class="text-white">
+                    SCHOLARIUM <br>
+                    TMTGROUP INCORPORATED<br>
+                    GLOBAL CITY, TAGUIG
+                </p>
+            </div>
+            <div class="border"></div>
+        </div>
+    </div>
+</center>
 {% endblock %}

@@ -1,6 +1,6 @@
 {% load static %}
 {% block content %}
-<table width="100%" align="left" border="0" cellpadding="0" cellspacing="0" role="presentation">
+{% comment %} <table width="100%" align="left" border="0" cellpadding="0" cellspacing="0" role="presentation">
 {% if route_enabled %}
 <tr>
     <td>
@@ -35,13 +35,108 @@
             {% endfilter %}
             <br />
         </p>
-        {% comment %} ########## ORIGINAL CODE ########## {% endcomment %}
             <a href="{{ domain }}{% url 'verify_account' user_hash %}">Verify Account</a>
-        {% comment %} ########## FOR TEST CODE ########## {% endcomment %}
-            {% comment %} <a href=http://127.0.0.1:8000{% url 'verify_account' user_hash=user_hash %}>Verify Your Account</a> {% endcomment %}
-            
-
     </td>
 </tr>
-</table>
+</table> {% endcomment %}
+<style>
+    .email-bg{
+        background-color: #aeadad;
+        min-height: 100vh;
+    }
+    .content-wrapper{
+        background-color: #fff;
+        max-width: 900px;
+    }
+    .email-header{
+        display: flex;
+        flex-direction: row;
+        padding: 10px;
+    }
+    .border{
+        background-color: #ff7300;
+        height: 5px;
+        width: 100%;
+    }
+    .email-banner{
+        background: url(https://scholarium-static.s3.ap-southeast-1.amazonaws.com/email-header+trial.jpg);
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center right;
+        width: 100%;
+        height: 200px;
+    }
+    .banner-message{
+        display: flex;
+        height: 100%;
+        width: 100%;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+        color: #fff;
+    }
+    .content{
+        height: 100vh;
+    }
+    .email{
+        display: flex;
+        flex-direction: column;
+        padding: 0 10%;
+    }
+    .email{
+        text-align: start;
+    }
+</style>
+{% if route_enabled %}
+    <p style="color: rgba(0,0,0,.75);">
+        {% filter force_escape %}
+            This is a routed Account Activation email for {{ email }}
+        {% endfilter %}
+        <br />
+    </p>
+{% endif %}
+    <center>
+        <div class="email-bg">
+            <div class="content-wrapper">
+                <div class="border"></div>
+                <div class="email-header">
+                    <a href="https://www.scholarium.io">
+                        <img src="https://scholarium.io/static/images/schol-header-logo.png" 
+                        alt="Scholarium" 
+                        title="Scholarium"
+                        width="200px">
+                    </a>
+                </div>
+                <div class="content">
+                    <div class="email-banner">
+                        <div class="banner-message">
+                            <h1>ONE MORE STEP...</h1>
+                        </div>
+                    </div>
+                    <div class="email">
+                        <h3 class="px-3">
+                            {% filter force_escape %}Hello, {{ email }}!{% endfilter %}
+                        </h3>
+                        <p>
+                            {% filter force_escape %}You're almost there! Click the button below to verify your {{ domain }} account. {% endfilter %}
+                        </p>
+                        <p>
+                            {% filter force_escape %}Note that you will not be able to log into your account until you have activated it.{% endfilter %}
+                        </p>
+                        <center>
+                            <a href="{{ domain }}{% url 'verify_account' user_hash %}" class="btn btn-primary">Verify your Account</a>
+                        </center>
+                    </div>
+                </div>
+                <div class="email-footer bg-dark">
+                    <p class="text-white">
+                        SCHOLARIUM <br>
+                        TMTGROUP INCORPORATED<br>
+                        GLOBAL CITY, TAGUIG
+                    </p>
+                </div>
+                <div class="border"></div>
+            </div>
+        </div>
+    </center>
 {% endblock %}
