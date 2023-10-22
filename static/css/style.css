@@ -104,13 +104,18 @@ form button {
   width: 300px !important;
 }
 
-tr {
-  border-bottom: 0.5px solid #ff7300;
+table.admin-table tr {
+  border-bottom: 0.5px solid #ff7300 !important;
 }
 
 th, td {
   padding: 5px 10px;
   font-size: 14px;
+}
+
+table.profile-stats tr {
+  padding: 10px 2px;
+  border-bottom: 1px solid #dee2e6 !important;
 }
 
 .content-container {
