@@ -1,19 +1,30 @@
 {% extends 'base.html' %}
 {% block content %}
-<html>
-<head>
-    <title>User List</title>
-</head>
-<body>
+{% block title %}User List{% endblock %}
+<div class="container">
+
     <h1>User List</h1>
     <form method="GET" action="{% url 'admin_dashboard' %}">
-        <input type="text" name="search" placeholder="Search..." value="{{ search_query }}">
+        {% comment %} <input type="text" name="search" placeholder="Search..." value="{{ search_query }}">
         <button type="submit">Search</button>
-        <button type="submit" name="generate_csv">Generate CSV</button>
+        <button type="submit" name="generate_csv">Generate CSV</button> {% endcomment %}
+        <div class="rc-ProfilePhotoUploader form-horizontal">
+            <div class="form-group horizontal-box wrap my-3 align-items-center">
+                <input type="text" name="search" placeholder="Search..." class="input-ctrl" value="{{ search_query }}">
+                <div class="form-control-custom">
+                    <div class="css-1cq002f">
+                        <div class="css-ek3fxo">
+                            <button type="submit" class="btn btn-primary">Search</button>
+                            <button type="submit" name="generate_csv" class=" btn btn-primary">Generate CSV</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </form>
     
     <table border="1" id="user-table">
-        <thead>
+        <thead class="p-4 text-white bg-scholarium">
         <tr>
             <th onclick="sortTable(0)">ID</th>
             <th onclick="sortTable(1)">Username</th>
@@ -64,9 +75,8 @@
     <div>
         <canvas id="user-chart" width="800" height="400"></canvas>
     </div>
-</body>
-</html>
 
+</div>
 <script>
     var sortOrders = [];
     function sortTable(colIndex) {

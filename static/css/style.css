@@ -273,6 +273,10 @@ textarea#about_me_text {
   margin-right: 15px;
 }
 
+.bg-scholarium {
+  background-color: #ff7300;
+}
+
 /* The Modal */
 .modal {
   display: none;
