@@ -766,6 +766,9 @@ def account(request):
 # STATIC TEMPLATES
 def guidelines(request):
     return render(request, "static_templates/program_guidelines.html")
+
+def contact(request):
+    return render(request, "static_templates/contact.html")
 #     context['program_list'] = get_programs(user_token,2,None)
 #     context['courses'] = get_courses()
 #     return render(request,template_name, context)

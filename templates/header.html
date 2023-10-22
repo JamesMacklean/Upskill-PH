@@ -11,7 +11,7 @@
 {% if not request.session.user_token %}
     <nav>
         <a href="#">About</a>
-        <a href="#">Contact Us</a>
+        <a href="{% url "contact" %}">Contact Us</a>
         <a href="{% url 'signin' %}">Login</a>
         <a href="{% url 'signup' %}" class="btn">Sign Up</a>
     </nav>

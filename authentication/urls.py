@@ -27,6 +27,7 @@ urlpatterns = [
     
     path('guidelines/',views.guidelines, name="guidelines"),
     path('privacy/', views.privacy, name="privacy"),
+    path('contact-us/', views.contact, name="contact"),
     
     # COURSERA
     path('refresh/', views.refresh_token, name="refresh"),
