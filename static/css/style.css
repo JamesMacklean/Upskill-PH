@@ -107,6 +107,7 @@ form button {
 th, td {
   padding: 5px 10px;
   font-size: 14px;
+  border-bottom: 1px solid #ff7300;
 }
 
 .content-container {
