@@ -31,7 +31,9 @@
         {% for user in users %}
         <tr>
             <td >{{ user.id }}</td>
-            <td><a href="{% url 'user_details' user.id %}">{{ user.username }}</td>
+            <td>
+                <a href="{% url 'user_details' user.id %}" class="fw-bold schol-link">{{ user.username }}
+            </td>
             <td>{{ user.first_name }}</td>
             <td>{{ user.last_name }}</td>
             <td>{{ user.email }}</td>
@@ -47,8 +49,8 @@
     <div class="pagination justify-content-center my-5">
         <span class="step-links">
             {% if users.has_previous %}
-            <a href="?page=1{% if search_query %}&search={{ search_query }}{% endif %}">First</a>
-            <a href="?page={{ users.previous_page_number }}{% if search_query %}&search={{ search_query }}{% endif %}">Previous</a>
+            <a href="?page=1{% if search_query %}&search={{ search_query }}{% endif %}" class="schol-link">First</a>
+            <a href="?page={{ users.previous_page_number }}{% if search_query %}&search={{ search_query }}{% endif %}" class="schol-link">Previous</a>
             {% endif %}
             
             <span class="current">
@@ -56,8 +58,8 @@
             </span>
             
             {% if users.has_next %}
-            <a href="?page={{ users.next_page_number }}{% if search_query %}&search={{ search_query }}{% endif %}">Next</a>
-            <a href="?page={{ paginator.num_pages }}{% if search_query %}&search={{ search_query }}{% endif %}">Last</a>
+            <a href="?page={{ users.next_page_number }}{% if search_query %}&search={{ search_query }}{% endif %}" class="schol-link">Next</a>
+            <a href="?page={{ paginator.num_pages }}{% if search_query %}&search={{ search_query }}{% endif %}" class="schol-link">Last</a>
             {% endif %}
         </span>
     </div> 
