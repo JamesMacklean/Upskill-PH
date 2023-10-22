@@ -3,15 +3,17 @@
 <title>User List</title>
 <div class="container">
 
-    <h1>User List</h1>
-    <form method="GET" action="{% url 'admin_dashboard' %}" class="d-flex">
-        <input class="input-ctrl" type="text" name="search" placeholder="Search..." value="{{ search_query }}">
+    <h3>User List</h3>
+    <form method="GET" action="{% url 'admin_dashboard' %}" class="d-flex mb-5">
+        <div style="width: 400px;">
+            <input class="input-ctrl" type="text" name="search" placeholder="Search..." value="{{ search_query }}">
+        </div>
         <button class="btn btn-primary" class="mx-3" type="submit">Search</button>
         <button class="btn btn-primary" type="submit" name="generate_csv">Generate CSV</button>
     </form>
     
-    <table border="1" id="user-table">
-        <thead class="p-4 text-white bg-scholarium">
+    <table border="1" id="user-table" class="w-100">
+        <thead class="text-white bg-scholarium">
         <tr>
             <th onclick="sortTable(0)">ID</th>
             <th onclick="sortTable(1)">Username</th>
@@ -42,7 +44,7 @@
         </tr>
         {% endfor %}
     </table>
-    <div class="pagination">
+    <div class="pagination justify-content-center my-5">
         <span class="step-links">
             {% if users.has_previous %}
             <a href="?page=1{% if search_query %}&search={{ search_query }}{% endif %}">First</a>

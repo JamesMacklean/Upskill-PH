@@ -87,13 +87,17 @@ form .input-field input:focus{
 form button{
     width: 300px !important ;
 }
-table{
-    width: 90%;
+th, td{
+    padding: 5px 10px;
+    font-size: 14px;
 }
-table tr td{
-    padding: 10px 2px;
-    border-bottom: 1px solid #dee2e6;
-}
+// table{
+//     width: 90%;
+// }
+// table tr td{
+//     padding: 10px 2px;
+//     border-bottom: 1px solid #dee2e6;
+// }
 .content-container{
     margin: 10px 12%;
     max-width: 1400px;
