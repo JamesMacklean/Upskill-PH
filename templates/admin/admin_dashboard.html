@@ -1,26 +1,13 @@
 {% extends 'base.html' %}
 {% block content %}
-{% block title %}User List{% endblock %}
+<title>User List</title>
 <div class="container">
 
     <h1>User List</h1>
-    <form method="GET" action="{% url 'admin_dashboard' %}">
-        {% comment %} <input type="text" name="search" placeholder="Search..." value="{{ search_query }}">
-        <button type="submit">Search</button>
-        <button type="submit" name="generate_csv">Generate CSV</button> {% endcomment %}
-        <div class="rc-ProfilePhotoUploader form-horizontal">
-            <div class="form-group horizontal-box wrap my-3 align-items-center">
-                <input type="text" name="search" placeholder="Search..." class="input-ctrl" value="{{ search_query }}">
-                <div class="form-control-custom">
-                    <div class="css-1cq002f">
-                        <div class="css-ek3fxo">
-                            <button type="submit" class="btn btn-primary">Search</button>
-                            <button type="submit" name="generate_csv" class=" btn btn-primary">Generate CSV</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <form method="GET" action="{% url 'admin_dashboard' %}" class="d-flex">
+        <input class="input-ctrl" type="text" name="search" placeholder="Search..." value="{{ search_query }}">
+        <button class="btn btn-primary" class="mx-3" type="submit">Search</button>
+        <button class="btn btn-primary" type="submit" name="generate_csv">Generate CSV</button>
     </form>
     
     <table border="1" id="user-table">
