@@ -371,16 +371,20 @@ def admin_dashboard(request):
     users = users_list(user_token)
     
     search_term = request.GET.get('search', '')
-    filtered_users = [user for user in users if search_term.lower() in str(user).lower()]
+    filtered_users_set = set()
+    
     if search_term:
         for user in users:
             for key, value in user.items():
                 if isinstance(value, str) and search_term.lower() in value.lower():
-                    filtered_users.append(user)
+                    filtered_users_set.add(user['id'])  # Add the user's ID to the set
                     break
     else:
-        filtered_users = users
+        for user in users:
+            filtered_users_set.add(user['id'])
 
+    filtered_users = [user for user in users if user['id'] in filtered_users_set]
+    
     paginator = Paginator(filtered_users, 50)  # Show 50 users per page
     
     page_number = request.GET.get('page')
