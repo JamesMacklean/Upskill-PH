@@ -412,7 +412,9 @@ def user_details(request, user_id):
     clear_session(request,'url')
     ########## LOGIN REQUIRED ##########
     is_admin = request.session['is_admin']
-    if not is_admin:
+    is_global = request.session['is_global']
+    
+    if not is_admin or is_global:
         raise Http404
     
     user_token = request.session['user_token']
@@ -425,8 +427,7 @@ def user_details(request, user_id):
         'education_details': education_details,
         'employment_details': employment_details,
     }
-    print('!!!!!!!!!!!!!!!!')
-    print(profile_details)
+
     return render(request, template_name, context)
 
 def profile(request):
