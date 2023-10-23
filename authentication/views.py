@@ -364,9 +364,8 @@ def admin_dashboard(request):
     is_admin = request.session['is_admin']
     is_global = request.session['is_global']
     
-    if not is_global:
-        if not is_admin and not is_staff:
-            raise Http404  
+    if not (is_global or is_admin or is_staff):
+        raise Http404  
     
     user_token = request.session['user_token']
     users = users_list(user_token)
@@ -419,9 +418,8 @@ def user_details(request, user_id):
     is_admin = request.session['is_admin']
     is_global = request.session['is_global']
     
-    if not is_global:
-        if not is_admin and not is_staff:
-            raise Http404  
+    if not (is_global or is_admin or is_staff):
+        raise Http404   
     
     user_token = request.session['user_token']
     profile_details = users_list(user_token, user_id, 'profile')
