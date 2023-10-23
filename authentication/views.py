@@ -416,9 +416,8 @@ def user_details(request, user_id):
     is_global = request.session['is_global']
     
     if not is_global:
-        if is_admin or is_staff:
-            pass
-        raise Http404    
+        if not is_admin and not is_staff:
+            raise Http404  
     
     user_token = request.session['user_token']
     profile_details = users_list(user_token, user_id, 'profile')
