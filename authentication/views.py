@@ -412,11 +412,13 @@ def user_details(request, user_id):
     clear_session(request,'url')
     ########## LOGIN REQUIRED ##########
     is_staff = request.session['is_staff']
+    is_admin = request.session['is_admin']
     is_global = request.session['is_global']
     
-    if not is_staff:
-        if not is_global:
-            raise Http404
+    if not is_global:
+        if is_admin or is_staff:
+            pass
+        raise Http404    
     
     user_token = request.session['user_token']
     profile_details = users_list(user_token, user_id, 'profile')
