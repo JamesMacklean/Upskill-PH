@@ -20,7 +20,7 @@
                       {% for scholarship in scholarships %}
                           {% for program in program_list %}
                               {% if scholarship.program_id == program.id %}    
-                              <a href="{% url 'program' program.partner_id program.id %}">
+                              <a href="{% url 'program' program.slug %}">
                                   <div class="partner-card-container">
                                       <div class="partner-card-image">
                                           <img src="{{program.image}}">
@@ -63,7 +63,7 @@
                     <div class="partner-cards my-5">
                         {% for program in program_list %}
                                 {% if program.id not in applied_programs %}   
-                                <a href="{% url 'program' program.partner_id program.id %}">
+                                <a href="{% url 'program' program.slug %}">
                                     <div class="partner-card-container">
                                         <div class="partner-card-image">
                                           {% if program.image %}

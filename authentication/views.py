@@ -636,7 +636,7 @@ def application(request, partner_id, program_id):
     
     return render(request, template_name, context)
 
-def program(request, partner_id, program_id):
+def program(request, slug):
     """"""
     template_name = "scholar_programs.html"
     context = {}
@@ -646,9 +646,8 @@ def program(request, partner_id, program_id):
     ######### LOGIN REQUIRED ##########
     if not authenticate_user(request):
         request.session['url'] = "program"
-        request.session['partner_id'] = partner_id
-        request.session['program_id'] = program_id
-        return HttpResponseRedirect('/signin?next=program/'+str(partner_id)+"/"+str(program_id)+"/")
+        request.session['program_slug'] = slug
+        return HttpResponseRedirect('/signin?next=program/'+str(slug)+"/")
     clear_session(request,'url')
     ######### LOGIN REQUIRED ##########
     
@@ -661,7 +660,8 @@ def program(request, partner_id, program_id):
     user_id = request.session.get('id')
     
     scholarships = user_programs(user_token)
-    
+    program_data = get_program_through_slug(user_token,slug)
+    program_id = 0
     # LOCKED OUT DAPAT ANG OTHER PROGRAMS KAPAG NAGAPPLY SA ISA
     if scholarships:   
         for data in scholarships:
@@ -671,7 +671,11 @@ def program(request, partner_id, program_id):
                     
             if status == 1:
                 status_checker = status_checker + 1
-        
+    
+    for data in program_data:
+        program_id = data['id']
+    
+    print('PROGRAM ID!!!!!!!!!!!!!!!!!!!!!!!!!!!!!', program_id)
     if request.method == "POST":
         # response = scholar_apply(user_token,program_id)
         license_code = request.POST.get('license_code')
@@ -691,7 +695,7 @@ def program(request, partner_id, program_id):
         context['message'] = response
         return render(request, template_name, context)
         
-    all_programs = get_programs(user_token, partner_id, None)
+    all_programs = get_programs(user_token, 2, None)
     
     for program in all_programs:
         for key, value in program.items():
@@ -708,8 +712,8 @@ def program(request, partner_id, program_id):
         'email': email,
     }
     
-    context['program_id'] = program_id
-    context['programs'] = get_programs(user_token,partner_id,program_id)
+    context['program_slug'] = slug
+    context['programs'] = get_program_through_slug(user_token,slug)
     context['dict_programs'] = get_dict_programs(bearer_token)
     context['scholarships'] = scholarships
     context['applied_programs'] = applied_programs

@@ -255,6 +255,26 @@ def get_programs(bearer_token, partner_id,program_id):
 
     return program_list
 
+# GET https://scholarium.tmtg-clone.click/v1/partner/program/[slug]
+def get_program_through_slug(bearer_token, slug):  
+    program_list = []
+    payload={}
+    headers = {
+    'Authorization': bearer_token
+    }
+    
+    response = requests.request("GET", os.path.join(API_PROGRAM_SLUGS_URL, str(slug)), headers=headers, data=payload)
+    response_dict = json.loads(response.text)
+    
+    if 'data' in response_dict:
+        try:
+            for data in response_dict['data']:
+                program_list.append(data)
+        except Exception as e:
+            print(str(e))
+
+    return program_list
+
 # GET https://api.coursera.org/api/businesses.v1/PigzUIPvRnWQ-YVaCKAmCw/programs
 def get_dict_programs(bearer_token):
     program_list = []
