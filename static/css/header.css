@@ -1,5 +1,15 @@
 /* You can add your CSS styles here to customize the header appearance */
-header {
+#web-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 12%;
+  background-color: white;
+  height: 90px;
+}
+
+#tab-header {
+  display: none;
   justify-content: space-between;
   align-items: center;
   padding: 10px 12%;
