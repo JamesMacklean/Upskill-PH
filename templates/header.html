@@ -2,7 +2,7 @@
 <link rel="stylesheet" href="{% static 'css/header.css' %}">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
-{% comment %} <header class="header">
+<header class="header" id="web-header">
 
     <a href="{% url 'home' %}">
         <img src="{% static 'images/schol-header-logo.png' %}" class="logo" alt="Scholarium">
@@ -33,49 +33,40 @@
         </div>
     </nav>
 {% endif %}
- </header> {% endcomment %}
+ </header>
 
- <header class="header">
+ <header class="header" id="tab-header">
+
     <a href="{% url 'home' %}">
         <img src="{% static 'images/schol-header-logo.png' %}" class="logo" alt="Scholarium">
     </a>
-    <div id="mobile-menu-icon" class="mobile-menu-icon">
-        <div class="bar"></div>
-        <div class="bar"></div>
-        <div class="bar"></div>
-    </div>
-    <nav class="main-menu">
-        {% if not request.session.user_token %}
-            <a href="#">About</a>
-            <a href="{% url 'contact' %}">Contact Us</a>
-            <a href="{% url 'signin' %}">Login</a>
-            <a href="{% url 'signup' %}" class="btn">Sign Up</a>
-        {% else %}
-            <a href="{% url 'home' %}">Home</a>
-            {% comment %} <a href="{% url 'courses' %}">Courses</a> {% endcomment %}
-            <a href="{% url 'dashboard' %}">Dashboard</a>
-            <div class="user-dropdown">
-                {% if request.session.username %}
-                    <a href="#" class="username">{{request.session.username}} <i class="fas fa-caret-down caret-down"></i></a>
-                {% else %}
-                    <a href="#" class="username">{{request.session.email}} <i class="fas fa-caret-down caret-down"></i></a>
-                {% endif %}
-                <div class="dropdown-content">
-                    <a href="{% url 'profile' %}">Profile</a>
-                    <a href="{% url 'account' %}">Account</a>
-                    <a href="{% url 'signout' %}">Sign Out</a>
-                </div>
-            </div>
-        {% endif %}
+ 
+{% if not request.session.user_token %}
+    <nav>
+        <button>
+            <i class="fas fa-bars" ></i>
+        </button>
+        {% comment %} <a href="#">About</a>
+        <a href="{% url "contact" %}">Contact Us</a>
+        <a href="{% url 'signin' %}">Login</a>
+        <a href="{% url 'signup' %}" class="btn">Sign Up</a> {% endcomment %}
     </nav>
-</header>
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const mobileMenuIcon = document.getElementById("mobile-menu-icon");
-        const mainMenu = document.querySelector(".main-menu");
-    
-        mobileMenuIcon.addEventListener("click", function () {
-            mainMenu.classList.toggle("show");
-        });
-    });
-</script>
+{% else %}
+    <nav>
+        <a href="{% url 'home' %}">Home</a>
+        <a href="{% url 'dashboard' %}">Dashboard</a>
+        <div class="user-dropdown">
+            {% if requet.session.username %}
+                <a href="#" class="username">{{request.session.username}} <i class="fas fa-caret-down caret-down"></i></a>
+            {% else %}
+                <a href="#" class="username">{{request.session.email}} <i class="fas fa-caret-down caret-down"></i></a>
+            {% endif %}
+            <div class="dropdown-content">
+                <a href="{% url 'profile' %}">Profile</a>
+                <a href="{% url 'account' %}">Account</a>
+                <a href="{% url 'signout' %}">Sign Out</a>
+            </div>
+        </div>
+    </nav>
+{% endif %}
+ </header>

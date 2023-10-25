@@ -1,6 +1,5 @@
 /* You can add your CSS styles here to customize the header appearance */
 header {
-  display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 10px 12%;
@@ -90,4 +89,13 @@ nav a:hover {
 
 .user-dropdown:hover .dropdown-content {
   display: block;
+}
+
+@media screen and (max-width: 768px) {
+  #web-header {
+    display: none;
+  }
+  #tab-header {
+    display: flex;
+  }
 }/*# sourceMappingURL=header.css.map */

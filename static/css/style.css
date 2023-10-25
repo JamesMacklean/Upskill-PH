@@ -358,23 +358,4 @@ div.card-image {
   transition: 0.4s;
 }
 
-/* Media query for mobile devices */
-@media (max-width: 768px) {
-  .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  .logo {
-    margin-bottom: 20px;
-  }
-  .main-menu {
-    display: none; /* Initially hidden for smaller screens */
-  }
-  .mobile-menu-icon {
-    display: block; /* Displayed for smaller screens */
-  }
-  .main-menu.show {
-    display: block;
-  }
-}/*# sourceMappingURL=style.css.map */
+/* Media query for mobile devices *//*# sourceMappingURL=style.css.map */
