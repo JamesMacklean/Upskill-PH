@@ -10,6 +10,11 @@
     margin: 0 auto;
     max-width: 1400px;
 }
+.custom-res-sub{
+    display: flex;
+    flex-direction: row;
+    align-items: start;
+}
 .hero-banner{
     background: url("https://scholarium-static.s3.ap-southeast-1.amazonaws.com/schol-hero-banner-2.jpg");
     height: calc(100vh - 90px);
@@ -1191,19 +1196,6 @@ div.card-image{
     background-size: auto auto, cover;
     background-repeat: no-repeat, no-repeat;
 }
-// MOBILE
-.mobile-menu-icon {
-    display: none; /* Initially hidden for larger screens */
-    cursor: pointer;
-}
-
-.mobile-menu-icon .bar {
-    width: 25px;
-    height: 3px;
-    background-color: #333;
-    margin: 4px 0;
-    transition: 0.4s;
-}
 
 // media queries - mobile
 
@@ -1222,7 +1214,7 @@ div.card-image{
         font-size: 12px;
     }
     .custom-res-sub{
-        display: grid!important;
+        display: grid !important;
         grid-template-columns: 200px 200px;
         grid-template-rows: 200px 200px;
     }
@@ -1230,13 +1222,13 @@ div.card-image{
         flex: 0 0 auto !important;
         width: 75% !important;
     }
-    .custom-res-sub col h1{
+    .custom-res-sub h1{
         font-size: 20px;
     }
-    .custom-res-sub col h3{
+    .custom-res-sub h3{
         font-size: 15px;
     }
-    .custom-res-sub col p{
+    .custom-res-sub p{
         font-size: 12px;
     }
 }
