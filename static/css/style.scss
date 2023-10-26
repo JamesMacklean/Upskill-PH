@@ -1207,6 +1207,9 @@ div.card-image{
         background-repeat: no-repeat;
         background-position: center right;
     }
+    .custom-res{
+        padding: 0 10% !important;
+    }
     .custom-res h2{
         font-size: 24px;
     }
@@ -1217,6 +1220,7 @@ div.card-image{
         display: grid !important;
         grid-template-columns: 200px 200px;
         grid-template-rows: 200px 200px;
+        justify-content: center;
     }
     .col.custom-res-sub-2{
         flex: 0 0 auto !important;
