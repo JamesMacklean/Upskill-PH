@@ -366,4 +366,28 @@ div.card-image {
     background-repeat: no-repeat;
     background-position: center right;
   }
+  .custom-res h2 {
+    font-size: 24px;
+  }
+  .custom-res p {
+    font-size: 12px;
+  }
+  .custom-res-sub {
+    display: grid !important;
+    grid-template-columns: 200px 200px;
+    grid-template-rows: 200px 200px;
+  }
+  .custom-res-sub col {
+    flex: 0 0 auto !important;
+    width: 75% !important;
+  }
+  .custom-res-sub col h1 {
+    font-size: 20px;
+  }
+  .custom-res-sub col h3 {
+    font-size: 15px;
+  }
+  .custom-res-sub col p {
+    font-size: 12px;
+  }
 }/*# sourceMappingURL=style.css.map */
