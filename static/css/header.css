@@ -1,15 +1,6 @@
 /* You can add your CSS styles here to customize the header appearance */
-#web-header {
+header {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 12%;
-  background-color: white;
-  height: 90px;
-}
-
-#tab-header {
-  display: none;
   justify-content: space-between;
   align-items: center;
   padding: 10px 12%;
@@ -101,11 +92,26 @@ nav a:hover {
   display: block;
 }
 
+.hamburger {
+  height: 40px;
+  border: none;
+  background: transparent;
+  box-shadow: none;
+}
+
+.hamburger i {
+  color: #ff7300;
+}
+
+.hamburger i:hover {
+  color: #f24725;
+}
+
 @media screen and (max-width: 768px) {
-  #web-header {
+  .web-nav {
     display: none;
   }
-  #tab-header {
+  .mobile-nav {
     display: flex;
   }
 }/*# sourceMappingURL=header.css.map */
