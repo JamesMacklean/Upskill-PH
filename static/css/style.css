@@ -358,4 +358,16 @@ div.card-image {
   transition: 0.4s;
 }
 
-/* Media query for mobile devices *//*# sourceMappingURL=style.css.map */
+@media screen and (max-width: 768px) {
+  .hero-banner {
+    background: linear-gradient(90deg, rgb(255, 115, 0) 0%, rgb(255, 255, 255) 50%, rgb(255, 115, 0) 100%);
+    height: calc(100vh - 90px);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center right;
+  }
+  .hero-color {
+    color: #fff;
+    text-shadow: 0px 0px 5px #ff7300;
+  }
+}/*# sourceMappingURL=style.css.map */
