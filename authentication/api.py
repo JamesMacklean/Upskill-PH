@@ -328,6 +328,31 @@ def get_applicants(bearer_token, partner_id, program_id, status):
                 
     return applicants_list
 
+# GET https://scholarium.tmtg-clone.click/v1/admin/codes/[code]
+def license_code(bearer_token,code):  
+    license_codes = []
+    context = {}
+    payload={}
+    headers = {
+    'Authorization': bearer_token
+    }
+    
+    response = requests.request("GET", API_LICENSE_CODE_URL, headers=headers, data=payload)
+    response_dict = json.loads(response.text)
+
+    # AUTO-ADD SA CONTEXT NG MGA KEYS NA NA-GET VIA API
+    if 'data' in response_dict:
+        try:
+            for data in response_dict['data']:
+                license_codes.append(data)
+                        
+        except Exception as e:
+            print(str(e))
+            
+    # return context
+    print(license_codes)
+    return license_codes
+
 # POST https://scholarium.tmtg-clone.click/v1/login
 def login_account (username, password):
     payload={

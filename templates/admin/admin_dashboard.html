@@ -13,6 +13,7 @@
     </form>
     
     <table border="0" id="user-table" class="w-100 text-center admin-table">
+    {% if is_admin or is_global%}
         <thead class="text-white bg-scholarium">
         <tr>
             <th onclick="sortTable(0)">ID</th>
@@ -45,7 +46,35 @@
             <td>{{ user.status }}</td>
         </tr>
         {% endfor %}
+    {% elif is_staff %}
+        <thead class="text-white bg-scholarium">
+            <tr>
+                <th onclick="sortTable(0)">ID</th>
+                <th onclick="sortTable(1)">Username</th>
+                <th onclick="sortTable(2)">First Name</th>
+                <th onclick="sortTable(3)">Last Name</th>
+                <th onclick="sortTable(4)">Email</th>
+                <th onclick="sortTable(5)">Date Joined</th>
+                <th onclick="sortTable(6)">Last Login</th>
+            </tr>
+        </thead>
+        {% for user in users %}
+        <tr>
+            <td >{{ user.id }}</td>
+            <td>
+                <a href="{% url 'user_details' user.id %}" class="fw-bold schol-link">{{ user.username }}
+            </td>
+            <td>{{ user.first_name }}</td>
+            <td>{{ user.last_name }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.date_joined }}</td>
+            <td>{{ user.last_login }}</td>
+        </tr>
+        {% endfor %}
+    {% endif %}
     </table>
+    
+        
     <div class="pagination justify-content-center my-5">
         <span class="step-links">
             {% if users.has_previous %}
@@ -66,8 +95,12 @@
     <div>
         <canvas id="user-chart" width="800" height="400"></canvas>
     </div>
-
 </div>
+<div>
+    {% comment %} TEMPORARILY HARD CODED FOR DICT {% endcomment %}
+    <a href="{% url 'admin_partners' '2' %}" class="btn btn-primary">DICT</a>
+</div>
+
 <script>
     var sortOrders = [];
     function sortTable(colIndex) {

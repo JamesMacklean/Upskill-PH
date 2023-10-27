@@ -369,7 +369,6 @@ def admin_dashboard(request):
     
     user_token = request.session['user_token']
     users = users_list(user_token)
-    
     search_term = request.GET.get('search', '')
     filtered_users_set = set()
     
@@ -404,7 +403,34 @@ def admin_dashboard(request):
         'users': page_obj,
         'paginator': paginator,
         'search_query': search_term,  # Add the search query to the context
+        'is_staff': is_staff,
+        'is_admin': is_admin,
+        'is_global': is_global,
+        
     }
+    return render(request,template_name, context)
+
+def admin_partners(request, partner_id):
+    """"""
+    template_name = "admin/admin_partners.html"
+    context = {}
+
+    ########## LOGIN REQUIRED ##########
+    if not authenticate_user(request):
+        request.session['url'] = "home"
+        return render(request, "index.html")
+    clear_session(request,'url')
+    ########## LOGIN REQUIRED ##########
+    is_staff = request.session['is_staff']
+    is_admin = request.session['is_admin']
+    is_global = request.session['is_global']
+    
+    if not (is_global or is_admin or is_staff):
+        raise Http404  
+    
+    user_token = request.session['user_token']
+    context['program_list'] = get_programs(user_token,partner_id,None)
+    
     return render(request,template_name, context)
 
 def user_details(request, user_id):
@@ -434,6 +460,67 @@ def user_details(request, user_id):
         'profile_details': profile_details,
         'education_details': education_details,
         'employment_details': employment_details,
+    }
+
+    return render(request, template_name, context)
+
+def license_codes(request, slug):
+    template_name = "admin/license_codes.html"
+    context = {}
+
+    ########## LOGIN REQUIRED ##########
+    if not authenticate_user(request):
+        request.session['url'] = "home"
+        return render(request, "index.html")
+    clear_session(request,'url')
+    ########## LOGIN REQUIRED ##########
+    is_admin = request.session['is_admin']
+    is_global = request.session['is_global']
+    
+    if not (is_global or is_admin):
+        raise Http404   
+    
+    user_token = request.session['user_token']
+    program_data = get_program_through_slug(user_token,slug)
+    program_id = program_data[0]['id']
+    license_codes = license_code(user_token, None)
+    program_license_codes = [code for code in license_codes if int(code['program_id']) == int(program_id)]
+    
+    search_term = request.GET.get('search', '')
+    filtered_codes_set = set()
+    
+    if search_term:
+        for code in program_license_codes:
+            for key, value in code.items():
+                if isinstance(value, str) and search_term.lower() in value.lower():
+                    filtered_codes_set.add(code['id'])
+                    break
+    else:
+        for code in program_license_codes:
+            filtered_codes_set.add(code['id'])
+
+    filtered_codes = [code for code in program_license_codes if code['id'] in filtered_codes_set]
+    
+    paginator = Paginator(filtered_codes, 50)  # Show 50 users per page
+    
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    
+    if 'generate_csv' in request.GET:
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename="license_codes.csv"'
+
+        writer = csv.DictWriter(response, fieldnames=filtered_codes[0].keys())
+        writer.writeheader()
+        for code in filtered_codes:
+            writer.writerow(code)
+        return response
+    
+    # Add error handling here if needed
+    context = {
+        'license_codes': page_obj,
+        'paginator': paginator,
+        'search_query': search_term,
     }
 
     return render(request, template_name, context)

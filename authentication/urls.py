@@ -24,6 +24,8 @@ urlpatterns = [
     path('dashboard/', views.applied_programs, name="dashboard"),
     path('administrator/', views.admin_dashboard, name='admin_dashboard'),
     path('administrator/<int:user_id>/', views.user_details, name='user_details'),
+    path('administrator/partner/<int:partner_id>/', views.admin_partners, name='admin_partners'),
+    path('administrator/license-codes/<slug>/', views.license_codes, name='license_codes'),
     # path('courses/',views.courses, name="courses"),
     
     path('guidelines/',views.guidelines, name="guidelines"),
