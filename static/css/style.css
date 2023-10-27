@@ -12,6 +12,12 @@
   max-width: 1400px;
 }
 
+.custom-res-sub {
+  display: flex;
+  flex-direction: row;
+  align-items: start;
+}
+
 .hero-banner {
   background: url("https://scholarium-static.s3.ap-southeast-1.amazonaws.com/schol-hero-banner-2.jpg");
   height: calc(100vh - 90px);
@@ -343,4 +349,42 @@ div.card-image {
   background-origin: padding-box, padding-box;
   background-size: auto auto, cover;
   background-repeat: no-repeat, no-repeat;
+}
+
+@media screen and (max-width: 768px) {
+  .hero-banner {
+    background: linear-gradient(90deg, rgb(255, 115, 0) 0%, rgb(255, 255, 255) 50%, rgb(255, 115, 0) 100%);
+    height: calc(100vh - 90px);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center right;
+  }
+  .custom-res {
+    padding: 0 10% !important;
+  }
+  .custom-res h2 {
+    font-size: 24px;
+  }
+  .custom-res p {
+    font-size: 12px;
+  }
+  .custom-res-sub {
+    display: grid !important;
+    grid-template-columns: 200px 200px;
+    grid-template-rows: 200px 200px;
+    justify-content: center;
+  }
+  .col.custom-res-sub-2 {
+    flex: 0 0 auto !important;
+    width: 75% !important;
+  }
+  .custom-res-sub h1 {
+    font-size: 20px;
+  }
+  .custom-res-sub h3 {
+    font-size: 15px;
+  }
+  .custom-res-sub p {
+    font-size: 12px;
+  }
 }/*# sourceMappingURL=style.css.map */

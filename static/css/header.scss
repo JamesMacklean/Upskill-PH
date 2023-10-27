@@ -1,5 +1,5 @@
 /* You can add your CSS styles here to customize the header appearance */
-header {
+header{
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -76,4 +76,28 @@ nav a:hover{
 }
 .user-dropdown:hover .dropdown-content {
   display: block;
+}
+// mobile response
+.mobile-nav{
+  display: none;
+}
+.hamburger{
+  height: 40px;
+  border: none;
+  background: transparent;
+  box-shadow: none;
+}
+.hamburger i{
+  color: #ff7300;
+}
+.hamburger i:hover{
+  color: #f24725;
+}
+@media screen and (max-width: 768px){
+  .web-nav{
+    display: none;
+  }
+  .mobile-nav{
+    display: flex !important;
+  }
 }

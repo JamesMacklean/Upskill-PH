@@ -90,4 +90,32 @@ nav a:hover {
 
 .user-dropdown:hover .dropdown-content {
   display: block;
+}
+
+.mobile-nav {
+  display: none;
+}
+
+.hamburger {
+  height: 40px;
+  border: none;
+  background: transparent;
+  box-shadow: none;
+}
+
+.hamburger i {
+  color: #ff7300;
+}
+
+.hamburger i:hover {
+  color: #f24725;
+}
+
+@media screen and (max-width: 768px) {
+  .web-nav {
+    display: none;
+  }
+  .mobile-nav {
+    display: flex !important;
+  }
 }/*# sourceMappingURL=header.css.map */
