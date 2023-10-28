@@ -1218,9 +1218,10 @@ div.card-image{
     }
     .custom-res-sub{
         display: grid !important;
-        grid-template-columns: 200px 200px;
-        grid-template-rows: 200px 200px;
+        grid-template-columns: 163px 194px;
+        grid-template-rows: 180px 190px;
         justify-content: center;
+        justify-items: center;
     }
     .col.custom-res-sub-2{
         flex: 0 0 auto !important;
