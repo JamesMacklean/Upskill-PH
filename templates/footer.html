@@ -2,7 +2,7 @@
 <link rel="stylesheet" href="{% static 'css/footer.css' %}">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
-<footer class="bg-dark">
+{% comment %} <footer class="bg-dark">
   <div class="container mb-5">
     <div class="row mb-5 pb-5">
       <div class="col col-md-10">
@@ -24,12 +24,22 @@
       </div>
       <div class="col">
         <ul class="mt-4 footer-links">
-          {% comment %} <li><a href="#">Help and FAQ</a></li>
-          <li><a href="#">Terms of Service</a></li> {% endcomment %}
           <li><a href="{% url "contact" %}">Contact Us</a></li>
           <li><a href="#">Privacy Policy</a></li>
         </ul>
       </div>
     </div>
+  </div>
+</footer> {% endcomment %}
+
+<footer class="bg-dark footer">
+  <div class="col">
+   <h2 class="text-white">Scholarium</h2>
+   <a href="{% url "signup" %}">Join Our Community</a>
+   <p class="text-white">© Copyright 2023 TMTG. All rights reserved.</p>
+  </div>
+  <div class="col">
+    <a href="{% url "contact" %}">Contact Us</a>
+    <a href="#">Privacy Policy</a>
   </div>
 </footer>
