@@ -22,10 +22,10 @@
     </nav>
 </header>
     <div class="nav-bar collapse">
-        <a href="#">About</a>
-        <a href="{% url "contact" %}">Contact Us</a>
-        <a href="{% url 'signin' %}" class="btn btn-primary">Login</a>
-        <a href="{% url 'signup' %}" class="btn btn-sec">Sign Up</a>
+        <a class="m-nav-link" href="#">About</a>
+        <a class="m-nav-link" href="{% url "contact" %}">Contact Us</a>
+        <a href="{% url 'signin' %}" class="btn btn-primary mt-4">Login</a>
+        <a href="{% url 'signup' %}" class="btn btn-sec mt-1">Sign Up</a>
     </div>
 {% else %}
     <nav>

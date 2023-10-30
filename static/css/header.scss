@@ -82,9 +82,9 @@ nav a:hover{
   flex-direction: column;
   padding: 15px 10%;
 }
-.nav-bar.collapse a{
+.nav-bar.collapse .m-nav-link{
   text-decoration: none;
-  color: #ff7300;
+  color: #000;
 }
 @media screen and (min-width: 769px) {
   .nav-bar.collapse{
