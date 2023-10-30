@@ -20,11 +20,12 @@
             <i class="fas fa-bars" ></i>
         </button>
     </nav>
+</header>
     <div class="nav-bar collapse">
         <a href="#">About</a>
         <a href="{% url "contact" %}">Contact Us</a>
-        <a href="{% url 'signin' %}">Login</a>
-        <a href="{% url 'signup' %}" class="btn">Sign Up</a>
+        <a href="{% url 'signin' %}" class="btn btn-primary">Login</a>
+        <a href="{% url 'signup' %}" class="btn btn-sec">Sign Up</a>
     </div>
 {% else %}
     <nav>
@@ -43,14 +44,14 @@
             </div>
         </div>
     </nav>
+</header>
 {% endif %}
- </header>
 
 <script>
     function toggleNavBar() {
         var navBar = document.querySelector(".nav-bar.collapse");
         if (navBar.style.display === "none" || navBar.style.display === "") {
-          navBar.style.display = "block";
+          navBar.style.display = "flex";
         } else {
           navBar.style.display = "none";
         }

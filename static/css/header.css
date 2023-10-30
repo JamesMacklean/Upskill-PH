@@ -94,8 +94,20 @@ nav a:hover {
 
 .nav-bar.collapse {
   display: none;
+  flex-direction: column;
+  padding: 15px 10%;
 }
 
+.nav-bar.collapse a {
+  text-decoration: none;
+  color: #ff7300;
+}
+
+@media screen and (min-width: 769px) {
+  .nav-bar.collapse {
+    display: none !important;
+  }
+}
 .mobile-nav {
   display: none;
 }
