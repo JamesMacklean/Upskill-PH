@@ -34,14 +34,15 @@
 
 <footer class="bg-dark footer">
   <div class="col custom-footer-1">
-   <h2 class="text-white">Scholarium</h2>
+   <h2 class="text-white mb-3">Scholarium</h2>
    {% if not request.session.user_token %}
-   <a href="{% url "signup" %}" class="btn btn-primary mt-3">Join Our Community</a>
+   <a href="{% url "signup" %}" class="btn btn-primary">Join Our Community</a>
    {% endif %}
-   <p class="text-white mt-4">© Copyright 2023 TMTG. All rights reserved.</p>
+   <p class="text-white mt-4 web-cr">© Copyright 2023 TMTG. All rights reserved.</p>
   </div>
   <div class="col custom-footer-2">
     <a class="schol-link" href="{% url "contact" %}">Contact Us</a>
     <a class="schol-link" href="#">Privacy Policy</a>
   </div>
+  <p class="text-white mt-4 mobile-cr">© Copyright 2023 TMTG. All rights reserved.</p>
 </footer>
