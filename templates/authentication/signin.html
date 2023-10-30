@@ -2,8 +2,8 @@
 {% load static %}
 {% block content %}
 
-<div class="mx-0 d-flex flex-column justify-content-center" style="height: calc(100vh - 90px);">
-    <div class="row gx-5 h-100">
+<div class="mx-0 d-flex flex-column justify-content-center mobile-bg" style="height: calc(100vh - 90px);">
+    <div class="d-flex gx-5 h-100">
 
         <div class="col-12 col-md-6 d-flex flex-column justify-content-center signup-panel" style="background: linear-gradient(90deg, rgba(241,90,37,1) 0%, rgba(37,188,241,0.5004595588235294) 100%),url({% static 'images/signup-panel.jpg' %});height: calc(100vh - 90px);background-size: cover;background-repeat: no-repeat;background-position: center right;">
         </div>
@@ -11,7 +11,7 @@
         <div class="col-12 col-md-6 d-flex flex-column justify-content-center align-items-center">
             <form method="post" action="" class="sign-up-form p-3 d-flex flex-column align-items-center justify-content-center" id="signup">
                 {% csrf_token %}
-                <h5 class="title p-2 mb-4">Log in</h5>
+                <h5 class="title p-2 mb-4 mform-text">Log in</h5>
                 
                 <div class="input-field pb-2">
                     <input type="text" name="username" placeholder="Username or Email">
@@ -27,7 +27,7 @@
             </form>
 
             <div class="content pt-5">
-                <p class="fw-semibold">Don't have an account? <a class="schol-link" href="/signup">Sign up</a></p>
+                <p class="fw-semibold mform-text">Don't have an account? <a class="schol-link" href="/signup">Sign up</a></p>
             </div>
         </div>
     </div>
