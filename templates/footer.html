@@ -33,13 +33,15 @@
 </footer> {% endcomment %}
 
 <footer class="bg-dark footer">
-  <div class="col">
+  <div class="col custom-footer-1">
    <h2 class="text-white">Scholarium</h2>
-   <a href="{% url "signup" %}">Join Our Community</a>
-   <p class="text-white">© Copyright 2023 TMTG. All rights reserved.</p>
+   {% if not request.session.user_token %}
+   <a href="{% url "signup" %}" class="btn btn-primary mt-3">Join Our Community</a>
+   {% endif %}
+   <p class="text-white mt-4">© Copyright 2023 TMTG. All rights reserved.</p>
   </div>
-  <div class="col">
-    <a href="{% url "contact" %}">Contact Us</a>
-    <a href="#">Privacy Policy</a>
+  <div class="col custom-footer-2">
+    <a class="schol-link" href="{% url "contact" %}">Contact Us</a>
+    <a class="schol-link" href="#">Privacy Policy</a>
   </div>
 </footer>
