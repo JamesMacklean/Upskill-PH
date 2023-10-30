@@ -389,7 +389,7 @@ div.card-image {
     font-size: 12px;
   }
   .program-partner-logos img {
-    max-width: 100px;
+    max-width: 110px;
     padding: 0;
     margin: 0 10px;
   }
@@ -399,7 +399,7 @@ div.card-image {
     display: none !important;
   }
   .program-partner-logos img {
-    max-width: 70px;
+    max-width: 85px;
     padding: 0;
     margin: 0 10px;
   }
@@ -413,7 +413,7 @@ div.card-image {
     justify-items: center;
   }
   .program-partner-logos img {
-    max-width: 45px;
+    max-width: 65px;
     padding: 0;
     margin: 0 10px;
   }
