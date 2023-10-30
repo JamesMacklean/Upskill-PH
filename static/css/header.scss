@@ -77,6 +77,9 @@ nav a:hover{
 .user-dropdown:hover .dropdown-content {
   display: block;
 }
+.nav-bar.collapse {
+  display: none;
+}
 // mobile response
 .mobile-nav{
   display: none;

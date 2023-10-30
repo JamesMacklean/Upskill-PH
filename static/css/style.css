@@ -405,6 +405,9 @@ div.card-image {
   }
 }
 @media screen and (max-width: 320px) {
+  .about {
+    height: 685px !important;
+  }
   .col.section-image {
     display: none !important;
   }
