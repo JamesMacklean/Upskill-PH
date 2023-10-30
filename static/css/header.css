@@ -96,6 +96,7 @@ nav a:hover {
   display: none;
   flex-direction: column;
   padding: 15px 10%;
+  transition: display 0.3s ease-in-out 0s;
 }
 
 .nav-bar.collapse .m-nav-link {
