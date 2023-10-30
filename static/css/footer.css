@@ -45,6 +45,9 @@ a.footer-link:hover {
     flex-direction: column !important;
     align-items: center !important;
   }
+  .footer p {
+    font-size: 11px;
+  }
   .custom-footer-1 p {
     font-size: 13px;
   }
@@ -52,11 +55,13 @@ a.footer-link:hover {
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin: auto !important;
   }
   .custom-footer-2 {
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-top: 40px;
   }
   .custom-footer-2 a {
     margin-bottom: 0.5rem;
