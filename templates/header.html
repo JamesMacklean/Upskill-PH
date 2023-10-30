@@ -50,6 +50,15 @@
 <script>
     function toggleNavBar() {
         var navBar = document.querySelector(".nav-bar.collapse");
+        navBar.classList.toggle("show");
+      }
+      
+      // Add a click event listener to the hamburger button
+      var hamburgerButton = document.querySelector(".hamburger");
+      hamburgerButton.addEventListener("click", toggleNavBar);
+      
+    {% comment %} function toggleNavBar() {
+        var navBar = document.querySelector(".nav-bar.collapse");
         if (navBar.style.display === "none" || navBar.style.display === "") {
           navBar.style.display = "flex";
         } else {
@@ -59,5 +68,5 @@
       
       // Add a click event listener to the hamburger button
       var hamburgerButton = document.querySelector(".hamburger");
-      hamburgerButton.addEventListener("click", toggleNavBar);
+      hamburgerButton.addEventListener("click", toggleNavBar); {% endcomment %}
 </script>

@@ -93,10 +93,15 @@ nav a:hover {
 }
 
 .nav-bar.collapse {
-  display: none;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.nav-bar.collapse.show {
+  opacity: 1;
+  display: flex;
   flex-direction: column;
   padding: 15px 10%;
-  transition: display 0.3s ease-in-out 0s;
 }
 
 .nav-bar.collapse .m-nav-link {
