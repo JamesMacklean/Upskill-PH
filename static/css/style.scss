@@ -90,7 +90,7 @@ form .input-field input:focus{
     color: gray;
 }
 form button{
-    width: 300px !important ;
+    width: 300px !important;
 }
 table.admin-table tr{
     border-bottom: 0.5px solid #dee2e6 !important;
@@ -1295,5 +1295,11 @@ div.card-image{
     }
     .form-submit{
         width: 150px !important;
+    }
+    form .input-field input{
+        width: 250px !important;
+    }
+    form button{
+        width: 250px !important;
     }
 }

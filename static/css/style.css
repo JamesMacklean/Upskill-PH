@@ -445,4 +445,10 @@ div.card-image {
   .form-submit {
     width: 150px !important;
   }
+  form .input-field input {
+    width: 250px !important;
+  }
+  form button {
+    width: 250px !important;
+  }
 }/*# sourceMappingURL=style.css.map */

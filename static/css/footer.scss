@@ -34,13 +34,17 @@ a.footer-link:hover{
 }
 // tablet
 @media screen and (max-width: 768px) {
+  .footer{
+    height: 270px;
+  }
   .custom-footer-1 {
-    margin-right: 300px;
+    margin-right: 255px;
   }
 }
 // Mobile- Large
 @media screen and (max-width: 425px) {
   .footer{
+    height: 300px;
     flex-direction: column !important;
     align-items: center !important;
   }
@@ -60,7 +64,7 @@ a.footer-link:hover{
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 40px;
+    margin-top: 25px;
   }
   .custom-footer-2 a{
     margin-bottom: 0.5rem;
