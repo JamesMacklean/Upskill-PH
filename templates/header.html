@@ -28,7 +28,7 @@
         <a href="{% url 'signup' %}" class="btn btn-sec mt-1">Sign Up</a>
     </div>
 {% else %}
-    <nav>
+    <nav class="web-nav">
         <a href="{% url 'home' %}">Home</a>
         <a href="{% url 'dashboard' %}">Dashboard</a>
         <div class="user-dropdown">
@@ -44,7 +44,19 @@
             </div>
         </div>
     </nav>
+    <nav class="mobile-nav">
+        <button class="hamburger">
+            <i class="fas fa-bars" ></i>
+        </button>
+    </nav>
 </header>
+<div class="nav-bar collapse">
+    <a class="m-nav-link" href="{% url 'home' %}">Home</a>
+    <a class="m-nav-link" href="{% url 'dashboard' %}">Dashboard</a>
+    <a class="m-nav-link" href="{% url 'profile' %}">Profile</a>
+    <a class="m-nav-link" href="{% url 'account' %}">Account</a>
+    <a class="schol-link" href="{% url 'signout' %}">Sign Out</a>
+</div>
 {% endif %}
 
 <script>
@@ -56,7 +68,7 @@
       // Add a click event listener to the hamburger button
       var hamburgerButton = document.querySelector(".hamburger");
       hamburgerButton.addEventListener("click", toggleNavBar);
-      
+
     {% comment %} function toggleNavBar() {
         var navBar = document.querySelector(".nav-bar.collapse");
         if (navBar.style.display === "none" || navBar.style.display === "") {
