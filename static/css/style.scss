@@ -1196,6 +1196,9 @@ div.card-image{
     background-size: auto auto, cover;
     background-repeat: no-repeat, no-repeat;
 }
+.profile-container{
+    padding: 3rem;
+}
 
 // media queries - mobile
 
@@ -1258,7 +1261,12 @@ div.card-image{
     .res-title {
         font-size: 18px !important;
     }
-    
+    .ml-2{
+        margin-left: 15px;
+    }
+    .profile-container{
+        padding: 2.5rem;
+    }
 }
 //mobile - Medium & Large
 @media screen and (max-width: 425px){
@@ -1298,10 +1306,16 @@ div.card-image{
     .content-container{
         margin: 10px 4% !important;
     }
+    .mob-p{
+        font-size: 14px;
+    }
 }
 @media screen and (max-width: 375px) {
     .form-control-custom{
         width: 264px;
+    }
+    .profile-container{
+        padding: 1.5rem;
     }
 }
 
@@ -1342,5 +1356,8 @@ div.card-image{
     }
     .content-container{
         margin: 10px 2% !important;
+    }
+    .profile-container{
+        padding: 1rem;
     }
 }

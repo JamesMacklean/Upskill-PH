@@ -351,6 +351,10 @@ div.card-image {
   background-repeat: no-repeat, no-repeat;
 }
 
+.profile-container {
+  padding: 3rem;
+}
+
 @media screen and (max-width: 768px) {
   .hero-banner {
     background: linear-gradient(90deg, rgb(255, 115, 0) 0%, rgb(255, 255, 255) 50%, rgb(255, 115, 0) 100%);
@@ -410,6 +414,12 @@ div.card-image {
   .res-title {
     font-size: 18px !important;
   }
+  .ml-2 {
+    margin-left: 15px;
+  }
+  .profile-container {
+    padding: 2.5rem;
+  }
 }
 @media screen and (max-width: 425px) {
   .col.section-image {
@@ -448,10 +458,16 @@ div.card-image {
   .content-container {
     margin: 10px 4% !important;
   }
+  .mob-p {
+    font-size: 14px;
+  }
 }
 @media screen and (max-width: 375px) {
   .form-control-custom {
     width: 264px;
+  }
+  .profile-container {
+    padding: 1.5rem;
   }
 }
 @media screen and (max-width: 320px) {
@@ -490,5 +506,8 @@ div.card-image {
   }
   .content-container {
     margin: 10px 2% !important;
+  }
+  .profile-container {
+    padding: 1rem;
   }
 }/*# sourceMappingURL=style.css.map */

@@ -3,103 +3,103 @@
 {% load parse_iso %}
 {% block content %}
 <div class="container">
-    <div class="content-container title d-flexjustify-content-between">
-        <h3>Profile</h3>
+    <div class="content-container title d-flex justify-content-between">
+        <h3 class="res-title ml-2">Profile</h3>
         <a href="/edit" class="btn btn-primary">Edit Profile</a>
     </div>
     <div class="content-container">
-    <div class="d-flex mt-5 bg-light p-5">
-        <div class="col-3">
+    <div class="d-flex mt-5 bg-light">
+        <div class="col">
             <img src="" alt="">
-            <h5>{{request.session.first_name}} {{request.session.last_name}}</h5>
+            <h5 class="res-title">{{request.session.first_name}} {{request.session.last_name}}</h5>
             <p class="label">Member since 2023</p>
         </div>
         <div class="col">
             <table class="w-100 profile-stats">
                 <tr>
-                    <td>Total learning hours</td>
-                    <td>123</td>
+                    <td class="mob-p">Total learning hours</td>
+                    <td class="mob-p">123</td>
                 </tr>
                 <tr>
-                    <td>Professional Certificates earned</td>
-                    <td>123</td>
+                    <td class="mob-p">Professional Certificates earned</td>
+                    <td class="mob-p">123</td>
                 </tr>
                 <tr>
-                    <td>Specializations completed</td>
-                    <td>123</td>
+                    <td class="mob-p">Specializations completed</td>
+                    <td class="mob-p">123</td>
                 </tr>
                 <tr>
-                    <td>Courses completed</td>
-                    <td>123</td>
+                    <td class="mob-p">Courses completed</td>
+                    <td class="mob-p">123</td>
                 </tr>
                 <tr>
-                    <td>Total Credits earned</td>
-                    <td>123</td>
+                    <td class="mob-p">Total Credits earned</td>
+                    <td class="mob-p">123</td>
                 </tr>
             </table>
         </div>
     </div>
     <div class="d-flex mt-2 bg-light p-5">
-        <div class="col-3">
-            <h5 class="mb-3">Introduction</h5>
+        <div class="col">
+            <h5 class="mb-3 res-title">Introduction</h5>
             <p>
                 Bio
             </p>
-            <hr>
-            <h5 class="mb-3">About</h5>
+            <hr style="width: 60%;">
+            <h5 class="mb-3 res-title">About</h5>
             <div class="mb-3">
-                <p class="mb-0">Address</p>
+                <p class="mb-0 mob-p">Address</p>
                 <label class="profile-label">ADDRESS</label>
             </div>
             <div class="mb-3">
-                <p class="mb-0">LinkedIn</p>
+                <p class="mb-0 mob-p">LinkedIn</p>
                 <label class="profile-label">LINKEDIN</label>
             </div>
             <div class="mb-3">
-                <p class="mb-0">Gender</p>
+                <p class="mb-0 mob-p">Gender</p>
                 <label class="profile-label">GENDER</label>
             </div>
             <div class="mb-3">
-                <p class="mb-0">Date of Birth</p>
+                <p class="mb-0 mob-p">Date of Birth</p>
                 <label class="profile-label">DATE OF BIRTH</label>
             </div>
             <div class="mb-3">
-                <p class="mb-0">0999999999</p>
+                <p class="mb-0 mob-p">0999999999</p>
                 <label class="profile-label">MOBILE NUMBER</label>
             </div>
         </div>
-        <div class="col mx-5">
-            <h5 class="mb-3">Work Experience and Education</h5>
+        <div class="col">
+            <h5 class="mb-3 res-title">Work Experience and Education</h5>
             <div class="mb-3">
-                <p class="mb-0">Employment Status</p>
+                <p class="mb-0 mob-p">Employment Status</p>
                 <label class="profile-label">EMPLOYMENT STATUS</label>
             </div>
             <div class="mb-3">
-                <p class="mb-0">Industry</p>
+                <p class="mb-0 mob-p">Industry</p>
                 <label class="profile-label">INDUSTRY</label>
             </div>
             <div class="mb-3">
-                <p class="mb-0">Employer</p>
+                <p class="mb-0 mob-p">Employer</p>
                 <label class="profile-label">EMPLOYER</label>
             </div>
             <div class="mb-3">
-                <p class="mb-0">Occupation</p>
+                <p class="mb-0 mob-p">Occupation</p>
                 <label class="profile-label">OCCUPATION</label>
             </div>
             <div class="mb-3">
-                <p class="mb-0">Experience Level</p>
+                <p class="mb-0 mob-p">Experience Level</p>
                 <label class="profile-label">EXPERIENCE LEVEL</label>
             </div>
             <div class="mb-3">
-                <p class="mb-0">Degree</p>
+                <p class="mb-0 mob-p">Degree</p>
                 <label class="profile-label">DEGREE</label>
             </div>
             <div class="mb-3">
-                <p class="mb-0">University</p>
+                <p class="mb-0 mob-p">University</p>
                 <label class="profile-label">UNIVERSITY</label>
             </div>
             <div class="mb-3">
-                <p class="mb-0">Field of Study</p>
+                <p class="mb-0 mob-p">Field of Study</p>
                 <label class="profile-label">FIELD OF STUDY</label>
             </div>
         </div>
