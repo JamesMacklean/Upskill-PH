@@ -1309,6 +1309,9 @@ div.card-image{
     .mob-p{
         font-size: 14px;
     }
+    td.mob-p{
+        font-size: 11px !important;
+    }
 }
 @media screen and (max-width: 375px) {
     .form-control-custom{
