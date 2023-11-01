@@ -407,6 +407,9 @@ div.card-image {
     display: flex;
     justify-content: center;
   }
+  .res-title {
+    font-size: 18px !important;
+  }
 }
 @media screen and (max-width: 425px) {
   .col.section-image {
@@ -439,6 +442,17 @@ div.card-image {
   .mform-text {
     color: #fff;
   }
+  .form-control-custom {
+    width: 312px;
+  }
+  .content-container {
+    margin: 10px 4% !important;
+  }
+}
+@media screen and (max-width: 375px) {
+  .form-control-custom {
+    width: 264px;
+  }
 }
 @media screen and (max-width: 320px) {
   .about {
@@ -470,5 +484,11 @@ div.card-image {
     width: 320px !important;
     height: 250px !important;
     border-radius: 0 !important;
+  }
+  .form-control-custom {
+    width: 212px;
+  }
+  .content-container {
+    margin: 10px 2% !important;
   }
 }/*# sourceMappingURL=style.css.map */
