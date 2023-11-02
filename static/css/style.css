@@ -414,6 +414,9 @@ div.card-image {
   .res-title {
     font-size: 18px !important;
   }
+  .res-title {
+    font-size: 16px !important;
+  }
   .ml-2 {
     margin-left: 15px;
   }
