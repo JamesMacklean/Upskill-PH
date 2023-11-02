@@ -1267,6 +1267,9 @@ div.card-image{
     .profile-container{
         padding: 2.5rem;
     }
+    .fa-bars{
+        font-size: 24px;
+    }
 }
 //mobile - Medium & Large
 @media screen and (max-width: 425px){
@@ -1319,6 +1322,9 @@ div.card-image{
     }
     .profile-container{
         padding: 1.5rem;
+    }
+    .fa-bars{
+        font-size: 20px;
     }
 }
 

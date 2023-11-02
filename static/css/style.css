@@ -420,6 +420,9 @@ div.card-image {
   .profile-container {
     padding: 2.5rem;
   }
+  .fa-bars {
+    font-size: 24px;
+  }
 }
 @media screen and (max-width: 425px) {
   .col.section-image {
@@ -471,6 +474,9 @@ div.card-image {
   }
   .profile-container {
     padding: 1.5rem;
+  }
+  .fa-bars {
+    font-size: 20px;
   }
 }
 @media screen and (max-width: 320px) {
