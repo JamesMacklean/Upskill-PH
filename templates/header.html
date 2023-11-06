@@ -31,6 +31,9 @@
     <nav class="web-nav">
         <a href="{% url 'home' %}">Home</a>
         <a href="{% url 'dashboard' %}">Dashboard</a>
+        {% if request.session.is_admin %}
+        <a class="m-nav-link" href="{% url 'admin_dashboard' %}">Admin</a>
+        {% endif %}
         <div class="user-dropdown">
             {% if request.session.username %}
                 <a href="#" class="username">{{request.session.username}} <i class="fas fa-caret-down caret-down"></i></a>
