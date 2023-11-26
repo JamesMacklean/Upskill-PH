@@ -1,7 +1,39 @@
 {% extends 'base.html' %}
 {% load static %}
+{% if response_message %}
 {% block content %}
+<div class="mx-0 d-flex flex-column justify-content-center mobile-bg" style="height: calc(100vh - 90px);">
+    <div class="d-flex gx-5 h-100">
 
+        <div class="col col-md-6 flex-column justify-content-center signup-panel" style="background: linear-gradient(90deg, rgba(241,90,37,1) 0%, rgba(37,188,241,0.5004595588235294) 100%),url({% static 'images/signup-panel.jpg' %});height: calc(100vh - 90px);background-size: cover;background-repeat: no-repeat;background-position: center right;">
+        </div>
+
+        <div class="col col-md-6 d-flex flex-column justify-content-center align-items-center">
+            {% if response_message == "user account added" %}
+            <div class="sign-up-form p-3 d-flex flex-column align-items-center justify-content-center" id="signup">
+                <h5 class="title p-2 mb-4 mform-text">We are having </h5>
+                <p>
+                    Congratulations on creating your new account! 🎉🌟 Your journey begins here, and we're thrilled to have you join our community. 
+                    <br>
+                    To complete the process and activate your account, kindly verify your email. This step ensures confirmation and full access to all our exciting features. 
+                    <br>
+                    If you need any assistance, feel free to reach out. Welcome aboard!
+                </p>
+            </div>
+            {% else %}
+            <div class="sign-up-form p-3 d-flex flex-column align-items-center justify-content-center" id="signup">
+                <h5 class="title p-2 mb-4 mform-text">Scholarium Account Created Successfully!</h5>
+                <p>
+                    We're sorry for the trouble with your account creation. Our team is ready to help! Please contact mailer@scholarium.io to get you set up smoothly. Thank you for your patience!
+                </p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% else %}
+{% block content %}
 <div class="mx-0 d-flex flex-column justify-content-center mobile-bg" style="height: calc(100vh - 90px);">
     <div class="d-flex gx-5 h-100">
 
@@ -19,7 +51,7 @@
                             <p class="m-1 label">Email</p>
                         </div>
                         {% if response_message %}
-                        <div class="d-flex flex-row align-items-center">
+                        <div class="d-flex flex-row align-items-center mt-2">
                             <i class="fas fa-circle-xmark label text-danger"></i>
                             <p class="m-1 label text-danger">{{ response_message }}</p>
                         </div>
@@ -29,7 +61,7 @@
                 </div>
                 <div class="input-field pb-4">
                     <p class="m-1 label">Password</p>
-                    <input type="password" id="password" name="password" placeholder="Password" required class="px-2">
+                    <input type="password" id="password" name="password" placeholder="Password" required class="px-2" minlength="8">
                 </div>
                     <button type="submit" class="btn solid">Sign Up</button>
             </form>
@@ -42,3 +74,4 @@
 </div>
 
 {% endblock %}
+{% endif %}
