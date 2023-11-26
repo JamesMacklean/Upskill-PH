@@ -3,15 +3,11 @@
 {% block content %}
 {% if response_message %}
 <div class="mx-0 d-flex flex-column justify-content-center mobile-bg" style="height: calc(100vh - 90px);">
-    <div class="d-flex gx-5 h-100">
-
-        <div class="col col-md-6 flex-column justify-content-center signup-panel" style="background: linear-gradient(90deg, rgba(241,90,37,1) 0%, rgba(37,188,241,0.5004595588235294) 100%),url({% static 'images/signup-panel.jpg' %});height: calc(100vh - 90px);background-size: cover;background-repeat: no-repeat;background-position: center right;">
-        </div>
-
-        <div class="col col-md-6 d-flex flex-column justify-content-center align-items-center">
+    <div class="d-flex content-container h-100 align-items-center">
+        <div class="col d-flex flex-column justify-content-center align-items-center">
             {% if response_message == "user account added" %}
-            <div class="sign-up-form p-3 d-flex flex-column align-items-center justify-content-center" id="signup">
-                <h5 class="title p-2 mb-4 mform-text">Congratulations on creating your account! 🎉</h5>
+            <div class="p-3 d-flex flex-column align-items-center justify-content-center" id="signup">
+                <h5 class="title p-2 mb-4 mform-text justify-content-center">Congratulations on creating your account! 🎉</h5>
                 <p>
                     Your journey begins here, and we're thrilled to have you join our community. 
                     <br>
@@ -21,10 +17,13 @@
                 </p>
             </div>
             {% else %}
-            <div class="sign-up-form p-3 d-flex flex-column align-items-center justify-content-center" id="signup">
-                <h5 class="title p-2 mb-4 mform-text">Account Creation failed</h5>
+            <div class="p-3 d-flex flex-column align-items-center justify-content-center" id="signup">
+                <h5 class="title p-2 mb-4 mform-text justify-content-center">Account Creation failed</h5>
                 <p>
-                    We're sorry for the trouble with your account creation. Our team is ready to help! Please contact mailer@scholarium.io to get you set up smoothly. Thank you for your patience!
+                    We're sorry for the trouble with your account creation. 
+                    <br>
+                    Our team is ready to help! Please contact <a href="mailto:mailer@scholarium.io" class="schol-link">mailer@scholarium.io</a> to get you set up smoothly. 
+                    Thank you for your patience!
                 </p>
             </div>
             {% endif %}
