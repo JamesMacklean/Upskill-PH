@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
-{% if response_message %}
 {% block content %}
+{% if response_message %}
 <div class="mx-0 d-flex flex-column justify-content-center mobile-bg" style="height: calc(100vh - 90px);">
     <div class="d-flex gx-5 h-100">
 
@@ -31,9 +31,7 @@
         </div>
     </div>
 </div>
-{% endblock %}
 {% else %}
-{% block content %}
 <div class="mx-0 d-flex flex-column justify-content-center mobile-bg" style="height: calc(100vh - 90px);">
     <div class="d-flex gx-5 h-100">
 
@@ -72,6 +70,5 @@
         </div>
     </div>
 </div>
-
-{% endblock %}
 {% endif %}
+{% endblock %}
