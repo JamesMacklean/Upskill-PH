@@ -11,7 +11,7 @@
     <div class="d-flex mt-5 bg-light profile-container">
         <div class="col">
             <img src="" alt="">
-            <h5 class="res-title">{{request.session.first_name}} {{request.session.last_name}}</h5>
+            <h5 class="res-title">{{profile.first_name|title}} {{profile.last_name|title}}</h5>
             <p class="label">Member since 2023</p>
         </div>
         <div class="col">
@@ -43,63 +43,63 @@
         <div class="col">
             <h5 class="mb-3 res-title-2">Introduction</h5>
             <p>
-                Bio
+                {{profile.about}}
             </p>
             <hr style="width: 60%;">
             <h5 class="mb-3 res-title-2">About</h5>
             <div class="mb-3">
-                <p class="mb-0 mob-p">Address</p>
+                <p class="mb-0 mob-p">{{profile.address}}</p>
                 <label class="profile-label">ADDRESS</label>
             </div>
             <div class="mb-3">
-                <p class="mb-0 mob-p">LinkedIn</p>
+                <p class="mb-0 mob-p">{{profile.socials}}</p>
                 <label class="profile-label">LINKEDIN</label>
             </div>
             <div class="mb-3">
-                <p class="mb-0 mob-p">Gender</p>
+                <p class="mb-0 mob-p">{{profile.gender}}</p>
                 <label class="profile-label">GENDER</label>
             </div>
             <div class="mb-3">
-                <p class="mb-0 mob-p">Date of Birth</p>
+                <p class="mb-0 mob-p">{{profile.birthday}}</p>
                 <label class="profile-label">DATE OF BIRTH</label>
             </div>
             <div class="mb-3">
-                <p class="mb-0 mob-p">0999999999</p>
+                <p class="mb-0 mob-p">{{profile.contact}}</p>
                 <label class="profile-label">MOBILE NUMBER</label>
             </div>
         </div>
         <div class="col">
             <h5 class="mb-3 res-title-2">Work Experience and Education</h5>
             <div class="mb-3">
-                <p class="mb-0 mob-p">Employment Status</p>
+                <p class="mb-0 mob-p">{{employment.employ_status}}</p>
                 <label class="profile-label">EMPLOYMENT STATUS</label>
             </div>
             <div class="mb-3">
-                <p class="mb-0 mob-p">Industry</p>
+                <p class="mb-0 mob-p">{{employment.industry}}</p>
                 <label class="profile-label">INDUSTRY</label>
             </div>
             <div class="mb-3">
-                <p class="mb-0 mob-p">Employer</p>
+                <p class="mb-0 mob-p">{{employment.employer}}</p>
                 <label class="profile-label">EMPLOYER</label>
             </div>
             <div class="mb-3">
-                <p class="mb-0 mob-p">Occupation</p>
+                <p class="mb-0 mob-p">{{employment.occupation}}</p>
                 <label class="profile-label">OCCUPATION</label>
             </div>
             <div class="mb-3">
-                <p class="mb-0 mob-p">Experience Level</p>
+                <p class="mb-0 mob-p">{{employment.experience}}</p>
                 <label class="profile-label">EXPERIENCE LEVEL</label>
             </div>
             <div class="mb-3">
-                <p class="mb-0 mob-p">Degree</p>
+                <p class="mb-0 mob-p">{{education.degree}}</p>
                 <label class="profile-label">DEGREE</label>
             </div>
             <div class="mb-3">
-                <p class="mb-0 mob-p">University</p>
+                <p class="mb-0 mob-p">{{education.school}}</p>
                 <label class="profile-label">UNIVERSITY</label>
             </div>
             <div class="mb-3">
-                <p class="mb-0 mob-p">Field of Study</p>
+                <p class="mb-0 mob-p">{{education.study}}</p>
                 <label class="profile-label">FIELD OF STUDY</label>
             </div>
         </div>
