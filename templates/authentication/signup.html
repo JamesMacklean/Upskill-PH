@@ -6,7 +6,7 @@
     <div class="d-flex content-container h-100 align-items-center">
         <div class="col d-flex flex-column justify-content-center align-items-center">
             {% if response_message == "user account added" %}
-            <div class="p-3 d-flex flex-column align-items-center justify-content-center" id="signup">
+            <div class="p-3 d-flex flex-column align-items-center justify-content-center text-center" id="signup">
                 <h5 class="title p-2 mb-4 mform-text justify-content-center">Congratulations on creating your account! 🎉</h5>
                 <p>
                     Your journey begins here, and we're thrilled to have you join our community. 
@@ -17,12 +17,12 @@
                 </p>
             </div>
             {% else %}
-            <div class="p-3 d-flex flex-column align-items-center justify-content-center" id="signup">
+            <div class="p-3 d-flex flex-column align-items-center justify-content-center text-center" id="signup">
                 <h5 class="title p-2 mb-4 mform-text justify-content-center">Account Creation failed</h5>
                 <p>
-                    We're sorry for the trouble with your account creation. 
+                    We're sorry for the trouble with your account creation. Our team is ready to help! 
+                    Please contact <a href="mailto:hello@scholarium.io" class="schol-link">mailer@scholarium.io</a> to get you set up smoothly. 
                     <br>
-                    Our team is ready to help! Please contact <a href="mailto:hello@scholarium.io" class="schol-link">mailer@scholarium.io</a> to get you set up smoothly. 
                     Thank you for your patience!
                 </p>
             </div>
