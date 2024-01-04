@@ -349,6 +349,67 @@ def applied_programs(request):
     
     return render(request, template_name, context)
 
+def user_management(request):
+    """"""
+    template_name = "admin/user_management.html"
+    context = {}
+
+    ########## LOGIN REQUIRED ##########
+    if not authenticate_user(request):
+        request.session['url'] = "home"
+        return render(request, "index.html")
+    clear_session(request,'url')
+    ########## LOGIN REQUIRED ##########
+    is_staff = request.session['is_staff']
+    is_admin = request.session['is_admin']
+    is_global = request.session['is_global']
+    
+    if not (is_global or is_admin or is_staff):
+        raise Http404  
+    
+    user_token = request.session['user_token']
+    users = users_list(user_token)
+    search_term = request.GET.get('search', '')
+    filtered_users_set = set()
+    
+    if search_term:
+        for user in users:
+            for key, value in user.items():
+                if isinstance(value, str) and search_term.lower() in value.lower():
+                    filtered_users_set.add(user['id'])  # Add the user's ID to the set
+                    break
+    else:
+        for user in users:
+            filtered_users_set.add(user['id'])
+
+    filtered_users = [user for user in users if user['id'] in filtered_users_set]
+    
+    paginator = Paginator(filtered_users, 50)  # Show 50 users per page
+    
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    
+    if 'generate_csv' in request.GET:
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename="users.csv"'
+
+        writer = csv.DictWriter(response, fieldnames=filtered_users[0].keys())
+        writer.writeheader()
+        for user in filtered_users:
+            writer.writerow(user)
+        return response
+    
+    context = {
+        'users': page_obj,
+        'paginator': paginator,
+        'search_query': search_term,  # Add the search query to the context
+        'is_staff': is_staff,
+        'is_admin': is_admin,
+        'is_global': is_global,
+        
+    }
+    return render(request,template_name, context)
+
 def admin_dashboard(request):
     """"""
     template_name = "admin/admin_dashboard.html"
