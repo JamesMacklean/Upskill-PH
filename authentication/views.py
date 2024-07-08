@@ -91,14 +91,14 @@ def clear_session(request,key):
 
 def home(request):
     """"""
-    template_name = "coursebank/courses.html"
+    template_name = "home/courses.html"
     context = {}
 
     ########## LOGIN REQUIRED ##########
     if not authenticate_user(request):
         request.session['url'] = "home"
-        return render(request, "index.html")
-    clear_session(request,'url')
+        return HttpResponseRedirect('signin')
+    # clear_session(request,'url')
     ########## LOGIN REQUIRED ##########
     
     user_token = request.session['user_token']
@@ -907,7 +907,7 @@ def account(request):
 
 # def courses(request):
 #     """"""
-#     template_name = "coursebank/courses.html"
+#     template_name = "home/courses.html"
 #     context = {}
 
 #     ########## LOGIN REQUIRED ##########
