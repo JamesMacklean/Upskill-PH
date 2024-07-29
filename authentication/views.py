@@ -221,7 +221,6 @@ def signup(request):
                     html_message=html,
                     fail_silently=False
                 )
-                print(email, password)
                 ############################# FOR MAIL ##############################
             
             messages.info(request, response_message)

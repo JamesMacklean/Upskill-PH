@@ -1,4 +1,5 @@
 DOMAIN = 'scholarium.io'
+# DOMAIN = 'http://127.0.0.1:8000'
 TEST_EMAIL_RECEIVER = 'jamesmacklean27@gmail.com'
 
 ########## ORIGINAL CODE ##########
