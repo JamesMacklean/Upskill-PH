@@ -1,36 +1,27 @@
-{% extends 'base.html' %}
+{% extends 'authentication/login_base.html' %}
 {% load static %}
+{% block 'title' %}upskillPH | Login{% endblock %}
 {% block content %}
 
-<div class="mx-0 d-flex flex-column justify-content-center mobile-bg" style="height: calc(100vh - 90px);">
-    <div class="d-flex gx-5 h-100">
-
-        <div class="col col-md-6 flex-column justify-content-center signup-panel" style="background: linear-gradient(90deg, rgba(241,90,37,1) 0%, rgba(37,188,241,0.5004595588235294) 100%),url({% static 'images/signup-panel.jpg' %});height: calc(100vh - 90px);background-size: cover;background-repeat: no-repeat;background-position: center right;">
+<div class="wrapper">
+    <form method="post" action="">
+        {% csrf_token %}
+        <h1>Login</h1>
+        <div class="input-box">
+            <input type="text" placeholder="Username or Email" required>
         </div>
-
-        <div class="col col-md-6 d-flex flex-column justify-content-center align-items-center">
-            <form method="post" action="" class="sign-up-form p-3 d-flex flex-column align-items-center justify-content-center" id="signup">
-                {% csrf_token %}
-                <h5 class="title p-2 mb-4 mform-text">Log in</h5>
-                
-                <div class="input-field pb-2">
-                    <input type="text" name="username" placeholder="Username or Email">
-                </div>
-
-                <div class="input-field pb-5">
-                    <input type="password" name="password" placeholder="Password" minlength="8" required>
-                </div>
-
-                    <button type="submit" class="btn solid">Log in</button>
-
-                    <p>{{ response_message }}</p>
-            </form>
-
-            <div class="content pt-5">
-                <p class="fw-semibold mform-text">Don't have an account? <a class="schol-link" href="/signup">Sign up</a></p>
-            </div>
+        <div class="input-box">
+            <input type="password" placeholder="Password" required>
         </div>
-    </div>
+        <div class="error" style="display: none;">
+            <p>{{ response_message }}</p>
+        </div>
+        <button type="submit" class="btn" id="loginButton">Login</button>
+        <div class="register-link">
+            <p>Don't have an account? <a href="/signup">Signup</a>
+            </p>
+        </div>
+    </form>
 </div>
 
 {% endblock %}
