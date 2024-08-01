@@ -1,5 +1,5 @@
 /* You can add your CSS styles here to customize the header appearance */
-header {
+/* header {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -140,4 +140,5 @@ nav a:hover {
   .mobile-nav {
     display: flex !important;
   }
-}/*# sourceMappingURL=header.css.map */
+} */
+/*# sourceMappingURL=header.css.map */
