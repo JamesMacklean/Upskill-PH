@@ -5,12 +5,10 @@
 <header class="header" id="web-header">
 
     <a href="{% url 'home' %}">
-        <img src="{% static 'images/upskilllogo.png' %}" class="logo" alt="Scholarium">
+        <img src="{% static 'images/upskilllogo.png' %}" class="header-logo" alt="Scholarium">
     </a>
  
 {% if not request.session.user_token %}
-    <nav class="web-nav">
-    </nav>
 </header>
 {% else %}
     <nav class="web-nav">
