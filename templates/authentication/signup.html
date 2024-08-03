@@ -8,10 +8,10 @@
         {% csrf_token %}
         <h1>Create an Account</h1>
         <div class="input-box">
-            <input type="text" placeholder="Email" required>
+            <input id="email" type="text" placeholder="Email" required>
         </div>
         <div class="input-box">
-            <input id="password1" type="password" placeholder="Password" required minlength="8" oninput="checkPasswordLength()">
+            <input id="password" name="password" type="password" placeholder="Password" required minlength="8" oninput="checkPasswordLength()">
             <span id="lengthWarning" style="position: absolute; right: 12px; top: 12px; display: none; color: orange;">
                 <i class="fa-solid fa-triangle-exclamation" title="Password must be at least 8 characters long."></i>
                 <span class="tooltip-warning" style="visibility: visible;width: 165px;font-size: 12px;background-color: white;border: 1px solid;color: orange;text-align: center;border-radius: 6px;padding: 5px 5px;position: absolute;z-index: 1;right: -195px; top: -10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">Password must be at least 8 characters long.</span>
@@ -30,8 +30,8 @@
         </div>
         <script>
             function checkPasswordLength() {
-                var password1 = document.getElementById('password1').value;
-                if (password1.length < 8) {
+                var password = document.getElementById('password').value;
+                if (password.length < 8) {
                     document.getElementById('lengthWarning').style.display = 'inline';
                     document.querySelector('#lengthWarning .tooltip').style.visibility = 'visible';
                 } else {
@@ -41,14 +41,14 @@
             }
 
             function checkPasswordMatch() {
-                var password1 = document.getElementById('password1').value;
+                var password = document.getElementById('password').value;
                 var password2 = document.getElementById('password2').value;
-                if (password1 === "" || password2 === "") {
+                if (password === "" || password2 === "") {
                     document.getElementById('checkmark').style.display = 'none';
                     document.getElementById('crossmark').style.display = 'none';
                     document.querySelector('#checkmark .tooltip').style.visibility = 'hidden';
                     document.querySelector('#crossmark .tooltip').style.visibility = 'hidden';
-                } else if (password1 === password2) {
+                } else if (password === password2) {
                     document.getElementById('checkmark').style.display = 'inline';
                     document.getElementById('crossmark').style.display = 'none';
                     document.querySelector('#checkmark .tooltip').style.visibility = 'visible';
@@ -67,12 +67,12 @@
         <button type="submit" class="btn" id="registerButton" disabled>Register</button>
         <script>
             function updateRegisterButton() {
-                var password1 = document.getElementById('password1').value;
+                var password = document.getElementById('password').value;
                 var password2 = document.getElementById('password2').value;
                 var allInputs = document.querySelectorAll('.input-box input');
                 var allFilled = Array.from(allInputs).every(input => input.value !== '');
 
-                if (password1 === password2 && allFilled) {
+                if (password === password2 && allFilled) {
                     document.getElementById('registerButton').disabled = false;
                     document.getElementById('registerButton').style.backgroundColor = 'green';
                     document.getElementById('registerButton').classList.add('enabled-button');
