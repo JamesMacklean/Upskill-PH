@@ -305,16 +305,16 @@ def signin(request):
 
     return render(request, template_name, context)
 
-def signout(request):   
-    # CLEAR SESSIONS
-    try:   
-        for key in list(request.session.keys()):
-            del request.session[key]
-            request.session.modified = True
-    except KeyError as e:
-        print(str(e))
+# def signout(request):   
+#     # CLEAR SESSIONS
+#     try:   
+#         for key in list(request.session.keys()):
+#             del request.session[key]
+#             request.session.modified = True
+#     except KeyError as e:
+#         print(str(e))
         
-    return redirect('home')
+#     return redirect('home')
 
 def applied_programs(request):
     """"""
