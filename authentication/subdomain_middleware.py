@@ -24,5 +24,5 @@ class SubdomainMiddleware:
                 return redirect(f'http://accounts.upskillph.org{reverse("signup")}')
         elif subdomain == 'accounts':
             if request.path not in [reverse('signup'), reverse('signin')]:
-                return HttpResponseForbidden("Forbidden")  # Restrict access to non-signin/signup views
+                return redirect(f'http://welcome.upskillph.org{request.path}')
         return None
