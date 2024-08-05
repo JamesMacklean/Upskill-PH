@@ -14,11 +14,11 @@ class SubdomainMiddleware(MiddlewareMixin):
             # Check if user is authenticated for other paths on the welcome subdomain
             if not authenticate_user(request):
                 return redirect(f'http://accounts.upskillph.org{reverse("signin")}')
-            if request.path == reverse('signup'):
-                return redirect(f'http://accounts.upskillph.org{reverse("signup")}')
-        elif subdomain == 'accounts':
-            if request.path not in [reverse('signup'), reverse('signin')]:
-                return redirect(f'http://welcome.upskillph.org{request.path}')
+            # if request.path == reverse('signup'):
+            #     return redirect(f'http://accounts.upskillph.org{reverse("signup")}')
+        # elif subdomain == 'accounts':
+        #     if request.path not in [reverse('signup'), reverse('signin')]:
+        #         return redirect(f'http://welcome.upskillph.org{request.path}')
         
         return None
     
