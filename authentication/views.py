@@ -314,7 +314,7 @@ def signout(request):
     except KeyError as e:
         print(str(e))
         
-    return redirect('home')
+    return redirect(f'http://accounts.upskillph.org{reverse("signin")}')
 
 def applied_programs(request):
     """"""
