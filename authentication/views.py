@@ -289,9 +289,9 @@ def signin(request):
                         program_id = request.session.get('program_id')
                         clear_session(request, 'partner_id')
                         clear_session(request, 'program_id')
-                        return redirect(f'http://welcome.upskillph.org{reverse(next_page, kwargs={"partner_id": partner_id, "program_id": program_id})}')
+                        return redirect(f'http://{DOMAIN}{reverse(next_page, kwargs={"partner_id": partner_id, "program_id": program_id})}')
                     else:
-                        return redirect(f'http://welcome.upskillph.org{next_page}')
+                        return redirect(f'http://{DOMAIN}{next_page}')
                     # return HttpResponseRedirect(reverse(next_page))
             
                 except Exception as e:

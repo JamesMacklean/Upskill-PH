@@ -15,11 +15,11 @@ class SubdomainMiddleware(MiddlewareMixin):
             # Check if user is authenticated for other paths on the welcome subdomain
             if not self.authenticate_user(request):
                 request.session['original_url'] = request.get_full_path()
-                return redirect(f'http://accounts.upskillph.org{reverse("signin")}')
+                return redirect(f'http://{ACCOUNTS_DOMAIN}{reverse("signin")}')
         
         elif subdomain == 'accounts':
             if request.path not in [reverse('signup'), reverse('signin')]:
-                return redirect(f'http://welcome.upskillph.org{request.path}')
+                return redirect(f'http://{DOMAIN}{request.path}')
         
         return None
 
@@ -59,4 +59,4 @@ class SubdomainMiddleware(MiddlewareMixin):
         except KeyError as e:
             print(str(e))
         
-        return redirect(f'http://accounts.upskillph.org{reverse("signin")}')
+        return redirect(f'http://{ACCOUNTS_DOMAIN}{reverse("signin")}')
