@@ -50,35 +50,35 @@ class SessionChecker(APIView):
         except KeyError:
             raise Http404
 
-def authenticate_user(request):
-    try:
-        # user_token = request.COOKIES.get('jwt')    
-        # PRINT SESSION ITEMS
-        for key, value in request.session.items():
-            print('{}: {}'.format(key, value))
+# def authenticate_user(request):
+#     try:
+#         # user_token = request.COOKIES.get('jwt')    
+#         # PRINT SESSION ITEMS
+#         for key, value in request.session.items():
+#             print('{}: {}'.format(key, value))
                  
-        try:   
-            user_token = request.session['user_token'] 
-            payload = jwt.decode(user_token, API_SECRET_KEY, algorithms=['HS256'])
+#         try:   
+#             user_token = request.session['user_token'] 
+#             payload = jwt.decode(user_token, API_SECRET_KEY, algorithms=['HS256'])
 
-            # SAVE JWT PAYLOAD INTO SESSIONS
-            for key,value in payload.items():
-                if key == 'data':
-                    for key,value in payload['data'].items():
-                        if request.session[key]:
-                            pass
-                        else:
-                            request.session[key] = value
-                            request.session.modified = True
-            return True
+#             # SAVE JWT PAYLOAD INTO SESSIONS
+#             for key,value in payload.items():
+#                 if key == 'data':
+#                     for key,value in payload['data'].items():
+#                         if request.session[key]:
+#                             pass
+#                         else:
+#                             request.session[key] = value
+#                             request.session.modified = True
+#             return True
         
-        except jwt.ExpiredSignatureError:
-            signout(request)
-            return False
+#         except jwt.ExpiredSignatureError:
+#             signout(request)
+#             return False
         
-    except KeyError:
-        signout(request)
-        return False
+#     except KeyError:
+#         signout(request)
+#         return False
 
 def clear_session(request,key):
     try:
@@ -163,9 +163,9 @@ def verify_account(request, user_hash):
     context = {}
     
     ########## ANONYMOUS REQUIRED ##########
-    if authenticate_user(request):
-        return HttpResponseRedirect('/')
-    clear_session(request,'url')
+    # if authenticate_user(request):
+    #     return HttpResponseRedirect('/')
+    # clear_session(request,'url')
     ########## ANONYMOUS REQUIRED ##########
 
     try:
@@ -322,10 +322,10 @@ def applied_programs(request):
     context = {}
     applied_programs = []
     ########## LOGIN REQUIRED ##########
-    if not authenticate_user(request):
-        request.session['url'] = "dashboard"
-        return HttpResponseRedirect('/signin?next=dashboard')
-    clear_session(request,'url')
+    # if not authenticate_user(request):
+    #     request.session['url'] = "dashboard"
+    #     return HttpResponseRedirect('/signin?next=dashboard')
+    # clear_session(request,'url')
     ########## LOGIN REQUIRED ##########
     
     user_token = request.session['user_token']
@@ -354,10 +354,10 @@ def user_management(request):
     context = {}
 
     ########## LOGIN REQUIRED ##########
-    if not authenticate_user(request):
-        request.session['url'] = "home"
-        return render(request, "index.html")
-    clear_session(request,'url')
+    # if not authenticate_user(request):
+    #     request.session['url'] = "home"
+    #     return render(request, "index.html")
+    # clear_session(request,'url')
     ########## LOGIN REQUIRED ##########
     is_staff = request.session['is_staff']
     is_admin = request.session['is_admin']
@@ -415,10 +415,10 @@ def admin_dashboard(request):
     context = {}
 
     ########## LOGIN REQUIRED ##########
-    if not authenticate_user(request):
-        request.session['url'] = "home"
-        return render(request, "index.html")
-    clear_session(request,'url')
+    # if not authenticate_user(request):
+    #     request.session['url'] = "home"
+    #     return render(request, "index.html")
+    # clear_session(request,'url')
     ########## LOGIN REQUIRED ##########
     is_staff = request.session['is_staff']
     is_admin = request.session['is_admin']
@@ -476,10 +476,10 @@ def admin_partners(request, partner_id):
     context = {}
 
     ########## LOGIN REQUIRED ##########
-    if not authenticate_user(request):
-        request.session['url'] = "home"
-        return render(request, "index.html")
-    clear_session(request,'url')
+    # if not authenticate_user(request):
+    #     request.session['url'] = "home"
+    #     return render(request, "index.html")
+    # clear_session(request,'url')
     ########## LOGIN REQUIRED ##########
     is_staff = request.session['is_staff']
     is_admin = request.session['is_admin']
@@ -499,10 +499,10 @@ def user_details(request, user_id):
     context = {}
 
     ########## LOGIN REQUIRED ##########
-    if not authenticate_user(request):
-        request.session['url'] = "home"
-        return render(request, "index.html")
-    clear_session(request,'url')
+    # if not authenticate_user(request):
+    #     request.session['url'] = "home"
+    #     return render(request, "index.html")
+    # clear_session(request,'url')
     ########## LOGIN REQUIRED ##########
     is_staff = request.session['is_staff']
     is_admin = request.session['is_admin']
@@ -529,10 +529,10 @@ def license_codes(request, slug):
     context = {}
 
     ########## LOGIN REQUIRED ##########
-    if not authenticate_user(request):
-        request.session['url'] = "home"
-        return render(request, "index.html")
-    clear_session(request,'url')
+    # if not authenticate_user(request):
+    #     request.session['url'] = "home"
+    #     return render(request, "index.html")
+    # clear_session(request,'url')
     ########## LOGIN REQUIRED ##########
     is_admin = request.session['is_admin']
     is_global = request.session['is_global']
@@ -591,10 +591,10 @@ def profile(request):
     context = {}
     applied_programs = []
     ########## LOGIN REQUIRED ##########
-    if not authenticate_user(request):
-        request.session['url'] = "profile"
-        return HttpResponseRedirect('/signin?next=profile')
-    clear_session(request,'url')
+    # if not authenticate_user(request):
+    #     request.session['url'] = "profile"
+    #     return HttpResponseRedirect('/signin?next=profile')
+    # clear_session(request,'url')
     ########## LOGIN REQUIRED ##########
     
     user_token = request.session['user_token']
@@ -625,10 +625,10 @@ def edit_profile(request):
     context = {}
     
     ########## LOGIN REQUIRED ##########
-    if not authenticate_user(request):
-        request.session['url'] = "edit"
-        return HttpResponseRedirect('/signin?next=edit')
-    clear_session(request,'url')
+    # if not authenticate_user(request):
+    #     request.session['url'] = "edit"
+    #     return HttpResponseRedirect('/signin?next=edit')
+    # clear_session(request,'url')
     ########## LOGIN REQUIRED ##########
     
     user_token = request.session['user_token']
@@ -703,10 +703,10 @@ def partner(request):
     partner_programs = []
     
     ########## LOGIN REQUIRED ##########
-    if not authenticate_user(request):
-        request.session['url'] = "partner"
-        return HttpResponseRedirect('/signin?next=partner')
-    clear_session(request,'url')
+    # if not authenticate_user(request):
+    #     request.session['url'] = "partner"
+    #     return HttpResponseRedirect('/signin?next=partner')
+    # clear_session(request,'url')
     ########## LOGIN REQUIRED ##########
     
     if request.session['is_partner']:
@@ -739,12 +739,12 @@ def application(request, partner_id, program_id):
     monitored_program = []
     
     ######### LOGIN REQUIRED ##########
-    if not authenticate_user(request):
-        request.session['url'] = "application"
-        request.session['partner_id'] = partner_id
-        request.session['program_id'] = program_id
-        return HttpResponseRedirect('/signin?next=application/'+str(partner_id)+"/"+str(program_id)+"/")
-    clear_session(request,'url')
+    # if not authenticate_user(request):
+    #     request.session['url'] = "application"
+    #     request.session['partner_id'] = partner_id
+    #     request.session['program_id'] = program_id
+    #     return HttpResponseRedirect('/signin?next=application/'+str(partner_id)+"/"+str(program_id)+"/")
+    # clear_session(request,'url')
     ######### LOGIN REQUIRED ##########
     
     user_token = request.session['user_token']
@@ -791,11 +791,11 @@ def program(request, slug):
     applied_programs = []
     status_checker = 0
     ######### LOGIN REQUIRED ##########
-    if not authenticate_user(request):
-        request.session['url'] = "program"
-        request.session['program_slug'] = slug
-        return HttpResponseRedirect('/signin?next=program/'+str(slug)+"/")
-    clear_session(request,'url')
+    # if not authenticate_user(request):
+    #     request.session['url'] = "program"
+    #     request.session['program_slug'] = slug
+    #     return HttpResponseRedirect('/signin?next=program/'+str(slug)+"/")
+    # clear_session(request,'url')
     ######### LOGIN REQUIRED ##########
     
     bearer_token = get_access_token()    
@@ -875,10 +875,10 @@ def account(request):
     """"""
     template_name = "account.html"
     ########## LOGIN REQUIRED ##########
-    if not authenticate_user(request):
-        request.session['url'] = "account"
-        return HttpResponseRedirect('/signin?next=account')
-    clear_session(request,'url')
+    # if not authenticate_user(request):
+    #     request.session['url'] = "account"
+    #     return HttpResponseRedirect('/signin?next=account')
+    # clear_session(request,'url')
     ########## LOGIN REQUIRED ##########
     
     user_token = request.session['user_token']
