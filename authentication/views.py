@@ -22,7 +22,7 @@ from .api import InvitationsAPI
 from django.core.paginator import Paginator
 
 from .variables import *
-import os, requests, ast, jwt, csv
+import jwt, csv
 
 class SessionChecker(APIView):
     def get(self, request):    
@@ -95,9 +95,9 @@ def home(request):
     context = {}
 
     ########## LOGIN REQUIRED ##########
-    if not authenticate_user(request):
-        request.session['url'] = "home"
-        return HttpResponseRedirect('signin')
+    # if not authenticate_user(request):
+    #     request.session['url'] = "home"
+    #     return HttpResponseRedirect('signin')
     # clear_session(request,'url')
     ########## LOGIN REQUIRED ##########
     
