@@ -1,7 +1,6 @@
 from multiprocessing import context
 from re import template
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from scholarium import settings
@@ -20,6 +19,7 @@ from .decorators import *
 from django.template import Library
 from .api import InvitationsAPI
 from django.core.paginator import Paginator
+from django.http import HttpResponseForbidden
 
 from .variables import *
 import os, requests, ast, jwt, csv
@@ -49,6 +49,9 @@ class SessionChecker(APIView):
             
         except KeyError:
             raise Http404
+
+def is_accounts_domain(request):
+    return request.get_host().startswith('accounts.upskillph.org')
 
 def authenticate_user(request):
     try:
@@ -186,7 +189,10 @@ def signup(request):
     """"""
     template_name = "authentication/signup.html"
     context = {}
-        
+    
+    if not is_accounts_domain(request):
+        return HttpResponseForbidden("Forbidden: This view is only accessible on accounts.upskillph.org")
+    
     try:
         if request.method == "POST":
             email = request.POST['email']
@@ -235,6 +241,10 @@ def signin(request):
     template_name = "authentication/signin.html"
     context = {}
     
+    if not is_accounts_domain(request):
+        return HttpResponseForbidden("Forbidden: This view is only accessible on accounts.upskillph.org")
+    
+
     if request.method == "POST":
         username = request.POST['username']
         password = request.POST['password']
