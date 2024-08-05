@@ -95,9 +95,9 @@ def home(request):
     context = {}
 
     ########## LOGIN REQUIRED ##########
-    if not authenticate_user(request):
-        request.session['url'] = "home"
-        return HttpResponseRedirect('signin')
+    # if not authenticate_user(request):
+    #     request.session['url'] = "home"
+    #     return HttpResponseRedirect('signin')
     # clear_session(request,'url')
     ########## LOGIN REQUIRED ##########
     
