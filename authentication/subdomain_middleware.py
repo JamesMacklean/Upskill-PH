@@ -15,13 +15,19 @@ class SubdomainMiddleware(MiddlewareMixin):
             # Check if user is authenticated for other paths on the welcome subdomain
             if not self.authenticate_user(request):
                 request.session['original_url'] = request.get_full_path()
-                return redirect(f'http://{ACCOUNTS_DOMAIN}{reverse("signin")}')
+                return redirect(f'{ACCOUNTS_DOMAIN}{reverse("signin")}')
         
         elif subdomain == 'accounts':
             if request.path not in [reverse('signup'), reverse('signin')]:
+<<<<<<< HEAD
                 return redirect(f'http://{DOMAIN}{request.path}')
             if self.authenticate_user(request):
                 return redirect(f'http://{DOMAIN}')
+=======
+                return redirect(f'{DOMAIN}{request.path}')
+            if self.authenticate_user(request):
+                return redirect(f'{DOMAIN}')
+>>>>>>> 1b803fbfd87a751f2be82267e1a8b3f90033d750
         
         return None
 
