@@ -62,6 +62,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'corsheaders.middleware.CorsMiddleware',
+    'authentication.subdomain_middleware.SubdomainMiddleware',
 ]
 
 ROOT_URLCONF = 'scholarium.urls'
