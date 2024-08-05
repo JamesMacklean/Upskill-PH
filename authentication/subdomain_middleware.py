@@ -19,15 +19,9 @@ class SubdomainMiddleware(MiddlewareMixin):
         
         elif subdomain == 'accounts':
             if request.path not in [reverse('signup'), reverse('signin')]:
-<<<<<<< HEAD
                 return redirect(f'http://{DOMAIN}{request.path}')
-            if self.authenticate_user(request):
-                return redirect(f'http://{DOMAIN}')
-=======
-                return redirect(f'{DOMAIN}{request.path}')
-            if self.authenticate_user(request):
-                return redirect(f'{DOMAIN}')
->>>>>>> 1b803fbfd87a751f2be82267e1a8b3f90033d750
+            # if self.authenticate_user(request):
+            #     return redirect(f'http://{DOMAIN}')
         
         return None
 
