@@ -236,10 +236,10 @@ def signin(request):
     context = {}
     
     if request.method == "POST":
-        username = request.POST['username']
+        email = request.POST['email']
         password = request.POST['password']
 
-        user_token, expires, response_message = login_account(username, password)
+        user_token, expires, response_message = login_account(email, password)
         
         #### MODAL RESPONSE KUNG NAGWORK BA ANG SIGN IN
         print(response_message)
