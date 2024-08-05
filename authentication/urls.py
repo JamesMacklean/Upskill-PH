@@ -36,3 +36,7 @@ urlpatterns = [
     # COURSERA
     path('refresh/', views.refresh_token, name="refresh"),
 ]
+
+urlpatterns += [
+    path('accounts/', include(('authentication.urls_accounts', 'authentication'), namespace='accounts')),
+]
