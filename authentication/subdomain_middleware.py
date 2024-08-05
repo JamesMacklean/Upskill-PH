@@ -16,7 +16,7 @@ class SubdomainMiddleware(MiddlewareMixin):
                 return redirect(f'http://accounts.upskillph.org{reverse("signin")}')
         
         if subdomain == 'accounts':
-            if authenticate_user(request):
+            if request.path not in [reverse('signup'), reverse('signin')]:
                 return redirect(f'http://welcome.upskillph.org{request.path}')
         
         return None
