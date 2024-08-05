@@ -275,21 +275,24 @@ def signin(request):
             
             # CHECK IF THE REQUEST IS REDIRECTION
             try:
-                next_page = request.session.get('url')
+                next_page = request.session.get('original_url')
             except:
                 next_page = ""
             
             # IF REDIRECTION SIYA, PUNTA SA NEXT PAGE, PERO KUNG HINDI, SA DASHBOARD
             if next_page:
                 try:
-                    if next_page == 'application' or next_page == 'program':
+                    clear_session(request,'original_url')
+                    
+                    if 'application' in next_page or 'program' in next_page:
                         partner_id = request.session.get('partner_id')
                         program_id = request.session.get('program_id')
-                        clear_session(request,'partner_id')
-                        clear_session(request,'program_id')
-                        return HttpResponseRedirect(reverse(next_page,kwargs={'partner_id':partner_id,'program_id':program_id}))
-
-                    return HttpResponseRedirect(reverse(next_page))
+                        clear_session(request, 'partner_id')
+                        clear_session(request, 'program_id')
+                        return redirect(f'http://welcome.upskillph.org{reverse(next_page, kwargs={"partner_id": partner_id, "program_id": program_id})}')
+                    else:
+                        return redirect(f'http://welcome.upskillph.org{next_page}')
+                    # return HttpResponseRedirect(reverse(next_page))
             
                 except Exception as e:
                     print(str(e))
