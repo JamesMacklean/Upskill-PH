@@ -1,5 +1,13 @@
 /* You can add your CSS styles here to customize the header appearance */
-header{
+.header-login{
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 10px 12%;
+  background-color: #ffff;
+  height: 90px;
+}
+.header{
   display: flex;
   justify-content: space-between;
   align-items: center;

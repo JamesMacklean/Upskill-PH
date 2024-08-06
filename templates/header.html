@@ -2,15 +2,23 @@
 <link rel="stylesheet" href="{% static 'css/header.css' %}">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
+{% if not request.session.user_token %}
+
+<header class="header-login" id="web-header">
+
+    <a href="{% url 'home' %}">
+        <img src="{% static 'images/upskilllogo.png' %}" class="header-logo" alt="Scholarium">
+    </a>
+</header>
+
+
+{% else %}
 <header class="header" id="web-header">
 
     <a href="{% url 'home' %}">
         <img src="{% static 'images/upskilllogo.png' %}" class="header-logo" alt="Scholarium">
     </a>
- 
-{% if not request.session.user_token %}
-</header>
-{% else %}
+
     <nav class="web-nav">
         <a href="{% url 'home' %}">Home</a>
         <a href="{% url 'dashboard' %}">Dashboard</a>
