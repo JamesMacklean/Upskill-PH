@@ -18,7 +18,7 @@ from .api import *
 from .forms import *
 from .decorators import *
 from django.template import Library
-from .api import InvitationsAPI
+# from .api import InvitationsAPI
 from django.core.paginator import Paginator
 
 from .variables import *
@@ -95,10 +95,10 @@ def home(request):
     context = {}
 
     ########## LOGIN REQUIRED ##########
-    # if not authenticate_user(request):
-    #     request.session['url'] = "home"
-    #     return HttpResponseRedirect('signin')
-    # clear_session(request,'url')
+    if not authenticate_user(request):
+        request.session['url'] = "home"
+        return HttpResponseRedirect('signin')
+    clear_session(request,'url')
     ########## LOGIN REQUIRED ##########
     
     user_token = request.session['user_token']
@@ -239,7 +239,7 @@ def signin(request):
         email = request.POST['email']
         password = request.POST['password']
 
-        user_token, expires, response_message = login_account(email, password)
+        user_token, expires, redirect_url, response_message = login_account(email, password)
         
         #### MODAL RESPONSE KUNG NAGWORK BA ANG SIGN IN
         print(response_message)
@@ -251,6 +251,7 @@ def signin(request):
             try:    
                 request.session['user_token'] = user_token
                 request.session['expires'] = expires
+                request.session['redirect_url'] = redirect_url
                 request.session['is_scholar'] = scholarships
                 request.session['is_partner'] = partners
                 request.session.modified = True
@@ -802,7 +803,7 @@ def program(request, slug):
     clear_session(request,'url')
     ######### LOGIN REQUIRED ##########
     
-    bearer_token = get_access_token()    
+    # bearer_token = get_access_token()    
     user_token = request.session['user_token']
     username = request.session.get('username')        
     first_name = request.session.get('first_name')
@@ -830,17 +831,17 @@ def program(request, slug):
     if request.method == "POST":
         # response = scholar_apply(user_token,program_id)
         license_code = request.POST.get('license_code')
-        coursera_program_id = request.POST.get('coursera_program_id')
+        # coursera_program_id = request.POST.get('coursera_program_id')
         full_name = first_name + last_name
         
-        access_token = get_access_token()
-        api = InvitationsAPI(access_token, coursera_program_id)
+        # access_token = get_access_token()
+        # api = InvitationsAPI(access_token, coursera_program_id)
 
         response = enroll_code(user_token, program_id, license_code)
         
-        if response == "License Code Verified!":
-            invitation_response = api.invite_user(user_id, full_name, email, True)
-            print(invitation_response)
+        # if response == "License Code Verified!":
+            # invitation_response = api.invite_user(user_id, full_name, email, True)
+            # print(invitation_response)
             
         #### MODAL RESPONSE KUNG NAGWORK BA ANG APPLICATION
         context['message'] = response
@@ -865,7 +866,7 @@ def program(request, slug):
     
     context['program_slug'] = slug
     context['programs'] = get_program_through_slug(user_token,slug)
-    context['dict_programs'] = get_dict_programs(bearer_token)
+    # context['dict_programs'] = get_dict_programs(bearer_token)
     context['scholarships'] = scholarships
     context['applied_programs'] = applied_programs
     context['atleast_approved_in_a_program'] = status_checker
@@ -944,13 +945,13 @@ def contact(request):
 # def privacy(request):
 #     return render(request, "static_templates/privacy.html")
 
-def refresh_token(request):
-    """"""
-    template_name = "coursera/refresh_token.html"
-    context = {}
+# def refresh_token(request):
+#     """"""
+#     template_name = "coursera/refresh_token.html"
+#     context = {}
     
-    response = get_refresh_token()
+#     response = get_refresh_token()
     
-    context['response'] = response
+#     context['response'] = response
     
-    return render(request, template_name, context)
+#     return render(request, template_name, context)

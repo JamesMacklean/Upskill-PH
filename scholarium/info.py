@@ -38,15 +38,15 @@ COURSEBANK_COURSES_URL = COURSEBANK_DISCOVERY_URL+"courses/?limit=9&"
 COURSEBANK_USERS_URL = COURSEBANK_LMS_URL+"users"
 
 # COURSERA
-COURSERA_CLIENT_ID = "OuUgwjMHhlTxJqqV6uM01w"
-COURSERA_CLIENT_SECRET = "PAbHGqU7oYzHWMoIQzh3Cw"
-COURSERA_TOKEN_URL = "https://accounts.coursera.org/oauth2/v1/token"
-COURSERA_ORG_URL = "https://api.coursera.org/api/businesses.v1/"
-DICT_ORG_ID = "PigzUIPvRnWQ-YVaCKAmCw"
-DICT_URL = COURSERA_ORG_URL + DICT_ORG_ID
-DICT_PROGRAMS_URL = DICT_URL + "/programs"
+# COURSERA_CLIENT_ID = "OuUgwjMHhlTxJqqV6uM01w"
+# COURSERA_CLIENT_SECRET = "PAbHGqU7oYzHWMoIQzh3Cw"
+# COURSERA_TOKEN_URL = "https://accounts.coursera.org/oauth2/v1/token"
+# COURSERA_ORG_URL = "https://api.coursera.org/api/businesses.v1/"
+# DICT_ORG_ID = "PigzUIPvRnWQ-YVaCKAmCw"
+# DICT_URL = COURSERA_ORG_URL + DICT_ORG_ID
+# DICT_PROGRAMS_URL = DICT_URL + "/programs"
 
 # Engr_James 
 # dff9f99e0898a7ff0a7f22758182ef4f230de4d3
 # qwerty 
-# 07dbcbe6c2252f946e7c46c526b9bc43828b560b
+# asdfasdf

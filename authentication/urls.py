@@ -34,5 +34,5 @@ urlpatterns = [
     path('contact-us/', views.contact, name="contact"),
     
     # COURSERA
-    path('refresh/', views.refresh_token, name="refresh"),
+    # path('refresh/', views.refresh_token, name="refresh"),
 ]
