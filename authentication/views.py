@@ -111,7 +111,8 @@ def home(request):
     except:
         request.session['original_url'] = request.get_full_path()
         print(f"original_url: {request.session['original_url']}")
-        return HttpResponseRedirect(reverse('signin'))
+        return HttpResponseRedirect(f'{ACCOUNTS_DOMAIN}{reverse("signin")}')
+        # return HttpResponseRedirect(reverse('signin'))
     ########## LOGIN REQUIRED ##########
     
     # Fetch course data from the API
@@ -395,7 +396,8 @@ def applied_programs(request):
     except:
         request.session['original_url'] = request.get_full_path()
         print(f"original_url: {request.session['original_url']}")
-        return HttpResponseRedirect(reverse('signin'))
+        return HttpResponseRedirect(f'{ACCOUNTS_DOMAIN}{reverse("signin")}')
+        # return HttpResponseRedirect(reverse('signin'))
     ########## LOGIN REQUIRED ##########
     
     scholarships = user_programs(user_token)
@@ -428,7 +430,8 @@ def user_management(request):
     except:
         request.session['original_url'] = request.get_full_path()
         print(f"original_url: {request.session['original_url']}")
-        return HttpResponseRedirect(reverse('signin'))
+        return HttpResponseRedirect(f'{ACCOUNTS_DOMAIN}{reverse("signin")}')
+        # return HttpResponseRedirect(reverse('signin'))
     ########## LOGIN REQUIRED ##########
     is_staff = request.session['is_staff']
     is_admin = request.session['is_admin']
@@ -490,7 +493,8 @@ def admin_dashboard(request):
     except:
         request.session['original_url'] = request.get_full_path()
         print(f"original_url: {request.session['original_url']}")
-        return HttpResponseRedirect(reverse('signin'))
+        return HttpResponseRedirect(f'{ACCOUNTS_DOMAIN}{reverse("signin")}')
+        # return HttpResponseRedirect(reverse('signin'))
     ########## LOGIN REQUIRED ##########
     is_staff = request.session['is_staff']
     is_admin = request.session['is_admin']
@@ -553,7 +557,8 @@ def admin_partners(request, partner_id):
     except:
         request.session['original_url'] = request.get_full_path()
         print(f"original_url: {request.session['original_url']}")
-        return HttpResponseRedirect(reverse('signin'))
+        return HttpResponseRedirect(f'{ACCOUNTS_DOMAIN}{reverse("signin")}')
+        # return HttpResponseRedirect(reverse('signin'))
     ########## LOGIN REQUIRED ##########
     is_staff = request.session['is_staff']
     is_admin = request.session['is_admin']
@@ -578,7 +583,8 @@ def user_details(request, user_id):
     except:
         request.session['original_url'] = request.get_full_path()
         print(f"original_url: {request.session['original_url']}")
-        return HttpResponseRedirect(reverse('signin'))
+        return HttpResponseRedirect(f'{ACCOUNTS_DOMAIN}{reverse("signin")}')
+        # return HttpResponseRedirect(reverse('signin'))
     ########## LOGIN REQUIRED ##########
     is_staff = request.session['is_staff']
     is_admin = request.session['is_admin']
@@ -610,7 +616,8 @@ def license_codes(request, slug):
     except:
         request.session['original_url'] = request.get_full_path()
         print(f"original_url: {request.session['original_url']}")
-        return HttpResponseRedirect(reverse('signin'))
+        return HttpResponseRedirect(f'{ACCOUNTS_DOMAIN}{reverse("signin")}')
+        # return HttpResponseRedirect(reverse('signin'))
     ########## LOGIN REQUIRED ##########
     is_admin = request.session['is_admin']
     is_global = request.session['is_global']
@@ -674,7 +681,8 @@ def profile(request):
     except:
         request.session['original_url'] = request.get_full_path()
         print(f"original_url: {request.session['original_url']}")
-        return HttpResponseRedirect(reverse('signin'))
+        return HttpResponseRedirect(f'{ACCOUNTS_DOMAIN}{reverse("signin")}')
+        # return HttpResponseRedirect(reverse('signin'))
     ########## LOGIN REQUIRED ##########
     
     scholarships = user_programs(user_token)
@@ -709,7 +717,8 @@ def edit_profile(request):
     except:
         request.session['original_url'] = request.get_full_path()
         print(f"original_url: {request.session['original_url']}")
-        return HttpResponseRedirect(reverse('signin'))
+        return HttpResponseRedirect(f'{ACCOUNTS_DOMAIN}{reverse("signin")}')
+        # return HttpResponseRedirect(reverse('signin'))
     ########## LOGIN REQUIRED ##########
     
     user_token = request.session['user_token']
@@ -789,7 +798,8 @@ def partner(request):
     except:
         request.session['original_url'] = request.get_full_path()
         print(f"original_url: {request.session['original_url']}")
-        return HttpResponseRedirect(reverse('signin'))
+        return HttpResponseRedirect(f'{ACCOUNTS_DOMAIN}{reverse("signin")}')
+        # return HttpResponseRedirect(reverse('signin'))
     ########## LOGIN REQUIRED ##########
     
     if request.session['is_partner']:
@@ -826,7 +836,8 @@ def application(request, partner_id, program_id):
     except:
         request.session['original_url'] = request.get_full_path()
         print(f"original_url: {request.session['original_url']}")
-        return HttpResponseRedirect(reverse('signin'))
+        return HttpResponseRedirect(f'{ACCOUNTS_DOMAIN}{reverse("signin")}')
+        # return HttpResponseRedirect(reverse('signin'))
     # middleware_instance = AuthenticationMiddleware()
     # if not middleware_instance.authenticate_user(request):
     #     request.session['url'] = "application"
@@ -885,7 +896,8 @@ def program(request, slug):
     except:
         request.session['original_url'] = request.get_full_path()
         print(f"original_url: {request.session['original_url']}")
-        return HttpResponseRedirect(reverse('signin'))
+        return HttpResponseRedirect(f'{ACCOUNTS_DOMAIN}{reverse("signin")}')
+        # return HttpResponseRedirect(reverse('signin'))
     # middleware_instance = AuthenticationMiddleware()
     # if not middleware_instance.authenticate_user(request):
     #     request.session['url'] = "program"
@@ -975,7 +987,8 @@ def account(request):
     except:
         request.session['original_url'] = request.get_full_path()
         print(f"original_url: {request.session['original_url']}")
-        return HttpResponseRedirect(reverse('signin'))
+        return HttpResponseRedirect(f'{ACCOUNTS_DOMAIN}{reverse("signin")}')
+        # return HttpResponseRedirect(reverse('signin'))
     ########## LOGIN REQUIRED ##########
     
     if request.method == "POST":
