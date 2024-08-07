@@ -213,7 +213,6 @@ def users_list(bearer_token, user_id=None, endpoint=None):
     response = requests.request("GET", ADMIN_URL + "users/", headers=headers, data=payload)
     response_dict = json.loads(response.text)
 
-    print(response)
     if 'data' in response_dict:
         try:
             for data in response_dict['data']:
@@ -350,7 +349,6 @@ def license_code(bearer_token,code):
             print(str(e))
             
     # return context
-    print(license_codes)
     return license_codes
 
 # POST https://scholarium.tmtg-clone.click/v1/login
@@ -402,17 +400,24 @@ def create_account(request, email, password):
         request.session['new_'+key] = value
         
     response = requests.request("POST", API_CREATE_ACCOUNT_URL, headers=headers, data=payload, files=files)
-    response_dict = ast.literal_eval(response.text)
-
+    # response_dict = ast.literal_eval(response.text)
+    
+    try:
+        response_dict = response.json()
+    except json.JSONDecodeError:
+        return '', '', '', 'Invalid response format'
+    
     if 'data' in response_dict:
         for data in response_dict['data']:
             response_message = data.get("success")
             user_hash = data.get("hash")
+            redirect_url = data.get("redirect")
     else:
         response_message = response_dict.get("error")
-        user_hash = ""         
-
-    return user_hash, response_message
+        user_hash = ""
+        redirect_url = ""
+    
+    return user_hash, redirect_url, response_message
 
 # POST https://scholarium.tmtg-clone.click/v1/me/profile 
 def update_profile (bearer_token, photo, first_name, last_name, about, country, region, municipality, socials, gender, birthday, contact, date_now, privacy):
@@ -717,7 +722,6 @@ def enroll_code(bearer_token, program_id, code):
         'Authorization': bearer_token
     }
     
-    print(payload)
     response = requests.request("PUT", API_ENROLL_CODE_URL, headers=headers, data=payload)
     response_dict = json.loads(response.text)
     
@@ -802,7 +806,6 @@ def enroll_code(bearer_token, program_id, code):
 #                 access_token_entry.save()
         
 #         access_token = CourseraToken.objects.get(item='access_token')
-#         print(response.text)
     
 #     else:
 #         print(f'access token: {access_token.value} is modified last {access_token.last_modified} and is not yet expired.')

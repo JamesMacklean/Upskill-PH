@@ -1,6 +1,7 @@
 from django.urls import reverse
 from django.shortcuts import redirect
 from django.utils.deprecation import MiddlewareMixin
+from django.http import HttpResponse, Http404, HttpResponseRedirect
 from scholarium.info import *
 import jwt
 
@@ -15,14 +16,12 @@ class SubdomainMiddleware(MiddlewareMixin):
             # Check if user is authenticated for other paths on the welcome subdomain
             if not self.authenticate_user(request):
                 request.session['original_url'] = request.get_full_path()
-                return redirect(f'http://accounts.upskillph.org{reverse("signin")}')
+                return redirect(f'{ACCOUNTS_DOMAIN}{reverse("signin")}')
         
         elif subdomain == 'accounts':
             if request.path not in [reverse('signup'), reverse('signin')]:
-                return redirect(f'http://welcome.upskillph.org{request.path}')
-            # if self.authenticate_user(request):
-            #     return redirect(f'http://{DOMAIN}')
-        
+                return redirect(f'{DOMAIN}{request.path}')
+            
         return None
 
     def authenticate_user(self, request):
@@ -60,5 +59,52 @@ class SubdomainMiddleware(MiddlewareMixin):
                 request.session.modified = True
         except KeyError as e:
             print(str(e))
+            
+        return HttpResponseRedirect(reverse('signin'))
+        # return redirect(f'{ACCOUNTS_DOMAIN}{reverse("signin")}')
+    
+# class AuthenticationMiddleware():
+#     API_SECRET_KEY = API_SECRET_KEY
+
+#     def authenticate_user(self, request):
+#         try:
+#             # user_token = request.COOKIES.get('jwt') 
+#             # PRINT SESSION ITEMS
+#             for key, value in request.session.items():
+#                 print('{}: {}'.format(key, value))
+
+#             try:   
+#                 user_token = request.session['user_token']
+#                 payload = jwt.decode(user_token, self.API_SECRET_KEY, algorithms=['HS256'])
+
+#                 response = HttpResponse()
+                
+#                 # SAVE JWT PAYLOAD INTO SESSIONS
+#                 for key, value in payload.items():
+#                     if key == 'data':
+#                         for subkey, subvalue in payload['data'].items():
+#                             if subkey not in request.session:
+#                                 request.session[subkey] = subvalue
+#                                 request.session.modified = True
+#                             response.set_cookie(subkey, subvalue)
+#                 return True
+            
+#             except jwt.ExpiredSignatureError:
+#                 self.signout(request)
+#                 return False
+            
+#         except KeyError:
+#             self.signout(request)
+#             return False
+
+#     def signout(self, request):   
+#         # CLEAR SESSIONS
+#         try:   
+#             for key in list(request.session.keys()):
+#                 del request.session[key]
+#                 request.session.modified = True
+#         except KeyError as e:
+#             print(str(e))
         
-        return redirect(f'http://accounts.upskillph.org{reverse("signin")}')
+#         return HttpResponseRedirect(reverse('signin'))
+#         # return redirect(f'{ACCOUNTS_DOMAIN}{reverse("signin")}')

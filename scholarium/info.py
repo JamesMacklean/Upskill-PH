@@ -1,6 +1,6 @@
-DOMAIN = 'welcome.uspkillph.org'
-ACCOUNTS_DOMAIN = "accounts.upskillph.org"
-# DOMAIN = 'http://127.0.0.1:8000'
+DOMAIN = 'http://welcome.upskillph.org'
+ACCOUNTS_DOMAIN = "http://accounts.upskillph.org"
+TEST_DOMAIN = 'http://127.0.0.1:8000'
 TEST_EMAIL_RECEIVER = 'jamesmacklean27@gmail.com'
 
 ########## ORIGINAL CODE ##########

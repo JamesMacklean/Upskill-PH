@@ -20,6 +20,7 @@ from .decorators import *
 from django.template import Library
 # from .api import InvitationsAPI
 from django.core.paginator import Paginator
+# from authentication.subdomain_middleware import AuthenticationMiddleware
 
 from .variables import *
 import os, requests, ast, jwt, csv
@@ -50,35 +51,45 @@ class SessionChecker(APIView):
         except KeyError:
             raise Http404
 
-def authenticate_user(request):
-    try:
-        # user_token = request.COOKIES.get('jwt')    
-        # PRINT SESSION ITEMS
-        for key, value in request.session.items():
-            print('{}: {}'.format(key, value))
+# def authenticate_user(request):
+#         try:
+#             # user_token = request.COOKIES.get('jwt')    
+#             # PRINT SESSION ITEMS
+#             for key, value in request.session.items():
+#                 print('{}: {}'.format(key, value))
                  
-        try:   
-            user_token = request.session['user_token'] 
-            payload = jwt.decode(user_token, API_SECRET_KEY, algorithms=['HS256'])
+#             try:   
+#                 user_token = request.session['user_token']
+#                 print(f"user_token found: {user_token}")
+#                 payload = jwt.decode(user_token, API_SECRET_KEY, algorithms=['HS256'])
 
-            # SAVE JWT PAYLOAD INTO SESSIONS
-            for key,value in payload.items():
-                if key == 'data':
-                    for key,value in payload['data'].items():
-                        if request.session[key]:
-                            pass
-                        else:
-                            request.session[key] = value
-                            request.session.modified = True
-            return True
-        
-        except jwt.ExpiredSignatureError:
-            signout(request)
-            return False
-        
-    except KeyError:
-        signout(request)
-        return False
+#                 response = HttpResponse()
+                
+#                 # SAVE JWT PAYLOAD INTO SESSIONS
+#                 for key, value in payload.items():
+#                     if key == 'data':
+#                         for subkey, subvalue in payload['data'].items():
+#                             # if request.session[key]:
+#                             #     pass
+#                             # else:
+#                             if subkey not in request.session:
+#                                 request.session[subkey] = subvalue
+#                                 request.session.modified = True
+#                             response.set_cookie(subkey, subvalue)
+                    
+#                 print("COOKIES!")
+#                 for key, value in request.COOKIES.items():
+#                     print(f'{key}: {value}')
+
+#                 return True
+            
+#             except jwt.ExpiredSignatureError:
+#                 signout(request)
+#                 return False
+            
+#         except KeyError:
+#             signout(request)
+#             return False
 
 def clear_session(request,key):
     try:
@@ -95,15 +106,15 @@ def home(request):
     context = {}
 
     ########## LOGIN REQUIRED ##########
-    if not authenticate_user(request):
-        request.session['url'] = "home"
-        return HttpResponseRedirect('signin')
-    clear_session(request,'url')
+    try:
+        user_token = request.session['user_token']
+    except:
+        request.session['original_url'] = request.get_full_path()
+        print(f"original_url: {request.session['original_url']}")
+        return HttpResponseRedirect(reverse('signin'))
     ########## LOGIN REQUIRED ##########
     
-    user_token = request.session['user_token']
     # Fetch course data from the API
-
     context['program_list'] = get_programs(user_token,2,None)
     # context['courses'] = get_courses(request, "static_templates/privacy.html")
     return render(request,template_name, context)
@@ -126,9 +137,15 @@ def success(request, user_hash):
     email = request.session.get('new_email')
     
     ########## ANONYMOUS REQUIRED ##########
-    if authenticate_user(request):
+    try:
+        user_token = request.session['user_token']
         return HttpResponseRedirect('/')
-    clear_session(request,'url')
+    except:
+        pass
+    # middleware_instance = AuthenticationMiddleware()
+    # if middleware_instance.authenticate_user(request):
+    #     return HttpResponseRedirect('/')
+    # clear_session(request,'url')
     ########## ANONYMOUS REQUIRED ##########
 
     ############################# FOR MAIL ##############################
@@ -163,9 +180,11 @@ def verify_account(request, user_hash):
     context = {}
     
     ########## ANONYMOUS REQUIRED ##########
-    if authenticate_user(request):
+    try:
+        user_token = request.session['user_token']
         return HttpResponseRedirect('/')
-    clear_session(request,'url')
+    except:
+        pass
     ########## ANONYMOUS REQUIRED ##########
 
     try:
@@ -192,7 +211,7 @@ def signup(request):
             email = request.POST['email']
             password = request.POST['password']
 
-            user_hash, response_message = create_account(request, email, password)
+            user_hash, redirect_url, response_message = create_account(request, email, password)
             context['response_message'] = response_message
             
             if user_hash:
@@ -200,13 +219,14 @@ def signup(request):
                 response_message = "success"
                 # request.session['user_hash'] = user_hash
                 # request.session.modified = True
-
-                print(email, password, user_hash)
+             
+                print(email, password, user_hash, redirect_url)
                 
                 ############################# FOR MAIL ##############################
                 html = render_to_string('emails/email_verification.html', {
                     'email': email,
                     'user_hash': user_hash,
+                    'redirect_url': redirect_url,
                     'domain': DOMAIN,
                     'link': API_VERIFY_ACCOUNT_URL
                 })
@@ -215,9 +235,9 @@ def signup(request):
                     'Content of the Message', 
                     settings.EMAIL_HOST_USER, 
                     ########## ORIGINAL CODE ##########
-                    [email], 
+                    # [email], 
                     ########## FOR TEST CODE ##########
-                    # [TEST_EMAIL_RECEIVER],
+                    [TEST_EMAIL_RECEIVER],
                     html_message=html,
                     fail_silently=False
                 )
@@ -277,6 +297,7 @@ def signin(request):
             # CHECK IF THE REQUEST IS REDIRECTION
             try:
                 next_page = request.session.get('original_url')
+                print(f"next_page:{next_page}")
             except:
                 next_page = ""
             
@@ -284,17 +305,30 @@ def signin(request):
             if next_page:
                 try:
                     clear_session(request,'original_url')
+                    ########## ORIGINAL CODE ##########
+                    return redirect(f'{DOMAIN}{next_page}')
+                    ########## FOR TEST CODE ##########
+                    # return redirect(f'{TEST_DOMAIN}{next_page}')
                     
-                    if 'application' in next_page or 'program' in next_page:
-                        partner_id = request.session.get('partner_id')
-                        program_id = request.session.get('program_id')
-                        clear_session(request, 'partner_id')
-                        clear_session(request, 'program_id')
-                        return redirect(f'http://welcome.upskillph.org{reverse(next_page, kwargs={"partner_id": partner_id, "program_id": program_id})}')
-                    else:
-                        return redirect(f'http://welcome.upskillph.org{next_page}')
-
-                    # return HttpResponseRedirect(reverse(next_page))
+                    ########## OLD ORIGINAL CODE ##########                    
+                    # if 'application' in next_page or 'program' in next_page:
+                    #     partner_id = request.session.get('partner_id')
+                    #     program_id = request.session.get('program_id')
+                    #     clear_session(request, 'partner_id')
+                    #     clear_session(request, 'program_id')
+                    #     return redirect(f'{DOMAIN}{reverse(next_page, kwargs={"partner_id": partner_id, "program_id": program_id})}')
+                    # else:
+                    #     return redirect(f'{DOMAIN}{next_page}')
+                    
+                    ########## OLD TEST CODE ##########
+                    # if 'application' in next_page or 'program' in next_page:
+                    #     partner_id = request.session.get('partner_id')
+                    #     program_id = request.session.get('program_id')
+                    #     clear_session(request, 'partner_id')
+                    #     clear_session(request, 'program_id')
+                    #     return redirect(f'{TEST_DOMAIN}{reverse(next_page, kwargs={"partner_id": partner_id, "program_id": program_id})}')
+                    # else:
+                    #     return redirect(f'{TEST_DOMAIN}{next_page}')
             
                 except Exception as e:
                     print(str(e))
@@ -318,8 +352,10 @@ def signout(request):
             request.session.modified = True
     except KeyError as e:
         print(str(e))
-        
-    return redirect(f'http://accounts.upskillph.org{reverse("signin")}')
+    
+    # return redirect(f'{ACCOUNTS_DOMAIN}{reverse("signin")}')
+    return HttpResponseRedirect(reverse('signin'))
+
 
 def applied_programs(request):
     """"""
@@ -327,13 +363,14 @@ def applied_programs(request):
     context = {}
     applied_programs = []
     ########## LOGIN REQUIRED ##########
-    if not authenticate_user(request):
-        request.session['url'] = "dashboard"
-        return HttpResponseRedirect('/signin?next=dashboard')
-    clear_session(request,'url')
+    try:
+        user_token = request.session['user_token']
+    except:
+        request.session['original_url'] = request.get_full_path()
+        print(f"original_url: {request.session['original_url']}")
+        return HttpResponseRedirect(reverse('signin'))
     ########## LOGIN REQUIRED ##########
     
-    user_token = request.session['user_token']
     scholarships = user_programs(user_token)
             
     if scholarships: 
@@ -359,10 +396,12 @@ def user_management(request):
     context = {}
 
     ########## LOGIN REQUIRED ##########
-    if not authenticate_user(request):
-        request.session['url'] = "home"
-        return render(request, "index.html")
-    clear_session(request,'url')
+    try:
+        user_token = request.session['user_token']
+    except:
+        request.session['original_url'] = request.get_full_path()
+        print(f"original_url: {request.session['original_url']}")
+        return HttpResponseRedirect(reverse('signin'))
     ########## LOGIN REQUIRED ##########
     is_staff = request.session['is_staff']
     is_admin = request.session['is_admin']
@@ -371,7 +410,6 @@ def user_management(request):
     if not (is_global or is_admin or is_staff):
         raise Http404  
     
-    user_token = request.session['user_token']
     users = users_list(user_token)
     search_term = request.GET.get('search', '')
     filtered_users_set = set()
@@ -420,10 +458,12 @@ def admin_dashboard(request):
     context = {}
 
     ########## LOGIN REQUIRED ##########
-    if not authenticate_user(request):
-        request.session['url'] = "home"
-        return render(request, "index.html")
-    clear_session(request,'url')
+    try:
+        user_token = request.session['user_token']
+    except:
+        request.session['original_url'] = request.get_full_path()
+        print(f"original_url: {request.session['original_url']}")
+        return HttpResponseRedirect(reverse('signin'))
     ########## LOGIN REQUIRED ##########
     is_staff = request.session['is_staff']
     is_admin = request.session['is_admin']
@@ -481,10 +521,12 @@ def admin_partners(request, partner_id):
     context = {}
 
     ########## LOGIN REQUIRED ##########
-    if not authenticate_user(request):
-        request.session['url'] = "home"
-        return render(request, "index.html")
-    clear_session(request,'url')
+    try:
+        user_token = request.session['user_token']
+    except:
+        request.session['original_url'] = request.get_full_path()
+        print(f"original_url: {request.session['original_url']}")
+        return HttpResponseRedirect(reverse('signin'))
     ########## LOGIN REQUIRED ##########
     is_staff = request.session['is_staff']
     is_admin = request.session['is_admin']
@@ -504,10 +546,12 @@ def user_details(request, user_id):
     context = {}
 
     ########## LOGIN REQUIRED ##########
-    if not authenticate_user(request):
-        request.session['url'] = "home"
-        return render(request, "index.html")
-    clear_session(request,'url')
+    try:
+        user_token = request.session['user_token']
+    except:
+        request.session['original_url'] = request.get_full_path()
+        print(f"original_url: {request.session['original_url']}")
+        return HttpResponseRedirect(reverse('signin'))
     ########## LOGIN REQUIRED ##########
     is_staff = request.session['is_staff']
     is_admin = request.session['is_admin']
@@ -534,10 +578,12 @@ def license_codes(request, slug):
     context = {}
 
     ########## LOGIN REQUIRED ##########
-    if not authenticate_user(request):
-        request.session['url'] = "home"
-        return render(request, "index.html")
-    clear_session(request,'url')
+    try:
+        user_token = request.session['user_token']
+    except:
+        request.session['original_url'] = request.get_full_path()
+        print(f"original_url: {request.session['original_url']}")
+        return HttpResponseRedirect(reverse('signin'))
     ########## LOGIN REQUIRED ##########
     is_admin = request.session['is_admin']
     is_global = request.session['is_global']
@@ -596,13 +642,14 @@ def profile(request):
     context = {}
     applied_programs = []
     ########## LOGIN REQUIRED ##########
-    if not authenticate_user(request):
-        request.session['url'] = "profile"
-        return HttpResponseRedirect('/signin?next=profile')
-    clear_session(request,'url')
+    try:
+        user_token = request.session['user_token']
+    except:
+        request.session['original_url'] = request.get_full_path()
+        print(f"original_url: {request.session['original_url']}")
+        return HttpResponseRedirect(reverse('signin'))
     ########## LOGIN REQUIRED ##########
     
-    user_token = request.session['user_token']
     scholarships = user_programs(user_token)
             
     if scholarships: 
@@ -630,10 +677,12 @@ def edit_profile(request):
     context = {}
     
     ########## LOGIN REQUIRED ##########
-    if not authenticate_user(request):
-        request.session['url'] = "edit"
-        return HttpResponseRedirect('/signin?next=edit')
-    clear_session(request,'url')
+    try:
+        user_token = request.session['user_token']
+    except:
+        request.session['original_url'] = request.get_full_path()
+        print(f"original_url: {request.session['original_url']}")
+        return HttpResponseRedirect(reverse('signin'))
     ########## LOGIN REQUIRED ##########
     
     user_token = request.session['user_token']
@@ -708,14 +757,15 @@ def partner(request):
     partner_programs = []
     
     ########## LOGIN REQUIRED ##########
-    if not authenticate_user(request):
-        request.session['url'] = "partner"
-        return HttpResponseRedirect('/signin?next=partner')
-    clear_session(request,'url')
+    try:
+        user_token = request.session['user_token']
+    except:
+        request.session['original_url'] = request.get_full_path()
+        print(f"original_url: {request.session['original_url']}")
+        return HttpResponseRedirect(reverse('signin'))
     ########## LOGIN REQUIRED ##########
     
     if request.session['is_partner']:
-        user_token = request.session['user_token']
         partners = user_partners(user_token)
         
         if partners:   
@@ -744,12 +794,19 @@ def application(request, partner_id, program_id):
     monitored_program = []
     
     ######### LOGIN REQUIRED ##########
-    if not authenticate_user(request):
-        request.session['url'] = "application"
-        request.session['partner_id'] = partner_id
-        request.session['program_id'] = program_id
-        return HttpResponseRedirect('/signin?next=application/'+str(partner_id)+"/"+str(program_id)+"/")
-    clear_session(request,'url')
+    try:
+        user_token = request.session['user_token']
+    except:
+        request.session['original_url'] = request.get_full_path()
+        print(f"original_url: {request.session['original_url']}")
+        return HttpResponseRedirect(reverse('signin'))
+    # middleware_instance = AuthenticationMiddleware()
+    # if not middleware_instance.authenticate_user(request):
+    #     request.session['url'] = "application"
+    #     request.session['partner_id'] = partner_id
+    #     request.session['program_id'] = program_id
+    #     return HttpResponseRedirect('/signin?next=application/'+str(partner_id)+"/"+str(program_id)+"/")
+    # clear_session(request,'url')
     ######### LOGIN REQUIRED ##########
     
     user_token = request.session['user_token']
@@ -796,15 +853,21 @@ def program(request, slug):
     applied_programs = []
     status_checker = 0
     ######### LOGIN REQUIRED ##########
-    if not authenticate_user(request):
-        request.session['url'] = "program"
-        request.session['program_slug'] = slug
-        return HttpResponseRedirect('/signin?next=program/'+str(slug)+"/")
-    clear_session(request,'url')
+    try:
+        user_token = request.session['user_token']
+    except:
+        request.session['original_url'] = request.get_full_path()
+        print(f"original_url: {request.session['original_url']}")
+        return HttpResponseRedirect(reverse('signin'))
+    # middleware_instance = AuthenticationMiddleware()
+    # if not middleware_instance.authenticate_user(request):
+    #     request.session['url'] = "program"
+    #     request.session['program_slug'] = slug
+    #     return HttpResponseRedirect('/signin?next=program/'+str(slug)+"/")
+    # clear_session(request,'url')
     ######### LOGIN REQUIRED ##########
     
     # bearer_token = get_access_token()    
-    user_token = request.session['user_token']
     username = request.session.get('username')        
     first_name = request.session.get('first_name')
     last_name = request.session.get('last_name')
@@ -827,7 +890,7 @@ def program(request, slug):
     for data in program_data:
         program_id = data['id']
     
-    print('PROGRAM ID!!!!!!!!!!!!!!!!!!!!!!!!!!!!!', program_id)
+    print('PROGRAM ID', program_id)
     if request.method == "POST":
         # response = scholar_apply(user_token,program_id)
         license_code = request.POST.get('license_code')
@@ -880,13 +943,13 @@ def account(request):
     """"""
     template_name = "account.html"
     ########## LOGIN REQUIRED ##########
-    if not authenticate_user(request):
-        request.session['url'] = "account"
-        return HttpResponseRedirect('/signin?next=account')
-    clear_session(request,'url')
+    try:
+        user_token = request.session['user_token']
+    except:
+        request.session['original_url'] = request.get_full_path()
+        print(f"original_url: {request.session['original_url']}")
+        return HttpResponseRedirect(reverse('signin'))
     ########## LOGIN REQUIRED ##########
-    
-    user_token = request.session['user_token']
     
     if request.method == "POST":
         current_pass = request.POST.get('current-pass')
@@ -915,7 +978,8 @@ def account(request):
 #     context = {}
 
 #     ########## LOGIN REQUIRED ##########
-#     if not authenticate_user(request):
+#     middleware_instance = AuthenticationMiddleware()
+#      if not middleware_instance.authenticate_user(request):
 #         request.session['url'] = "courses"
 #         return HttpResponseRedirect('/signin?next=courses')
 #     clear_session(request,'url')
@@ -924,9 +988,9 @@ def account(request):
 #     user_token = request.session['user_token']
 #     # Fetch course data from the API
 
-    context['program_list'] = get_programs(user_token,2,None)
-    context['courses'] = get_courses()
-    return render(request,template_name, context)
+#    context['program_list'] = get_programs(user_token,2,None)
+#    context['courses'] = get_courses()
+#    return render(request,template_name, context)
 
 # STATIC TEMPLATES
 def guidelines(request):
