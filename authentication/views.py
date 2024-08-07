@@ -235,9 +235,9 @@ def signup(request):
                     'Content of the Message', 
                     settings.EMAIL_HOST_USER, 
                     ########## ORIGINAL CODE ##########
-                    # [email], 
+                    [email], 
                     ########## FOR TEST CODE ##########
-                    [TEST_EMAIL_RECEIVER],
+                    # [TEST_EMAIL_RECEIVER],
                     html_message=html,
                     fail_silently=False
                 )
@@ -300,15 +300,17 @@ def signin(request):
                 print(f"next_page:{next_page}")
             except:
                 next_page = ""
+                  
+            response = None
             
             # IF REDIRECTION SIYA, PUNTA SA NEXT PAGE, PERO KUNG HINDI, SA DASHBOARD
             if next_page:
                 try:
                     clear_session(request,'original_url')
                     ########## ORIGINAL CODE ##########
-                    return redirect(f'{DOMAIN}{next_page}')
+                    response = redirect(f'{DOMAIN}{next_page}')
                     ########## FOR TEST CODE ##########
-                    # return redirect(f'{TEST_DOMAIN}{next_page}')
+                    # response = redirect(f'{TEST_DOMAIN}{next_page}')
                     
                     ########## OLD ORIGINAL CODE ##########                    
                     # if 'application' in next_page or 'program' in next_page:
@@ -334,7 +336,18 @@ def signin(request):
                     print(str(e))
             
             else:
-                return redirect('home')
+                response = redirect('home')
+            
+            # Set cookies
+            print("SETTING COOKIES...") 
+            # response.set_cookie('cookie_name', 'cookie_value')
+            response.set_cookie('_ups_aut', user_token, expires=expires, samesite='None', secure=True)
+
+            # for key, value in payload['data'].items():
+            #     response.set_cookie(key, value)
+            #     print(f"Set cookie: {key} = {value}")
+            
+            return response
 
         else:
             # LAGYAN ITO NG MESSAGE BOX NA NAGSASABI NG ERROR MESSAGE
@@ -345,6 +358,10 @@ def signin(request):
     return render(request, template_name, context)
 
 def signout(request):   
+    # PRINT COOKIES
+    for key, value in request.COOKIES.items():
+        print(f'{key}: {value}')
+        
     # CLEAR SESSIONS
     try:   
         for key in list(request.session.keys()):
@@ -353,8 +370,18 @@ def signout(request):
     except KeyError as e:
         print(str(e))
     
-    # return redirect(f'{ACCOUNTS_DOMAIN}{reverse("signin")}')
-    return HttpResponseRedirect(reverse('signin'))
+    response = HttpResponseRedirect(reverse('signin'))
+
+    # List of cookies to delete
+    cookies_to_delete = [
+        '_ups_aut',
+    ]
+
+    # Delete cookies
+    for cookie in cookies_to_delete:
+        response.delete_cookie(cookie)
+
+    return response
 
 
 def applied_programs(request):

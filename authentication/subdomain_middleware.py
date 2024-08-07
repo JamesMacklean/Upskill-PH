@@ -52,6 +52,9 @@ class SubdomainMiddleware(MiddlewareMixin):
             return False
 
     def signout(self, request):   
+        # PRINT COOKIES
+        for key, value in request.COOKIES.items():
+            print(f'{key}: {value}')
         # CLEAR SESSIONS
         try:   
             for key in list(request.session.keys()):
@@ -59,9 +62,8 @@ class SubdomainMiddleware(MiddlewareMixin):
                 request.session.modified = True
         except KeyError as e:
             print(str(e))
-            
+        # return redirect(f'{ACCOUNTS_DOMAIN}{reverse("signin")}')    
         return HttpResponseRedirect(reverse('signin'))
-        # return redirect(f'{ACCOUNTS_DOMAIN}{reverse("signin")}')
     
 # class AuthenticationMiddleware():
 #     API_SECRET_KEY = API_SECRET_KEY
