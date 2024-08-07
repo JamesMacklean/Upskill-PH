@@ -32,6 +32,8 @@ urlpatterns = [
     path('guidelines/',views.guidelines, name="guidelines"),
     path('privacy/', views.privacy, name="privacy"),
     path('contact-us/', views.contact, name="contact"),
+
+    path('lakip/apply/',views.lakip_application, name='lakip-application'),
     
     # COURSERA
     # path('refresh/', views.refresh_token, name="refresh"),

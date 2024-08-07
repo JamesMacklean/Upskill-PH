@@ -1012,6 +1012,20 @@ def account(request):
     
     return render(request, template_name)
 
+def lakip_application(request):
+    """"""
+    template_name= "lakip-application.html"
+
+    try:
+        user_token = request.session['user_token']
+    except:
+        request.session['original_url'] = request.get_full_path()
+        print(f"original_url: {request.session['original_url']}")
+        return HttpResponseRedirect(f'{ACCOUNTS_DOMAIN}{reverse("signin")}')
+        # return HttpResponseRedirect(reverse('signin'))
+    return render(request, template_name)
+
+
 # def courses(request):
 #     """"""
 #     template_name = "home/courses.html"
