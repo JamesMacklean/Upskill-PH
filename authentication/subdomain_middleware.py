@@ -16,6 +16,8 @@ class SubdomainMiddleware(MiddlewareMixin):
             # Check if user is authenticated for other paths on the welcome subdomain
             try:
                 user_token = request.session['user_token']
+                if request.path in [reverse('signup'), reverse('signin')]:
+                    return redirect ('home')
             except:
                 if request.path in [reverse('signup'), reverse('signin')]:
                     return redirect(f'{ACCOUNTS_DOMAIN}{request.path}')
