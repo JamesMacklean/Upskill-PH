@@ -213,7 +213,6 @@ def users_list(bearer_token, user_id=None, endpoint=None):
     response = requests.request("GET", ADMIN_URL + "users/", headers=headers, data=payload)
     response_dict = json.loads(response.text)
 
-    print(response)
     if 'data' in response_dict:
         try:
             for data in response_dict['data']:
@@ -276,25 +275,25 @@ def get_program_through_slug(bearer_token, slug):
     return program_list
 
 # GET https://api.coursera.org/api/businesses.v1/PigzUIPvRnWQ-YVaCKAmCw/programs
-def get_dict_programs(bearer_token):
-    program_list = []
-    payload = {}
-    headers = {
-    'Authorization': 'Bearer '+ bearer_token
-    }
+# def get_dict_programs(bearer_token):
+#     program_list = []
+#     payload = {}
+#     headers = {
+#     'Authorization': 'Bearer '+ bearer_token
+#     }
 
-    response = requests.request("GET", DICT_PROGRAMS_URL, headers=headers, data=payload)
-    response_dict = json.loads(response.text)
+#     response = requests.request("GET", DICT_PROGRAMS_URL, headers=headers, data=payload)
+#     response_dict = json.loads(response.text)
     
-    # 'id', 'name', 'tagline', 'url', 'contentIds': [{'contentId', 'contentType'}]}
-    if 'elements' in response_dict:
-        try:
-            for data in response_dict['elements']:
-                program_list.append(data)
-        except Exception as e:
-            print(str(e))
+#     # 'id', 'name', 'tagline', 'url', 'contentIds': [{'contentId', 'contentType'}]}
+#     if 'elements' in response_dict:
+#         try:
+#             for data in response_dict['elements']:
+#                 program_list.append(data)
+#         except Exception as e:
+#             print(str(e))
 
-    return program_list
+#     return program_list
 
 # GET https://scholarium.tmtg-clone.click/v1/partner/[partner_id]/scholarship/[program_id]/status/[status]
 def get_applicants(bearer_token, partner_id, program_id, status):  
@@ -350,7 +349,6 @@ def license_code(bearer_token,code):
             print(str(e))
             
     # return context
-    print(license_codes)
     return license_codes
 
 # POST https://scholarium.tmtg-clone.click/v1/login
@@ -365,19 +363,27 @@ def login_account (username, password):
     }
 
     response = requests.request("POST", API_LOGIN_ACCOUNT_URL, headers=headers, data=payload, files=files)        
-    response_dict = ast.literal_eval(response.text)
+    
+    # response_dict = ast.literal_eval(response.text)
+    
+    try:
+        response_dict = response.json()
+    except json.JSONDecodeError:
+        return '', '', '', 'Invalid response format'
     
     if 'data' in response_dict:
         for data in response_dict['data']:
             user_token = data.get("token")
             expires = data.get("expires")
+            redirect_url = data.get("redirect")
             response_message = "Successfully Logged In!"
     else:
         user_token = ''
         expires = ''
+        redirect_url = ''
         response_message = response_dict.get("error")
     
-    return user_token, expires, response_message
+    return user_token, expires, redirect_url, response_message
 
 # POST https://scholarium.tmtg-clone.click/v1/user/add
 def create_account(request, email, password):    
@@ -394,17 +400,24 @@ def create_account(request, email, password):
         request.session['new_'+key] = value
         
     response = requests.request("POST", API_CREATE_ACCOUNT_URL, headers=headers, data=payload, files=files)
-    response_dict = ast.literal_eval(response.text)
-
+    # response_dict = ast.literal_eval(response.text)
+    
+    try:
+        response_dict = response.json()
+    except json.JSONDecodeError:
+        return '', '', '', 'Invalid response format'
+    
     if 'data' in response_dict:
         for data in response_dict['data']:
             response_message = data.get("success")
             user_hash = data.get("hash")
+            redirect_url = data.get("redirect")
     else:
         response_message = response_dict.get("error")
-        user_hash = ""         
-
-    return user_hash, response_message
+        user_hash = ""
+        redirect_url = ""
+    
+    return user_hash, redirect_url, response_message
 
 # POST https://scholarium.tmtg-clone.click/v1/me/profile 
 def update_profile (bearer_token, photo, first_name, last_name, about, country, region, municipality, socials, gender, birthday, contact, date_now, privacy):
@@ -709,7 +722,6 @@ def enroll_code(bearer_token, program_id, code):
         'Authorization': bearer_token
     }
     
-    print(payload)
     response = requests.request("PUT", API_ENROLL_CODE_URL, headers=headers, data=payload)
     response_dict = json.loads(response.text)
     
@@ -721,113 +733,112 @@ def enroll_code(bearer_token, program_id, code):
     return response_message
 
 # GET INITIAL CODE
-def get_initial_code():
-    try:
-        code = CourseraToken.objects.get(item='initial_code')
-        return code.value
-    except CourseraToken.DoesNotExist:
-        return None
+# def get_initial_code():
+#     try:
+#         code = CourseraToken.objects.get(item='initial_code')
+#         return code.value
+#     except CourseraToken.DoesNotExist:
+#         return None
     
-def get_refresh_token_from_django():
-    try:
-        token = CourseraToken.objects.get(item='refresh_token')
-        return token.value
-    except CourseraToken.DoesNotExist:
-        return None
+# def get_refresh_token_from_django():
+#     try:
+#         token = CourseraToken.objects.get(item='refresh_token')
+#         return token.value
+#     except CourseraToken.DoesNotExist:
+#         return None
     
 # POST https://accounts.coursera.org/oauth2/v1/token
-def get_refresh_token():  
+# def get_refresh_token():  
 
-    payload = 'redirect_uri=http%3A%2F%2Flocalhost%3A9876%2Fcallback&client_id=' + COURSERA_CLIENT_ID + "&client_secret=" + COURSERA_CLIENT_SECRET + "&access_type=offline&code=" + get_initial_code() + "&Content-Type=application%2Fx-www-form-urlencoded&grant_type=authorization_code"
+#     payload = 'redirect_uri=http%3A%2F%2Flocalhost%3A9876%2Fcallback&client_id=' + COURSERA_CLIENT_ID + "&client_secret=" + COURSERA_CLIENT_SECRET + "&access_type=offline&code=" + get_initial_code() + "&Content-Type=application%2Fx-www-form-urlencoded&grant_type=authorization_code"
     
-    headers = {
-    'Content-Type': 'application/x-www-form-urlencoded',
-    }
+#     headers = {
+#     'Content-Type': 'application/x-www-form-urlencoded',
+#     }
 
-    response = requests.request("POST", COURSERA_TOKEN_URL, headers=headers, data=payload)
-    response_dict = json.loads(response.text)
+#     response = requests.request("POST", COURSERA_TOKEN_URL, headers=headers, data=payload)
+#     response_dict = json.loads(response.text)
     
-    if 'refresh_token' in response_dict:
-        new_refresh_token =  response_dict.get("refresh_token")
-        new_access_token =  response_dict.get("access_token")
+#     if 'refresh_token' in response_dict:
+#         new_refresh_token =  response_dict.get("refresh_token")
+#         new_access_token =  response_dict.get("access_token")
         
-        try:
-            refresh_token_entry = CourseraToken.objects.get(item='refresh_token')
-            access_token_entry = CourseraToken.objects.get(item='access_token')
-        except CourseraToken.DoesNotExist:
-            refresh_token_entry = CourseraToken(item='refresh_token', value=new_refresh_token)
-            refresh_token_entry.save()
-            access_token_entry = CourseraToken(item='access_token', value=new_access_token)
-            access_token_entry.save()
-        else:
-            refresh_token_entry.value = new_refresh_token
-            refresh_token_entry.save()
-            access_token_entry.value = new_access_token
-            access_token_entry.save()
+#         try:
+#             refresh_token_entry = CourseraToken.objects.get(item='refresh_token')
+#             access_token_entry = CourseraToken.objects.get(item='access_token')
+#         except CourseraToken.DoesNotExist:
+#             refresh_token_entry = CourseraToken(item='refresh_token', value=new_refresh_token)
+#             refresh_token_entry.save()
+#             access_token_entry = CourseraToken(item='access_token', value=new_access_token)
+#             access_token_entry.save()
+#         else:
+#             refresh_token_entry.value = new_refresh_token
+#             refresh_token_entry.save()
+#             access_token_entry.value = new_access_token
+#             access_token_entry.save()
 
-    return (response.text)
+#     return (response.text)
 
 # POST https://accounts.coursera.org/oauth2/v1/token
-def get_access_token():
+# def get_access_token():
     
-    access_token = CourseraToken.objects.get(item='access_token')
+#     access_token = CourseraToken.objects.get(item='access_token')
     
-    if access_token.is_access_token_expired():
-        payload = 'redirect_uri=http%3A%2F%2Flocalhost%3A9876%2Fcallback&client_id=' + COURSERA_CLIENT_ID + '&client_secret=' + COURSERA_CLIENT_SECRET + '&access_type=offline&Content-Type=application%2Fx-www-form-urlencoded&grant_type=refresh_token&refresh_token=' + get_refresh_token_from_django()
+#     if access_token.is_access_token_expired():
+#         payload = 'redirect_uri=http%3A%2F%2Flocalhost%3A9876%2Fcallback&client_id=' + COURSERA_CLIENT_ID + '&client_secret=' + COURSERA_CLIENT_SECRET + '&access_type=offline&Content-Type=application%2Fx-www-form-urlencoded&grant_type=refresh_token&refresh_token=' + get_refresh_token_from_django()
 
-        headers = {
-        'Content-Type': 'application/x-www-form-urlencoded',
-        }
+#         headers = {
+#         'Content-Type': 'application/x-www-form-urlencoded',
+#         }
 
-        response = requests.request("POST", COURSERA_TOKEN_URL, headers=headers, data=payload)
-        response_dict = json.loads(response.text)
-        if 'access_token' in response_dict:
-            new_access_token =  response_dict.get("access_token")
-            access_token = new_access_token
-            try:
-                access_token_entry = CourseraToken.objects.get(item='access_token')
-            except CourseraToken.DoesNotExist:
-                access_token_entry = CourseraToken(item='access_token', value=new_access_token)
-                access_token_entry.save()
-            else:
-                access_token_entry.value = new_access_token
-                access_token_entry.save()
+#         response = requests.request("POST", COURSERA_TOKEN_URL, headers=headers, data=payload)
+#         response_dict = json.loads(response.text)
+#         if 'access_token' in response_dict:
+#             new_access_token =  response_dict.get("access_token")
+#             access_token = new_access_token
+#             try:
+#                 access_token_entry = CourseraToken.objects.get(item='access_token')
+#             except CourseraToken.DoesNotExist:
+#                 access_token_entry = CourseraToken(item='access_token', value=new_access_token)
+#                 access_token_entry.save()
+#             else:
+#                 access_token_entry.value = new_access_token
+#                 access_token_entry.save()
         
-        access_token = CourseraToken.objects.get(item='access_token')
-        print(response.text)
+#         access_token = CourseraToken.objects.get(item='access_token')
     
-    else:
-        print(f'access token: {access_token.value} is modified last {access_token.last_modified} and is not yet expired.')
+#     else:
+#         print(f'access token: {access_token.value} is modified last {access_token.last_modified} and is not yet expired.')
     
-    return access_token.value
+#     return access_token.value
 
 # POST https://api.coursera.org/api/businesses.v1/{{ORG_ID}}/programs/{{PROGRAM_ID}}/invitations
-class InvitationsAPI:
-    def __init__(self, access_token, program_id):
-        self.base_url = DICT_PROGRAMS_URL+"/" + program_id + "/invitations"
-        self.bearer_token = access_token
+# class InvitationsAPI:
+#     def __init__(self, access_token, program_id):
+#         self.base_url = DICT_PROGRAMS_URL+"/" + program_id + "/invitations"
+#         self.bearer_token = access_token
 
-    def invite_user(self, external_id, full_name, email, send_email, contract_id=None):
-        params = {}
-        if contract_id:
-            params["contractId"] = contract_id
+#     def invite_user(self, external_id, full_name, email, send_email, contract_id=None):
+#         params = {}
+#         if contract_id:
+#             params["contractId"] = contract_id
 
-        headers = {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + self.bearer_token
-        }
+#         headers = {
+#             'Content-Type': 'application/json',
+#             'Authorization': 'Bearer ' + self.bearer_token
+#         }
         
-        payload = json.dumps({
-            "externalId": external_id,
-            "fullName": full_name,
-            "email": email,
-            "sendEmail": send_email
-        })
+#         payload = json.dumps({
+#             "externalId": external_id,
+#             "fullName": full_name,
+#             "email": email,
+#             "sendEmail": send_email
+#         })
 
-        response = requests.request("POST", self.base_url, headers=headers, data=payload, params=params)
+#         response = requests.request("POST", self.base_url, headers=headers, data=payload, params=params)
 
-        if response.status_code == 201:
-            return response.json()
-        else:
-            raise Exception(f"Error inviting user: {response.status_code} - {response.text}")
+#         if response.status_code == 201:
+#             return response.json()
+#         else:
+#             raise Exception(f"Error inviting user: {response.status_code} - {response.text}")
 
