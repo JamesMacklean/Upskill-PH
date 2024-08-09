@@ -838,6 +838,12 @@ def account(request):
     
     return render(request, template_name)
 
+def lakip_landing(request):
+    """"""
+    template_name="lakip-landing.html"
+
+    return render(request, template_name)
+
 def lakip_application(request):
     """"""
     template_name= "lakip-application.html"

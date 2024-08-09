@@ -1,0 +1,220 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap");
+
+*{
+    font-family: 'Poppins', 'Sans-serif';
+}
+.fixed-whole-nav{
+    position: fixed;
+    z-index: 1;
+    height: 90px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    background-color: #ffffff;
+}
+.sticky-whole-nav{
+    position: sticky;
+    z-index: 1;
+    height: 90px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    background-color: #ffffff;
+}
+.nav-link{
+    cursor: pointer;
+}
+.nav-link:hover{
+    color: rgb(123, 122, 122);
+}
+.lakip-button{
+    text-decoration: none;
+    padding: 8px 20px; 
+    background-color: black; 
+    color: white; 
+    border-radius: 25px;
+    cursor: pointer;
+}
+.lakip-button:hover{
+    background-color: dimgray;
+}
+main{
+    padding: 0 80px !important;
+}
+.hero{
+    width: 100%;
+    display: flex;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+}
+.hero-banner{
+    width: 800px;
+    height: 300px;
+}
+.overview{
+    display: flex;
+    flex-direction: row;
+    min-height: 100vh;
+}
+.lakip-text{
+    line-height: 30px;
+    text-align: justify;
+}
+.course-item{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+}
+.img-item{
+    object-fit: cover;
+    height: 275px;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+.course-details-container{
+    background: #ffffff;
+    border: 1px solid #ededed;
+    border-radius: 4px;
+    padding: 16px;
+    height: 100px;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+.course-item-container a{
+    text-decoration: none;
+    color: rgb(44, 44, 44);
+    font-weight: 600;
+    font-size: 14px;
+}
+#partners{
+    background-color: #ececec;
+    padding-bottom: 50px;
+}
+.partners{
+    min-height: 30vh;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: center;
+    gap: 30px;
+}
+.partner-img{
+    object-fit: cover;
+    height: 190px;
+}
+.partner-heading{
+    padding: 0 80px;
+    padding-top: 30px;
+}
+.faq-title{
+    padding: 0 80px;
+}
+.faq{
+    padding: 0 80px;
+}
+#faq{
+    min-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* PRIVACY POLICY */
+.privacy{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    margin-bottom: 50px;
+}
+.line{
+    width: 850px;
+    align-self: center;
+}
+.privacy p,li{
+    font-size: 14px;
+}
+.agree-to-terms{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.agree-to-terms button{
+    width: 200px;
+    margin-top: 30px;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 15px;
+    transition: 0.3s ease-in-out;
+}
+.agree-to-terms button:enabled{
+    color: #ffffff;
+    background-color: green;
+}
+.agree-to-terms button:enabled:hover{
+    color: #ffffff;
+    background-color: rgb(1, 90, 1);
+}
+.agree{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 10px;
+}
+
+.application-form{
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+}
+.application-form button{
+    width: 200px !important;
+    margin-top: 30px !important;
+    border: none !important;
+    padding: 10px 20px !important;
+    border-radius: 15px !important;
+    transition: 0.3s ease-in-out !important;
+    align-self: center !important;
+}
+.application-form button:enabled{
+    color: #ffffff;
+    background-color: green !important;
+}
+.application-form button:enabled:hover{
+    color: #ffffff !important;
+    background-color: rgb(1, 90, 1) !important;
+}
+.input-box{
+    width: 100% !important;
+}
+.input-field{
+    padding: 10px !important;
+    margin-right: 10px !important;
+    width: 200px !important;
+}
+
+/* COURSE */
+
+.contained-wrapper {
+    margin: 0 auto !important;
+    max-width: 1400px !important;
+    padding: 0 80px !important;
+}
+.bg-light-1 {
+    background: #fafafa !important;
+}
+.page-banner-v2 {
+    height: 70vh !important;
+}
+.section-course-modules .section-title {
+    font-weight: 600 !important;
+    font-size: 24px !important;
+}
+.section-course-modules .course-module-item {
+    margin-bottom: 50px !important;
+}

@@ -33,6 +33,7 @@ urlpatterns = [
     path('privacy/', views.privacy, name="privacy"),
     path('contact-us/', views.contact, name="contact"),
 
+    path('lakip/',views.lakip_landing, name='lakip-landing'),
     path('lakip/apply/',views.lakip_application, name='lakip-application'),
     
     # COURSERA
