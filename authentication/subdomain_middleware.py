@@ -24,8 +24,8 @@ class SubdomainMiddleware(MiddlewareMixin):
                 if request.path in [reverse('signup'), reverse('signin')]:
                     return redirect(f'{ACCOUNTS_DOMAIN}{request.path}')
                 # KUNG HINDI AUTHENTICATED PERO SA SUCCESS OR VERIFY ACCOUNT PUMUNTA, HAYAAN LANG
-                elif request.path in [reverse('success'), reverse('verify_account')]:
-                    return redirect(f'{DOMAIN}{request.path}')
+                # elif request.path in [reverse('success'), reverse('verify_account')]:
+                #     return redirect(f'{DOMAIN}{request.path}')
                 # KUNG HINDI AUTHENTICATED AT PUMUNTA SA IBANG PAGE, ISAVE ANG URL, DALHIN SA ACCOUNTS
                 else:
                     request.session['original_url'] = request.get_full_path()
