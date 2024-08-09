@@ -17,17 +17,23 @@ class SubdomainMiddleware(MiddlewareMixin):
             try:
                 # KUNG AUTHENTICATED PERO SA SIGNIN GUSTO PUMUNTA, DALHIN SA HOME
                 user_token = request.session['user_token']
-                if request.path in [reverse('signup'), reverse('signin')]:
+                if request.path in [
+                    reverse('signup'), 
+                    reverse('signin'),
+                    reverse('success', args=['']), 
+                    reverse('verify_account', args=[''],
+                    )]:
                     return redirect ('home')
             except:
                 # KUNG HINDI AUTHENTICATED PERO SA SIGNIN GUSTO PUMUNTA, DALHIN SA ACCOUNTS
-                if request.path in [reverse('signup'), reverse('signin')]:
+                if request.path in [
+                    reverse('signup'), 
+                    reverse('signin'),
+                    reverse('success', args=['']), 
+                    reverse('verify_account', args=[''],
+                    )]:
                     return redirect(f'{ACCOUNTS_DOMAIN}{request.path}')
-                # KUNG HINDI AUTHENTICATED PERO SA SUCCESS OR VERIFY ACCOUNT PUMUNTA, HAYAAN LANG
-                if request.path in [reverse('success', args=['']), reverse('verify_account', args=[''])]:
-                # Remove args so reverse returns only the base path without placeholders
-                    return redirect(f'{DOMAIN}{request.path}')
-                # KUNG HINDI AUTHENTICATED AT PUMUNTA SA IBANG PAGE, ISAVE ANG URL, DALHIN SA ACCOUNTS
+                # KUNG HINDI AUTHENTICATED AT PUMUNTA SA IBANG PAGE, ISAVE ANG URL, DALHIN SA SIGNIN
                 else:
                     request.session['original_url'] = request.get_full_path()
                     print(f"original_url: {request.session['original_url']}")
@@ -35,7 +41,12 @@ class SubdomainMiddleware(MiddlewareMixin):
                 
         elif subdomain == 'accounts':
             # KUNG HINDI SIGNIN ANG PUPUNTAHAN, DALHIN SA WELCOME
-            if request.path not in [reverse('signup'), reverse('signin')]:
+            if request.path not in [
+                reverse('signup'), 
+                reverse('signin'),
+                reverse('success', args=['']), 
+                reverse('verify_account', args=[''],
+                )]:
                 return redirect(f'{DOMAIN}{request.path}')
             else:
                 # KUNG AUTHENTICATED PERO SA SIGNIN GUSTO PUMUNTA, DALHIN SA HOME
