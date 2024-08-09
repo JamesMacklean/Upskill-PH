@@ -22,23 +22,24 @@
     justify-content: center;
     width: 100%;
     background-color: #ffffff;
+    top: 0;
 }
 .nav-link{
     cursor: pointer;
 }
 .nav-link:hover{
-    color: rgb(123, 122, 122);
+    color: rgb(123, 122, 122) !important;
 }
 .lakip-button{
-    text-decoration: none;
-    padding: 8px 20px; 
-    background-color: black; 
-    color: white; 
+    text-decoration: none !important;
+    padding: 8px 20px !important; 
+    background-color: black !important; 
+    color: white !important; 
     border-radius: 25px;
-    cursor: pointer;
+    cursor: pointer !important;
 }
 .lakip-button:hover{
-    background-color: dimgray;
+    background-color: dimgray !important;
 }
 main{
     padding: 0 80px !important;
