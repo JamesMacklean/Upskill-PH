@@ -99,11 +99,11 @@ def success(request, user_hash):
     email = request.session.get('new_email')
     
     ########## ANONYMOUS REQUIRED ##########
-    try:
-        user_token = request.session['user_token']
-        return HttpResponseRedirect('/')
-    except:
-        pass
+    # try:
+    #     user_token = request.session['user_token']
+    #     return HttpResponseRedirect('/')
+    # except:
+    #     pass
     ########## ANONYMOUS REQUIRED ##########
 
     ############################# FOR MAIL ##############################
@@ -138,11 +138,11 @@ def verify_account(request, user_hash):
     context = {}
     
     ########## ANONYMOUS REQUIRED ##########
-    try:
-        user_token = request.session['user_token']
-        return HttpResponseRedirect('/')
-    except:
-        pass
+    # try:
+    #     user_token = request.session['user_token']
+    #     return HttpResponseRedirect('/')
+    # except:
+    #     pass
     ########## ANONYMOUS REQUIRED ##########
 
     try:
