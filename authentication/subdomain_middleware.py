@@ -15,20 +15,33 @@ class SubdomainMiddleware(MiddlewareMixin):
         if subdomain == 'welcome':
             # Check if user is authenticated for other paths on the welcome subdomain
             try:
+                # KUNG AUTHENTICATED PERO SA SIGNIN GUSTO PUMUNTA, DALHIN SA HOME
                 user_token = request.session['user_token']
                 if request.path in [reverse('signup'), reverse('signin')]:
                     return redirect ('home')
             except:
+                # KUNG HINDI AUTHENTICATED PERO SA SIGNIN GUSTO PUMUNTA, DALHIN SA ACCOUNTS
                 if request.path in [reverse('signup'), reverse('signin')]:
                     return redirect(f'{ACCOUNTS_DOMAIN}{request.path}')
+                # KUNG HINDI AUTHENTICATED AT PUMUNTA SA IBANG PAGE, ISAVE ANG URL, DALHIN SA ACCOUNTS
                 else:
                     request.session['original_url'] = request.get_full_path()
                     print(f"original_url: {request.session['original_url']}")
-                    
-                return HttpResponseRedirect(f'{ACCOUNTS_DOMAIN}{reverse("signin")}')
+                    return HttpResponseRedirect(f'{ACCOUNTS_DOMAIN}{reverse("signin")}')
+                
         elif subdomain == 'accounts':
+            # KUNG HINDI SIGNIN ANG PUPUNTAHAN, DALHIN SA WELCOME
             if request.path not in [reverse('signup'), reverse('signin')]:
                 return redirect(f'{DOMAIN}{request.path}')
+            else:
+                # KUNG AUTHENTICATED PERO SA SIGNIN GUSTO PUMUNTA, DALHIN SA HOME
+                try:
+                    user_token = request.session['user_token']
+                    return redirect ('home')
+                # KUNG HINDI AUTHENTICATED PERO SA SIGNIN GUSTO PUMUNTA, HAYAAN LANG
+                except:
+                    pass
+                
             
         return None
 
