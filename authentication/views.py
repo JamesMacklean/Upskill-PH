@@ -676,15 +676,16 @@ def profile(request):
     context = {}
     applied_programs = []
     ########## LOGIN REQUIRED ##########
-    try:
-        user_token = request.session['user_token']
-    except:
-        request.session['original_url'] = request.get_full_path()
-        print(f"original_url: {request.session['original_url']}")
-        return HttpResponseRedirect(f'{ACCOUNTS_DOMAIN}{reverse("signin")}')
+    # try:
+    #     user_token = request.session['user_token']
+    # except:
+    #     request.session['original_url'] = request.get_full_path()
+    #     print(f"original_url: {request.session['original_url']}")
+    #     return HttpResponseRedirect(f'{ACCOUNTS_DOMAIN}{reverse("signin")}')
         # return HttpResponseRedirect(reverse('signin'))
     ########## LOGIN REQUIRED ##########
     
+    user_token = request.session['user_token']
     scholarships = user_programs(user_token)
             
     if scholarships: 
