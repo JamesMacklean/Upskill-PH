@@ -77,7 +77,7 @@ def home(request):
     
     user_token = request.session['user_token']
     # Fetch course data from the API
-    context['program_list'] = get_programs(user_token,2,None)
+    context['program_list'] = get_programs(user_token,6,None)
     # context['courses'] = get_courses(request, "static_templates/privacy.html")
     return render(request,template_name, context)
     
@@ -743,16 +743,20 @@ def program(request, slug):
     scholarships = user_programs(user_token)
     program_data = get_program_through_slug(user_token,slug)
     program_id = 0
+    
     # LOCKED OUT DAPAT ANG OTHER PROGRAMS KAPAG NAGAPPLY SA ISA
-    if scholarships:   
+    # CHECK KUNG SCHOLAR BA
+    if scholarships:
+        # ILAGAY SA 'APPLIED PROGRAMS' LAHAT NG NA-APPLYAN NA
         for data in scholarships:
             scholar_program_id = data['program_id']
             applied_programs.append(scholar_program_id)
             status = data['status']
-                    
+            print(scholar_program_id)
             if status == 1:
                 status_checker = status_checker + 1
     
+    # KUNIN ANG INFO NG CINLICK NA PROGRAM
     for data in program_data:
         program_id = data['id']
     
@@ -760,8 +764,9 @@ def program(request, slug):
     if request.method == "POST":
         # response = scholar_apply(user_token,program_id)
         license_code = request.POST.get('license_code')
-        # coursera_program_id = request.POST.get('coursera_program_id')
         full_name = first_name + last_name
+        # coursera_program_id = request.POST.get('coursera_program_id')
+        
         
         # access_token = get_access_token()
         # api = InvitationsAPI(access_token, coursera_program_id)
@@ -775,14 +780,16 @@ def program(request, slug):
         #### MODAL RESPONSE KUNG NAGWORK BA ANG APPLICATION
         context['message'] = response
         return render(request, template_name, context)
-        
-    all_programs = get_programs(user_token, 2, None)
+    
+    # KUNIN LAHAT NG DATA NG MGA PROGRAMS
+    all_programs = get_programs(user_token, 6, None)
     
     for program in all_programs:
         for key, value in program.items():
             if key == 'id':
                 program_ids.append(value)
-                
+
+    # 404 ERROR KAPAG WALA SA LISTAHAN NG PROGRAM IDS ANG PROGRAM NA CINLICK    
     if program_id not in program_ids:
         raise Http404
     
@@ -796,7 +803,7 @@ def program(request, slug):
     context['program_slug'] = slug
     context['programs'] = get_program_through_slug(user_token,slug)
     # context['dict_programs'] = get_dict_programs(bearer_token)
-    context['scholarships'] = scholarships
+    # context['scholarships'] = scholarships
     context['applied_programs'] = applied_programs
     context['atleast_approved_in_a_program'] = status_checker
     
