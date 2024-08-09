@@ -27,14 +27,8 @@ class SubdomainMiddleware(MiddlewareMixin):
                     
                 return HttpResponseRedirect(f'{ACCOUNTS_DOMAIN}{reverse("signin")}')
         elif subdomain == 'accounts':
-            try:
-                user_token = request.session['user_token']
-                return redirect(f'{DOMAIN}')
-            except:
-                if request.path not in [reverse('signup'), reverse('signin')]:
-                    return redirect(f'{DOMAIN}{request.path}')
-                else:
-                    return redirect(f'{ACCOUNTS_DOMAIN}{request.path}')
+            if request.path not in [reverse('signup'), reverse('signin')]:
+                return redirect(f'{DOMAIN}{request.path}')
             
         return None
 
