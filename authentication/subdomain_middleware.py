@@ -12,22 +12,25 @@ class SubdomainMiddleware(MiddlewareMixin):
         host = request.get_host()
         subdomain = host.split('.')[0]
 
+        accounts_redirect_paths = [
+            reverse('signup'), 
+            reverse('signin')
+        ]
+        accounts_redirect_prefixes = [
+            '/success/',
+            '/verify/'
+        ]
+        
         if subdomain == 'welcome':
             # Check if user is authenticated for other paths on the welcome subdomain
             try:
                 # KUNG AUTHENTICATED PERO SA SIGNIN GUSTO PUMUNTA, DALHIN SA HOME
                 user_token = request.session['user_token']
-                if request.path in [
-                    reverse('signup'), 
-                    reverse('signin'),
-                    ] or request.path.startswith(reverse('success', args=['dummy'])) or request.path.startswith(reverse('verify_account', args=['dummy'])):
-                    return redirect ('home')
+                if request.path in accounts_redirect_paths or any(request.path.startswith(prefix) for prefix in accounts_redirect_prefixes):
+                    return redirect('home')
             except:
                 # KUNG HINDI AUTHENTICATED PERO SA SIGNIN GUSTO PUMUNTA, DALHIN SA ACCOUNTS
-                if request.path in [
-                    reverse('signup'), 
-                    reverse('signin'),
-                    ] or request.path.startswith(reverse('success', args=['dummy'])) or request.path.startswith(reverse('verify_account', args=['dummy'])):
+                if request.path in accounts_redirect_paths or any(request.path.startswith(prefix) for prefix in accounts_redirect_prefixes):
                     return redirect(f'{ACCOUNTS_DOMAIN}{request.path}')
                 # KUNG HINDI AUTHENTICATED AT PUMUNTA SA IBANG PAGE, ISAVE ANG URL, DALHIN SA SIGNIN
                 else:
@@ -37,10 +40,7 @@ class SubdomainMiddleware(MiddlewareMixin):
                 
         elif subdomain == 'accounts':
             # KUNG HINDI SIGNIN ANG PUPUNTAHAN, DALHIN SA WELCOME
-            if request.path not in [
-                reverse('signup'), 
-                reverse('signin'),
-                ] or request.path.startswith(reverse('success', args=['dummy'])) or request.path.startswith(reverse('verify_account', args=['dummy'])):
+            if request.path not in accounts_redirect_paths and not any(request.path.startswith(prefix) for prefix in accounts_redirect_prefixes):
                 return redirect(f'{DOMAIN}{request.path}')
             else:
                 # KUNG AUTHENTICATED PERO SA SIGNIN GUSTO PUMUNTA, DALHIN SA HOME
