@@ -23,6 +23,9 @@ class SubdomainMiddleware(MiddlewareMixin):
                 # KUNG HINDI AUTHENTICATED PERO SA SIGNIN GUSTO PUMUNTA, DALHIN SA ACCOUNTS
                 if request.path in [reverse('signup'), reverse('signin')]:
                     return redirect(f'{ACCOUNTS_DOMAIN}{request.path}')
+                # KUNG HINDI AUTHENTICATED PERO SA SUCCESS OR VERIFY ACCOUNT PUMUNTA, HAYAAN LANG
+                elif request.path in [reverse('success'), reverse('verify_account')]:
+                    pass
                 # KUNG HINDI AUTHENTICATED AT PUMUNTA SA IBANG PAGE, ISAVE ANG URL, DALHIN SA ACCOUNTS
                 else:
                     request.session['original_url'] = request.get_full_path()
@@ -41,50 +44,22 @@ class SubdomainMiddleware(MiddlewareMixin):
                 # KUNG HINDI AUTHENTICATED PERO SA SIGNIN GUSTO PUMUNTA, HAYAAN LANG
                 except:
                     pass
-                
+        
+        # FOR http:127.0.0.1:8000
+        # else:
+        #     try:
+        #         user_token = request.session['user_token']
+        #         if request.path in [reverse('signup'), reverse('signin')]:
+        #             return redirect ('home')
+        #     except:
+        #         if request.path in [reverse('signup'), reverse('signin')]:
+        #             pass
+        #         else:
+        #             request.session['original_url'] = request.get_full_path()
+        #             print(f"original_url: {request.session['original_url']}")
+        #             return HttpResponseRedirect(f'{TEST_DOMAIN}{reverse("signin")}')
             
         return None
-
-    def authenticate_user(self, request):
-        try:
-            # PRINT SESSION ITEMS
-            for key, value in request.session.items():
-                print('{}: {}'.format(key, value))
-
-            try:   
-                user_token = request.session['user_token']
-                payload = jwt.decode(user_token, self.API_SECRET_KEY, algorithms=['HS256'])
-
-                # SAVE JWT PAYLOAD INTO SESSIONS
-                for key, value in payload.items():
-                    if key == 'data':
-                        for key, value in payload['data'].items():
-                            if key not in request.session:
-                                request.session[key] = value
-                                request.session.modified = True
-                return True
-            
-            except jwt.ExpiredSignatureError:
-                self.signout(request)
-                return False
-            
-        except KeyError:
-            self.signout(request)
-            return False
-
-    def signout(self, request):   
-        # PRINT COOKIES
-        for key, value in request.COOKIES.items():
-            print(f'{key}: {value}')
-        # CLEAR SESSIONS
-        try:   
-            for key in list(request.session.keys()):
-                del request.session[key]
-                request.session.modified = True
-        except KeyError as e:
-            print(str(e))
-        # return redirect(f'{ACCOUNTS_DOMAIN}{reverse("signin")}')    
-        return HttpResponseRedirect(reverse('signin'))
     
 # class AuthenticationMiddleware():
 #     API_SECRET_KEY = API_SECRET_KEY

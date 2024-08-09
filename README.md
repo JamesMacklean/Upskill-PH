@@ -18,3 +18,6 @@
 
 1. Search for the comments 'ORIGINAL CODE' and uncomment them.
 2. Search for the comments 'FOR TEST CODE' and comment them.
+
+## WHEN IN DEVELOPMENT MODE
+Since there are no subdomains in development mode, uncomment 'FOR http:127.0.0.1:8000' under the subdomain_middleware.py file
