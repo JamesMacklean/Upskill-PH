@@ -20,18 +20,14 @@ class SubdomainMiddleware(MiddlewareMixin):
                 if request.path in [
                     reverse('signup'), 
                     reverse('signin'),
-                    reverse('success', args=['']), 
-                    reverse('verify_account', args=[''],
-                    )]:
+                    ] or request.path.startswith(reverse('success', args=['dummy'])) or request.path.startswith(reverse('verify_account', args=['dummy'])):
                     return redirect ('home')
             except:
                 # KUNG HINDI AUTHENTICATED PERO SA SIGNIN GUSTO PUMUNTA, DALHIN SA ACCOUNTS
                 if request.path in [
                     reverse('signup'), 
                     reverse('signin'),
-                    reverse('success', args=['']), 
-                    reverse('verify_account', args=[''],
-                    )]:
+                    ] or request.path.startswith(reverse('success', args=['dummy'])) or request.path.startswith(reverse('verify_account', args=['dummy'])):
                     return redirect(f'{ACCOUNTS_DOMAIN}{request.path}')
                 # KUNG HINDI AUTHENTICATED AT PUMUNTA SA IBANG PAGE, ISAVE ANG URL, DALHIN SA SIGNIN
                 else:
@@ -44,9 +40,7 @@ class SubdomainMiddleware(MiddlewareMixin):
             if request.path not in [
                 reverse('signup'), 
                 reverse('signin'),
-                reverse('success', args=['']), 
-                reverse('verify_account', args=[''],
-                )]:
+                ] or request.path.startswith(reverse('success', args=['dummy'])) or request.path.startswith(reverse('verify_account', args=['dummy'])):
                 return redirect(f'{DOMAIN}{request.path}')
             else:
                 # KUNG AUTHENTICATED PERO SA SIGNIN GUSTO PUMUNTA, DALHIN SA HOME
