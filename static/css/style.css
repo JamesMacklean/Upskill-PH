@@ -391,7 +391,9 @@ div.card-image{
 .profile-container{
     padding: 3rem;
 }
-
+.min-100{
+    min-height: 100vh;
+}
 /* media queries - mobile */
 
 @media screen and (max-width: 768px) {
