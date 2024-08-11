@@ -55,8 +55,15 @@
     <a class="m-nav-link" href="{% url 'account' %}">Account</a>
     <a class="btn btn-sec mt-3" href="{% url 'signout' %}">Sign Out</a>
 </div>
+<script>
+    function toggleNavBar() {
+        var navBar = document.querySelector(".nav-bar.collapse");
+        navBar.classList.toggle("show");
+      }
+      
+      var hamburgerButton = document.querySelector(".hamburger");
+      hamburgerButton.addEventListener("click", toggleNavBar);
+</script>
+
 {% endif %}
 
-<script>
-
-</script>
