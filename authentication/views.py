@@ -174,6 +174,8 @@ def signup(request):
     context = {}
     
     logger = logging.getLogger(__name__)
+    
+    logger.debug("SIGN UP!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
     try:
         if request.method == "POST":
             email = request.POST['email']
