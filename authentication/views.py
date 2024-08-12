@@ -23,7 +23,7 @@ from django.core.paginator import Paginator
 # from authentication.subdomain_middleware import AuthenticationMiddleware
 
 from .variables import *
-import os, requests, ast, jwt, csv
+import os, requests, ast, jwt, csv, logging
 
 class SessionChecker(APIView):
     def get(self, request):    
@@ -172,7 +172,8 @@ def signup(request):
     """"""
     template_name = "authentication/signup.html"
     context = {}
-        
+    
+    logger = logging.getLogger(__name__)
     try:
         if request.method == "POST":
             email = request.POST['email']
@@ -180,7 +181,9 @@ def signup(request):
 
             user_hash, redirect_url, response_message = create_account(request, email, password)
             context['response_message'] = response_message
-
+            
+            logger.debug(response_message)
+            
             try:
                 original_url = request.session['original_url']
             except Exception as e:
