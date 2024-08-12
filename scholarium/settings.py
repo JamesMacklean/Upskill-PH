@@ -21,8 +21,8 @@ import os
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 EMAIL_HOST = 'smtp.hostinger.com' 
-EMAIL_HOST_USER = 'mailer@scholarium.io' 
-EMAIL_HOST_PASSWORD = 'Scholarium:2023'
+EMAIL_HOST_USER = 'mailer@tmtg-clone.click' 
+EMAIL_HOST_PASSWORD = 'hnVw35UEvflyXYPzJI7IWk2AmZkIpL8-'
 EMAIL_PORT = 465
 EMAIL_USE_TLS = False
 EMAIL_USE_SSL = True

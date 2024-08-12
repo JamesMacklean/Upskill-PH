@@ -52,18 +52,18 @@ class SubdomainMiddleware(MiddlewareMixin):
                     pass
         
         # FOR http:127.0.0.1:8000
-        # else:
-        #     try:
-        #         user_token = request.session['user_token']
-        #         if request.path in [reverse('signup'), reverse('signin')]:
-        #             return redirect ('home')
-        #     except:
-        #         if request.path in [reverse('signup'), reverse('signin')]:
-        #             pass
-        #         else:
-        #             request.session['original_url'] = request.get_full_path()
-        #             print(f"original_url: {request.session['original_url']}")
-        #             return HttpResponseRedirect(f'{TEST_DOMAIN}{reverse("signin")}')
+        else:
+            try:
+                user_token = request.session['user_token']
+                if request.path in accounts_redirect_paths or any(request.path.startswith(prefix) for prefix in accounts_redirect_prefixes):
+                    return redirect ('home')
+            except:
+                if request.path in accounts_redirect_paths or any(request.path.startswith(prefix) for prefix in accounts_redirect_prefixes):
+                    pass
+                else:
+                    request.session['original_url'] = request.get_full_path()
+                    print(f"original_url: {request.session['original_url']}")
+                    return HttpResponseRedirect(f'{TEST_DOMAIN}{reverse("signin")}')
             
         return None
     

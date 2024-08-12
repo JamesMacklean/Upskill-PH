@@ -4,7 +4,8 @@ TEST_DOMAIN = 'http://127.0.0.1:8000'
 TEST_EMAIL_RECEIVER = 'jamesmacklean27@gmail.com'
 
 ########## ORIGINAL CODE ##########
-API_TOKEN = 'TMTG tujyBpbgtum3xcctFvXZgr4ZnaRsddVRpvkwJuq8B3KEwfd4BZQtrRaj5r4vdtDm'
+API_TOKEN = 'UpskillPH etXESiNggFImCLPBBZjCsdPIRRW5v73PhpXKza7LXG9pLOCNTXE2UU461rldSor1'
+# API_TOKEN = 'TMTG tujyBpbgtum3xcctFvXZgr4ZnaRsddVRpvkwJuq8B3KEwfd4BZQtrRaj5r4vdtDm'
 ########## FOR TEST CODE ##########
 # API_TOKEN = 'LOC_TEST b3vg5vz5t6QJqRccTTysUtaYzF9bmUUrZXDNP54hxyF3Nr6azNdmAHXRrYjSQXA5'
 

@@ -107,26 +107,26 @@ def success(request, user_hash):
     ########## ANONYMOUS REQUIRED ##########
 
     ############################# FOR MAIL ##############################
-    html = render_to_string('emails/email_verification.html', {
-        'username': username,
-        'first_name': first_name,
-        'last_name': last_name,
-        'email': email,
-        'user_hash': user_hash,
-        'domain': DOMAIN,
-        'link': API_VERIFY_ACCOUNT_URL
-    })
-    send_mail(
-        'Title', 
-        'Content of the Message', 
-        settings.EMAIL_HOST_USER, 
-        ########## ORIGINAL CODE ##########
-        [email], 
-        ########## FOR TEST CODE ##########
-        # [TEST_EMAIL_RECEIVER],
-        html_message=html,
-        fail_silently=False
-    )
+    # html = render_to_string('emails/email_verification.html', {
+    #     'username': username,
+    #     'first_name': first_name,
+    #     'last_name': last_name,
+    #     'email': email,
+    #     'user_hash': user_hash,
+    #     'domain': DOMAIN,
+    #     'link': API_VERIFY_ACCOUNT_URL
+    # })
+    # send_mail(
+    #     'Title', 
+    #     'Content of the Message', 
+    #     settings.EMAIL_HOST_USER, 
+    #     ########## ORIGINAL CODE ##########
+    #     # [email], 
+    #     ########## FOR TEST CODE ##########
+    #     [TEST_EMAIL_RECEIVER],
+    #     html_message=html,
+    #     fail_silently=False
+    # )
     ############################# FOR MAIL ##############################
 
     return render(request,template_name, context)
@@ -144,13 +144,22 @@ def verify_account(request, user_hash):
     # except:
     #     pass
     ########## ANONYMOUS REQUIRED ##########
-
     try:
         email, response_message = verify(user_hash)
                 
         if email:
             print ("SUCCESS:", response_message)
-            return render(request, template_successful, context)                 
+            print(response_message)
+            
+            try:
+                original_url = request.session['original_url']
+            except Exception as e:
+                print(str(e))
+                original_url = ""
+                
+            context['original_url'] = original_url
+            
+            return render(request, template_successful, context)                
         else:
             print ("ERROR:", response_message)
             return render(request, template_failed, context) 
@@ -171,31 +180,42 @@ def signup(request):
 
             user_hash, redirect_url, response_message = create_account(request, email, password)
             context['response_message'] = response_message
-            
+
+            try:
+                original_url = request.session['original_url']
+            except Exception as e:
+                print(str(e))
+                original_url = ""
+
             if user_hash:
                 #### MODAL RESPONSE KUNG NAGWORK BA ANG SIGN UP
                 response_message = "success"
                 # request.session['user_hash'] = user_hash
                 # request.session.modified = True
-             
-                print(email, password, user_hash, redirect_url)
+
+                print(email, password, user_hash, redirect_url, original_url)
                 
                 ############################# FOR MAIL ##############################
                 html = render_to_string('emails/email_verification.html', {
                     'email': email,
                     'user_hash': user_hash,
                     'redirect_url': redirect_url,
-                    'domain': DOMAIN,
-                    'link': API_VERIFY_ACCOUNT_URL
+                    'original_url': original_url,
+                    'link': API_VERIFY_ACCOUNT_URL,
+                    ########## ORIGINAL CODE ##########
+                    'domain': ACCOUNTS_DOMAIN,
+                    ########## FOR TEST CODE ##########
+                    # 'domain': TEST_DOMAIN,
+                    
                 })
                 send_mail(
                     'Title', 
                     'Content of the Message', 
                     settings.EMAIL_HOST_USER, 
                     ########## ORIGINAL CODE ##########
-                    [email], 
+                    # [email], 
                     ########## FOR TEST CODE ##########
-                    # [TEST_EMAIL_RECEIVER],
+                    [TEST_EMAIL_RECEIVER],
                     html_message=html,
                     fail_silently=False
                 )

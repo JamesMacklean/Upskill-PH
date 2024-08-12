@@ -659,14 +659,21 @@ def update_applicant(bearer_token, user_id, program_id, status):
 
 # PUT https://scholarium.tmtg-clone.click/v1/user/verify/[args]
 def verify(user_hash):
+
     payload={}
     files={}
     headers = {
     'Authorization': API_TOKEN
     }
     response = requests.request("PUT", os.path.join(API_VERIFY_ACCOUNT_URL, user_hash), headers=headers, data=payload, files=files)
-    response_dict = ast.literal_eval(response.text)
-        
+    
+    try:
+        response_dict = response.json()
+    except ValueError:
+        # Handle the case where the response is not JSON
+        print("Response is not valid JSON")
+        return '', 'Invalid response format'
+    
     if 'data' in response_dict:
         for data in response_dict['data']:
             response_message = data.get("success")
