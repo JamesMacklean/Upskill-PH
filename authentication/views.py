@@ -203,7 +203,7 @@ def signup(request):
                     'original_url': original_url,
                     'link': API_VERIFY_ACCOUNT_URL,
                     ########## ORIGINAL CODE ##########
-                    'domain': ACCOUNTS_DOMAIN,
+                    'domain': DOMAIN,
                     ########## FOR TEST CODE ##########
                     # 'domain': TEST_DOMAIN,
                     
