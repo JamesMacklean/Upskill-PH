@@ -6,7 +6,7 @@
         <div class="program-banner w-100">
             <div class="contained-wrapper h-100">
                 <div class="d-flex align-items-center h-100">
-                <div class="col-12 col-md-8 d-flex flex-column">
+                <div class="col d-flex flex-column">
                     <h1 class="pagebanner-title mb-3 text-left">
                         {{ program.name }}
                     </h1>
@@ -29,14 +29,25 @@
                 </div>
             </div>
         </div>
-        <div class="program h-100 w-100 px-5 py-3">
-            <h5>Learning Platform</h5>
-            <p>
-                <a href="https://castlms.com/" target="_blank" style="color: #000 !important;">Cast LMS</a>
-            </p>
-            <hr>
-            <h5>Apply to this Program</h5>
-            <a href="https://dict-lakip.upskillph.org" class="btn btn-primary"> Go to Program</a>
+        <div class="program min-100 w-100 px-5 py-3">
+            <div class="program-about mt-4">
+                <h5>About this Program</h5>
+                <p>
+                    The <strong>Department of Information and Communications Technology (DICT) - 10</strong>, through its <strong>ICT Literacy and Competency Development Bureau (ILCDB)</strong>, also known as the training arm of the Department, is responsible for providing ICT training and capacity-building initiatives to the government workforce and ICT-enabled sectors. The ILCDB promotes and recognizes the vital role of information and communications technology in nation-building, promote digital literacy, ICT expertise, and knowledge-building among citizens to enable them to participate and compete in an evolving ICT age, and empower, through the use of ICT, the disadvantaged segments of the population, including the elderly, out-of-school youth, persons with disabilities and indigenous and minority groups.
+                </p>
+                <hr>
+            </div>
+            <div class="program-about mt-4">
+                <h5>Learning Platform</h5>
+                <p>
+                    <a href="https://castlms.com/" target="_blank" style="color: #000 !important;">Cast LMS</a>
+                </p>
+                <hr>
+            </div>
+            <div class="program-about mt-4">
+                <h5 class="mb-5">Apply to this Program</h5>
+                <a href="https://dict-lakip.upskillph.org" class="btn btn-primary">Go to Program</a>
+            </div>
         </div>
     {% endfor %}
 {% endblock %}
