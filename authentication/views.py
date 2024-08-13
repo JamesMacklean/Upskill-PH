@@ -748,6 +748,7 @@ def program(request, slug):
     context = {}
     program_ids = []
     applied_programs = []
+    user_program = []
     status_checker = 0
     
     # bearer_token = get_access_token()  
@@ -763,34 +764,35 @@ def program(request, slug):
     program_id = 0
     
     # LOCKED OUT DAPAT ANG OTHER PROGRAMS KAPAG NAGAPPLY SA ISA
-    # CHECK KUNG SCHOLAR BA
+    # I-CHECK LAHAT NG SCHOLARSHIP NI USER
     if scholarships:
-        # ILAGAY SA 'APPLIED PROGRAMS' LAHAT NG NA-APPLYAN NA
+        # ILAGAY SA 'APPLIED PROGRAMS' LAHAT NG PROGRAM ID NG SCHOLARSHIP NI USER
         for data in scholarships:
             scholar_program_id = data['program_id']
             applied_programs.append(scholar_program_id)
-            print(scholar_program_id)
-            # COMMENT MUNA PARA LAGING MAY APPLY NOW BUTTON
-            # status = data['status']
-            # if status == 1:
-            #     status_checker = status_checker + 1
-    
-    # KUNIN ANG INFO NG CINLICK NA PROGRAM
+            status = data['status']
+            if status == 1:
+                status_checker = status_checker + 1
+        
+    # KUNIN ANG PROGRAM ID NG CINLICK NA PROGRAM
     for data in program_data:
         program_id = data['id']
+
+    # ILAGAY SA 'USER_PROGRAM' ANG SCHOLARSHIP DETAILS NI USER ABOUT SA PROGRAM NA ITO
+    for scholarship in scholarships:
+        if scholarship['program_id'] == program_id:
+            user_program.append(scholarship)
     
-    print('PROGRAM ID', program_id)
     if request.method == "POST":
-        # response = scholar_apply(user_token,program_id)
-        license_code = request.POST.get('license_code')
+        # license_code = request.POST.get('license_code')
         full_name = first_name + last_name
         # coursera_program_id = request.POST.get('coursera_program_id')
-        
-        
+         
         # access_token = get_access_token()
         # api = InvitationsAPI(access_token, coursera_program_id)
 
-        response = enroll_code(user_token, program_id, license_code)
+        # response = enroll_code(user_token, program_id, license_code)
+        response = enroll_program(user_token, program_id)
         
         # if response == "License Code Verified!":
             # invitation_response = api.invite_user(user_id, full_name, email, True)
@@ -820,9 +822,9 @@ def program(request, slug):
     }
     
     context['program_slug'] = slug
-    context['programs'] = get_program_through_slug(user_token,slug)
-    # context['dict_programs'] = get_dict_programs(bearer_token)
-    # context['scholarships'] = scholarships
+    context['programs'] = program_data
+    context['user_program'] = user_program
+    context['scholarships'] = scholarships
     context['applied_programs'] = applied_programs
     context['atleast_approved_in_a_program'] = status_checker
     

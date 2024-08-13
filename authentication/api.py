@@ -739,6 +739,28 @@ def enroll_code(bearer_token, program_id, code):
     
     return response_message
 
+# PUT https://scholarium.tmtg-clone.click/v1/me/enroll/program
+def enroll_program(bearer_token, program_id):  
+
+    program_id = int(program_id)
+    payload = f'{{\r\n    "data": \r\n        {{\r\n            "program_id\":{program_id},\r\n        }}\r\n}}'
+    headers = {
+        'Content-Type': 'text/plain',
+        'Authorization': bearer_token
+    }
+    
+    response = requests.request("PUT", API_ENROLL_PROGRAM_URL, headers=headers, data=payload)
+    response_dict = json.loads(response.text)
+    
+    if 'data' in response_dict:
+        response_message = "License Code Verified!"
+    else:
+        response_message = response_dict.get("error")
+    print("SA API 'TO")
+    print(response)
+    print(response_message)
+    return response_message
+
 # GET INITIAL CODE
 # def get_initial_code():
 #     try:

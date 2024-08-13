@@ -4,15 +4,12 @@
 
     {% for program in programs %}
         {% if program.id in applied_programs %}
-            {% comment %} {% for scholarship in scholarships %} {% endcomment %}
-                {% comment %} {% if program.id == scholarship.program_id %} {% endcomment %}
-                    {% comment %} {% for dict_program in dict_programs %} {% endcomment %}
-                        {% comment %} {% if program.external_id == dict_program.id %} {% endcomment %}
+            {% for user_data in user_program %}
+                {% if program.id in user_data.program_id%}
                             <div class="bg_{{program.id}}_image p-5">
                                 <div class="">
                                     <section class="program-title text-white">
                                         <h1 class="pb-3">{{ program.name }}</h1>
-                                        {% comment %} <h1 class="pb-3">{{ dict_program.name }}</h1> {% endcomment %}
                                         <h5>About this Program</h5>
                                         {% if program.description %}
                                         <p>{{program.description}}</p> <br>
@@ -51,14 +48,14 @@
                                                 <div class="form-control-custom">
                                                     <div class="css-1cq002f">
                                                         <div class="css-ek3fxo">
-                                                                {% if program.status == 1 %}
+                                                                {% if user_data.status == 1 %}
                                                                 {% comment %} {% if scholarship.status == 1 %} {% endcomment %}
                                                                     <a href={{dict_program.url}} class="btn btn-primary">Go to Program</a>
                                                                     {% comment %} <button type="submit" class="btn solid">APPLIED</button> {% endcomment %}
-                                                                {% elif program.status == 2 %}
+                                                                {% elif user_data.status == 2 %}
                                                                 {% comment %} {% elif scholarship.status == 2 %} {% endcomment %}
                                                                     <button type="submit" class="btn btn-primary"disabled>WAITLISTED</button>
-                                                                {% elif program.status == 3 %}
+                                                                {% elif user_data.status == 3 %}
                                                                 {% comment %} {% elif scholarship.status == 3 %} {% endcomment %}
                                                                     <button type="submit" class="btn btn-primary"disabled>REJECTED</button>
                                                                 {% else %}
@@ -73,10 +70,8 @@
                                 </div>
                             </div>
                         </div>
-                        {% comment %} {% endif %} {% endcomment %}
-                    {% comment %} {% endfor %} {% endcomment %}
-                {% comment %} {% endif %} {% endcomment %}
-            {% comment %} {% endfor %} {% endcomment %}
+                {% endif %}
+            {% endfor %}
         {% else %}
             {% comment %} {% for dict_program in dict_programs %} {% endcomment %}
                 {% comment %} {% if program.external_id == dict_program.id %} {% endcomment %}
