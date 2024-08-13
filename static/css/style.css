@@ -328,9 +328,14 @@ textarea#about_me_text {
   gap: 25px;
 }
 
+.program-about {
+  padding: 0 120px;
+  margin: 65px 0;
+}
+
 .program-partner-logos img {
   object-fit: cover;
-  height: 100px;
+  height: 80px;
 }
 
 .pagebanner-title {
