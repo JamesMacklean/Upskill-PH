@@ -71,7 +71,7 @@ def home(request):
     # except:
     #     request.session['original_url'] = request.get_full_path()
     #     print(f"original_url: {request.session['original_url']}")
-    #     return HttpResponseRedirect(f'{ACCOUNTS_DOMAIN}{reverse("signin")}')
+    #     return HttpResponseRedirect(f'{settings.ACCOUNTS_DOMAIN}{reverse("signin")}')
         # return HttpResponseRedirect(reverse('signin'))
     ########## LOGIN REQUIRED ##########
     
@@ -113,7 +113,7 @@ def success(request, user_hash):
     #     'last_name': last_name,
     #     'email': email,
     #     'user_hash': user_hash,
-    #     'domain': DOMAIN,
+    #     'domain': settings.DOMAIN,
     #     'link': API_VERIFY_ACCOUNT_URL
     # })
     # send_mail(
@@ -190,6 +190,7 @@ def signup(request):
             if user_hash:
                 #### MODAL RESPONSE KUNG NAGWORK BA ANG SIGN UP
                 response_message = "success"
+                domain = f'http://{request.get_host()}'
                 # request.session['user_hash'] = user_hash
                 # request.session.modified = True
 
@@ -203,9 +204,9 @@ def signup(request):
                     'original_url': original_url,
                     'link': API_VERIFY_ACCOUNT_URL,
                     ########## ORIGINAL CODE ##########
-                    'domain': DOMAIN,
+                    # 'domain': settings.DOMAIN,
                     ########## FOR TEST CODE ##########
-                    # 'domain': TEST_DOMAIN,
+                    'domain': domain,
                     
                 })
                 send_mail(
@@ -285,11 +286,8 @@ def signin(request):
             if next_page:
                 try:
                     clear_session(request,'original_url')
-                    ########## ORIGINAL CODE ##########
-                    response = redirect(f'{DOMAIN}{next_page}')
-                    ########## FOR TEST CODE ##########
-                    # response = redirect(f'{TEST_DOMAIN}{next_page}')
-            
+                    domain = f'http://{request.get_host()}'
+                    response = redirect(f'{domain}{next_page}')
                 except Exception as e:
                     print(str(e))
             
@@ -771,10 +769,11 @@ def program(request, slug):
         for data in scholarships:
             scholar_program_id = data['program_id']
             applied_programs.append(scholar_program_id)
-            status = data['status']
             print(scholar_program_id)
-            if status == 1:
-                status_checker = status_checker + 1
+            # COMMENT MUNA PARA LAGING MAY APPLY NOW BUTTON
+            # status = data['status']
+            # if status == 1:
+            #     status_checker = status_checker + 1
     
     # KUNIN ANG INFO NG CINLICK NA PROGRAM
     for data in program_data:

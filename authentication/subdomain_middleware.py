@@ -3,6 +3,7 @@ from django.shortcuts import redirect
 from django.utils.deprecation import MiddlewareMixin
 from django.http import HttpResponse, Http404, HttpResponseRedirect
 from scholarium.info import *
+from scholarium import settings
 import jwt
 
 class SubdomainMiddleware(MiddlewareMixin):
@@ -11,7 +12,8 @@ class SubdomainMiddleware(MiddlewareMixin):
     def process_request(self, request):
         host = request.get_host()
         subdomain = host.split('.')[0]
-
+        domain = f'http://{host}'
+        
         accounts_redirect_paths = [
             reverse('signup'), 
             reverse('signin')
@@ -31,17 +33,18 @@ class SubdomainMiddleware(MiddlewareMixin):
             except:
                 # KUNG HINDI AUTHENTICATED PERO SA SIGNIN GUSTO PUMUNTA, DALHIN SA ACCOUNTS
                 if request.path in accounts_redirect_paths or any(request.path.startswith(prefix) for prefix in accounts_redirect_prefixes):
-                    return redirect(f'{ACCOUNTS_DOMAIN}{request.path}')
+                    return redirect(f'{settings.ACCOUNTS_DOMAIN}{request.path}')
                 # KUNG HINDI AUTHENTICATED AT PUMUNTA SA IBANG PAGE, ISAVE ANG URL, DALHIN SA SIGNIN
                 else:
                     request.session['original_url'] = request.get_full_path()
                     print(f"original_url: {request.session['original_url']}")
-                    return HttpResponseRedirect(f'{ACCOUNTS_DOMAIN}{reverse("signin")}')
+                    return HttpResponseRedirect(f'{settings.ACCOUNTS_DOMAIN}{reverse("signin")}')
                 
         elif subdomain == 'accounts':
             # KUNG HINDI SIGNIN ANG PUPUNTAHAN, DALHIN SA WELCOME
             if request.path not in accounts_redirect_paths and not any(request.path.startswith(prefix) for prefix in accounts_redirect_prefixes):
-                return redirect(f'{DOMAIN}{request.path}')
+                # return redirect(f'{settings.DOMAIN}{request.path}')
+                return redirect(f'{domain}{request.path}')
             else:
                 # KUNG AUTHENTICATED PERO SA SIGNIN GUSTO PUMUNTA, DALHIN SA HOME
                 try:
@@ -51,8 +54,10 @@ class SubdomainMiddleware(MiddlewareMixin):
                 except:
                     pass
         
-        # FOR http:127.0.0.1:8000
+        # FOR TEST CODE
+        # FOR http://127.0.0.1:8000
         else:
+            
             try:
                 user_token = request.session['user_token']
                 if request.path in accounts_redirect_paths or any(request.path.startswith(prefix) for prefix in accounts_redirect_prefixes):
@@ -63,52 +68,6 @@ class SubdomainMiddleware(MiddlewareMixin):
                 else:
                     request.session['original_url'] = request.get_full_path()
                     print(f"original_url: {request.session['original_url']}")
-                    return HttpResponseRedirect(f'{TEST_DOMAIN}{reverse("signin")}')
+                    return HttpResponseRedirect(f'{domain}{reverse("signin")}')
             
         return None
-    
-# class AuthenticationMiddleware():
-#     API_SECRET_KEY = API_SECRET_KEY
-
-#     def authenticate_user(self, request):
-#         try:
-#             # user_token = request.COOKIES.get('jwt') 
-#             # PRINT SESSION ITEMS
-#             for key, value in request.session.items():
-#                 print('{}: {}'.format(key, value))
-
-#             try:   
-#                 user_token = request.session['user_token']
-#                 payload = jwt.decode(user_token, self.API_SECRET_KEY, algorithms=['HS256'])
-
-#                 response = HttpResponse()
-                
-#                 # SAVE JWT PAYLOAD INTO SESSIONS
-#                 for key, value in payload.items():
-#                     if key == 'data':
-#                         for subkey, subvalue in payload['data'].items():
-#                             if subkey not in request.session:
-#                                 request.session[subkey] = subvalue
-#                                 request.session.modified = True
-#                             response.set_cookie(subkey, subvalue)
-#                 return True
-            
-#             except jwt.ExpiredSignatureError:
-#                 self.signout(request)
-#                 return False
-            
-#         except KeyError:
-#             self.signout(request)
-#             return False
-
-#     def signout(self, request):   
-#         # CLEAR SESSIONS
-#         try:   
-#             for key in list(request.session.keys()):
-#                 del request.session[key]
-#                 request.session.modified = True
-#         except KeyError as e:
-#             print(str(e))
-        
-#         return HttpResponseRedirect(reverse('signin'))
-#         # return redirect(f'{ACCOUNTS_DOMAIN}{reverse("signin")}')
