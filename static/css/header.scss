@@ -1,22 +1,21 @@
-/* You can add your CSS styles here to customize the header appearance */
 .header-login{
   display: flex;
+  height: 90px;
+  position: fixed;
+  top: 0;
   justify-content: flex-start;
-  align-items: center;
-  padding: 10px 12%;
-  background-color: #ffff;
-  height: 90px;
+  width: 100%;
 }
-.header{
+header{
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 12%;
-  background-color: #ffff;
   height: 90px;
+  justify-content: space-between;
+  width: 100%;
 }
-.logo {
-  width: 160px;
+.header-logo{
+  width: 150px;
+  margin-left: 50px;
+  margin-top: 30px;
 }
 nav {
   display: flex;
@@ -69,7 +68,7 @@ nav a:hover{
   right: 0;
   background-color: #f9f9f9;
   min-width: 120px;
-  z-index: 1;
+  z-index: 2;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
 }
 .dropdown-content a {
@@ -104,7 +103,7 @@ nav a:hover{
     display: none !important;
   }
 }
-// mobile response
+/* mobile response */
 .mobile-nav{
   display: none;
 }

@@ -1,4 +1,4 @@
-.header-login{
+.header-login {
   display: flex;
   height: 90px;
   position: fixed;
@@ -6,29 +6,35 @@
   justify-content: flex-start;
   width: 100%;
 }
-header{
+
+header {
   display: flex;
   height: 90px;
   justify-content: space-between;
   width: 100%;
 }
-.header-logo{
+
+.header-logo {
   width: 150px;
   margin-left: 50px;
   margin-top: 30px;
 }
+
 nav {
   display: flex;
   gap: 30px;
   align-items: center;
 }
+
 nav a {
   text-decoration: none;
   color: #000;
 }
-nav a:hover{
+
+nav a:hover {
   color: #ff7300;
 }
+
 .btn {
   padding: 8px 16px;
   background-color: #ff7300;
@@ -37,13 +43,16 @@ nav a:hover{
   border-radius: 4px;
   cursor: pointer;
 }
-.btn:hover{
+
+.btn:hover {
   background-color: #f24725;
   color: #fff;
 }
+
 .user-dropdown {
   position: relative;
 }
+
 .username {
   padding: 8px 16px;
   text-decoration: none;
@@ -54,13 +63,16 @@ nav a:hover{
   display: flex;
   align-items: center;
 }
+
 .caret-down {
   margin-left: 5px;
 }
+
 .caret-up {
   margin-left: 5px;
   transform: rotate(180deg);
 }
+
 .dropdown-content {
   display: none;
   position: absolute;
@@ -69,61 +81,72 @@ nav a:hover{
   background-color: #f9f9f9;
   min-width: 120px;
   z-index: 2;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
 }
+
 .dropdown-content a {
   color: #000;
   padding: 12px 16px;
   text-decoration: none;
   display: block;
 }
+
 .dropdown-content a:hover {
   background-color: #f1f1f1;
   color: #ff7300;
 }
+
 .user-dropdown:hover .dropdown-content {
   display: block;
 }
+
 .nav-bar.collapse {
   height: 0;
   transition: height 200ms ease-in-out;
 }
+
 .nav-bar.collapse.show {
   height: auto;
   display: flex;
   flex-direction: column;
   padding: 15px 10%;
 }
-.nav-bar.collapse .m-nav-link{
+
+.nav-bar.collapse .m-nav-link {
   text-decoration: none;
   color: #000;
 }
+
 @media screen and (min-width: 769px) {
-  .nav-bar.collapse{
+  .nav-bar.collapse {
     display: none !important;
   }
 }
 /* mobile response */
-.mobile-nav{
+.mobile-nav {
   display: none;
 }
-.hamburger{
+
+.hamburger {
   height: 40px;
   border: none;
   background: transparent;
   box-shadow: none;
 }
-.hamburger i{
+
+.hamburger i {
   color: #ff7300;
 }
-.hamburger i:hover{
+
+.hamburger i:hover {
   color: #f24725;
 }
-@media screen and (max-width: 768px){
-  .web-nav{
+
+@media screen and (max-width: 768px) {
+  .web-nav {
     display: none;
   }
-  .mobile-nav{
+  .mobile-nav {
     display: flex !important;
   }
-}
+}/*# sourceMappingURL=header.css.map */
