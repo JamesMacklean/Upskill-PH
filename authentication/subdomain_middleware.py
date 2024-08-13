@@ -43,8 +43,8 @@ class SubdomainMiddleware(MiddlewareMixin):
         elif subdomain == 'accounts':
             # KUNG HINDI SIGNIN ANG PUPUNTAHAN, DALHIN SA WELCOME
             if request.path not in accounts_redirect_paths and not any(request.path.startswith(prefix) for prefix in accounts_redirect_prefixes):
-                # return redirect(f'{settings.DOMAIN}{request.path}')
-                return redirect(f'{domain}{request.path}')
+                return redirect(f'{settings.DOMAIN}{request.path}')
+                # return redirect(f'{domain}{request.path}')
             else:
                 # KUNG AUTHENTICATED PERO SA SIGNIN GUSTO PUMUNTA, DALHIN SA HOME
                 try:
