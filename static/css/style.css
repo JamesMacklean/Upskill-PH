@@ -314,8 +314,7 @@ textarea#about_me_text {
   background: linear-gradient(90deg, rgba(0, 74, 173, 0.8) 0%, rgba(255, 189, 89, 0.8) 50%, rgba(255, 49, 49, 0.8) 100%), url(https://coursebank-static-assets.s3.ap-northeast-1.amazonaws.com/partners/lakip-main-bg.png);
   background-repeat: no-repeat;
   background-size: cover;
-  -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
 }
 
 .contained-wrapper {
@@ -327,8 +326,7 @@ textarea#about_me_text {
 }
 
 .program-partner-logos img {
-  -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
   height: 100px;
 }
 
@@ -361,8 +359,6 @@ textarea#about_me_text {
 }
 
 .section-courses-container .course-item .img-item {
-  -o-object-fit: cover;
-     object-fit: cover;
   object-fit: cover;
   height: 257px;
 }
