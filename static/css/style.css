@@ -329,8 +329,8 @@ textarea#about_me_text {
 }
 
 .program-about {
-  padding: 0 120px;
-  margin: 65px 0;
+  padding: 0 120px !important;
+  margin: 65px 0 !important;
 }
 
 .program-partner-logos img {
