@@ -3,243 +3,42 @@
 {% block content %}
 
     {% for program in programs %}
-        {% if program.id in applied_programs %}
-            {% for user_data in user_program %}
-                {% if program.id in user_data.program_id%}
-                            <div class="bg_{{program.id}}_image p-5">
-                                <div class="">
-                                    <section class="program-title text-white">
-                                        <h1 class="pb-3">{{ program.name }}</h1>
-                                        <h5>About this Program</h5>
-                                        {% if program.description %}
-                                        <p>{{program.description}}</p> <br>
-                                        <p>Click on the Coursera link below to check the collection under this program.</p>
-                                        {% else %}
-                                        <p>No description for this program.</p>
-                                        {% endif %}
-                                    </section>
-                                </div>
-                            </div>
-                            <div class="my-5">
-                                <div class="">
-                                    <div class="program-partner-logos">
-                                        <img src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/DICT-Logo-nobg.png">
-                                        <img src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/ILCDB+logo_2.png">
-                                        <img src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/coursera-social-logo-brand.png">
-                                        <img src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/logo-moocsx.png">
-                                    </div>
-                                <div class="program">
-                                    <hr>
-                                    <h5>Learning Platform</h5>
-                                    <p>
-                                        <a href="https://castlms.com/" target="_blank" style="color: #000 !important;">Cast LMS</a>
-                                    </p>
-                                    <hr>
-                                    {% comment %} <h5>Apply to this Program</h5>
-                                    <p>By applying to this program, you are agreeing to the program guidelines set forth by the granting organization.</p>
-                                    <br>
-                                    <p><a href="{% url 'guidelines' %}" target="_blank" style="color: #000 !important;">View program guidelines.</a></p> {% endcomment %}
-                                </div>
-                                <div class="">
-                                    <form action="" class="program-application" id="apply" method="POST">
-                                        {% csrf_token %}
-                                        <div class="rc-ProfilePhotoUploader form-horizontal">
-                                            <div class="form-group horizontal-box wrap my-3 align-items-center">
-                                                <div class="form-control-custom">
-                                                    <div class="css-1cq002f">
-                                                        <div class="css-ek3fxo">
-                                                                {% if user_data.status == 1 %}
-                                                                {% comment %} {% if scholarship.status == 1 %} {% endcomment %}
-                                                                    <a href={{dict_program.url}} class="btn btn-primary">Go to Program</a>
-                                                                    {% comment %} <button type="submit" class="btn solid">APPLIED</button> {% endcomment %}
-                                                                {% elif user_data.status == 2 %}
-                                                                {% comment %} {% elif scholarship.status == 2 %} {% endcomment %}
-                                                                    <button type="submit" class="btn btn-primary"disabled>WAITLISTED</button>
-                                                                {% elif user_data.status == 3 %}
-                                                                {% comment %} {% elif scholarship.status == 3 %} {% endcomment %}
-                                                                    <button type="submit" class="btn btn-primary"disabled>REJECTED</button>
-                                                                {% else %}
-                                                                    <button type="submit" class="btn btn-primary"disabled>PENDING</button>
-                                                                {% endif %}
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                {% endif %}
-            {% endfor %}
-        {% else %}
-            {% comment %} {% for dict_program in dict_programs %} {% endcomment %}
-                {% comment %} {% if program.external_id == dict_program.id %} {% endcomment %}
-                    <div class="bg_{{program.id}}_image p-5">
-                        <div class="">
-                            <section class="program-title text-white">
-                                <h1 class="pb-3">{{ program.name }}</h1>
-
-                                {% comment %} <h1 class="pb-3">{{ dict_program.name }}</h1> {% endcomment %}
-                                <h5>About this Program</h5>
-                                {% if program.description %}
-                                    <p>{{program.description}}</p> <br>
-                                    <p>Click on the Coursera link below to check the collection under this program.</p>
-                                {% else %}
-                                    <p>No description for this program.</p>
-                                {% endif %}
-                            </section>
-                        </div>
-                        </div>
-                        <div class="my-5">
-                            <div class="">
-                            <div class="program-partner-logos">
-                                <img src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/DICT-Logo-nobg.png">
-                                <img src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/ILCDB+logo_2.png">
-                                <img src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/coursera-social-logo-brand.png">
-                                <img src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/logo-moocsx.png">
-                            </div>
-                            <div class="program">
-                                <hr>
-                                <h5>Learning Platform</h5>
-                                <p>
-                                    <a href="https://castlms.com/" target="_blank" style="color: #000 !important;">Cast LMS</a>
-                                </p>
-                                <hr>
-                                
-                                <h5>Apply to this Program</h5>
-                                {% if atleast_approved_in_a_program %}
-                                <p>You cannot apply to more than 1 program</p>
-                                {% else %}
-                                <p><input type="checkbox" class="mr-3" id="agreeCheckbox">  By checking this box, you are agreeing to the <a href="#" id="programGuidelinesLink">program guidelines</a>  set forth by the granting organization.</p>
-                            </div>
-                            <div class="">
-                                <form action="" class="program-application" id="apply" method="POST">
-                                    {% csrf_token %}
-                                    {% if user_details.first_name and user_details.last_name and user_details.email %}
-                                        <div class="rc-ProfilePhotoUploader form-horizontal">
-                                            <div class="form-group horizontal-box wrap my-3 align-items-center">
-                                                <div class="form-control-custom" id="lc-custom">
-                                                    <div class="css-1cq002f">
-                                                        <div class="css-ek3fxo">
-                                                            <input type="text" name="license_code" id="license_code" placeholder="Enter License Code" required class="input-ctrl" disabled>
-                                                            <input type="hidden" name="coursera_program_id" value="{{ program.external_id }}">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="form-control-custom">
-                                                    <div class="css-1cq002f">
-                                                        <div class="css-ek3fxo">
-                                                            <button type="submit" class="btn solid" id="applyBtn" disabled>APPLY NOW</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    {% else %}
-                                        <div class="rc-ProfilePhotoUploader form-horizontal">
-                                            <div class="form-group horizontal-box wrap my-3 align-items-center">
-                                                <div class="form-control-custom" id="lc-custom">
-                                                    <div class="css-1cq002f">
-                                                        <div class="css-ek3fxo">
-                                                            <input type="hidden" name="program_slug" value="{{ program_slug }}">
-                                                            <p>You need to update your profile to apply to this Program. <br>
-                                                            <a href="{% url 'edit' %}">Update Profile</a>
-                                                            </p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="form-control-custom">
-                                                    <div class="css-1cq002f">
-                                                        <div class="css-ek3fxo">
-                                                            {% comment %} <button type="submit" class="btn solid" id="applyBtn" disabled>APPLY NOW</button> {% endcomment %}
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    {% endif %}
-                                    <p>{{ message }}</p>
-                                    {% endif %}
-
-                                    {% comment %} <input type="text" name="license_code" id="license_code" placeholder="Enter License Code" required>
-                                    {% if user_details.first_name and user_details.last_name and user_details.email %}
-                                        <input type="hidden" name="program_id" value="{{ program_id }}">
-                                        <button type="submit" class="btn solid">APPLY NOW</button>
-                                    {% else %}
-                                        <p>COMPLETE YOUR PROFILE FIRST!</p>
-                                    {% endif %}
-                                    <p>{{ message }}</p> {% endcomment %}
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                {% comment %} {% endif %} {% endcomment %}
-            {% comment %} {% endfor%} {% endcomment %}
-        {% endif %}
-    {% endfor %}
-
-    <div id="myModal" class="modal">
-        <div class="modal-content p-5">
-            <h2 class="text-center">DIGITAL LITERACY COURSERA TRAINING PROGRAM</h2>
-            <p class="text-center">ACCEPTANCE AND UNDERTAKING</p>
-            <p>
-                Congratulations! You have been selected as one of the learners for the DICT ILCDB Coursera Digital Literacy Training Program as part of the “Enhancing Information and 
-                <br>Communications Technology Upskilling Ecosystem Through Massive Open Online Courses” project, jointly led by the DICT, MOOCSX PH, 
-                <br>and Coursera. The DICT shall cover the training expenses for the duration of the program.
-            </p>
-            <p>
-                As a grantee, you are expected to perform, and be guided with the following:
-            </p>
-            <p>
-                1. Complete your selected learning track within the approved duration of the program which is from the date of your invitation to December 31, 2022;
-                <br>2. Devote the necessary amount of time and carry out the activities as stated in the plan of activities;
-                <br>3. Conduct oneself professionally and use the knowledge gained in this training in the interest of the public good;
-                <br>4. Acknowledge the support of the DICT in all reports and any publication arising from the training, a copy of which should be provided to DICT;
-                <br>5. Learners who are inactive for seven (7) days or those who voluntarily withdraw from the program without justifiable reason shall have their license to access Coursera revoked and shall be banned from participating in any DICT training program;
-                <br>6. Participate in the training monitoring and evaluation survey to be conducted by the organizers;
-                <br>7. The learners who complete the courses may be tapped as resource person for related activities of the DICT in the future in a one-time free of charge service.
-            </p>
-            <p>
-                Should you accept the above-cited conditions, kindly accomplish the agreement form below. By accomplishing the agreement below, you acknowledge reading and agreeing to the terms stated in our Privacy Policy.
-            </p>
-            <p>
-                For inquiries, you may contact us at <a href="mailto:inquire@moocs.ph">inquire@moocs.ph</a>
-            </p>
-            <div class="m-auto">
-                <span class="close btn btn-primary">CLOSE</span>
+        <div class="program-banner w-100">
+            <div class="contained-wrapper h-100">
+                <div class="d-flex align-items-center h-100">
+                <div class="col-12 col-md-8 d-flex flex-column">
+                    <h1 class="pagebanner-title mb-3 text-left">
+                        {{ program.name }}
+                    </h1>
+                    {% if program.description %}
+                    <p class="pagebanner-desc mt-2">
+                        {{program.description}}
+                    </p>
+                </div>
+                </div>
             </div>
         </div>
-    </div>
-
-    <script>
-        var checkbox = document.getElementById("agreeCheckbox");
-        var licensetext = document.getElementById("license_code");
-        var applybtn = document.getElementById("applyBtn");
-        var modal = document.getElementById("myModal");
-        var programGuidelinesLink = document.getElementById("programGuidelinesLink");
-        var closeButton = document.querySelector(".close");
-
-        checkbox.addEventListener("click", function() {
-            if (checkbox.checked) {
-                applybtn.removeAttribute("disabled");
-                licensetext.removeAttribute("disabled");
-                modal.style.display = "block";
-            } else {
-                applybtn.setAttribute("disabled", "true");
-                licensetext.setAttribute("disabled", "true");
-                modal.style.display = "none";
-            }
-        });
-
-        programGuidelinesLink.addEventListener("click", function(event) {
-            event.preventDefault();
-            modal.style.display = "block";
-        });
-
-        closeButton.addEventListener("click", function() {
-            modal.style.display = "none";
-        });
-
-    </script>
+        <div class="my-5 bg-light-1 w-100">
+            <div class="program-partners">
+                <div class="program-partner-logos d-flex flex-row w-100 ">
+                    <img src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/DICT-Logo-nobg.png">
+                    <img src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/ILCDB+logo_2.png">
+                    <img src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/coursera-social-logo-brand.png">
+                    <img src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/logo-moocsx.png">
+                </div>
+            </div>
+        </div>
+        <div class="program h-100">
+            <hr>
+            <h5>Learning Platform</h5>
+            <p>
+                <a href="https://castlms.com/" target="_blank" style="color: #000 !important;">Cast LMS</a>
+            </p>
+            <hr>
+            
+            <h5>Apply to this Program</h5>
+            
+            <p>You cannot apply to more than 1 program</p>
+        </div>
+    {% endfor%}
 {% endblock %}
