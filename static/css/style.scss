@@ -305,7 +305,7 @@ textarea#about_me_text {
     flex-direction: column;
 }
 .section-courses-container .course-item .img-item {
-    -o-object-fit: cover;
+    object-fit: cover;
     object-fit: cover;
     height: 257px;
 }
