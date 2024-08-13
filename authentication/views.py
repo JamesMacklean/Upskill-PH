@@ -359,7 +359,7 @@ def applied_programs(request):
             print(str(e))       
 
     # NAKADEFAULT MUNA ITO SA 2 SINCE DICT PA LANG ANG MAY PROGRAMS
-    context['program_list'] = get_programs(user_token,2,None)
+    context['program_list'] = get_programs(user_token,6,None)
     context['profile'] = user_profile(user_token)
     context['scholarships'] = scholarships
     context['applied_programs'] = applied_programs
@@ -591,8 +591,8 @@ def profile(request):
         except Exception as e:
             print(str(e))       
 
-    # NAKADEFAULT MUNA ITO SA 2 SINCE DICT PA LANG ANG MAY PROGRAMS
-    context['program_list'] = get_programs(user_token,2,None)
+    # NAKADEFAULT MUNA ITO SA 6 SINCE DICT PA LANG ANG MAY PROGRAMS
+    context['program_list'] = get_programs(user_token,6,None)
     context['profile'] = user_profile(user_token)
     context['employment'] = user_employment(user_token)
     context['education'] = user_education(user_token)
