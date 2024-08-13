@@ -270,8 +270,22 @@ textarea#about_me_text {
     background-size: cover;
     object-fit: cover;
 }
+.contained-wrapper{
+    margin: 0 auto;
+}
 .program-partner-logos img{
-    max-width: 185px;
+    object-fit: cover;
+    height: 100px;
+}
+.page-banner-title{
+    font-weight: 600;
+    font-size: 56px;
+    color: #ffffff;
+}
+.page-banner-desc{
+    font-weight: 500;
+    font-size: 21px;
+    color: #ffffff;
 }
 .program p{
     font-size: 14px;
