@@ -497,6 +497,13 @@ div.card-image {
 .min-100 {
   min-height: 100vh;
 }
+.css-ek3fxo{
+  flex-direction: row;
+  gap: 10px;
+}
+.edit-button{
+  width: 50%;
+}
 /* mobile response */
 @media screen and (max-width: 430px) {
   .program-partner-logos img {
@@ -506,6 +513,15 @@ div.card-image {
   .program-about {
     padding: 0 20px !important;
     margin: 65px 0 !important;
+  }
+  label.body-2-text.color-primary-text.form-label {
+    text-align: left;
+  }
+  .css-ek3fxo{
+    flex-direction: column;
+  }
+  .edit-button{
+    width: 100%;
   }
 }
 

@@ -26,10 +26,10 @@
                     <div class="form-control-custom">
                         <div class="css-1cq002f">
                             <div class="css-ek3fxo mb-2">
-                                <input type="text" name = "first_name" placeholder="First Name" value="{{profile.first_name}}" class="input-ctrl">
+                                <input type="text" name = "first_name" placeholder="First Name" value="{{profile.first_name}}" class="input-ctrl" pattern="[A-Za-z]+">
                             </div>
                             <div class="css-ek3fxo">
-                                <input type="text" name = "last_name" placeholder="Last Name" value="{{profile.last_name}}" class="input-ctrl">
+                                <input type="text" name = "last_name" placeholder="Last Name" value="{{profile.last_name}}" class="input-ctrl" pattern="[A-Za-z]+">
                             </div>
                         </div>
                     </div>
@@ -333,7 +333,7 @@
                     <div class="form-control-custom">
                         <div class="css-1cq002f">
                             <div class="css-ek3fxo">
-                                <input type="text" name="mobile" value="{{profile.contact}}" class="input-ctrl">
+                                <input type="tel" name="mobile" value="{{profile.contact}}" class="input-ctrl" maxlength="11" pattern="\d{11}">
                             </div>
                         </div>
                     </div>
@@ -351,7 +351,7 @@
                         <div class="css-ek3fxo">
                             <select name="details_privacy" id="details-privacy" class="input-ctrl">
                                 <option value="2" {% if profile.privacy == 2 %}selected{% endif %}>Only Me</option>
-                                <option value="1" {% if profile.privacy == 1 %}selected{% endif %}>Scholarium Community</option>
+                                <option value="1" {% if profile.privacy == 1 %}selected{% endif %}>SupskillPH Community</option>
                                 <option value="0" {% if profile.privacy == 0 %}selected{% endif %}>Public on the Web</option>
                             </select>
                         </div>
@@ -365,8 +365,9 @@
                 <label for="save" class="body-2-text color-primary-text form-label"></label>
                 <div class="form-control-custom">
                     <div class="css-1cq002f">
-                        <div class="css-ek3fxo">
-                        <input type="submit" value="SAVE CHANGES" class="btn btn-primary"> 
+                        <div class="css-ek3fxo d-flex">
+                            <input type="submit" value="SAVE CHANGES" class="btn btn-primary edit-button">
+                            <a href="#" id="cancelButton" class="btn btn-sec edit-button">CANCEL</a>
                         </div>
                     </div>
                 </div>
@@ -374,6 +375,16 @@
         </div>
     </div>
 </form>
+
+<script>
+    document.getElementById('cancelButton').addEventListener('click', function(event) {
+        event.preventDefault();
+        var userConfirmed = confirm('Are you sure you want to cancel editing and go back?');
+        if (userConfirmed) {
+            window.history.back();
+        }
+    });
+</script>
 
 {% comment %} 
                 <!--  COUNTRY SELECTION START  -->
