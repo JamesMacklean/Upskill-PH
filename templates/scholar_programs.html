@@ -11,13 +11,12 @@
                     <div class="d-flex align-items-center h-100">
                     <div class="col d-flex flex-column">
                         <h1 class="pagebanner-title mb-3 text-left">{{ program.name }}</h1>
-                            <h5>About this Program</h5>
                             {% if program.description %}
                             <p class="pagebanner-desc mt-2">
                                 {{program.description}}
                             </p>
                             {% else %}
-                            <p>No description for this program.</p>
+                            <p class="pagebanner-desc mt-2">No description for this program.</p>
                             {% endif %}
                     </div>
                     </div>
@@ -42,6 +41,7 @@
                     <div class="program min-100 w-100 px-5 py-3">
                         <div class="program-about mt-4">
                             <h5 class="mb-4">About this Program</h5>
+                            {% comment %} will be replaced by program.about {% endcomment %}
                             <p>
                                 The <strong>Department of Information and Communications Technology (DICT) - 10</strong>, through its <strong>ICT Literacy and Competency Development Bureau (ILCDB)</strong>, also known as the training arm of the Department, is responsible for providing ICT training and capacity-building initiatives to the government workforce and ICT-enabled sectors. The ILCDB promotes and recognizes the vital role of information and communications technology in nation-building, promote digital literacy, ICT expertise, and knowledge-building among citizens to enable them to participate and compete in an evolving ICT age, and empower, through the use of ICT, the disadvantaged segments of the population, including the elderly, out-of-school youth, persons with disabilities and indigenous and minority groups.
                             </p>

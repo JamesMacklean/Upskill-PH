@@ -496,4 +496,19 @@ div.card-image {
 
 .min-100 {
   min-height: 100vh;
-}/*# sourceMappingURL=style.css.map */
+}
+/* mobile response */
+@media screen and (max-width: 430px) {
+  .program-partner-logos img {
+    object-fit: cover;
+    height: 35px;
+  }
+  .program-about {
+    padding: 0 20px !important;
+    margin: 65px 0 !important;
+  }
+}
+
+
+
+/*# sourceMappingURL=style.css.map */
