@@ -204,9 +204,9 @@ def signup(request):
                     'original_url': original_url,
                     'link': API_VERIFY_ACCOUNT_URL,
                     ########## ORIGINAL CODE ##########
-                    # 'domain': settings.DOMAIN,
+                    'domain': settings.DOMAIN,
                     ########## FOR TEST CODE ##########
-                    'domain': domain,
+                    # 'domain': domain,
                     
                 })
                 send_mail(
@@ -214,9 +214,9 @@ def signup(request):
                     'Content of the Message', 
                     settings.EMAIL_HOST_USER, 
                     ########## ORIGINAL CODE ##########
-                    # [email], 
+                    [email], 
                     ########## FOR TEST CODE ##########
-                    [TEST_EMAIL_RECEIVER],
+                    # [TEST_EMAIL_RECEIVER],
                     html_message=html,
                     fail_silently=False
                 )
