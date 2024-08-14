@@ -743,7 +743,11 @@ def enroll_code(bearer_token, program_id, code):
 def enroll_program(bearer_token, program_id):  
 
     program_id = int(program_id)
-    payload = f'{{\r\n    "data": \r\n        {{\r\n            "program_id\":{program_id},\r\n        }}\r\n}}'
+    payload = json.dumps({
+        "data": {
+            "program_id": program_id
+        }
+    })
     headers = {
         'Content-Type': 'text/plain',
         'Authorization': bearer_token

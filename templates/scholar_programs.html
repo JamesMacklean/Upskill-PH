@@ -4,19 +4,23 @@
 {% block content %}
 
     {% for program in programs %}
-        <div class="program-banner w-100">
-            <div class="contained-wrapper h-100">
-                <div class="d-flex align-items-center h-100">
-                <div class="col d-flex flex-column">
-                    <h1 class="pagebanner-title mb-3 text-left">
-                        {{ program.name }}
-                    </h1>
-                    {% if program.description %}
-                    <p class="pagebanner-desc mt-2">
-                        {{program.description}}
-                    </p>
-                    {% endif %}
-                </div>
+        {% comment %} DEFAULT SA LAHAT NG PROGRAMS {% endcomment %}
+        <div class="bg_{{program.id}}_image w-100">
+            <div class="program-banner w-100">
+                <div class="contained-wrapper h-100">
+                    <div class="d-flex align-items-center h-100">
+                    <div class="col d-flex flex-column">
+                        <h1 class="pagebanner-title mb-3 text-left">{{ program.name }}</h1>
+                            <h5>About this Program</h5>
+                            {% if program.description %}
+                            <p class="pagebanner-desc mt-2">
+                                {{program.description}}
+                            </p>
+                            {% else %}
+                            <p>No description for this program.</p>
+                            {% endif %}
+                    </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -30,25 +34,122 @@
                 </div>
             </div>
         </div>
-        <div class="program min-100 w-100 px-5 py-3">
-            <div class="program-about mt-4">
-                <h5 class="mb-4">About this Program</h5>
-                <p>
-                    The <strong>Department of Information and Communications Technology (DICT) - 10</strong>, through its <strong>ICT Literacy and Competency Development Bureau (ILCDB)</strong>, also known as the training arm of the Department, is responsible for providing ICT training and capacity-building initiatives to the government workforce and ICT-enabled sectors. The ILCDB promotes and recognizes the vital role of information and communications technology in nation-building, promote digital literacy, ICT expertise, and knowledge-building among citizens to enable them to participate and compete in an evolving ICT age, and empower, through the use of ICT, the disadvantaged segments of the population, including the elderly, out-of-school youth, persons with disabilities and indigenous and minority groups.
-                </p>
-                <hr>
+        
+        {% comment %} KUNG NA-APPLYAN NA NG USER ANG PROGRAM NA ITO {% endcomment %}
+        {% if program.id in applied_programs %}
+            {% for user_data in user_program %}
+                {% if program.id in user_data.program_id%}
+                    <div class="program min-100 w-100 px-5 py-3">
+                        <div class="program-about mt-4">
+                            <h5 class="mb-4">About this Program</h5>
+                            <p>
+                                The <strong>Department of Information and Communications Technology (DICT) - 10</strong>, through its <strong>ICT Literacy and Competency Development Bureau (ILCDB)</strong>, also known as the training arm of the Department, is responsible for providing ICT training and capacity-building initiatives to the government workforce and ICT-enabled sectors. The ILCDB promotes and recognizes the vital role of information and communications technology in nation-building, promote digital literacy, ICT expertise, and knowledge-building among citizens to enable them to participate and compete in an evolving ICT age, and empower, through the use of ICT, the disadvantaged segments of the population, including the elderly, out-of-school youth, persons with disabilities and indigenous and minority groups.
+                            </p>
+                            <hr>
+                        </div>
+                        <div class="program-about mt-4">
+                            <h5 class="mb-4">Learning Platform</h5>
+                            <p>
+                                <a href="https://castlms.com/" target="_blank" style="color: #000 !important;">Cast LMS</a>
+                            </p>
+                            <hr>
+                        </div>
+                        <div class="program-about mt-4">
+                            <form action="" class="program-application" id="apply" method="POST">
+                                {% csrf_token %}
+                                <div class="rc-ProfilePhotoUploader form-horizontal">
+                                    <div class="form-group horizontal-box wrap my-3 align-items-center">
+                                        <div class="form-control-custom">
+                                            <div class="css-1cq002f">
+                                                <div class="css-ek3fxo">
+                                                        {% if user_data.status == 1 %}
+                                                            <a href="https://dict-lakip.upskillph.org" class="btn btn-primary">Go to Program</a>
+                                                            {% comment %} <button type="submit" class="btn solid">APPLIED</button> {% endcomment %}
+                                                        {% elif user_data.status == 2 %}
+                                                            <button type="submit" class="btn btn-primary"disabled>WAITLISTED</button>
+                                                        {% elif user_data.status == 3 %}
+                                                            <button type="submit" class="btn btn-primary"disabled>REJECTED</button>
+                                                        {% else %}
+                                                            <button type="submit" class="btn btn-primary"disabled>PENDING</button>
+                                                        {% endif %}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        {% comment %} KUNG HINDI PA NA-APPLYAN NG USER ANG PROGRAM NA ITO {% endcomment %}
+        {% else %}
+            <div class="program min-100 w-100 px-5 py-3">
+                <div class="program-about mt-4">
+                    <h5 class="mb-4">About this Program</h5>
+                    <p>
+                        The <strong>Department of Information and Communications Technology (DICT) - 10</strong>, through its <strong>ICT Literacy and Competency Development Bureau (ILCDB)</strong>, also known as the training arm of the Department, is responsible for providing ICT training and capacity-building initiatives to the government workforce and ICT-enabled sectors. The ILCDB promotes and recognizes the vital role of information and communications technology in nation-building, promote digital literacy, ICT expertise, and knowledge-building among citizens to enable them to participate and compete in an evolving ICT age, and empower, through the use of ICT, the disadvantaged segments of the population, including the elderly, out-of-school youth, persons with disabilities and indigenous and minority groups.
+                    </p>
+                    <hr>
+                </div>
+                <div class="program-about mt-4">
+                    <h5 class="mb-4">Learning Platform</h5>
+                    <p>
+                        <a href="https://castlms.com/" target="_blank" style="color: #000 !important;">Cast LMS</a>
+                    </p>
+                    <hr>
+                </div>
+                <div class="program-about mt-4">
+                    <h5 class="mb-4">Apply to this Program</h5>
+                    <form action="" class="program-application" id="apply" method="POST">
+                        {% csrf_token %}
+                        {% comment %} **************************************************************************************** {% endcomment %}
+                                    {% comment %} COMMENT MUNA ITO PARA ALLOWED MAG-APPLY NG MULTIPLE PROGRAMS {% endcomment %}
+                        {% comment %} {% if atleast_approved_in_a_program %}
+                            <p>You cannot apply to more than 1 program</p>
+                        {% endif %}                                 {% endcomment %}
+                        {% comment %} **************************************************************************************** {% endcomment %}
+
+                        {% comment %} KUNG MAGA-APPLY SIYA AT UPDATED ANG PROFILE NIYA {% endcomment %}
+                        {% if user_details.first_name and user_details.last_name and user_details.email %}
+                            <div class="rc-ProfilePhotoUploader form-horizontal">
+                                <div class="form-group horizontal-box wrap my-3 align-items-center">
+                                    <div class="form-control-custom">
+                                        <div class="css-1cq002f">
+                                            <div class="css-ek3fxo">
+                                                <button type="submit" class="btn solid" id="applyBtn">APPLY NOW</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% comment %} KUNG MAGA-APPLY SIYA AT HINDI UPDATED ANG PROFILE NIYA {% endcomment %}
+                        {% else %}
+                            <div class="rc-ProfilePhotoUploader form-horizontal">
+                                <div class="form-group horizontal-box wrap my-3 align-items-center">
+                                    <div class="form-control-custom" id="lc-custom">
+                                        <div class="css-1cq002f">
+                                            <div class="css-ek3fxo">
+                                                <input type="hidden" name="program_slug" value="{{ program_slug }}">
+                                                <p>You need to update your profile to apply to this Program. <br>
+                                                <a href="{% url 'edit' %}">Update Profile</a>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-control-custom">
+                                        <div class="css-1cq002f">
+                                            <div class="css-ek3fxo">
+                                                <button type="submit" class="btn solid" id="applyBtn" disabled>APPLY NOW</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                    </form>
+                </div>
             </div>
-            <div class="program-about mt-4">
-                <h5 class="mb-4">Learning Platform</h5>
-                <p>
-                    <a href="https://castlms.com/" target="_blank" style="color: #000 !important;">Cast LMS</a>
-                </p>
-                <hr>
-            </div>
-            <div class="program-about mt-4">
-                <h5 class="mb-4">Apply to this Program</h5>
-                <a href="https://dict-lakip.upskillph.org" class="btn btn-primary">Go to Program</a>
-            </div>
-        </div>
+        {% endif %}
     {% endfor %}
 {% endblock %}
