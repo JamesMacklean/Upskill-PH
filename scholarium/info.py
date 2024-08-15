@@ -1,4 +1,4 @@
-TEST_EMAIL_RECEIVER = 'jamesmacklean27@gmail.com'
+TEST_EMAIL_RECEIVER = 'tmtcoredev@gmail.com'
 
 API_TOKEN = 'UpskillPH etXESiNggFImCLPBBZjCsdPIRRW5v73PhpXKza7LXG9pLOCNTXE2UU461rldSor1'
 
