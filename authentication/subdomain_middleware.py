@@ -12,7 +12,6 @@ class SubdomainMiddleware(MiddlewareMixin):
     def process_request(self, request):
         host = request.get_host()
         subdomain = host.split('.')[0]
-        domain = f'http://{host}'
         
         accounts_redirect_paths = [
             reverse('signup'), 
@@ -32,20 +31,20 @@ class SubdomainMiddleware(MiddlewareMixin):
                 current_time = int(time.time())  # Get the current time in seconds since the epoch (UNIX time)
                 if current_time >= expires:
                     # The session has expired, sign out the user
-                    return self.signout(request, settings.ACCOUNTS_DOMAIN)
+                    return self.signout(request, f'http://{settings.ACCOUNTS_DOMAIN}')
                 
                 if request.path in accounts_redirect_paths or any(request.path.startswith(prefix) for prefix in accounts_redirect_prefixes):
                     return redirect('home')
             except KeyError:
                 # KUNG HINDI AUTHENTICATED PERO SA SIGNIN GUSTO PUMUNTA, DALHIN SA ACCOUNTS
                 if request.path in accounts_redirect_paths or any(request.path.startswith(prefix) for prefix in accounts_redirect_prefixes):
-                    return redirect(f'{settings.ACCOUNTS_DOMAIN}{request.path}')
+                    return redirect(f'http://{settings.ACCOUNTS_DOMAIN}{request.path}')
                 # KUNG HINDI AUTHENTICATED AT PUMUNTA SA IBANG PAGE, ISAVE ANG URL, DALHIN SA SIGNIN
                 else:
                     if request.path in accounts_redirect_paths or any(request.path.startswith(prefix) for prefix in accounts_redirect_prefixes):
-                        return redirect(f'{settings.ACCOUNTS_DOMAIN}{request.path}')
+                        return redirect(f'http://{settings.ACCOUNTS_DOMAIN}{request.path}')
                     else:
-                        return self.signout(request, settings.ACCOUNTS_DOMAIN)
+                        return self.signout(request, f'http://{settings.ACCOUNTS_DOMAIN}')
                 
         elif subdomain == 'accounts':
             # Check if user is authenticated for other paths on the welcome subdomain
@@ -56,16 +55,16 @@ class SubdomainMiddleware(MiddlewareMixin):
                 current_time = int(time.time())  # Get the current time in seconds since the epoch (UNIX time)
                 if current_time >= expires:
                     # The session has expired, sign out the user
-                    return self.signout(request, settings.ACCOUNTS_DOMAIN)
+                    return self.signout(request, f'http://{settings.ACCOUNTS_DOMAIN}')
                 
                 if request.path in accounts_redirect_paths or any(request.path.startswith(prefix) for prefix in accounts_redirect_prefixes):
                     return redirect('home')
                 else:
-                    return redirect(f'{settings.DOMAIN}{request.path}')
+                    return redirect(f'http://{settings.DOMAIN}{request.path}')
             except KeyError:
                 # KUNG HINDI SA SIGNIN PUPUNTA, DALHIN SA WELCOME
                 if request.path not in accounts_redirect_paths and not any(request.path.startswith(prefix) for prefix in accounts_redirect_prefixes):
-                    return redirect(f'{settings.DOMAIN}{request.path}')
+                    return redirect(f'http://{settings.DOMAIN}{request.path}')
         
         # FOR TEST CODE
         # FOR http://127.0.0.1:8000
@@ -77,13 +76,13 @@ class SubdomainMiddleware(MiddlewareMixin):
                 current_time = int(time.time())  # Get the current time in seconds since the epoch (UNIX time)
                 if current_time >= expires:
                     # The session has expired, sign out the user
-                    return self.signout(request, domain)
+                    return self.signout(request, f'http://{host}')
                     
                 if request.path in accounts_redirect_paths or any(request.path.startswith(prefix) for prefix in accounts_redirect_prefixes):
                     return redirect ('home')
             except KeyError:
                 if request.path not in accounts_redirect_paths and not any(request.path.startswith(prefix) for prefix in accounts_redirect_prefixes):
-                    return self.signout(request, domain)
+                    return self.signout(request, f'http://{host}')
             
         return None
     

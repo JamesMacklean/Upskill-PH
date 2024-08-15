@@ -217,7 +217,7 @@ def signup(request):
                     'original_url': original_url,
                     'link': API_VERIFY_ACCOUNT_URL,
                     ########## ORIGINAL CODE ##########
-                    'domain': settings.DOMAIN,
+                    'domain': f'{settings.DOMAIN}',
                     ########## FOR TEST CODE ##########
                     # 'domain': domain,
                     
@@ -293,7 +293,8 @@ def signin(request):
             # CHECK IF THE REQUEST IS REDIRECTION
             try:
                 next_page = request.session.get('original_url')
-                print(f"next_page:{next_page}", flush=True)
+                print('')
+                print(f"SIGN IN original_url:{next_page}", flush=True)
             except:
                 next_page = ""
                   

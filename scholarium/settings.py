@@ -20,8 +20,8 @@ import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-DOMAIN = 'http://welcome.upskillph.org'
-ACCOUNTS_DOMAIN = "http://accounts.upskillph.org"
+DOMAIN = 'welcome.upskillph.org'
+ACCOUNTS_DOMAIN = "accounts.upskillph.org"
 
 EMAIL_HOST = 'smtp.hostinger.com' 
 EMAIL_HOST_USER = 'mailer@tmtg-clone.click' 
