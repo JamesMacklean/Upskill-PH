@@ -2,7 +2,7 @@
 {% load static %}
 {% block 'title' %}Program{% endblock %}
 {% block content %}
-
+<div class="application-prompt" style="display: none;">Application Submitted</div>
     {% for program in programs %}
         {% comment %} DEFAULT SA LAHAT NG PROGRAMS {% endcomment %}
         <div class="bg_{{program.id}}_image w-100">
@@ -101,7 +101,7 @@
                 </div>
                 <div class="program-about mt-4">
                     <h5 class="mb-4">Apply to this Program</h5>
-                    <form action="" class="program-application" id="apply" method="POST">
+                    <form action="" class="program-application" id="apply" method="POST" onsubmit="showSubmissionPrompt()">
                         {% csrf_token %}
                         {% comment %} **************************************************************************************** {% endcomment %}
                                     {% comment %} COMMENT MUNA ITO PARA ALLOWED MAG-APPLY NG MULTIPLE PROGRAMS {% endcomment %}
@@ -123,6 +123,80 @@
                                     </div>
                                 </div>
                             </div>
+
+                            {% comment %} Privacy Policy Modal {% endcomment %}
+                            <div class="modal fade" id="privacy-modal" tabindex="-1" aria-labelledby="privacyModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+                                <div class="modal-dialog modal-lg">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="privacyModalLabel">Data Privacy Policy</h5>
+                                        </div>
+                                        <div class="modal-body p-5">
+                                            <h1 class="mb-3">Privacy Policy</h1>
+                                            <p>Department of Information and Communications Technology Training Programs</p>
+                        
+                                            <h5 class="mb-4 mt-5">Your Privacy Is Important To Us</h5>
+                                            <p>We at Coursebank, as a data controller and/or processor, is committed to protect and respect your privacy in compliance with the Data Privacy Act of 2012 in relation to all Personal and Sensitive Personal Information that we collect from you.</p>
+                                            <p>For most purposes, we determine what happens to any information that we collect about you, which for all intents and purposes are related to your engagements with Coursebank – for this particular case, in relation to your application as a possible learner to training programs under the Department of Information and Communications Technology (DICT).</p>
+                        
+                                            <h5 class="mb-4 mt-4">What Information Do We Collect?</h5>
+                                            <p>We may collect the following personal information from you when you fill out online forms as required by the Academy:</p>
+                                            <ul>
+                                                <li>Name</li>
+                                                <li>Email</li>
+                                                <li>Place of Residence</li>
+                                                <li>Age</li>
+                                                <li>Gender</li>
+                                                <li>Highest Educational Attainment</li>
+                                            </ul>
+                        
+                                            <h5 class="mb-4 mt-4">How Do We Use Your Information?</h5>
+                                            <p>The collected personal information is utilized solely for documentation and processing purposes for the scholarship programs you are applying for under the DICT. It is only shared and processed by authorized personnel under the project appointed by Coursebank and the DICT.</p>
+                                            <p>The information collected also enables the project team to monitor and assess the performance of the projects for future iterations.</p>
+                        
+                                            <h5 class="mb-4 mt-4">How Do We Protect And Handle Your Information</h5>
+                                            <p>Coursebank strictly enforces its Privacy Policy. It has implemented technological, organizational and physical security measures to protect personal data from loss, misuse, unauthorized modification, unauthorized or accidental access or disclosure, alteration or destruction.</p>
+                                            <p>Only authorized Coursebank personnel and designated DICT personnel for the scholarship programs have access to your personal information, the exchange of which will be facilitated through secured email or hard copy. They will be stored in a database for three years (after inquiries, requests are acted upon) after which digital files shall be anonymized.</p>
+                        
+                                            <h5 class="mb-4 mt-4">Your Rights Pertaining To Your Information</h5>
+                                            <p>If you would like to exercise your rights (as listed below) to or have any concerns about our handling of your personal information and sensitive personal information, you may contact the Data Protection Officer (DPO) through the following contact details:</p>
+                        
+                                            <p> Data Privacy Officer | <a href="mailto:inquire@moocs.ph">inquire@moocs.ph</a></p>
+                        
+                                            <p>Rights you can exercise:</p>
+                                            <ul>
+                                                <li>request a copy of your information which you supplied to us</li>
+                                                <li>request us to correct or delete your information</li>
+                                                <li>object to us processing your information</li>
+                                                <li>inform Coursebank of any clarification and/or complaint you have in relation to the personal information and sensitive personal information being collected, processed, shared, and/or purged</li>
+                                                <li>lodge a complaint with the National Privacy Commission</li>
+                                            </ul>
+                                            <p class="mb-0 mt-5 text-center"> <input id="privacy-checkbox" type="checkbox"> <strong> I Agree to the Data Privacy Policy of the Program</strong></p>
+                                        </div>
+                                        <div class="modal-footer justify-content-center">
+                                            <button type="submit" class="btn btn-primary" id="apply-button" disabled>APPLY NOW</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <script src="https://unpkg.com/@popperjs/core@2"></script>
+                            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+                            <script>
+                                const submitButton = document.getElementById('submit-button');
+                                const privacyModal = new bootstrap.Modal(document.getElementById('privacy-modal'));
+
+                                submitButton.addEventListener('click', function() {
+                                    privacyModal.show();
+                                });
+
+                                const checkbox = document.getElementById('privacy-checkbox');
+                                const applyButton = document.getElementById('apply-button');
+
+                                // Event listener to enable the 'APPLY NOW' button when the checkbox is checked
+                                checkbox.addEventListener('change', function() {
+                                    applyButton.disabled = !this.checked;
+                                });
+                            </script>
                         {% comment %} KUNG MAGA-APPLY SIYA AT HINDI UPDATED ANG PROFILE NIYA {% endcomment %}
                         {% else %}
                             <div class="rc-ProfilePhotoUploader form-horizontal">
@@ -137,13 +211,14 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="form-control-custom">
+                                    {% comment %} HIDDEN BUTTON {% endcomment %}
+                                    {% comment %} <div class="form-control-custom">
                                         <div class="css-1cq002f">
                                             <div class="css-ek3fxo">
                                                 <button type="submit" class="btn solid" id="applyBtn" disabled>APPLY NOW</button>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> {% endcomment %}
                                 </div>
                             </div>
                         {% endif %}
@@ -153,3 +228,12 @@
         {% endif %}
     {% endfor %}
 {% endblock %}
+<script>
+    function showSubmissionPrompt() {
+        const promptDiv = document.querySelector('.application-prompt');
+        promptDiv.style.display = 'block'; // Show the div
+        setTimeout(() => {
+            promptDiv.style.display = 'none'; // Hide the div after 15 seconds
+        }, 15000);
+    }
+</script>

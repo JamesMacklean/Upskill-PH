@@ -309,6 +309,22 @@ textarea#about_me_text {
   outline: none;
 }
 
+.page-banner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+  background: linear-gradient(90deg, rgba(0, 74, 173, 0.8) 0%, rgba(255, 189, 89, 0.8) 50%, rgba(255, 49, 49, 0.8) 100%);
+  background-repeat: no-repeat;
+  background-size: cover;
+  object-fit: cover;
+  color: #fff;
+}
+
+.banner-title {
+  font-size: 36px;
+}
+
 .program-banner {
   height: 400px;
   background: linear-gradient(90deg, rgba(0, 74, 173, 0.8) 0%, rgba(255, 189, 89, 0.8) 50%, rgba(255, 49, 49, 0.8) 100%), url(https://coursebank-static-assets.s3.ap-northeast-1.amazonaws.com/partners/lakip-main-bg.png);
@@ -326,6 +342,14 @@ textarea#about_me_text {
 
 .program-partner-logos {
   gap: 25px;
+}
+
+.application-prompt {
+  padding: 5px 0;
+  color: #fff;
+  background-color: green;
+  width: 100%;
+  text-align: center;
 }
 
 .program-about {

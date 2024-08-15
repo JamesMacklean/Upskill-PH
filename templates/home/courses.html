@@ -22,10 +22,12 @@
         {% endfor %}
         </div>
     </div> {% endcomment %}
+    <div class="mb-3 page-banner w-100">
+        <h3 class="banner-title">PROGRAMS</h3>
+    </div>
 
     <div class="bg-light w-100 min-100">
-        <div class="my-5 p-5">
-            <h3 class="res-title">Available Scholarship Programs</h3>
+        <div class="p-5">
                 <div class="bg-white w-100">
                     {% for program in program_list %}
                         {% if program.id not in applied_programs %}   
