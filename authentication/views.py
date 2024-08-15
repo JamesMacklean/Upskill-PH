@@ -64,7 +64,8 @@ def home(request):
     """"""
     template_name = "home/courses.html"
     context = {}
-
+    applied_programs = []
+    
     ########## LOGIN REQUIRED ##########
     # try:
     #     user_token = request.session['user_token']
@@ -76,8 +77,21 @@ def home(request):
     ########## LOGIN REQUIRED ##########
     
     user_token = request.session['user_token']
+    scholarships = user_programs(user_token)
+            
+    if scholarships: 
+        try:  
+            for data in scholarships:
+                program_id = data['program_id']
+                applied_programs.append(program_id)
+            
+        except Exception as e:
+            print(str(e))
+    
     # Fetch course data from the API
     context['program_list'] = get_programs(user_token,6,None)
+    context['scholarships'] = scholarships
+    context['applied_programs'] = applied_programs
     # context['courses'] = get_courses(request, "static_templates/privacy.html")
     return render(request,template_name, context)
     
@@ -209,17 +223,20 @@ def signup(request):
                     # 'domain': domain,
                     
                 })
-                send_mail(
-                    'Title', 
-                    'Content of the Message', 
-                    settings.EMAIL_HOST_USER, 
-                    ########## ORIGINAL CODE ##########
-                    [email], 
-                    ########## FOR TEST CODE ##########
-                    # [TEST_EMAIL_RECEIVER],
-                    html_message=html,
-                    fail_silently=False
-                )
+                try:
+                    send_mail(
+                        'Title', 
+                        'Content of the Message', 
+                        settings.EMAIL_HOST_USER, 
+                        ########## ORIGINAL CODE ##########
+                        # [email], 
+                        ########## FOR TEST CODE ##########
+                        [TEST_EMAIL_RECEIVER],
+                        html_message=html,
+                        fail_silently=False
+                    )
+                except Exception as e:
+                    print("Failed to send email:", str(e))
                 ############################# FOR MAIL ##############################
             
             messages.info(request, response_message)
