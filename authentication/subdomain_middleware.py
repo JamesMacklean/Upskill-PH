@@ -52,7 +52,7 @@ class SubdomainMiddleware(MiddlewareMixin):
             try:
                 # KUNG AUTHENTICATED PERO SA SIGNIN GUSTO PUMUNTA, DALHIN SA HOME
                 user_token = request.session['user_token']
-                print(expires)
+                expires = request.session['expires']
                 current_time = int(time.time())  # Get the current time in seconds since the epoch (UNIX time)
                 if current_time >= expires:
                     # The session has expired, sign out the user
