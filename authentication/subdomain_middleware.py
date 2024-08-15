@@ -60,6 +60,8 @@ class SubdomainMiddleware(MiddlewareMixin):
                 
                 if request.path in accounts_redirect_paths or any(request.path.startswith(prefix) for prefix in accounts_redirect_prefixes):
                     return redirect('home')
+                else:
+                    return redirect(f'{settings.DOMAIN}{request.path}')
             except KeyError:
                 # KUNG HINDI SA SIGNIN PUPUNTA, DALHIN SA WELCOME
                 if request.path not in accounts_redirect_paths and not any(request.path.startswith(prefix) for prefix in accounts_redirect_prefixes):
