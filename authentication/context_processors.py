@@ -34,6 +34,6 @@ def global_context(request):
         context['user_date_joined'] = date_joined_session
         
     except Exception as e:
-        print(str(e))
+        print(str(e), flush=True)
     
     return context

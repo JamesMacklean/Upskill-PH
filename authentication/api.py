@@ -47,7 +47,7 @@ def user_details(bearer_token):
                         context[key] = data.get(key)
                         
         except Exception as e:
-            print(str(e))
+            print(str(e), flush=True)
             
     return context
 
@@ -74,7 +74,7 @@ def user_profile(bearer_token):
                         context[key] = data.get(key)
                         
         except Exception as e:
-            print(str(e))
+            print(str(e), flush=True)
             
     return context
 
@@ -94,7 +94,7 @@ def user_programs(bearer_token):
             for data in response_dict['data']:
                 program_list.append(data)
         except Exception as e:
-            print(str(e))
+            print(str(e), flush=True)
             
     return program_list
 
@@ -114,7 +114,7 @@ def user_partners(bearer_token):
             for data in response_dict['data']:
                 partner_list.append(data)
         except Exception as e:
-            print(str(e))
+            print(str(e), flush=True)
             
     return partner_list
 
@@ -141,7 +141,7 @@ def user_employment(bearer_token):
                         context[key] = data.get(key)
                         
         except Exception as e:
-            print(str(e))
+            print(str(e), flush=True)
             
     return context
 
@@ -168,7 +168,7 @@ def user_education(bearer_token):
                         context[key] = data.get(key)
                         
         except Exception as e:
-            print(str(e))
+            print(str(e), flush=True)
     
     return context
 
@@ -194,7 +194,7 @@ def get_user_details(bearer_token, user_id, endpoint):
                         context[key] = data.get(key)
                         
         except Exception as e:
-            print(str(e))
+            print(str(e), flush=True)
     
     return context
 
@@ -218,7 +218,7 @@ def users_list(bearer_token, user_id=None, endpoint=None):
             for data in response_dict['data']:
                 users.append(data)
         except Exception as e:
-            print(str(e))
+            print(str(e), flush=True)
             
     return users
 
@@ -239,7 +239,7 @@ def get_programs(bearer_token, partner_id,program_id):
                 for data in response_dict['data']:
                     program_list.append(data)
             except Exception as e:
-                print(str(e))
+                print(str(e), flush=True)
                               
     else:
         response = requests.request("GET", os.path.join(API_PARTNER_URL, str(partner_id)+"/programs"), headers=headers, data=payload)
@@ -250,7 +250,7 @@ def get_programs(bearer_token, partner_id,program_id):
                 for data in response_dict['data']:
                     program_list.append(data)
             except Exception as e:
-                print(str(e))
+                print(str(e), flush=True)
 
     return program_list
 
@@ -270,7 +270,7 @@ def get_program_through_slug(bearer_token, slug):
             for data in response_dict['data']:
                 program_list.append(data)
         except Exception as e:
-            print(str(e))
+            print(str(e), flush=True)
 
     return program_list
 
@@ -291,7 +291,7 @@ def get_program_through_slug(bearer_token, slug):
 #             for data in response_dict['elements']:
 #                 program_list.append(data)
 #         except Exception as e:
-#             print(str(e))
+#             print(str(e), flush=True)
 
 #     return program_list
 
@@ -312,7 +312,7 @@ def get_applicants(bearer_token, partner_id, program_id, status):
                 for data in response_dict['data']:
                     applicants_list.append(data)
             except Exception as e:
-                print(str(e))
+                print(str(e), flush=True)
                 
     else:
         response = requests.request("GET", os.path.join(API_PARTNER_URL,str(partner_id)+"/scholarship/"+str(program_id)), headers=headers, data=payload)
@@ -323,7 +323,7 @@ def get_applicants(bearer_token, partner_id, program_id, status):
                 for data in response_dict['data']:
                     applicants_list.append(data)
             except Exception as e:
-                print(str(e))
+                print(str(e), flush=True)
                 
     return applicants_list
 
@@ -346,7 +346,7 @@ def license_code(bearer_token,code):
                 license_codes.append(data)
                         
         except Exception as e:
-            print(str(e))
+            print(str(e), flush=True)
             
     # return context
     return license_codes
@@ -462,7 +462,7 @@ def update_profile (bearer_token, photo, first_name, last_name, about, country, 
                         context[key] = data.get(key)
                         
         except Exception as e:
-            print(str(e))
+            print(str(e), flush=True)
             
     return context, response_message
 
@@ -503,7 +503,7 @@ def update_employment (bearer_token, employ_status, industry, employer, occupati
                         context[key] = data.get(key)
                         
         except Exception as e:
-            print(str(e))
+            print(str(e), flush=True)
 
     return context, response_message
 
@@ -543,7 +543,7 @@ def update_education (bearer_token, degree, school, study, date_now, privacy):
                         context[key] = data.get(key)
                         
         except Exception as e:
-            print(str(e))
+            print(str(e), flush=True)
 
     return context, response_message
 
@@ -590,7 +590,7 @@ def update_program (bearer_token, program_id, name, description, partner_id, log
                         context[key] = data.get(key)
                         
         except Exception as e:
-            print(str(e))
+            print(str(e), flush=True)
 
     return context, response_message
 
@@ -669,10 +669,8 @@ def verify(user_hash):
     
     try:
         response_dict = response.json()
-    except ValueError:
-        # Handle the case where the response is not JSON
-        print("Response is not valid JSON")
-        return '', 'Invalid response format'
+    except json.JSONDecodeError:
+        return '', '', '', 'Invalid response format'
     
     if 'data' in response_dict:
         for data in response_dict['data']:
@@ -691,14 +689,18 @@ def get_courses():
     response = requests.get(COURSEBANK_COURSES_URL)
     
     if response.status_code == 200:
-        courses_data = response.json()
+        
+        try:
+            courses_data = response.json()
+        except json.JSONDecodeError:
+            return '', '', '', 'Invalid response format'
         
         if 'results' in courses_data:
             try:
                 for data in courses_data['results']:
                     courses.append(data)
             except Exception as e:
-                print(str(e))
+                print(str(e), flush=True)
     
     return courses
 
@@ -708,14 +710,17 @@ def get_coursebank_users():
     response = requests.get(COURSEBANK_USERS_URL)
     
     if response.status_code == 200:
-        user_data = response.json()
+        try:
+            user_data = response.json()
+        except json.JSONDecodeError:
+            return '', '', '', 'Invalid response format'
         
         if 'results' in user_data:
             try:
                 for data in user_data['results']:
                     users.append(data)
             except Exception as e:
-                print(str(e))
+                print(str(e), flush=True)
     
     return users
 
@@ -760,9 +765,6 @@ def enroll_program(bearer_token, program_id):
         response_message = "License Code Verified!"
     else:
         response_message = response_dict.get("error")
-    print("SA API 'TO")
-    print(response)
-    print(response_message)
     return response_message
 
 # GET INITIAL CODE

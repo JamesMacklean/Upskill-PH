@@ -91,7 +91,7 @@ class SubdomainMiddleware(MiddlewareMixin):
         """
         # Print cookies
         for key, value in request.COOKIES.items():
-            print(f'{key}: {value}')
+            print(f'{key}: {value}', flush=True)
 
         # Clear sessions
         try:
@@ -99,9 +99,9 @@ class SubdomainMiddleware(MiddlewareMixin):
                 del request.session[key]
             request.session.modified = True
         except KeyError as e:
-            print(str(e))
+            print(str(e), flush=True)
         
         # Save the original URL and redirect to signin
         request.session['original_url'] = request.get_full_path()
-        print(f"original_url: {request.session['original_url']}")
+        print(f"original_url: {request.session['original_url']}", flush=True)
         return HttpResponseRedirect(f'{redirect_domain}{reverse("signin")}')

@@ -41,7 +41,7 @@ class SessionChecker(APIView):
                             request.session.modified = True
                 # DISPLAY SESSION ITEMS
                 for key, value in request.session.items():
-                    print('{}: {}'.format(key, value))    
+                    print('{}: {}'.format(key, value), flush=True)    
                 return Response(payload)      
                 
             except jwt.ExpiredSignatureError:
@@ -86,7 +86,7 @@ def home(request):
                 applied_programs.append(program_id)
             
         except Exception as e:
-            print(str(e))
+            print(str(e), flush=True)
     
     # Fetch course data from the API
     context['program_list'] = get_programs(user_token,6,None)
@@ -162,24 +162,23 @@ def verify_account(request, user_hash):
         email, response_message = verify(user_hash)
                 
         if email:
-            print ("SUCCESS:", response_message)
-            print(response_message)
+            print ("SUCCESS:", response_message, flush=True)
             
             try:
                 original_url = request.session['original_url']
             except Exception as e:
-                print(str(e))
+                print(str(e), flush=True)
                 original_url = ""
                 
             context['original_url'] = original_url
             
             return render(request, template_successful, context)                
         else:
-            print ("ERROR:", response_message)
+            print ("ERROR:", response_message, flush=True)
             return render(request, template_failed, context) 
         
     except Exception as e:
-        print(str(e))
+        print(str(e), flush=True)
         return render(request, template_failed, context)
     
 def signup(request):
@@ -198,7 +197,7 @@ def signup(request):
             try:
                 original_url = request.session['original_url']
             except Exception as e:
-                print(str(e))
+                print(str(e), flush=True)
                 original_url = ""
 
             if user_hash:
@@ -208,7 +207,7 @@ def signup(request):
                 # request.session['user_hash'] = user_hash
                 # request.session.modified = True
 
-                print(email, password, user_hash, redirect_url, original_url)
+                print(f'NEW ACCOUNT DETAILS: {email, password, user_hash, redirect_url, original_url}', flush=True)
                 
                 ############################# FOR MAIL ##############################
                 html = render_to_string('emails/email_verification.html', {
@@ -236,13 +235,13 @@ def signup(request):
                         fail_silently=False
                     )
                 except Exception as e:
-                    print("Failed to send email:", str(e))
+                    print("Failed to send email:", str(e), flush=True)
                 ############################# FOR MAIL ##############################
             
             messages.info(request, response_message)
             
     except Exception as e:
-        print(str(e))
+        print(str(e), flush=True)
     
     return render(request, template_name, context)
 
@@ -258,7 +257,7 @@ def signin(request):
         user_token, expires, redirect_url, response_message = login_account(email, password)
         
         #### MODAL RESPONSE KUNG NAGWORK BA ANG SIGN IN
-        print(response_message)
+        print(f'SIGN IN: {response_message}', flush=True)
         
         if user_token:            
             scholarships = user_programs(user_token) 
@@ -281,7 +280,7 @@ def signin(request):
                             request.session.modified = True
                 # PRINT SESSION ITEMS
                 for key, value in request.session.items():
-                    print('{}: {}'.format(key, value))
+                    print('{}: {}'.format(key, value), flush=True)
                                         
             except jwt.ExpiredSignatureError:
                 raise Http404
@@ -293,7 +292,7 @@ def signin(request):
             # CHECK IF THE REQUEST IS REDIRECTION
             try:
                 next_page = request.session.get('original_url')
-                print(f"next_page:{next_page}")
+                print(f"next_page:{next_page}", flush=True)
             except:
                 next_page = ""
                   
@@ -306,13 +305,13 @@ def signin(request):
                     domain = f'http://{request.get_host()}'
                     response = redirect(f'{domain}{next_page}')
                 except Exception as e:
-                    print(str(e))
+                    print(str(e), flush=True)
             
             else:
                 response = redirect('home')
             
             # Set cookies
-            print("SETTING COOKIES...") 
+            print("SETTING COOKIES...", flush=True) 
             # response.set_cookie('cookie_name', 'cookie_value')
             response.set_cookie('_ups_aut', user_token, expires=expires, samesite='None', secure=True)
 
@@ -324,7 +323,7 @@ def signin(request):
 
         else:
             # LAGYAN ITO NG MESSAGE BOX NA NAGSASABI NG ERROR MESSAGE
-            print ("ERROR:", response_message)
+            print ("SIGN IN ERROR:", response_message, flush=True)
             context['response_message'] = response_message
             return render(request, template_name, context)
 
@@ -333,7 +332,7 @@ def signin(request):
 def signout(request):   
     # PRINT COOKIES
     for key, value in request.COOKIES.items():
-        print(f'{key}: {value}')
+        print(f'{key}: {value}', flush=True)
         
     # CLEAR SESSIONS
     try:   
@@ -341,7 +340,7 @@ def signout(request):
             del request.session[key]
             request.session.modified = True
     except KeyError as e:
-        print(str(e))
+        print(str(e), flush=True)
     
     response = HttpResponseRedirect(reverse('signin'))
 
@@ -373,7 +372,7 @@ def applied_programs(request):
                 applied_programs.append(program_id)
             
         except Exception as e:
-            print(str(e))       
+            print(str(e), flush=True)       
 
     # NAKADEFAULT MUNA ITO SA 2 SINCE DICT PA LANG ANG MAY PROGRAMS
     context['program_list'] = get_programs(user_token,6,None)
@@ -606,7 +605,7 @@ def profile(request):
                 applied_programs.append(program_id)
             
         except Exception as e:
-            print(str(e))       
+            print(str(e), flush=True)       
 
     # NAKADEFAULT MUNA ITO SA 6 SINCE DICT PA LANG ANG MAY PROGRAMS
     context['program_list'] = get_programs(user_token,6,None)
@@ -665,9 +664,9 @@ def edit_profile(request):
         context['education'] = education_update
 
         #### MODAL RESPONSE KUNG NAGWORK BA ANG UPDATE NG PROFILE, EMPLOYMENT AT EDUCATION
-        print("PROFILE:",profile_response)
-        print("EMPLOYMENT:",employment_response)
-        print("EDUCATION:",education_response)
+        print("PROFILE:",profile_response, flush=True)
+        print("EMPLOYMENT:",employment_response, flush=True)
+        print("EDUCATION:",education_response, flush=True)
         
         return redirect("profile")
 
@@ -747,7 +746,7 @@ def application(request, partner_id, program_id):
             response_message = update_applicant(user_token, user_id, request_program_id, 3)
 
         #### MODAL RESPONSE KUNG NAGWORK BA ANG APPLICATION
-        print (response_message)
+        print (f'APPLICATION: {response_message}', flush=True)
             
 
     applicants = get_applicants(user_token,partner_id,program_id,None)
@@ -864,14 +863,14 @@ def account(request):
             response = change_password(user_token, current_pass, new_pass)
             #### MODAL RESPONSE KUNG NAGWORK BA ANG CHANGE PASSWORD
             if response == 'Successfully Updated Password!':
-                print (response)
+                print (response, flush=True)
                 return redirect ('home')
             else:
-                print (response)
+                print (response, flush=True)
                 return redirect ('account')
         else:
             #### MODAL RESPONSE KUNG NAGWORK BA ANG CHANGE PASSWORD
-            print("password does not match")
+            print("password does not match", flush=True)
             return redirect ('account')
     
     return render(request, template_name)
