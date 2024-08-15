@@ -27,8 +27,8 @@ EMAIL_HOST = 'smtp.hostinger.com'
 EMAIL_HOST_USER = 'mailer@tmtg-clone.click' 
 EMAIL_HOST_PASSWORD = 'hnVw35UEvflyXYPzJI7IWk2AmZkIpL8-'
 EMAIL_PORT = 465
-EMAIL_USE_TLS = True
-EMAIL_USE_SSL = False
+EMAIL_USE_TLS = False
+EMAIL_USE_SSL = True
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
