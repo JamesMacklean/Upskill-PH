@@ -238,6 +238,7 @@ def signup(request):
                     print("Failed to send email:", str(e), flush=True)
                 ############################# FOR MAIL ##############################
             
+            print(f'SIGN UP: {response_message}', flush=True)
             messages.info(request, response_message)
             
     except Exception as e:
