@@ -239,6 +239,7 @@ def signup(request):
                 ############################# FOR MAIL ##############################
             
             print(f'SIGN UP: {response_message}', flush=True)
+            print(f'verification email sent to {TEST_EMAIL_RECEIVER}', flush=True)
             messages.info(request, response_message)
             
     except Exception as e:
