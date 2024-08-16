@@ -234,12 +234,13 @@ def signup(request):
                         html_message=html,
                         fail_silently=False
                     )
+                    print(f'Verification email sent to {TEST_EMAIL_RECEIVER}', flush=True)
                 except Exception as e:
                     print("Failed to send email:", str(e), flush=True)
                 ############################# FOR MAIL ##############################
             
             print(f'SIGN UP: {response_message}', flush=True)
-            print(f'verification email sent to {TEST_EMAIL_RECEIVER}', flush=True)
+            
             messages.info(request, response_message)
             
     except Exception as e:
