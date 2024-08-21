@@ -31,7 +31,6 @@ class SubdomainMiddleware(MiddlewareMixin):
                 current_time = int(time.time())  # Get the current time in seconds since the epoch (UNIX time)
                 if current_time >= expires:
                     # The session has expired, sign out the user
-                    print("EXPIRED ANG TOKEN MO SA WELCOME", flush=True)
                     return self.signout(request, f'http://{settings.ACCOUNTS_DOMAIN}')
                 
                 if request.path in accounts_redirect_paths or any(request.path.startswith(prefix) for prefix in accounts_redirect_prefixes):
@@ -70,6 +69,7 @@ class SubdomainMiddleware(MiddlewareMixin):
                 if request.path not in accounts_redirect_paths and not any(request.path.startswith(prefix) for prefix in accounts_redirect_prefixes):
                     print("WALANG GANIYANG URL SA ACCOUNTS BOI", flush=True)
                     print(request.path, flush=True)
+                    print(reverse('signup'),flush=True)
                     return redirect(f'http://{settings.DOMAIN}{request.path}')
         
         # FOR TEST CODE
