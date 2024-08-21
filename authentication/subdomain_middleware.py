@@ -13,9 +13,10 @@ class SubdomainMiddleware(MiddlewareMixin):
         host = request.get_host()
         subdomain = host.split('.')[0]
         
+        path = request.path.rstrip('/')
         accounts_redirect_paths = [
-            reverse('signup'), 
-            reverse('signin')
+            reverse('signup').rstrip('/'), 
+            reverse('signin').rstrip('/')
         ]
         accounts_redirect_prefixes = [
             '/success/',
@@ -33,15 +34,15 @@ class SubdomainMiddleware(MiddlewareMixin):
                     # The session has expired, sign out the user
                     return self.signout(request, f'http://{settings.ACCOUNTS_DOMAIN}')
                 
-                if request.path in accounts_redirect_paths or any(request.path.startswith(prefix) for prefix in accounts_redirect_prefixes):
+                if path in accounts_redirect_paths or any(path.startswith(prefix) for prefix in accounts_redirect_prefixes):
                     return redirect('home')
             except KeyError:
                 # KUNG HINDI AUTHENTICATED PERO SA SIGNIN GUSTO PUMUNTA, DALHIN SA ACCOUNTS
-                if request.path in accounts_redirect_paths or any(request.path.startswith(prefix) for prefix in accounts_redirect_prefixes):
-                    return redirect(f'http://{settings.ACCOUNTS_DOMAIN}{request.path}')
+                if path in accounts_redirect_paths or any(path.startswith(prefix) for prefix in accounts_redirect_prefixes):
+                    return redirect(f'http://{settings.ACCOUNTS_DOMAIN}{path}')
                 # KUNG HINDI AUTHENTICATED AT PUMUNTA SA IBANG PAGE, ISAVE ANG URL, DALHIN SA SIGNIN
                 else:
-                    if request.path in accounts_redirect_paths or any(request.path.startswith(prefix) for prefix in accounts_redirect_prefixes):
+                    if path in accounts_redirect_paths or any(path.startswith(prefix) for prefix in accounts_redirect_prefixes):
                         return redirect(f'http://{settings.ACCOUNTS_DOMAIN}{request.path}')
                     else:
                         return self.signout(request, f'http://{settings.ACCOUNTS_DOMAIN}')
@@ -57,19 +58,13 @@ class SubdomainMiddleware(MiddlewareMixin):
                     # The session has expired, sign out the user
                     return self.signout(request, f'http://{settings.ACCOUNTS_DOMAIN}')
                 
-                # if request.path == reverse('signup'):
-                #     return None
-                
-                if request.path in accounts_redirect_paths or any(request.path.startswith(prefix) for prefix in accounts_redirect_prefixes):
+                if path in accounts_redirect_paths or any(path.startswith(prefix) for prefix in accounts_redirect_prefixes):
                     return redirect('home')
                 else:
                     return redirect(f'http://{settings.DOMAIN}{request.path}')
             except KeyError:
                 # KUNG HINDI SA SIGNIN PUPUNTA, DALHIN SA WELCOME
-                if request.path not in accounts_redirect_paths and not any(request.path.startswith(prefix) for prefix in accounts_redirect_prefixes):
-                    print("WALANG GANIYANG URL SA ACCOUNTS BOI", flush=True)
-                    print(request.path, flush=True)
-                    print(reverse('signup'),flush=True)
+                if path not in accounts_redirect_paths and not any(path.startswith(prefix) for prefix in accounts_redirect_prefixes):
                     return redirect(f'http://{settings.DOMAIN}{request.path}')
         
         # FOR TEST CODE
@@ -84,10 +79,10 @@ class SubdomainMiddleware(MiddlewareMixin):
                     # The session has expired, sign out the user
                     return self.signout(request, f'http://{host}')
                     
-                if request.path in accounts_redirect_paths or any(request.path.startswith(prefix) for prefix in accounts_redirect_prefixes):
+                if path in accounts_redirect_paths or any(path.startswith(prefix) for prefix in accounts_redirect_prefixes):
                     return redirect ('home')
             except KeyError:
-                if request.path not in accounts_redirect_paths and not any(request.path.startswith(prefix) for prefix in accounts_redirect_prefixes):
+                if path not in accounts_redirect_paths and not any(path.startswith(prefix) for prefix in accounts_redirect_prefixes):
                     return self.signout(request, f'http://{host}')
             
         return None
