@@ -65,6 +65,7 @@ class SubdomainMiddleware(MiddlewareMixin):
                 # KUNG HINDI SA SIGNIN PUPUNTA, DALHIN SA WELCOME
                 if request.path not in accounts_redirect_paths and not any(request.path.startswith(prefix) for prefix in accounts_redirect_prefixes):
                     return redirect(f'http://{settings.DOMAIN}{request.path}')
+                return redirect(f'http://{settings.ACCOUNTS_DOMAIN}{request.path}')
         
         # FOR TEST CODE
         # FOR http://127.0.0.1:8000
