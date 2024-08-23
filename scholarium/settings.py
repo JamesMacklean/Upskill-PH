@@ -156,6 +156,7 @@ CORS_ALLOW_CREDENTIALS = True
 SESSION_SAVE_EVERY_REQUEST = True
 
 ########## ORIGINAL CODE ##########
+# comment these to run in DEV MODE
 SESSION_COOKIE_DOMAIN = '.upskillph.org'
 SESSION_COOKIE_SAMESITE = 'None'
 SESSION_COOKIE_SECURE = True
