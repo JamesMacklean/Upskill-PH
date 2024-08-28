@@ -43,25 +43,26 @@
                     {% for applicant in scholarship_applicants %}
                         <tr>
                             <td>
-                                <input class="checkbox" type="checkbox" name="user_id[]" value="{{ applicant.user_id }}">
+                                <input class="checkbox" type="checkbox" name="user_id[]" value="{{ applicant.user_id }}" id="user_id_{{applicant.user_id}}">
                             </td>
                             <td>
-                                <div class="action-name">
-                                <strong>{{applicant.first_name|title}} {{applicant.last_name|title}}</strong>
-                                <br>
-                                {{applicant.email}} • 
-                                {{applicant.occupation}} • 
-                                {{applicant.degree}} • 
+                                <label for="user_id_{{applicant.user_id}}" class="action-name">
+                                <strong>{{applicant.first_name|title}} {{applicant.last_name|title}}</strong> 
+                                &nbsp;&nbsp;
                                     {% if applicant.status == 0 %}
-                                    Pending
-                                    {% elif applicant.status == 1 %}
-                                    Approved
-                                    {% elif applicant.status == 2 %}
-                                    Waitlisted
-                                    {% elif applicant.status == 3 %}
-                                    Rejected
+                                        Pending
+                                        {% elif applicant.status == 1 %}
+                                        Approved
+                                        {% elif applicant.status == 2 %}
+                                        Waitlisted
+                                        {% elif applicant.status == 3 %}
+                                        Rejected
                                     {% endif %}
-                                </div>
+                                <br>
+                                {{ applicant.email }}{% if applicant.email and applicant.occupation or applicant.degree %} • {% endif %}
+                                {{ applicant.occupation }}{% if applicant.occupation and applicant.degree %} • {% endif %}
+                                {{ applicant.degree }}
+                                </label>
                                 <input type="hidden" name="user_id" value="{{ applicant.user_id }}">
                             </td>
                         </tr>
