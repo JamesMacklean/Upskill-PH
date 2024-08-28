@@ -718,20 +718,25 @@ def partner(request):
     
     return render(request, template_name, context)
 
-def application(request, partner_id, program_id):
+def application(request, program_slug):
     """"""
     template_name = "scholar_application.html"
     context = {}
     scholarship_applicants = []
-    monitored_partner = []
-    monitored_program = []
         
     user_token = request.session['user_token']
     partners = user_partners(user_token)
     
-    for data in partners:
-            monitored_partner.append(data['partner_id'])
-            monitored_program.append(data['program_id'])
+    # Get the program using the slug
+    program_data = get_program_through_slug(user_token, program_slug)
+    if not program_data:
+        raise Http404
+    
+    partner_id = program_data[0]['partner_id']
+    program_id = program_data[0]['id']
+    
+    monitored_partner = [data['partner_id'] for data in partners]
+    monitored_program = [data['program_id'] for data in partners]
             
     if partner_id not in monitored_partner:
         raise Http404
@@ -739,25 +744,31 @@ def application(request, partner_id, program_id):
         raise Http404
 
     if request.method == "POST":
-        user_id = request.POST.get("user_id")
-        request_program_id = request.POST.get("program_id")
-        
-        if 'approve' in request.POST:
-            response_message = update_applicant(user_token, user_id, request_program_id, 1)
-        elif 'waitlist' in request.POST:
-            response_message = update_applicant(user_token, user_id, request_program_id, 2)
-        elif 'reject' in request.POST:
-            response_message = update_applicant(user_token, user_id, request_program_id, 3)
+        user_ids = request.POST.getlist("user_id[]")
 
-        #### MODAL RESPONSE KUNG NAGWORK BA ANG APPLICATION
-        print (f'APPLICATION: {response_message}', flush=True)
+        response_message = ''
+
+        for user_id in user_ids:
+            if 'approve' in request.POST:
+                print("APPROVE attempt", flush=True)
+                response_message = update_applicant(user_token, int(user_id), int(partner_id), int(program_id), 1)
+            elif 'waitlist' in request.POST:
+                print("WAITLIST attempt", flush=True)
+                response_message = update_applicant(user_token, int(user_id), int(partner_id), int(program_id), 2)
+            elif 'reject' in request.POST:
+                print("REJECT attempt", flush=True)
+                response_message = update_applicant(user_token, int(user_id), int(partner_id), int(program_id), 3)
+            elif 'clear' in request.POST:
+                print("CLEAR attempt", flush=True)
+                response_message = update_applicant(user_token, int(user_id), int(partner_id), int(program_id), 0)
+
+            print(f'APPLICATION: {response_message} for user_id: {user_id}', flush=True)
             
-
     applicants = get_applicants(user_token,partner_id,program_id,None)
     for applicant in applicants:
         scholarship_applicants.append(applicant)
 
-    context['programs'] = get_programs(user_token,partner_id,program_id)
+    context['programs'] = program_data
     context['scholarship_applicants'] = scholarship_applicants
     
     return render(request, template_name, context)
@@ -874,7 +885,7 @@ def account(request):
                 return redirect ('account')
         else:
             #### MODAL RESPONSE KUNG NAGWORK BA ANG CHANGE PASSWORD
-            print("password does not match", flush=True)
+            print("Password does not match", flush=True)
             return redirect ('account')
     
     return render(request, template_name)

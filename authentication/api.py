@@ -635,10 +635,11 @@ def change_password(bearer_token, old_password, new_password):
     return response_message
 
 # PUT https://scholarium.tmtg-clone.click/v1/partner/scholarship/[program_id]/[status]
-def update_applicant(bearer_token, user_id, program_id, status):  
+def update_applicant(bearer_token, user_id, partner_id, program_id, status):  
     payload = json.dumps({
     "data": {
         "user_id": user_id,
+        "partner_id": partner_id,
         "program_id": program_id,
         "status": status
     }

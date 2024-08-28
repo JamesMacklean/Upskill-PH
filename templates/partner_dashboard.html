@@ -161,38 +161,36 @@
         <div class="row pt-3 gutter-2rem">
             {% for program in program_list %}
             <div class="col-12 mb-4">
-                <a href="{% url 'application' program.partner_id program.id %}"></a>
-                <div class="course-item course-item-row"><a href="{% url 'application' program.partner_id program.id %}">
-                    {% if program.image %}
-                    <img class="img-item" height="100%" width="320px" src="{{program.image}}">
-                    {% else %}
-                    <img class="img-item" height="100%" width="320px" src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/mspiral_djph_model-768x417.jpg">
-                    {% endif %} 
+                <a href="{% url 'application' program.slug %}"></a>
+                <div class="course-item course-item-row">
+                    <a href="{% url 'application' program.slug %}">
+                        {% if program.image %}
+                        <img class="img-item" height="100%" width="320px" src="{{program.image}}">
+                        {% else %}
+                        <img class="img-item" height="100%" width="320px" src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/mspiral_djph_model-768x417.jpg">
+                        {% endif %}
                     </a>
-                <div class="course-details-container w-100">
-                    <a href="{% url 'application' program.partner_id program.id %}">
-                    <p class="course-description mb-1 mt-2">
-                        {{program.name}}
-                    </p>
-                    <p class="text-dark mb-1">
-                        {{program.description}}
-                    </p>
-                    <div class="d-flex align-items-center pb-3">
-                        <img width="50px"src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/DICT-Logo-nobg.png">
-                        <img width="50px"src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/ILCDB+logo_2.png">
-                        <img width="50px"src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/coursera-social-logo-brand.png">
-                        <img width="50px"src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/logo-moocsx.png">
+                    <div class="course-details-container w-100">
+                        <a href="{% url 'application' program.slug %}">
+                            <p class="course-description mb-1 mt-2">
+                                {{program.name}}
+                            </p>
+                            <p class="text-dark mb-1">
+                                {{program.description}}
+                            </p>
+                            <div class="d-flex align-items-center pb-3">
+                                <img width="50px" src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/DICT-Logo-nobg.png">
+                                <img width="50px" src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/ILCDB+logo_2.png">
+                                <img width="50px" src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/coursera-social-logo-brand.png">
+                                <img width="50px" src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/logo-moocsx.png">
+                            </div>
+                        </a>
                     </div>
-                    </a>
-                    </div>
+                </div>
             </div>
-          </div>  
-          {% endfor %}          
-          </div>
+            {% endfor %}
         </div>
-
       </section>
     </div>
   </div>
-
 {% endblock %}

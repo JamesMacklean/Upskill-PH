@@ -39,34 +39,37 @@
                     </td>
                 </tr>
                 <form action="" class="scholarship-applications" id="apply" method="POST">
-                {% for applicant in scholarship_applicants %}
-                    <tr>
-                        <td>
-                            <input class="checkbox" type="checkbox" name="applicant" id="applicant">
-                        </td>
-                        <td>
-                            <div class="action-name">
-                            <strong>{{applicant.first_name|title}} {{applicant.last_name|title}}</strong>
-                            <br>
-                            {{applicant.email}} • 
-                            {{applicant.occupation}} • 
-                            {{applicant.degree}} • 
-                                {% if applicant.status == 0 %}
-                                Pending
-                                {% elif applicant.status == 1 %}
-                                Approved
-                                {% elif applicant.status == 2 %}
-                                Waitlisted
-                                {% elif applicant.status == 3 %}
-                                Rejected
-                                {% endif %}
-                            </div>
-                        </td>
-                    </tr>
+                    {% csrf_token %}
+                    {% for applicant in scholarship_applicants %}
+                        <tr>
+                            <td>
+                                <input class="checkbox" type="checkbox" name="user_id[]" value="{{ applicant.user_id }}">
+                            </td>
+                            <td>
+                                <div class="action-name">
+                                <strong>{{applicant.first_name|title}} {{applicant.last_name|title}}</strong>
+                                <br>
+                                {{applicant.email}} • 
+                                {{applicant.occupation}} • 
+                                {{applicant.degree}} • 
+                                    {% if applicant.status == 0 %}
+                                    Pending
+                                    {% elif applicant.status == 1 %}
+                                    Approved
+                                    {% elif applicant.status == 2 %}
+                                    Waitlisted
+                                    {% elif applicant.status == 3 %}
+                                    Rejected
+                                    {% endif %}
+                                </div>
+                                <input type="hidden" name="user_id" value="{{ applicant.user_id }}">
+                            </td>
+                        </tr>
                     {% endfor %}
-                    <input class="btn btn-primary mx-1" type="submit" value="Approve">
-                    <input class="btn btn-primary mx-1" type="submit" value="Waitlist">
-                    <input class="btn btn-primary mx-1" type="submit" value="Reject">
+                    <button class="btn btn-primary mx-1" type="submit" name="approve" value="Approve">Approve</button>
+                    <button class="btn btn-primary mx-1" type="submit" name="waitlist" value="Waitlist">Waitlist</button>
+                    <button class="btn btn-primary mx-1" type="submit" name="reject" value="Reject">Reject</button>
+                    <button class="btn btn-primary mx-1" type="submit" name="clear" value="Clear">Clear</button>
                 </form>
             </table>
         </div>
