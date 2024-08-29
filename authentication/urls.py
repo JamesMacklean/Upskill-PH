@@ -16,6 +16,7 @@ urlpatterns = [
     path('dashboard/', views.applied_programs, name="dashboard"),
     path('partner/', views.partner, name="partner"),
     path('partner/<slug:program_slug>/application/', views.application, name="application"),
+    # path('partner/<slug:program_slug>/profile/', views.partner_profile, name="partner_profile"),
     path('profile/', views.profile, name="profile"),
     path('profile/edit/', views.edit_profile, name="edit"),
     path('program/<slug>/', views.program, name="program"),
