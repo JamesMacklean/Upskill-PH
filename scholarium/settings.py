@@ -39,7 +39,7 @@ SECRET_KEY = 'django-insecure-k(i3^c+t7zkamnk@nut1x_inn)p_^s)sfrq(o61=i@uu6@uv&6
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['139.59.116.183','127.0.0.1','welcome.upskillph.org', 'accounts.upskillph.org', 'lgu.upskillph.org', 'misamis-occidental.upskillph.org']
+ALLOWED_HOSTS = ['139.59.116.183','127.0.0.1','welcome.upskillph.org', 'accounts.upskillph.org', 'lgu.upskillph.org', 'misamisoccidental.upskillph.org']
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 # Application definition
