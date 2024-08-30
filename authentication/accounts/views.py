@@ -44,13 +44,13 @@ def verify_account(request, user_hash):
                 
         if email:
             print ("SUCCESS:", response_message, flush=True)
-            print (f'ORIGINAL URL: {original_url}', flush=True)
             try:
                 original_url = request.session['original_url']
             except Exception as e:
                 print(str(e), flush=True)
                 original_url = ""
-                
+            
+            print (f'ORIGINAL URL: {original_url}', flush=True)
             context['original_url'] = original_url
             
             return render(request, template_successful, context)                
