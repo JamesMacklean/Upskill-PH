@@ -3,6 +3,9 @@ from . import views
 from .views import SessionChecker
 from . import subdomain_middleware
 
+urlpatterns = [
+    path('',views.home, name="home"),
+]
 # URLs for 'accounts' subdomain
 accounts_urlpatterns = [
     path('signin/', views.signin, name="signin"),
