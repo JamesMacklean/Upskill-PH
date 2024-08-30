@@ -97,6 +97,7 @@ def signup(request):
                     'link': API_VERIFY_ACCOUNT_URL,
                     ########## ORIGINAL CODE ##########
                     'domain': f'{settings.DOMAIN}',
+                    'accounts_domain': f'{settings.ACCOUNTS_DOMAIN}',
                     ########## FOR TEST CODE ##########
                     # 'domain': domain,
                     
