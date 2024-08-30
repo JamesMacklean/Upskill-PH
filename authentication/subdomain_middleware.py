@@ -25,34 +25,37 @@ class SubdomainMiddleware(MiddlewareMixin):
 
         path = request.path.rstrip('/')
         
+        # Check for authentication before checking path validity
+        authentication_response = self.handle_authentication(request, subdomain, path)
+        if authentication_response:
+            return authentication_response
+        
         # Redirect or block access if the path does not match any of the subdomain-specific URLs
-        # if not any(path.startswith(p.pattern) for p in subdomain_urlpatterns):
-        #     return self.redirect_to_home_or_signout(request, subdomain)
+        if not any(path.startswith(p.pattern) for p in subdomain_urlpatterns):
+            return self.redirect_to_home_or_signout(request, subdomain)
 
         # Check for authentication if required by subdomain
-        if subdomain in ['welcome', 'accounts']:
-            return self.handle_authentication(request, subdomain, path)
+        # if subdomain in ['welcome', 'accounts']:
+        #     return self.handle_authentication(request, subdomain, path)
 
         return None
 
     def handle_authentication(self, request, subdomain, path):
         try:
-            user_token = request.session['user_token']
-            expires = request.session['expires']
+            user_token = request.session.get('user_token')
+            expires = request.session.get('expires', 0)
             current_time = int(time.time())
 
+            # Session expired, force signout
             if current_time >= expires:
                 return self.signout(request, f'http://{settings.ACCOUNTS_DOMAIN}')
 
-            if subdomain == 'accounts':
-                # Redirect authenticated users from accounts to home
-                if path in ['signin', 'signup', 'verify'] and user_token:
-                    return redirect('home')
-                else:
-                    return redirect(f'http://{settings.DOMAIN}{path}')
-
+            if subdomain == 'accounts' and user_token:
+                # If authenticated user tries to access accounts, redirect to the welcome home page
+                return redirect(f'http://{settings.DOMAIN}/')
             elif subdomain == 'welcome' and not user_token:
-                return self.signout(request, f'http://{settings.ACCOUNTS_DOMAIN}')
+                # If unauthenticated user tries to access welcome, redirect to accounts sign-in
+                return redirect(f'http://{settings.ACCOUNTS_DOMAIN}/signin/')
         except KeyError:
             if subdomain == 'welcome':
                 return self.signout(request, f'http://{settings.ACCOUNTS_DOMAIN}')
