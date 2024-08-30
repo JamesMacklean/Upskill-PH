@@ -56,21 +56,30 @@ class SubdomainMiddleware(MiddlewareMixin):
             if match:
                 print(f'MATCH! {match}', flush=True)
                 request.urlconf = accounts_urlconf
+                try:
+                    user_token = request.session['user_token']
+                    expires = request.session['expires']
+                    current_time = int(time.time())  
+                    if current_time >= expires:
+                        # The session has expired, sign out the user
+                        return self.signout(request, f'http://{settings.ACCOUNTS_DOMAIN}')
+                    return redirect(f'http://{settings.DOMAIN}')
+                except:
+                    print(f'ACCOUNTS: Unauthenticated.', flush=True)
             # KUNG HINDI PANG-ACCOUNTS
             else:
-                return self.signout(request, f'http://{settings.ACCOUNTS_DOMAIN}')
-            
-            try:
-                user_token = request.session['user_token']
-                expires = request.session['expires']
-                current_time = int(time.time())  
-                if current_time >= expires:
-                    # The session has expired, sign out the user
-                    return self.signout(request, f'http://{settings.ACCOUNTS_DOMAIN}')
-                print(f'ACCOUNTS: Authenticated. ibalik sa {request.path}', flush=True)
-                return redirect(f'http://{settings.DOMAIN}{request.path}')
-            except KeyError:
-                print(f'ACCOUNTS: Unauthenticated.', flush=True)
+                raise Http404  
+                # CHECK IF AUTHENTICATED          
+                # try:
+                #     user_token = request.session['user_token']
+                #     expires = request.session['expires']
+                #     current_time = int(time.time())  
+                #     if current_time >= expires:
+                #         # The session has expired, sign out the user
+                #         return self.signout(request, f'http://{settings.ACCOUNTS_DOMAIN}')
+                #     return redirect(f'http://{settings.DOMAIN}{request.path}')
+                # except KeyError:
+                    
             #     if path in accounts_redirect_paths or any(path.startswith(prefix) for prefix in accounts_redirect_prefixes):
             #         return redirect('home')
             #     else:
