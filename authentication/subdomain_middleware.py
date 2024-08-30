@@ -53,9 +53,6 @@ class SubdomainMiddleware(MiddlewareMixin):
             if subdomain == 'accounts' and user_token:
                 # If authenticated user tries to access accounts, redirect to the welcome home page
                 return redirect(f'http://{settings.DOMAIN}/')
-            elif subdomain == 'welcome' and not user_token:
-                # If unauthenticated user tries to access welcome, redirect to accounts sign-in
-                return redirect(f'http://{settings.ACCOUNTS_DOMAIN}/signin/')
         except KeyError:
             if subdomain == 'welcome':
                 return self.signout(request, f'http://{settings.ACCOUNTS_DOMAIN}')
@@ -64,7 +61,7 @@ class SubdomainMiddleware(MiddlewareMixin):
 
     def redirect_to_home_or_signout(self, request, subdomain):
         if subdomain == 'accounts':
-            return redirect(reverse('signin'))
+            pass
         return self.signout(request, f'http://{settings.ACCOUNTS_DOMAIN}')
 
     def signout(self, request, redirect_domain):
