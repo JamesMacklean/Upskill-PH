@@ -1,10 +1,12 @@
-from django.urls import reverse
+from django.urls import reverse, resolve, Resolver404
 from django.shortcuts import redirect
 from django.utils.deprecation import MiddlewareMixin
 from django.http import HttpResponseRedirect
 from scholarium import settings
 from scholarium.info import *
 import time
+from .urls import accounts_urlpatterns, welcome_urlpatterns
+
 
 class SubdomainMiddleware(MiddlewareMixin):
     API_SECRET_KEY = API_SECRET_KEY
@@ -40,29 +42,39 @@ class SubdomainMiddleware(MiddlewareMixin):
             if subdomain == 'accounts':
                 # Redirect authenticated users from accounts to home
                 print("AUTHENTICATED EH BA'T KA NASA ACCOUNTS? BALIK WELCOME", flush=True)
-                if path in [p.pattern for p in self.SUBDOMAIN_URL_PATTERNS['accounts']]:
+                if self.path_in_urlpatterns(path, self.SUBDOMAIN_URL_PATTERNS['accounts']):
                     return redirect(f'http://{settings.DOMAIN}{path}')
             elif subdomain == 'welcome':
                 # Redirect to the home page if the path is not in the welcome_urlpatterns
-                print("AUTHENTICATED", flush=True)
-                if not any(path == p.pattern for p in self.SUBDOMAIN_URL_PATTERNS['welcome']):
-                    print(f"PERO ANG PUPUNTAHANG {path} AY WALA SA WELCOME_URLPATTERNS", flush=True)
+                print(f"AUTHENTICATED PERO ANG PUPUNTAHANG {path} AY WALA SA WELCOME_URLPATTERNS", flush=True)
+                if not self.path_in_urlpatterns(path, self.SUBDOMAIN_URL_PATTERNS['welcome']):
                     return redirect(f'http://{settings.DOMAIN}')
         
         # ELSE HINDI AUTHENTICATED SI USER
         except KeyError:
             if subdomain == 'welcome':
                 print("HINDI KA AUTHENTICATED! BALIK ACCOUNTS", flush=True)
-                return self.signout(request, f'http://{settings.ACCOUNTS_DOMAIN}')
+                return self.signout(request, f'http://{settings.ACCOUNTS_DOMAIN}/signin')
             elif subdomain == 'accounts':
-                # Redirect to the home page if the path is not in the welcome_urlpatterns
-                print("HINDI KA AUTHENTICATED!")
-                if not any(path == p.pattern for p in self.SUBDOMAIN_URL_PATTERNS['accounts']):
-                    print(f"PERO ANG PUPUNTAHANG {path} AY WALA SA ACCOUNTS_URLPATTERNS", flush=True)
-                    return redirect(f'http://{settings.ACCOUNTS_DOMAIN}')
+                print(f"HINDI KA AUTHENTICATED! PERO ANG PUPUNTAHANG {path} AY WALA SA ACCOUNTS_URLPATTERNS", flush=True)
+                if not self.path_in_urlpatterns(path, self.SUBDOMAIN_URL_PATTERNS['accounts']):
+                    return redirect(f'http://{settings.ACCOUNTS_DOMAIN}/signin')
 
         return None
 
+    def path_in_urlpatterns(self, path, urlpatterns):
+        """
+        Check if the path matches any of the patterns in the given urlpatterns.
+        """
+        for pattern in urlpatterns:
+            try:
+                match = resolve(path)
+                if match:
+                    return True
+            except Resolver404:
+                continue
+        return False
+    
     def signout(self, request, redirect_domain):
         """
         Signs out the user by clearing session data and printing relevant information.
