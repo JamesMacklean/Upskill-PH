@@ -33,6 +33,7 @@ class SubdomainMiddleware(MiddlewareMixin):
             for resolver in [accounts_resolver, misocc_resolver]:
                 try:
                     resolver.resolve(request.path)
+                    print(f'RESOLVING! {resolver.resolve(request.path)}',flush=True)
                     raise Http404("Page not found.")
                 except Http404:
                     continue
