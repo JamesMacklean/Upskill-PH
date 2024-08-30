@@ -28,7 +28,9 @@ def success(request, user_hash):
     first_name = request.session.get('new_first_name')
     last_name = request.session.get('new_last_name')
     email = request.session.get('new_email')
-
+    
+    context['domain'] = settings.DOMAIN
+    context['accounts_domain'] = settings.ACCOUNTS_DOMAIN
     return render(request,template_name, context)
 
 def verify_account(request, user_hash):

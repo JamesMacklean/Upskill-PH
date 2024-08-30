@@ -30,7 +30,6 @@ class SubdomainMiddleware(MiddlewareMixin):
                     match = accounts_resolver.resolve(request.path)
                 except:
                     match = None
-                    
                 if match:
                     raise Http404("Page not found.")
                 
@@ -62,6 +61,8 @@ class SubdomainMiddleware(MiddlewareMixin):
                     user_token = request.session['user_token']
                     return redirect(f'http://{settings.DOMAIN}{request.path}')
                 except KeyError:
+                    if request.path=='':
+                        return self.signout(request, f'http://{settings.ACCOUNTS_DOMAIN}')
                     raise Http404("Page not found.")
         
         elif subdomain == 'misamis-occidental':
