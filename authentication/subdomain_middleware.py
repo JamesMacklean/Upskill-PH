@@ -24,62 +24,43 @@ class SubdomainMiddleware(MiddlewareMixin):
         ]
         
         if subdomain == 'welcome':
-            # Check if user is authenticated for other paths on the welcome subdomain
             try:
-                # KUNG AUTHENTICATED PERO SA SIGNIN GUSTO PUMUNTA, DALHIN SA HOME
                 user_token = request.session['user_token']
                 expires = request.session['expires']
-                current_time = int(time.time())  # Get the current time in seconds since the epoch (UNIX time)
+                current_time = int(time.time())  
                 if current_time >= expires:
                     # The session has expired, sign out the user
                     return self.signout(request, f'http://{settings.ACCOUNTS_DOMAIN}')
                 
-                if path in accounts_redirect_paths or any(path.startswith(prefix) for prefix in accounts_redirect_prefixes):
-                    return redirect('home')
+                # if path in accounts_redirect_paths or any(path.startswith(prefix) for prefix in accounts_redirect_prefixes):
+                #     return redirect('home')
             except KeyError:
-                # KUNG HINDI AUTHENTICATED PERO SA SIGNIN GUSTO PUMUNTA, DALHIN SA ACCOUNTS
-                if path in accounts_redirect_paths or any(path.startswith(prefix) for prefix in accounts_redirect_prefixes):
-                    return redirect(f'http://{settings.ACCOUNTS_DOMAIN}{path}')
-                # KUNG HINDI AUTHENTICATED AT PUMUNTA SA IBANG PAGE, ISAVE ANG URL, DALHIN SA SIGNIN
-                else:
-                    if path in accounts_redirect_paths or any(path.startswith(prefix) for prefix in accounts_redirect_prefixes):
-                        return redirect(f'http://{settings.ACCOUNTS_DOMAIN}{request.path}')
-                    else:
+                # if path in accounts_redirect_paths or any(path.startswith(prefix) for prefix in accounts_redirect_prefixes):
+                #     return redirect(f'http://{settings.ACCOUNTS_DOMAIN}{path}')
+                # else:
+                    # if path in accounts_redirect_paths or any(path.startswith(prefix) for prefix in accounts_redirect_prefixes):
+                    #     return redirect(f'http://{settings.ACCOUNTS_DOMAIN}{request.path}')
+                    # else:
                         return self.signout(request, f'http://{settings.ACCOUNTS_DOMAIN}')
                 
         elif subdomain == 'accounts':
-            # Check if user is authenticated for other paths on the welcome subdomain
-            try:
-                # KUNG AUTHENTICATED PERO SA SIGNIN GUSTO PUMUNTA, DALHIN SA HOME
-                user_token = request.session['user_token']
-                expires = request.session['expires']
-                current_time = int(time.time())  # Get the current time in seconds since the epoch (UNIX time)
-                if current_time >= expires:
-                    # The session has expired, sign out the user
-                    return self.signout(request, f'http://{settings.ACCOUNTS_DOMAIN}')
+            request.urlconf = 'authentication.accounts.urls'
+            # try:
+            #     user_token = request.session['user_token']
                 
-                if path in accounts_redirect_paths or any(path.startswith(prefix) for prefix in accounts_redirect_prefixes):
-                    return redirect('home')
-                else:
-                    return redirect(f'http://{settings.DOMAIN}{request.path}')
-            except KeyError:
-                # KUNG HINDI SA SIGNIN PUPUNTA, DALHIN SA WELCOME
-                if path not in accounts_redirect_paths and not any(path.startswith(prefix) for prefix in accounts_redirect_prefixes):
-                    return redirect(f'http://{settings.DOMAIN}{request.path}')
+            #     if path in accounts_redirect_paths or any(path.startswith(prefix) for prefix in accounts_redirect_prefixes):
+            #         return redirect('home')
+            #     else:
+            #         return redirect(f'http://{settings.DOMAIN}{request.path}')
+            # except KeyError:
+            #     # KUNG HINDI SA SIGNIN PUPUNTA, DALHIN SA WELCOME
+            #     if path not in accounts_redirect_paths and not any(path.startswith(prefix) for prefix in accounts_redirect_prefixes):
+            #         return redirect(f'http://{settings.DOMAIN}{request.path}')
         
         elif subdomain == 'misamis-occidental':
-            # Route to the misamis_occidental URLs
             request.urlconf = 'authentication.misamis_occidental.urls'
-            # Allow only specific paths on the misamis-occidental subdomain
-            # allowed_paths = ['/lakip/', '/privacy/']
-            # if path in allowed_paths or any(path.startswith(prefix) for prefix in allowed_paths):
-            #     return None  # Allow the request to proceed
-            # else:
-            #     return HttpResponse(status=404)
-            
-            
-            
-            
+
+    
         # FOR TEST CODE
         # FOR http://127.0.0.1:8000
         else:

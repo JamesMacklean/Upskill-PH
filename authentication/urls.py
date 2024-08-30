@@ -25,11 +25,11 @@ urlpatterns = [
     path('profile/edit/', views.edit_profile, name="edit"),
     path('program/<slug>/', views.program, name="program"),
     path('sessions/', SessionChecker.as_view(), name="sessions"),
-    path('signin/',views.signin, name="signin"),
+    # path('signin/',views.signin, name="signin"),
     path('signout/',views.signout, name="signout"),
-    path('signup/',views.signup, name="signup"),
-    path('success/<user_hash>/', views.success, name="success"),
-    path('verify/<user_hash>/', views.verify_account, name="verify_account"),
+    # path('signup/',views.signup, name="signup"),
+    # path('success/<user_hash>/', views.success, name="success"),
+    # path('verify/<user_hash>/', views.verify_account, name="verify_account"),
 
     # COURSERA
     # path('refresh/', views.refresh_token, name="refresh"),
