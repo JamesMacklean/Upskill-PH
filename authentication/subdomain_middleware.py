@@ -13,15 +13,15 @@ class SubdomainMiddleware(MiddlewareMixin):
         host = request.get_host()
         subdomain = host.split('.')[0]
         
-        path = request.path.rstrip('/')
-        accounts_redirect_paths = [
-            reverse('signup').rstrip('/'), 
-            reverse('signin').rstrip('/')
-        ]
-        accounts_redirect_prefixes = [
-            '/success/',
-            '/verify/'
-        ]
+        # path = request.path.rstrip('/')
+        # accounts_redirect_paths = [
+        #     reverse('signup').rstrip('/'), 
+        #     reverse('signin').rstrip('/')
+        # ]
+        # accounts_redirect_prefixes = [
+        #     '/success/',
+        #     '/verify/'
+        # ]
         
         if subdomain == 'welcome':
             try:
