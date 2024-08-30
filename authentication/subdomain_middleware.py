@@ -46,7 +46,6 @@ class SubdomainMiddleware(MiddlewareMixin):
                     if current_time >= expires:
                         # The session has expired, sign out the user
                         return self.signout(request, f'http://{settings.ACCOUNTS_DOMAIN}')
-                    return redirect(f'http://{settings.DOMAIN}{request.path}')
                 except KeyError:
                     print(f'WELCOME: Unauthenticated.', flush=True)
                     return self.signout(request, f'http://{settings.ACCOUNTS_DOMAIN}')
