@@ -57,14 +57,16 @@ class SubdomainMiddleware(MiddlewareMixin):
                 except KeyError:
                     print(f'ACCOUNTS: Unauthenticated.', flush=True)
             else:
+                print(f"HINDI MATCH! {match}", flush = True)
                 try:
                     user_token = request.session['user_token']
                     return redirect(f'http://{settings.DOMAIN}{request.path}')
                 except KeyError:
-                    if request.path=='':
-                        return self.signout(request, f'http://{settings.ACCOUNTS_DOMAIN}')
-                    else:
-                        raise Http404("Page not found.")
+                    print(f"WALANG GANITONG PATH SA ACCOUNTS! {match}", flush = True)
+                    # if request.path=='':
+                    #     return self.signout(request, f'http://{settings.ACCOUNTS_DOMAIN}')
+                    # else:
+                    raise Http404("Page not found.")
         
         elif subdomain == 'misamis-occidental':
             request.urlconf = 'authentication.misamis_occidental.urls'
