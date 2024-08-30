@@ -68,12 +68,18 @@ class SubdomainMiddleware(MiddlewareMixin):
                     return redirect(f'http://{settings.DOMAIN}{request.path}')
         
         elif subdomain == 'misamis-occidental':
+            # Route to the misamis_occidental URLs
+            request.urlconf = 'misamis_occidental.urls'
             # Allow only specific paths on the misamis-occidental subdomain
-            allowed_paths = ['/lakip/', '/privacy/']
-            if path in allowed_paths or any(path.startswith(prefix) for prefix in allowed_paths):
-                return None  # Allow the request to proceed
-            else:
-                return HttpResponse(status=404)
+            # allowed_paths = ['/lakip/', '/privacy/']
+            # if path in allowed_paths or any(path.startswith(prefix) for prefix in allowed_paths):
+            #     return None  # Allow the request to proceed
+            # else:
+            #     return HttpResponse(status=404)
+            
+            
+            
+            
         # FOR TEST CODE
         # FOR http://127.0.0.1:8000
         else:

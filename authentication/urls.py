@@ -1,6 +1,6 @@
 from unicodedata import name
 from django.contrib import admin
-from django.urls import path,include, re_path
+from django.urls import path, include, re_path
 from . import views
 from .views import SessionChecker
 
@@ -13,10 +13,14 @@ urlpatterns = [
     path('administrator/partner/<int:partner_id>/', views.admin_partners, name='admin_partners'),
     path('administrator/license-codes/<slug>/', views.license_codes, name='license_codes'),
     path('certificate/', views.certificate, name="certificate"),
+    path('contact-us/', views.contact, name="contact"),
     path('dashboard/', views.applied_programs, name="dashboard"),
+    path('guidelines/',views.guidelines, name="guidelines"),
+    path('lakip/',views.lakip_landing, name='lakip-landing'),
+    path('lakip/apply/',views.lakip_application, name='lakip-application'),
     path('partner/', views.partner, name="partner"),
     path('partner/<slug:program_slug>/application/', views.application, name="application"),
-    # path('partner/<slug:program_slug>/profile/', views.partner_profile, name="partner_profile"),
+    path('privacy/', views.privacy, name="privacy"),
     path('profile/', views.profile, name="profile"),
     path('profile/edit/', views.edit_profile, name="edit"),
     path('program/<slug>/', views.program, name="program"),
@@ -26,12 +30,10 @@ urlpatterns = [
     path('signup/',views.signup, name="signup"),
     path('success/<user_hash>/', views.success, name="success"),
     path('verify/<user_hash>/', views.verify_account, name="verify_account"),
-    path('guidelines/',views.guidelines, name="guidelines"),
-    path('privacy/', views.privacy, name="privacy"),
-    path('contact-us/', views.contact, name="contact"),
-    path('lakip/',views.lakip_landing, name='lakip-landing'),
-    path('lakip/apply/',views.lakip_application, name='lakip-application'),
-    
+
     # COURSERA
     # path('refresh/', views.refresh_token, name="refresh"),
+    
+    # Include subdomain-specific URLs
+    path('misamis-occidental/', include('misamis_occidental.urls'))
 ]
