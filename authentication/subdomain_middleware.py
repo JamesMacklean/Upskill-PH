@@ -54,10 +54,12 @@ class SubdomainMiddleware(MiddlewareMixin):
             
             # KUNG ANG PATH AY PANG-ACCOUNTS    
             if match:
+                print(f'MATCH! {match}', flush=True)
                 request.urlconf = accounts_urlconf
             # KUNG HINDI PANG-ACCOUNTS
             else:
                 try:
+                    print(f'ACCOUNTS: Authenticated. ibalik sa {request.path}', flush=True)
                     user_token = request.session['user_token']
                     expires = request.session['expires']
                     current_time = int(time.time())  
@@ -66,7 +68,7 @@ class SubdomainMiddleware(MiddlewareMixin):
                         return self.signout(request, f'http://{settings.ACCOUNTS_DOMAIN}')
                     return redirect(f'http://{settings.DOMAIN}{request.path}')
                 except KeyError:
-                    
+                    print(f'ACCOUNTS: Unauthenticated.', flush=True)
                 #     if path in accounts_redirect_paths or any(path.startswith(prefix) for prefix in accounts_redirect_prefixes):
                 #         return redirect('home')
                 #     else:
