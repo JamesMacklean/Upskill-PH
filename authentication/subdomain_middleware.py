@@ -7,7 +7,6 @@ from scholarium import settings
 import time
 
 class SubdomainMiddleware(MiddlewareMixin):
-    API_SECRET_KEY = API_SECRET_KEY
 
     # Define allowed paths for each subdomain in a dictionary
     SUBDOMAIN_PATHS = {
@@ -59,8 +58,8 @@ class SubdomainMiddleware(MiddlewareMixin):
         if path in path_patterns or any(path.startswith(prefix) for prefix in path_patterns):
             return None  # Allow the request to proceed
 
-        if subdomain in ['welcome', 'accounts', 'misamis-occidental']:
-            return HttpResponse(status=404)
+        # if subdomain in ['welcome', 'accounts', 'misamis-occidental']:
+        #     return HttpResponse(status=404)
 
         # Handle authentication logic for other subdomains if needed
         try:
