@@ -69,7 +69,7 @@ class SubdomainMiddleware(MiddlewareMixin):
         
         elif subdomain == 'misamis-occidental':
             # Route to the misamis_occidental URLs
-            request.urlconf = 'misamis_occidental.urls'
+            request.urlconf = 'authentication.misamis_occidental.urls'
             # Allow only specific paths on the misamis-occidental subdomain
             # allowed_paths = ['/lakip/', '/privacy/']
             # if path in allowed_paths or any(path.startswith(prefix) for prefix in allowed_paths):

@@ -35,5 +35,5 @@ urlpatterns = [
     # path('refresh/', views.refresh_token, name="refresh"),
     
     # Include subdomain-specific URLs
-    path('misamis-occidental/', include('misamis_occidental.urls'))
+    path('misamis-occidental/', include('authentication.misamis_occidental.urls'))
 ]
