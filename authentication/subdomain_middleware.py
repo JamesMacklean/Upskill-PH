@@ -63,7 +63,8 @@ class SubdomainMiddleware(MiddlewareMixin):
                 except KeyError:
                     if request.path=='':
                         return self.signout(request, f'http://{settings.ACCOUNTS_DOMAIN}')
-                    raise Http404("Page not found.")
+                    else:
+                        raise Http404("Page not found.")
         
         elif subdomain == 'misamis-occidental':
             request.urlconf = 'authentication.misamis_occidental.urls'
