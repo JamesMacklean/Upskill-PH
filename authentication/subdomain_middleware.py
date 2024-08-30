@@ -39,21 +39,27 @@ class SubdomainMiddleware(MiddlewareMixin):
 
             if subdomain == 'accounts':
                 # Redirect authenticated users from accounts to home
+                print("AUTHENTICATED EH BA'T KA NASA ACCOUNTS? BALIK WELCOME", flush=True)
                 return redirect(f'http://{settings.DOMAIN}{path}')
             elif subdomain == 'welcome':
                 # Redirect to the home page if the path is not in the welcome_urlpatterns
                 welcome_urlpatterns = [p.pattern for p in globals().get('welcome_urlpatterns', [])]
-                if not any(path == p for p in welcome_urlpatterns) and user_token:
+                print("AUTHENTICATED", flush=True)
+                if not any(path == p for p in welcome_urlpatterns):
+                    print(f"PERO ANG PUPUNTAHANG {path} AY WALA SA WELCOME_URLPATTERNS", flush=True)
                     return redirect(f'http://{settings.DOMAIN}')
         
         # ELSE HINDI AUTHENTICATED SI USER
         except KeyError:
             if subdomain == 'welcome':
+                print("HINDI KA AUTHENTICATED! BALIK ACCOUNTS", flush=True)
                 return self.signout(request, f'http://{settings.ACCOUNTS_DOMAIN}')
             elif subdomain == 'accounts':
                 # Redirect to the home page if the path is not in the welcome_urlpatterns
                 accounts_urlpatterns = [p.pattern for p in globals().get('accounts_urlpatterns', [])]
+                print("HINDI KA AUTHENTICATED!")
                 if not any(path == p for p in accounts_urlpatterns):
+                    print(f"PERO ANG PUPUNTAHANG {path} AY WALA SA ACCOUNTS_URLPATTERNS", flush=True)
                     return redirect(f'http://{settings.ACCOUNTS_DOMAIN}')
 
         return None
