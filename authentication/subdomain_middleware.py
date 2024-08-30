@@ -28,24 +28,27 @@ class SubdomainMiddleware(MiddlewareMixin):
         misocc_urlconf = 'authentication.misamis_occidental.urls'
         misocc_resolver = get_resolver(misocc_urlconf)
         
+                        
         if subdomain == 'welcome':
+            for resolver in [accounts_resolver, misocc_resolver]:
                 try:
-                    user_token = request.session['user_token']
-                    expires = request.session['expires']
-                    current_time = int(time.time())  
-                    if current_time >= expires:
-                        # The session has expired, sign out the user
-                        return self.signout(request, f'http://{settings.ACCOUNTS_DOMAIN}')
-                    for resolver in [accounts_resolver, misocc_resolver]:
-                        try:
-                            resolver.resolve(request.path)
-                            raise Http404("Page not found.")
-                        except Http404:
-                            continue
-                    
-                except KeyError:
-                    print(f'WELCOME: Unauthenticated.', flush=True)
+                    resolver.resolve(request.path)
+                    raise Http404("Page not found.")
+                except Http404:
+                    continue
+                
+            try:
+                user_token = request.session['user_token']
+                expires = request.session['expires']
+                current_time = int(time.time())  
+                if current_time >= expires:
+                    # The session has expired, sign out the user
                     return self.signout(request, f'http://{settings.ACCOUNTS_DOMAIN}')
+                
+                
+            except KeyError:
+                print(f'WELCOME: Unauthenticated.', flush=True)
+                return self.signout(request, f'http://{settings.ACCOUNTS_DOMAIN}')
                 # try:
                 #     user_token = request.session['user_token']
                 #     expires = request.session['expires']
