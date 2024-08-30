@@ -256,7 +256,8 @@ def signin(request):
     if request.method == "POST":
         email = request.POST['email']
         password = request.POST['password']
-
+        domain = f'http://{request.get_host()}'
+        
         user_token, expires, redirect_url, response_message = login_account(email, password)
         
         #### MODAL RESPONSE KUNG NAGWORK BA ANG SIGN IN
@@ -306,7 +307,6 @@ def signin(request):
             if next_page:
                 try:
                     clear_session(request,'original_url')
-                    domain = f'http://{request.get_host()}'
                     response = redirect(f'{domain}{next_page}')
                 except Exception as e:
                     print(str(e), flush=True)
