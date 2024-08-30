@@ -23,22 +23,12 @@ class SubdomainMiddleware(MiddlewareMixin):
         #     '/verify/'
         # ]
         
-        welcome_urlconf = 'authentication.urls'
-        welcome_resolver = get_resolver(welcome_urlconf)
         accounts_urlconf = 'authentication.accounts.urls'
         accounts_resolver = get_resolver(accounts_urlconf)
         misocc_urlconf = 'authentication.misamis_occidental.urls'
         misocc_resolver = get_resolver(misocc_urlconf)
         
         if subdomain == 'welcome':
-            try:
-                match = welcome_resolver.resolve(request.path)
-            except:
-                match = None
-            
-            if match:
-                print(f'WELCOME MATCH! {match}', flush=True)  
-                request.urlconf = welcome_urlconf
                 try:
                     user_token = request.session['user_token']
                     expires = request.session['expires']
@@ -46,6 +36,13 @@ class SubdomainMiddleware(MiddlewareMixin):
                     if current_time >= expires:
                         # The session has expired, sign out the user
                         return self.signout(request, f'http://{settings.ACCOUNTS_DOMAIN}')
+                    for resolver in [accounts_resolver, misocc_resolver]:
+                        try:
+                            resolver.resolve(request.path)
+                            raise Http404("Page not found.")
+                        except Http404:
+                            continue
+                    
                 except KeyError:
                     print(f'WELCOME: Unauthenticated.', flush=True)
                     return self.signout(request, f'http://{settings.ACCOUNTS_DOMAIN}')
@@ -65,15 +62,7 @@ class SubdomainMiddleware(MiddlewareMixin):
                 #     # else:
                 #         # if path in accounts_redirect_paths or any(path.startswith(prefix) for prefix in accounts_redirect_prefixes):
                 #         #     return redirect(f'http://{settings.ACCOUNTS_DOMAIN}{request.path}')
-                #         # else:
-            else:
-                try:
-                    user_token = request.session['user_token']
-                    if request.path == '':
-                        return redirect(f'http://{settings.DOMAIN}')
-                except KeyError:
-                    raise Http404
-                            
+                #         # else:                            
                 
         elif subdomain == 'accounts':
             
@@ -104,7 +93,7 @@ class SubdomainMiddleware(MiddlewareMixin):
                     user_token = request.session['user_token']
                     return redirect(f'http://{settings.DOMAIN}{request.path}')
                 except KeyError:
-                    raise Http404  
+                    raise Http404("Page not found.")
                 # CHECK IF AUTHENTICATED          
                 # try:
                 #     user_token = request.session['user_token']
