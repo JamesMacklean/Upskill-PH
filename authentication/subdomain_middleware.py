@@ -19,50 +19,44 @@ class SubdomainMiddleware(MiddlewareMixin):
         host = request.get_host()
         subdomain = host.split('.')[0]
 
-        # Default to 'welcome' if subdomain is not specified
-        urlpatterns_key = self.SUBDOMAIN_URL_PATTERNS.get(subdomain, 'welcome_urlpatterns')
-        subdomain_urlpatterns = globals().get(urlpatterns_key, [])
-
         path = request.path.rstrip('/')
         
-        # Check for authentication before checking path validity
-        authentication_response = self.handle_authentication(request, subdomain, path)
-        if authentication_response:
-            return authentication_response
-        
-        # Redirect or block access if the path does not match any of the subdomain-specific URLs
-        if not any(path.startswith(p.pattern) for p in subdomain_urlpatterns):
-            return self.redirect_to_home_or_signout(request, subdomain)
-
         # Check for authentication if required by subdomain
-        # if subdomain in ['welcome', 'accounts']:
-        #     return self.handle_authentication(request, subdomain, path)
+        if subdomain in ['welcome', 'accounts']:
+            return self.handle_authentication(request, subdomain, path)
 
         return None
 
     def handle_authentication(self, request, subdomain, path):
+        # IF AUTHENTICATED SI USER
         try:
-            user_token = request.session.get('user_token')
-            expires = request.session.get('expires', 0)
+            user_token = request.session['user_token']
+            expires = request.session['expires']
             current_time = int(time.time())
 
-            # Session expired, force signout
             if current_time >= expires:
                 return self.signout(request, f'http://{settings.ACCOUNTS_DOMAIN}')
 
-            if subdomain == 'accounts' and user_token:
-                # If authenticated user tries to access accounts, redirect to the welcome home page
-                return redirect(f'http://{settings.DOMAIN}/')
+            if subdomain == 'accounts':
+                # Redirect authenticated users from accounts to home
+                return redirect(f'http://{settings.DOMAIN}{path}')
+            elif subdomain == 'welcome':
+                # Redirect to the home page if the path is not in the welcome_urlpatterns
+                welcome_urlpatterns = [p.pattern for p in globals().get('welcome_urlpatterns', [])]
+                if not any(path == p for p in welcome_urlpatterns) and user_token:
+                    return redirect(f'http://{settings.DOMAIN}')
+        
+        # ELSE HINDI AUTHENTICATED SI USER
         except KeyError:
             if subdomain == 'welcome':
                 return self.signout(request, f'http://{settings.ACCOUNTS_DOMAIN}')
+            elif subdomain == 'accounts':
+                # Redirect to the home page if the path is not in the welcome_urlpatterns
+                accounts_urlpatterns = [p.pattern for p in globals().get('accounts_urlpatterns', [])]
+                if not any(path == p for p in accounts_urlpatterns):
+                    return redirect(f'http://{settings.ACCOUNTS_DOMAIN}')
 
         return None
-
-    def redirect_to_home_or_signout(self, request, subdomain):
-        if subdomain == 'accounts':
-            pass
-        return self.signout(request, f'http://{settings.ACCOUNTS_DOMAIN}')
 
     def signout(self, request, redirect_domain):
         for key in list(request.session.keys()):
