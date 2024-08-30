@@ -40,12 +40,12 @@ class SubdomainMiddleware(MiddlewareMixin):
             if subdomain == 'accounts':
                 # Redirect authenticated users from accounts to home
                 print("AUTHENTICATED EH BA'T KA NASA ACCOUNTS? BALIK WELCOME", flush=True)
-                return redirect(f'http://{settings.DOMAIN}{path}')
+                if path in [p.pattern for p in self.SUBDOMAIN_URL_PATTERNS['accounts']]:
+                    return redirect(f'http://{settings.DOMAIN}{path}')
             elif subdomain == 'welcome':
                 # Redirect to the home page if the path is not in the welcome_urlpatterns
-                welcome_urlpatterns = [p.pattern for p in globals().get('welcome_urlpatterns', [])]
                 print("AUTHENTICATED", flush=True)
-                if not any(path == p for p in welcome_urlpatterns):
+                if not any(path == p.pattern for p in self.SUBDOMAIN_URL_PATTERNS['welcome']):
                     print(f"PERO ANG PUPUNTAHANG {path} AY WALA SA WELCOME_URLPATTERNS", flush=True)
                     return redirect(f'http://{settings.DOMAIN}')
         
@@ -56,17 +56,30 @@ class SubdomainMiddleware(MiddlewareMixin):
                 return self.signout(request, f'http://{settings.ACCOUNTS_DOMAIN}')
             elif subdomain == 'accounts':
                 # Redirect to the home page if the path is not in the welcome_urlpatterns
-                accounts_urlpatterns = [p.pattern for p in globals().get('accounts_urlpatterns', [])]
                 print("HINDI KA AUTHENTICATED!")
-                if not any(path == p for p in accounts_urlpatterns):
+                if not any(path == p.pattern for p in self.SUBDOMAIN_URL_PATTERNS['accounts']):
                     print(f"PERO ANG PUPUNTAHANG {path} AY WALA SA ACCOUNTS_URLPATTERNS", flush=True)
                     return redirect(f'http://{settings.ACCOUNTS_DOMAIN}')
 
         return None
 
     def signout(self, request, redirect_domain):
-        for key in list(request.session.keys()):
-            del request.session[key]
-        request.session.modified = True
+        """
+        Signs out the user by clearing session data and printing relevant information.
+        """
+        # Print cookies
+        for key, value in request.COOKIES.items():
+            print(f'{key}: {value}', flush=True)
+
+        # Clear sessions
+        try:
+            for key in list(request.session.keys()):
+                del request.session[key]
+            request.session.modified = True
+        except KeyError as e:
+            print(str(e), flush=True)
+        
+        # Save the original URL and redirect to signin
         request.session['original_url'] = request.get_full_path()
+        print(f"original_url: {request.session['original_url']}", flush=True)
         return HttpResponseRedirect(f'{redirect_domain}{reverse("signin")}')
