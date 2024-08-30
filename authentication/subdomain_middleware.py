@@ -102,8 +102,7 @@ class SubdomainMiddleware(MiddlewareMixin):
             else:
                 try:
                     user_token = request.session['user_token']
-                    if request.path == '':
-                        return redirect(f'http://{settings.DOMAIN}')
+                    return redirect(f'http://{settings.DOMAIN}{request.path}')
                 except KeyError:
                     raise Http404  
                 # CHECK IF AUTHENTICATED          
