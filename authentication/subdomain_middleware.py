@@ -26,8 +26,8 @@ class SubdomainMiddleware(MiddlewareMixin):
         path = request.path.rstrip('/')
         
         # Redirect or block access if the path does not match any of the subdomain-specific URLs
-        if not any(path.startswith(p.pattern) for p in subdomain_urlpatterns):
-            return self.redirect_to_home_or_signout(request, subdomain)
+        # if not any(path.startswith(p.pattern) for p in subdomain_urlpatterns):
+        #     return self.redirect_to_home_or_signout(request, subdomain)
 
         # Check for authentication if required by subdomain
         if subdomain in ['welcome', 'accounts']:
