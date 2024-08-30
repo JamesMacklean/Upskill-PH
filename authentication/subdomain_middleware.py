@@ -23,29 +23,62 @@ class SubdomainMiddleware(MiddlewareMixin):
         #     '/verify/'
         # ]
         
+        welcome_urlconf = 'authentication.urls'
+        welcome_resolver = get_resolver(welcome_urlconf)
+        accounts_urlconf = 'authentication.accounts.urls'
+        accounts_resolver = get_resolver(accounts_urlconf)
+        misocc_urlconf = 'authentication.misamis_occidental.urls'
+        misocc_resolver = get_resolver(misocc_urlconf)
+        
         if subdomain == 'welcome':
             try:
-                user_token = request.session['user_token']
-                expires = request.session['expires']
-                current_time = int(time.time())  
-                if current_time >= expires:
-                    # The session has expired, sign out the user
-                    return self.signout(request, f'http://{settings.ACCOUNTS_DOMAIN}')
-                
-                # if path in accounts_redirect_paths or any(path.startswith(prefix) for prefix in accounts_redirect_prefixes):
-                #     return redirect('home')
-            except KeyError:
-                # if path in accounts_redirect_paths or any(path.startswith(prefix) for prefix in accounts_redirect_prefixes):
-                #     return redirect(f'http://{settings.ACCOUNTS_DOMAIN}{path}')
-                # else:
-                    # if path in accounts_redirect_paths or any(path.startswith(prefix) for prefix in accounts_redirect_prefixes):
-                    #     return redirect(f'http://{settings.ACCOUNTS_DOMAIN}{request.path}')
-                    # else:
+                match = welcome_resolver.resolve(request.path)
+            except:
+                match = None
+            
+            if match:
+                print(f'WELCOME MATCH! {match}', flush=True)  
+                request.urlconf = welcome_urlconf
+                try:
+                    user_token = request.session['user_token']
+                    expires = request.session['expires']
+                    current_time = int(time.time())  
+                    if current_time >= expires:
+                        # The session has expired, sign out the user
                         return self.signout(request, f'http://{settings.ACCOUNTS_DOMAIN}')
+                    return redirect(f'http://{settings.DOMAIN}{request.path}')
+                except KeyError:
+                    print(f'WELCOME: Unauthenticated.', flush=True)
+                    return self.signout(request, f'http://{settings.ACCOUNTS_DOMAIN}')
+                # try:
+                #     user_token = request.session['user_token']
+                #     expires = request.session['expires']
+                #     current_time = int(time.time())  
+                #     if current_time >= expires:
+                #         # The session has expired, sign out the user
+                #         return self.signout(request, f'http://{settings.ACCOUNTS_DOMAIN}')
+                    
+                #     # if path in accounts_redirect_paths or any(path.startswith(prefix) for prefix in accounts_redirect_prefixes):
+                #     #     return redirect('home')
+                # except KeyError:
+                #     # if path in accounts_redirect_paths or any(path.startswith(prefix) for prefix in accounts_redirect_prefixes):
+                #     #     return redirect(f'http://{settings.ACCOUNTS_DOMAIN}{path}')
+                #     # else:
+                #         # if path in accounts_redirect_paths or any(path.startswith(prefix) for prefix in accounts_redirect_prefixes):
+                #         #     return redirect(f'http://{settings.ACCOUNTS_DOMAIN}{request.path}')
+                #         # else:
+            else:
+                try:
+                    user_token = request.session['user_token']
+                    if request.path == '':
+                        return redirect(f'http://{settings.DOMAIN}')
+                except KeyError:
+                    raise Http404
+                            
                 
         elif subdomain == 'accounts':
-            accounts_urlconf = 'authentication.accounts.urls'
-            accounts_resolver = get_resolver(accounts_urlconf)
+            
+            
             
             try:
                 match = accounts_resolver.resolve(request.path)
@@ -54,7 +87,7 @@ class SubdomainMiddleware(MiddlewareMixin):
             
             # KUNG ANG PATH AY PANG-ACCOUNTS    
             if match:
-                print(f'MATCH! {match}', flush=True)
+                print(f'ACCOUNTS MATCH! {match}', flush=True)
                 request.urlconf = accounts_urlconf
                 try:
                     user_token = request.session['user_token']
@@ -64,7 +97,7 @@ class SubdomainMiddleware(MiddlewareMixin):
                         # The session has expired, sign out the user
                         return self.signout(request, f'http://{settings.ACCOUNTS_DOMAIN}')
                     return redirect(f'http://{settings.DOMAIN}')
-                except:
+                except KeyError:
                     print(f'ACCOUNTS: Unauthenticated.', flush=True)
             # KUNG HINDI PANG-ACCOUNTS
             else:
@@ -72,7 +105,7 @@ class SubdomainMiddleware(MiddlewareMixin):
                     user_token = request.session['user_token']
                     if request.path == '':
                         return redirect(f'http://{settings.DOMAIN}')
-                except:
+                except KeyError:
                     raise Http404  
                 # CHECK IF AUTHENTICATED          
                 # try:
