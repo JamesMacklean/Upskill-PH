@@ -312,7 +312,7 @@ def signin(request):
                     print(str(e), flush=True)
             
             else:
-                response = redirect('home')
+                response = redirect(f'{domain}')
             
             # Set cookies
             print("SETTING COOKIES...", flush=True) 
