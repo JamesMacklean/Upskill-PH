@@ -37,13 +37,6 @@ def verify_account(request, user_hash):
     template_failed = "authentication/verification_failed.html"
     context = {}
     
-    ########## ANONYMOUS REQUIRED ##########
-    # try:
-    #     user_token = request.session['user_token']
-    #     return HttpResponseRedirect('/')
-    # except:
-    #     pass
-    ########## ANONYMOUS REQUIRED ##########
     try:
         email, response_message = verify(user_hash)
                 
@@ -114,9 +107,9 @@ def signup(request):
                         'Content of the Message', 
                         settings.EMAIL_HOST_USER, 
                         ########## ORIGINAL CODE ##########
-                        [email], 
+                        # [email], 
                         ########## FOR TEST CODE ##########
-                        # [TEST_EMAIL_RECEIVER],
+                        [TEST_EMAIL_RECEIVER],
                         html_message=html,
                         fail_silently=False
                     )
@@ -218,32 +211,6 @@ def signin(request):
             return render(request, template_name, context)
 
     return render(request, template_name, context)
-
-def signout(request):   
-    # PRINT COOKIES
-    for key, value in request.COOKIES.items():
-        print(f'{key}: {value}', flush=True)
-        
-    # CLEAR SESSIONS
-    try:   
-        for key in list(request.session.keys()):
-            del request.session[key]
-            request.session.modified = True
-    except KeyError as e:
-        print(str(e), flush=True)
-    
-    response = HttpResponseRedirect(reverse('signin'))
-
-    # List of cookies to delete
-    cookies_to_delete = [
-        '_ups_aut',
-    ]
-
-    # Delete cookies
-    for cookie in cookies_to_delete:
-        response.delete_cookie(cookie)
-
-    return response
 
 def clear_session(request,key):
     try:

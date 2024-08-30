@@ -12,32 +12,13 @@ class SubdomainMiddleware(MiddlewareMixin):
     def process_request(self, request):
         host = request.get_host()
         subdomain = host.split('.')[0]
-        
-        # path = request.path.rstrip('/')
-        # accounts_redirect_paths = [
-        #     reverse('signup').rstrip('/'), 
-        #     reverse('signin').rstrip('/')
-        # ]
-        # accounts_redirect_prefixes = [
-        #     '/success/',
-        #     '/verify/'
-        # ]
-        
+                
         accounts_urlconf = 'authentication.accounts.urls'
         accounts_resolver = get_resolver(accounts_urlconf)
         misocc_urlconf = 'authentication.misamis_occidental.urls'
         misocc_resolver = get_resolver(misocc_urlconf)
-        
-                        
-        if subdomain == 'welcome':
-            for resolver in [accounts_resolver, misocc_resolver]:
-                try:
-                    resolver.resolve(request.path)
-                    print(f'RESOLVING! {resolver.resolve(request.path)}',flush=True)
-                    raise Http404("Page not found.")
-                except Http404:
-                    continue
-                
+               
+        if subdomain == 'welcome': 
             try:
                 user_token = request.session['user_token']
                 expires = request.session['expires']
@@ -45,39 +26,24 @@ class SubdomainMiddleware(MiddlewareMixin):
                 if current_time >= expires:
                     # The session has expired, sign out the user
                     return self.signout(request, f'http://{settings.ACCOUNTS_DOMAIN}')
-                
+                try:
+                    match = accounts_resolver.resolve(request.path)
+                except:
+                    match = None
+                    
+                if match:
+                    raise Http404("Page not found.")
                 
             except KeyError:
                 print(f'WELCOME: Unauthenticated.', flush=True)
-                return self.signout(request, f'http://{settings.ACCOUNTS_DOMAIN}')
-                # try:
-                #     user_token = request.session['user_token']
-                #     expires = request.session['expires']
-                #     current_time = int(time.time())  
-                #     if current_time >= expires:
-                #         # The session has expired, sign out the user
-                #         return self.signout(request, f'http://{settings.ACCOUNTS_DOMAIN}')
-                    
-                #     # if path in accounts_redirect_paths or any(path.startswith(prefix) for prefix in accounts_redirect_prefixes):
-                #     #     return redirect('home')
-                # except KeyError:
-                #     # if path in accounts_redirect_paths or any(path.startswith(prefix) for prefix in accounts_redirect_prefixes):
-                #     #     return redirect(f'http://{settings.ACCOUNTS_DOMAIN}{path}')
-                #     # else:
-                #         # if path in accounts_redirect_paths or any(path.startswith(prefix) for prefix in accounts_redirect_prefixes):
-                #         #     return redirect(f'http://{settings.ACCOUNTS_DOMAIN}{request.path}')
-                #         # else:                            
+                return self.signout(request, f'http://{settings.ACCOUNTS_DOMAIN}')                       
                 
-        elif subdomain == 'accounts':
-            
-            
-            
+        elif subdomain == 'accounts': 
             try:
                 match = accounts_resolver.resolve(request.path)
             except:
                 match = None
-            
-            # KUNG ANG PATH AY PANG-ACCOUNTS    
+  
             if match:
                 print(f'ACCOUNTS MATCH! {match}', flush=True)
                 request.urlconf = accounts_urlconf
@@ -91,35 +57,12 @@ class SubdomainMiddleware(MiddlewareMixin):
                     return redirect(f'http://{settings.DOMAIN}')
                 except KeyError:
                     print(f'ACCOUNTS: Unauthenticated.', flush=True)
-            # KUNG HINDI PANG-ACCOUNTS
             else:
                 try:
                     user_token = request.session['user_token']
                     return redirect(f'http://{settings.DOMAIN}{request.path}')
                 except KeyError:
                     raise Http404("Page not found.")
-                # CHECK IF AUTHENTICATED          
-                # try:
-                #     user_token = request.session['user_token']
-                #     expires = request.session['expires']
-                #     current_time = int(time.time())  
-                #     if current_time >= expires:
-                #         # The session has expired, sign out the user
-                #         return self.signout(request, f'http://{settings.ACCOUNTS_DOMAIN}')
-                #     return redirect(f'http://{settings.DOMAIN}{request.path}')
-                # except KeyError:
-                    
-            #     if path in accounts_redirect_paths or any(path.startswith(prefix) for prefix in accounts_redirect_prefixes):
-            #         return redirect('home')
-            #     else:
-            #         return redirect(f'http://{settings.DOMAIN}{request.path}')
-            # except KeyError:
-            #     # KUNG HINDI SA SIGNIN PUPUNTA, DALHIN SA WELCOME
-            #     if path not in accounts_redirect_paths and not any(path.startswith(prefix) for prefix in accounts_redirect_prefixes):
-            #         return redirect(f'http://{settings.DOMAIN}{request.path}')
-            # The path does not exist, redirect to the main domain
-                # return redirect(f'http://{settings.ACCOUNTS_DOMAIN}{request.path}')
-
         
         elif subdomain == 'misamis-occidental':
             request.urlconf = 'authentication.misamis_occidental.urls'
@@ -127,21 +70,30 @@ class SubdomainMiddleware(MiddlewareMixin):
     
         # FOR TEST CODE
         # FOR http://127.0.0.1:8000
-        # else:
+        else:
             
-        #     try:
-        #         user_token = request.session['user_token']
-        #         expires = request.session['expires']
-        #         current_time = int(time.time())  # Get the current time in seconds since the epoch (UNIX time)
-        #         if current_time >= expires:
-        #             # The session has expired, sign out the user
-        #             return self.signout(request, f'http://{host}')
+            try:
+                user_token = request.session['user_token']
+                expires = request.session['expires']
+                current_time = int(time.time())  # Get the current time in seconds since the epoch (UNIX time)
+                if current_time >= expires:
+                    # The session has expired, sign out the user
+                    return self.signout(request, f'http://{host}')
+                try:
+                    match = accounts_resolver.resolve(request.path)
+                except:
+                    match = None
                     
-        #         if path in accounts_redirect_paths or any(path.startswith(prefix) for prefix in accounts_redirect_prefixes):
-        #             return redirect ('home')
-        #     except KeyError:
-        #         if path not in accounts_redirect_paths and not any(path.startswith(prefix) for prefix in accounts_redirect_prefixes):
-        #             return self.signout(request, f'http://{host}')
+                if match:
+                    raise Http404("Page not found.")
+            except KeyError:
+                try:
+                    match = accounts_resolver.resolve(request.path)
+                except:
+                    match = None
+                    
+                if not match:
+                    return self.signout(request, f'http://{host}')
             
         return None
     
