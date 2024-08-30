@@ -59,13 +59,13 @@ class SubdomainMiddleware(MiddlewareMixin):
             # KUNG HINDI PANG-ACCOUNTS
             else:
                 try:
-                    print(f'ACCOUNTS: Authenticated. ibalik sa {request.path}', flush=True)
                     user_token = request.session['user_token']
                     expires = request.session['expires']
                     current_time = int(time.time())  
                     if current_time >= expires:
                         # The session has expired, sign out the user
                         return self.signout(request, f'http://{settings.ACCOUNTS_DOMAIN}')
+                    print(f'ACCOUNTS: Authenticated. ibalik sa {request.path}', flush=True)
                     return redirect(f'http://{settings.DOMAIN}{request.path}')
                 except KeyError:
                     print(f'ACCOUNTS: Unauthenticated.', flush=True)
@@ -78,7 +78,7 @@ class SubdomainMiddleware(MiddlewareMixin):
                 #     if path not in accounts_redirect_paths and not any(path.startswith(prefix) for prefix in accounts_redirect_prefixes):
                 #         return redirect(f'http://{settings.DOMAIN}{request.path}')
                 # The path does not exist, redirect to the main domain
-                    return redirect(f'http://{settings.DOMAIN}{request.path}')
+                    # return redirect(f'http://{settings.ACCOUNTS_DOMAIN}{request.path}')
 
         
         elif subdomain == 'misamis-occidental':
