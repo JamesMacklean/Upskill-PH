@@ -1,4 +1,4 @@
-from django.urls import reverse
+from django.urls import resolve, reverse, get_resolver, URLResolver, get_urlconf
 from django.shortcuts import redirect
 from django.utils.deprecation import MiddlewareMixin
 from django.http import HttpResponse, Http404, HttpResponseRedirect
@@ -44,18 +44,40 @@ class SubdomainMiddleware(MiddlewareMixin):
                         return self.signout(request, f'http://{settings.ACCOUNTS_DOMAIN}')
                 
         elif subdomain == 'accounts':
-            request.urlconf = 'authentication.accounts.urls'
-            # try:
-            #     user_token = request.session['user_token']
-                
-            #     if path in accounts_redirect_paths or any(path.startswith(prefix) for prefix in accounts_redirect_prefixes):
-            #         return redirect('home')
-            #     else:
-            #         return redirect(f'http://{settings.DOMAIN}{request.path}')
-            # except KeyError:
-            #     # KUNG HINDI SA SIGNIN PUPUNTA, DALHIN SA WELCOME
-            #     if path not in accounts_redirect_paths and not any(path.startswith(prefix) for prefix in accounts_redirect_prefixes):
-            #         return redirect(f'http://{settings.DOMAIN}{request.path}')
+            accounts_urlconf = 'authentication.accounts.urls'
+            accounts_resolver = get_resolver(accounts_urlconf)
+            
+            try:
+                match = accounts_resolver.resolve(request.path)
+            except:
+                match = None
+            
+            # KUNG ANG PATH AY PANG-ACCOUNTS    
+            if match:
+                request.urlconf = accounts_urlconf
+            # KUNG HINDI PANG-ACCOUNTS
+            else:
+                try:
+                    user_token = request.session['user_token']
+                    expires = request.session['expires']
+                    current_time = int(time.time())  
+                    if current_time >= expires:
+                        # The session has expired, sign out the user
+                        return self.signout(request, f'http://{settings.ACCOUNTS_DOMAIN}')
+                    return redirect(f'http://{settings.DOMAIN}{request.path}')
+                except KeyError:
+                    
+                #     if path in accounts_redirect_paths or any(path.startswith(prefix) for prefix in accounts_redirect_prefixes):
+                #         return redirect('home')
+                #     else:
+                #         return redirect(f'http://{settings.DOMAIN}{request.path}')
+                # except KeyError:
+                #     # KUNG HINDI SA SIGNIN PUPUNTA, DALHIN SA WELCOME
+                #     if path not in accounts_redirect_paths and not any(path.startswith(prefix) for prefix in accounts_redirect_prefixes):
+                #         return redirect(f'http://{settings.DOMAIN}{request.path}')
+                # The path does not exist, redirect to the main domain
+                    return redirect(f'http://{settings.DOMAIN}{request.path}')
+
         
         elif subdomain == 'misamis-occidental':
             request.urlconf = 'authentication.misamis_occidental.urls'
