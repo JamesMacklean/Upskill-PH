@@ -63,21 +63,21 @@ class SubdomainMiddleware(MiddlewareMixin):
     
         # FOR TEST CODE
         # FOR http://127.0.0.1:8000
-        else:
+        # else:
             
-            try:
-                user_token = request.session['user_token']
-                expires = request.session['expires']
-                current_time = int(time.time())  # Get the current time in seconds since the epoch (UNIX time)
-                if current_time >= expires:
-                    # The session has expired, sign out the user
-                    return self.signout(request, f'http://{host}')
+        #     try:
+        #         user_token = request.session['user_token']
+        #         expires = request.session['expires']
+        #         current_time = int(time.time())  # Get the current time in seconds since the epoch (UNIX time)
+        #         if current_time >= expires:
+        #             # The session has expired, sign out the user
+        #             return self.signout(request, f'http://{host}')
                     
-                if path in accounts_redirect_paths or any(path.startswith(prefix) for prefix in accounts_redirect_prefixes):
-                    return redirect ('home')
-            except KeyError:
-                if path not in accounts_redirect_paths and not any(path.startswith(prefix) for prefix in accounts_redirect_prefixes):
-                    return self.signout(request, f'http://{host}')
+        #         if path in accounts_redirect_paths or any(path.startswith(prefix) for prefix in accounts_redirect_prefixes):
+        #             return redirect ('home')
+        #     except KeyError:
+        #         if path not in accounts_redirect_paths and not any(path.startswith(prefix) for prefix in accounts_redirect_prefixes):
+        #             return self.signout(request, f'http://{host}')
             
         return None
     
