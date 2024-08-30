@@ -29,8 +29,6 @@ def success(request, user_hash):
     last_name = request.session.get('new_last_name')
     email = request.session.get('new_email')
     
-    context['domain'] = settings.DOMAIN
-    context['accounts_domain'] = settings.ACCOUNTS_DOMAIN
     return render(request,template_name, context)
 
 def verify_account(request, user_hash):
@@ -52,6 +50,7 @@ def verify_account(request, user_hash):
             
             print (f'ORIGINAL URL: {original_url}', flush=True)
             context['original_url'] = original_url
+            context['domain'] = settings.DOMAIN
             
             return render(request, template_successful, context)                
         else:
