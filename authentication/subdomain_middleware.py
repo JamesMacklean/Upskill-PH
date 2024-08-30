@@ -1,109 +1,72 @@
 from django.urls import reverse
 from django.shortcuts import redirect
 from django.utils.deprecation import MiddlewareMixin
-from django.http import HttpResponse, Http404, HttpResponseRedirect
-from scholarium.info import *
+from django.http import HttpResponseRedirect
 from scholarium import settings
-import jwt, time
+from scholarium.info import *
+import time
 
 class SubdomainMiddleware(MiddlewareMixin):
     API_SECRET_KEY = API_SECRET_KEY
 
+    SUBDOMAIN_URL_PATTERNS = {
+        'welcome': 'welcome_urlpatterns',
+        'accounts': 'accounts_urlpatterns',
+        # Add more subdomains here as needed
+    }
+
     def process_request(self, request):
         host = request.get_host()
         subdomain = host.split('.')[0]
-        
-        path = request.path.rstrip('/')
-        accounts_redirect_paths = [
-            reverse('signup').rstrip('/'), 
-            reverse('signin').rstrip('/')
-        ]
-        accounts_redirect_prefixes = [
-            '/success/',
-            '/verify/'
-        ]
-        
-        if subdomain == 'welcome':
-            # Check if user is authenticated for other paths on the welcome subdomain
-            try:
-                # KUNG AUTHENTICATED PERO SA SIGNIN GUSTO PUMUNTA, DALHIN SA HOME
-                user_token = request.session['user_token']
-                expires = request.session['expires']
-                current_time = int(time.time())  # Get the current time in seconds since the epoch (UNIX time)
-                if current_time >= expires:
-                    # The session has expired, sign out the user
-                    return self.signout(request, f'http://{settings.ACCOUNTS_DOMAIN}')
-                
-                if path in accounts_redirect_paths or any(path.startswith(prefix) for prefix in accounts_redirect_prefixes):
-                    return redirect('home')
-            except KeyError:
-                # KUNG HINDI AUTHENTICATED PERO SA SIGNIN GUSTO PUMUNTA, DALHIN SA ACCOUNTS
-                if path in accounts_redirect_paths or any(path.startswith(prefix) for prefix in accounts_redirect_prefixes):
-                    return redirect(f'http://{settings.ACCOUNTS_DOMAIN}{path}')
-                # KUNG HINDI AUTHENTICATED AT PUMUNTA SA IBANG PAGE, ISAVE ANG URL, DALHIN SA SIGNIN
-                else:
-                    if path in accounts_redirect_paths or any(path.startswith(prefix) for prefix in accounts_redirect_prefixes):
-                        return redirect(f'http://{settings.ACCOUNTS_DOMAIN}{request.path}')
-                    else:
-                        return self.signout(request, f'http://{settings.ACCOUNTS_DOMAIN}')
-                
-        elif subdomain == 'accounts':
-            # Check if user is authenticated for other paths on the welcome subdomain
-            try:
-                # KUNG AUTHENTICATED PERO SA SIGNIN GUSTO PUMUNTA, DALHIN SA HOME
-                user_token = request.session['user_token']
-                expires = request.session['expires']
-                current_time = int(time.time())  # Get the current time in seconds since the epoch (UNIX time)
-                if current_time >= expires:
-                    # The session has expired, sign out the user
-                    return self.signout(request, f'http://{settings.ACCOUNTS_DOMAIN}')
-                
-                if path in accounts_redirect_paths or any(path.startswith(prefix) for prefix in accounts_redirect_prefixes):
-                    return redirect('home')
-                else:
-                    return redirect(f'http://{settings.DOMAIN}{request.path}')
-            except KeyError:
-                # KUNG HINDI SA SIGNIN PUPUNTA, DALHIN SA WELCOME
-                if path not in accounts_redirect_paths and not any(path.startswith(prefix) for prefix in accounts_redirect_prefixes):
-                    return redirect(f'http://{settings.DOMAIN}{request.path}')
-        
-        # FOR TEST CODE
-        # FOR http://127.0.0.1:8000
-        else:
-            
-            try:
-                user_token = request.session['user_token']
-                expires = request.session['expires']
-                current_time = int(time.time())  # Get the current time in seconds since the epoch (UNIX time)
-                if current_time >= expires:
-                    # The session has expired, sign out the user
-                    return self.signout(request, f'http://{host}')
-                    
-                if path in accounts_redirect_paths or any(path.startswith(prefix) for prefix in accounts_redirect_prefixes):
-                    return redirect ('home')
-            except KeyError:
-                if path not in accounts_redirect_paths and not any(path.startswith(prefix) for prefix in accounts_redirect_prefixes):
-                    return self.signout(request, f'http://{host}')
-            
-        return None
-    
-    def signout(self, request, redirect_domain):
-        """
-        Signs out the user by clearing session data and printing relevant information.
-        """
-        # Print cookies
-        for key, value in request.COOKIES.items():
-            print(f'{key}: {value}', flush=True)
 
-        # Clear sessions
-        try:
-            for key in list(request.session.keys()):
-                del request.session[key]
-            request.session.modified = True
-        except KeyError as e:
-            print(str(e), flush=True)
+        # Default to 'welcome' if subdomain is not specified
+        urlpatterns_key = self.SUBDOMAIN_URL_PATTERNS.get(subdomain, 'welcome_urlpatterns')
+        subdomain_urlpatterns = globals().get(urlpatterns_key, [])
+
+        path = request.path.rstrip('/')
         
-        # Save the original URL and redirect to signin
+        # Redirect or block access if the path does not match any of the subdomain-specific URLs
+        if not any(path.startswith(p.pattern) for p in subdomain_urlpatterns):
+            return self.redirect_to_home_or_signout(request, subdomain)
+
+        # Check for authentication if required by subdomain
+        if subdomain in ['welcome', 'accounts']:
+            return self.handle_authentication(request, subdomain, path)
+
+        return None
+
+    def handle_authentication(self, request, subdomain, path):
+        try:
+            user_token = request.session['user_token']
+            expires = request.session['expires']
+            current_time = int(time.time())
+
+            if current_time >= expires:
+                return self.signout(request, f'http://{settings.ACCOUNTS_DOMAIN}')
+
+            if subdomain == 'accounts':
+                # Redirect authenticated users from accounts to home
+                if path in ['signin', 'signup', 'verify'] and user_token:
+                    return redirect('home')
+                else:
+                    return redirect(f'http://{settings.DOMAIN}{path}')
+
+            elif subdomain == 'welcome' and not user_token:
+                return self.signout(request, f'http://{settings.ACCOUNTS_DOMAIN}')
+        except KeyError:
+            if subdomain == 'welcome':
+                return self.signout(request, f'http://{settings.ACCOUNTS_DOMAIN}')
+
+        return None
+
+    def redirect_to_home_or_signout(self, request, subdomain):
+        if subdomain == 'accounts':
+            return redirect(reverse('signin'))
+        return self.signout(request, f'http://{settings.ACCOUNTS_DOMAIN}')
+
+    def signout(self, request, redirect_domain):
+        for key in list(request.session.keys()):
+            del request.session[key]
+        request.session.modified = True
         request.session['original_url'] = request.get_full_path()
-        print(f"original_url: {request.session['original_url']}", flush=True)
         return HttpResponseRedirect(f'{redirect_domain}{reverse("signin")}')

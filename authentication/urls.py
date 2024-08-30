@@ -1,11 +1,20 @@
-from unicodedata import name
-from django.contrib import admin
-from django.urls import path,include, re_path
+from django.urls import path
 from . import views
 from .views import SessionChecker
+from . import subdomain_middleware
 
-urlpatterns = [
-    path('',views.home, name="home"),
+# URLs for 'accounts' subdomain
+accounts_urlpatterns = [
+    path('signin/', views.signin, name="signin"),
+    path('signout/', views.signout, name="signout"),
+    path('signup/', views.signup, name="signup"),
+    path('success/<user_hash>/', views.success, name="success"),
+    path('verify/<user_hash>/', views.verify_account, name="verify_account"),
+]
+
+# URLs for 'welcome' subdomain
+welcome_urlpatterns = [
+    path('', views.home, name="home"),
     path('account/', views.account, name="account"),
     path('administrator/', views.admin_dashboard, name='admin_dashboard'),
     path('administrator/users/', views.user_management, name='user_management'),
@@ -21,19 +30,14 @@ urlpatterns = [
     path('profile/edit/', views.edit_profile, name="edit"),
     path('program/<slug>/', views.program, name="program"),
     path('sessions/', SessionChecker.as_view(), name="sessions"),
-    path('signin/',views.signin, name="signin"),
-    path('signout/',views.signout, name="signout"),
-    path('signup/',views.signup, name="signup"),
-    path('success/<user_hash>/', views.success, name="success"),
-    path('verify/<user_hash>/', views.verify_account, name="verify_account"),
-    
-    path('guidelines/',views.guidelines, name="guidelines"),
+    path('guidelines/', views.guidelines, name="guidelines"),
     path('privacy/', views.privacy, name="privacy"),
     path('contact-us/', views.contact, name="contact"),
+    path('lakip/', views.lakip_landing, name='lakip-landing'),
+    path('lakip/apply/', views.lakip_application, name='lakip-application'),
 
-    path('lakip/',views.lakip_landing, name='lakip-landing'),
-    path('lakip/apply/',views.lakip_application, name='lakip-application'),
-    
+
     # COURSERA
     # path('refresh/', views.refresh_token, name="refresh"),
+    
 ]
