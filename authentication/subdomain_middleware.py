@@ -68,7 +68,12 @@ class SubdomainMiddleware(MiddlewareMixin):
                     print(f'ACCOUNTS: Unauthenticated.', flush=True)
             # KUNG HINDI PANG-ACCOUNTS
             else:
-                raise Http404  
+                try:
+                    user_token = request.session['user_token']
+                    if request.path == '':
+                        return redirect(f'http://{settings.DOMAIN}')
+                except:
+                    raise Http404  
                 # CHECK IF AUTHENTICATED          
                 # try:
                 #     user_token = request.session['user_token']
