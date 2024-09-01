@@ -1,0 +1,242 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap');
+@font-face {
+    font-family: 'Barabara';
+    src: url('barabara.ttf') format('truetype');
+}
+*{
+    font-family: "Nunito Sans", sans-serif;
+    scroll-behavior: smooth;
+}
+body{
+    margin: 0;
+}
+.hero{
+    height: 60vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    /* background: linear-gradient(0deg, rgb(34 193 195 / 69%) 0%, rgb(253 187 45 / 68%) 100%); */
+    background: linear-gradient(0deg, rgb(34 193 195 / 75%) 0%, rgb(253 187 45 / 75%) 100%), url(images/misocc-hall.jpg) no-repeat center center fixed;
+    background-size: cover;
+    padding-bottom: 100px;
+}
+.hero-title{
+    font-family: "barabara", sans-serif;
+    font-size: 40px;
+    color: #fff;
+}
+.hero-sub-title{
+    font-size: 30px;
+    font-family: 'Nunito Sans';
+    font-weight: 800;
+}
+.hero-item-wrapper{
+    gap: 30px;
+    justify-content: center;
+    margin-top: 40px;
+    margin-bottom: 40px;
+    padding: 20px;
+    height: 30vh;
+}
+.hero-item{
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+    justify-content: space-evenly;
+    align-items: center;
+    color: rgb(255, 255, 255);
+    background-color: rgb(23, 166, 168);
+    padding: 35px 10px;
+    width: 295px;
+    border-radius: 20px;
+    height: 170px;
+}
+.item-title{
+    font-weight: 700;
+    font-size: 40px;
+    margin-bottom: 0;
+}
+.item-description{
+    margin-bottom: 0;
+    margin-top: 15px;
+}
+#main-header{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    padding: 15px 50px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: transparent;
+    transition: background-color 0.3s ease;
+}
+#main-header.scrolled {
+    background-color: #fff;
+}
+.header-logo{
+    width: 70px;
+    height: 70px;
+    object-fit: contain;
+    overflow: hidden;
+}
+.vh-100{
+    min-height: 100vh;
+}
+nav{
+    display: flex;
+    gap: 18px;
+    align-items: center;
+}
+.nav-link{
+    text-decoration: none !important;
+    color: #fff !important;
+    font-size: 18px !important;
+}
+#main-header.scrolled .nav-link {
+    color: black !important;
+}
+.nav-button{
+    text-decoration: none;
+    background-color: rgb(0, 76, 76);
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 12px;
+}
+.nav-button:hover{
+    background-color: rgb(1, 99, 99);
+}
+.about-text{
+    font-size: 18px;
+    z-index: 2;
+    text-shadow: 0 0 15px white;
+}
+.about-image{
+    position: absolute;
+    right: 70px;
+    height: 40%;
+    opacity: 30%;
+}
+
+/* COURSE */
+
+.contained-wrapper {
+    margin: 0 auto;
+    max-width: 1400px;
+    padding: 0 80px;
+}
+.bg-light-1 {
+    background: #fafafa;
+}
+.page-banner-v2 {
+    height: 70vh;
+}
+.section-title {
+    font-weight: 600;
+    font-size: 
+    24px;
+}
+.course-module-item {
+    margin-bottom: 50px;
+}
+.course-item {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+    border: 1px solid rgb(237, 237, 237);
+    border-radius: 10px;
+}
+.course-item-container a {
+    color: rgb(44, 44, 44);
+    font-weight: 600;
+    font-size: 15px;
+    text-decoration: none;
+}
+.img-wrapper {
+    position: relative;
+}
+
+.img-item {
+    display: block;
+    width: 100%;
+    height: 275px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+.partner-card-logo{
+    width: 40px;
+    height: 40px;
+    padding: 3px;
+    border: 1px solid #ececec;
+    border-radius: 5px;
+}
+.partner-details {
+    position: absolute;
+    bottom: 0px;
+    left: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+}
+
+.gradient-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(191deg, transparent, transparent, white 75%);
+    pointer-events: none; /* Allows clicking through the gradient */
+}
+.course-details-container {
+    height: 80px;
+    background: rgb(255, 255, 255);
+    border-image: initial;
+    border-radius: 0 0 8px 8px;
+    padding: 16px;
+}
+
+.partner-img-item{
+    width: 250px;
+    object-fit: contain;
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 10px;
+}
+#scrollToTopBtn {
+    padding: 5px 20px;
+    background-color: #fafafa;
+    color: #000;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+    box-shadow: 0 0 3px 0px;
+    font-size: 25px;
+    z-index: 99;
+}
+
+#scrollToTopBtn:hover {
+    opacity: 1;
+}
+footer{
+    height: 200px;
+    color: #fff;
+    padding: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.footer-title{
+    font-family: 'Barabara';
+}
+.footer-sub-title{
+    font-size: 20px;
+    font-weight: 700;
+}
