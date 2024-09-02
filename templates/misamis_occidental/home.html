@@ -525,10 +525,10 @@
     <section id="faq" class="container mb-5 d-flex justify-content-center flex-column py-5">
         <h4 class="mb-5 faq-title">FREQUENTLY ASKED QUESTIONS</h4>
         <div class="faq px-5">
-            <h5>Are the courses Free?</h5>
-            <p class="mb-5 mx-5">The courses under this project is free. This initiative is fully funded by the Department of Information and Communications Technology.</p>
+            <h5>Are the courses free under this program?</h5>
+            <p class="mb-5 mx-5">Access to the courses under this project is free subject to the approval of program administrators.</p>
             <h5>How can I access the courses?</h5>
-            <p class="mx-5">You can apply access to the courses by accomplishing an application form. The project staff will send the invite via your registered email address. Make sure that you first have a coursebank account.</p>
+            <p class="mx-5">You can apply access to the courses by applying to the program. An invite will be sent via your registered email address upon acceptance to the program.</p>
         </div>
     </section>
 
@@ -540,6 +540,22 @@
     </footer>
 
     <button id="scrollToTopBtn" style="position: fixed; bottom: 40px; right: 40px; display: none;"><i class="fa-solid fa-caret-up"></i></button>
+    <style>
+        @font-face {
+            font-family: 'Barabara';
+            src: url("{% static 'fonts/barabara.ttf' %}") format('truetype');
+        }
+        .hero{
+            height: 60vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            align-items: center;
+            background: linear-gradient(0deg, rgb(34 193 195 / 75%) 0%, rgb(253 187 45 / 75%) 100%), url("{% static 'images/misamis-occidental/misocc-hall.jpg' %}") no-repeat center center fixed;
+            background-size: cover;
+            padding-bottom: 100px;
+        }
+    </style>
     <script>
     window.addEventListener('scroll', function() {
         var heroHeight = document.querySelector('.hero').offsetHeight;

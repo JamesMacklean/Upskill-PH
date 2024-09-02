@@ -1,8 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap');
-@font-face {
+/* @font-face {
     font-family: 'Barabara';
     src: url("{% static 'fonts/barabara.ttf' %}") format('truetype');
-}
+} */
 *{
     font-family: "Nunito Sans", sans-serif;
     scroll-behavior: smooth;
@@ -10,17 +10,16 @@
 body{
     margin: 0;
 }
-.hero{
+/* .hero{
     height: 60vh;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
     align-items: center;
-    /* background: linear-gradient(0deg, rgb(34 193 195 / 69%) 0%, rgb(253 187 45 / 68%) 100%); */
     background: linear-gradient(0deg, rgb(34 193 195 / 75%) 0%, rgb(253 187 45 / 75%) 100%), url("{% static 'images/misamis-occidental/misocc-hall.jpg' %}") no-repeat center center fixed;
     background-size: cover;
     padding-bottom: 100px;
-}
+} */
 .hero-title{
     font-family: "barabara", sans-serif;
     font-size: 40px;
