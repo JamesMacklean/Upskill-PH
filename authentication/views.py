@@ -451,31 +451,111 @@ def edit_profile(request):
     return render(request, template_name, context)
 
 def partner(request):
-    """"""
-    template_name = "partner_dashboard.html"
-    context = {}
-    partner_programs = []
-        
-    user_token = request.session['user_token']
-    if request.session['is_partner']:
-        partners = user_partners(user_token)
-        
-        if partners:   
-            for data in partners:
-                partner_id = data['partner_id']
-                program_id = data['program_id']
-                
-                if program_id:
-                    programs_list = get_programs(user_token,partner_id,program_id)
-                    
-                    for program in programs_list:
-                        partner_programs.append(program)
-    else:
+    template_name = "partner/partner_selection_page.html"
+    user_token = request.session.get('user_token')
+    
+    if not user_token or not request.session.get('is_partner'):
+        raise Http404
+
+    # Get the user's partners
+    partners = user_partners(user_token)
+    
+    if not partners:
         raise Http404
     
+    # Collect all unique partner_ids
+    unique_partner_ids = list({data['partner_id'] for data in partners})
+    if len(unique_partner_ids) == 1:
+        # If there is only one unique partner, fetch its details and redirect
+        partner_id = unique_partner_ids[0]
+        all_partners = get_partner(user_token)
+        selected_partner = next((partner for partner in all_partners if partner['id'] == partner_id), None)
+        
+        if not selected_partner or not selected_partner['slug']:
+            raise Http404
+        
+        return HttpResponseRedirect(reverse('partner_slug', kwargs={'partner_slug': selected_partner['slug']}))
+    else:
+        # If there are multiple unique partners, render the partner selection page
+        all_partners = get_partner(user_token)
+        partner_details = []
+        
+        for partner_id in unique_partner_ids:
+            partner = next((p for p in all_partners if p['id'] == partner_id), None)
+            if partner:
+                partner_details.append(partner)
+        
+        context = {
+            'partners': partner_details
+        }
+    return render(request, template_name, context)
+
+def partner_slug_view(request, partner_slug):
+    template_name = "partner/partner_page.html"
+    context = {}
+    partner_programs = []
+    partner_details = []
+
+    user_token = request.session['user_token']
+    
+    # Fetch the partner details using the slug
+    selected_partner_list = get_partner_through_slug(user_token, partner_slug)
+    print("!!!!!!!!!!!!!!!!!!!!!!!")
+    print(selected_partner_list)
+    if not selected_partner_list or not isinstance(selected_partner_list, list):
+        raise Http404("Partner not found")
+    
+    # Assuming the first item is the correct partner
+    selected_partner = selected_partner_list[0]
+    partner_details.append(selected_partner)
+    
+    if request.session.get('is_partner'):
+        partners = user_partners(user_token)
+        
+        if partners:
+            # Filter programs associated with the selected partner
+            for data in partners:
+                if data['partner_id'] == selected_partner['id']:
+                    program_id = data['program_id']
+                    
+                    if program_id:
+                        programs_list = get_programs(user_token, selected_partner['id'], program_id)
+                        partner_programs.extend(programs_list)
+    else:
+        raise Http404("User is not a partner")
+    
+    context['partner_details'] = partner_details
     context['program_list'] = partner_programs
     
     return render(request, template_name, context)
+
+
+# def partner(request):
+#     """"""
+#     template_name = "partner/partner_page.html"
+#     context = {}
+#     partner_programs = []
+        
+#     user_token = request.session['user_token']
+#     if request.session['is_partner']:
+#         partners = user_partners(user_token)
+        
+#         if partners:   
+#             for data in partners:
+#                 partner_id = data['partner_id']
+#                 program_id = data['program_id']
+                
+#                 if program_id:
+#                     programs_list = get_programs(user_token,partner_id,program_id)
+                    
+#                     for program in programs_list:
+#                         partner_programs.append(program)
+#     else:
+#         raise Http404
+    
+#     context['program_list'] = partner_programs
+    
+#     return render(request, template_name, context)
 
 def application(request, program_slug):
     """"""

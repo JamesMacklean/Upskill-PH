@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="mb-5">
+    <h3>Partners</h3>
+</div>
+<div class="bg-light py-5" id="partners">
+    <div class="pb-5">
+      <section class="section-courses-container">
+        <div class="row pt-3 gutter-2rem">
+            {% for partner in partners %}
+            <div class="col-12 col-md-4 mb-4">
+                <a href="{% url 'partner_slug' partner.slug %}">
+                <div class="course-item course-item-row">
+                    <div class="course-details-container w-100">
+                        <p class="course-description mb-1 mt-2">
+                            {{ partner.name }}
+                        </p>
+                        <p class="text-dark mb-1">
+                            {{ partner.about|default:"No description available." }}
+                        </p>
+                    </div>
+                </div>
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+      </section>
+    </div>
+  </div>
+{% endblock %}

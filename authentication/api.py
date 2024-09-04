@@ -222,6 +222,46 @@ def users_list(bearer_token, user_id=None, endpoint=None):
             
     return users
 
+# GET https://scholarium.tmtg-clone.click/v1/partner
+def get_partner(bearer_token):  
+    partner_list = []
+    payload={}
+    headers = {
+    'Authorization': bearer_token
+    }
+    
+    response = requests.request("GET", API_PARTNER_URL, headers=headers, data=payload)
+    response_dict = json.loads(response.text)
+    
+    if 'data' in response_dict:
+        try:
+            for data in response_dict['data']:
+                partner_list.append(data)
+        except Exception as e:
+            print(str(e), flush=True)
+
+    return partner_list
+
+# GET https://scholarium.tmtg-clone.click/v1/partner
+def get_partner_through_slug(bearer_token, slug):  
+    partner_list = []
+    payload={}
+    headers = {
+    'Authorization': bearer_token
+    }
+    
+    response = requests.request("GET", os.path.join(API_PARTNER_URL, str(slug)), headers=headers, data=payload)
+    response_dict = json.loads(response.text)
+    
+    if 'data' in response_dict:
+        try:
+            for data in response_dict['data']:
+                partner_list.append(data)
+        except Exception as e:
+            print(str(e), flush=True)
+
+    return partner_list
+
 # GET https://scholarium.tmtg-clone.click/v1/partner/[partner_id]/programs/[program_id]
 def get_programs(bearer_token, partner_id,program_id):  
     program_list = []
