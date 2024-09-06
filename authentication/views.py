@@ -490,7 +490,7 @@ def partner(request):
         }
     return render(request, template_name, context)
 
-def partner_slug_view(request, partner_slug):
+def partner_slug(request, partner_slug):
     template_name = "partner/partner_page.html"
     context = {}
     partner_programs = []
@@ -500,8 +500,7 @@ def partner_slug_view(request, partner_slug):
     
     # Fetch the partner details using the slug
     selected_partner_list = get_partner_through_slug(user_token, partner_slug)
-    print("!!!!!!!!!!!!!!!!!!!!!!!")
-    print(selected_partner_list)
+    
     if not selected_partner_list or not isinstance(selected_partner_list, list):
         raise Http404("Partner not found")
     
@@ -509,6 +508,7 @@ def partner_slug_view(request, partner_slug):
     selected_partner = selected_partner_list[0]
     partner_details.append(selected_partner)
     
+    is_user_partner = False
     if request.session.get('is_partner'):
         partners = user_partners(user_token)
         
@@ -516,6 +516,7 @@ def partner_slug_view(request, partner_slug):
             # Filter programs associated with the selected partner
             for data in partners:
                 if data['partner_id'] == selected_partner['id']:
+                    is_user_partner = True
                     program_id = data['program_id']
                     
                     if program_id:
@@ -526,9 +527,56 @@ def partner_slug_view(request, partner_slug):
     
     context['partner_details'] = partner_details
     context['program_list'] = partner_programs
+    context['is_user_partner'] = is_user_partner
     
     return render(request, template_name, context)
 
+def partner_edit(request, partner_slug):
+    user_token = request.session.get('user_token')
+    
+    if not request.session.get('is_partner'):
+        raise Http404("You are not authorized to edit this partner.")
+    
+    date_now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    
+    # Fetch the partner using the slug
+    selected_partner_list = get_partner_through_slug(user_token, partner_slug)
+    
+    if not selected_partner_list or not isinstance(selected_partner_list, list):
+        raise Http404("Partner not found")
+    
+    selected_partner = selected_partner_list[0]
+    
+    if request.method == 'POST':
+        
+        # Get data from the POST request
+        partner_name = request.POST.get('partner_name')
+        partner_about = request.POST.get('partner_about')
+        partner_slug = request.POST.get('partner_slug')
+        partner_url = request.POST.get('partner_url')
+        partner_fb = request.POST.get('partner_fb')
+        partner_ig = request.POST.get('partner_ig')
+        date_now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        
+        # Call the API to update the partner details
+        updated_partner, response_message= update_partner(
+            user_token,
+            selected_partner['id'],
+            partner_name,
+            partner_about,
+            partner_slug,
+            partner_url,
+            partner_fb,
+            partner_ig,
+            date_now,
+        )
+        return redirect('partner_slug', partner_slug=partner_slug)
+        
+    context = {
+        'partner': selected_partner
+    }
+    
+    return render(request, 'partner/partner_edit_page.html', context)
 
 # def partner(request):
 #     """"""
@@ -557,7 +605,133 @@ def partner_slug_view(request, partner_slug):
     
 #     return render(request, template_name, context)
 
-def application(request, program_slug):
+def program_slug(request, partner_slug, program_slug):
+    template_name = "program/program_page.html"
+    context = {}
+
+    user_token = request.session['user_token']
+    partners = user_partners(user_token)
+    partner_details = []
+    # Get the program using the slug
+    program_data = get_program_through_slug(user_token, program_slug)
+    if not program_data:
+        raise Http404
+    
+    partner_id = program_data[0]['partner_id']
+    program_id = program_data[0]['id']
+    
+    monitored_partner = [data['partner_id'] for data in partners]
+    monitored_program = [data['program_id'] for data in partners]
+            
+    if partner_id not in monitored_partner:
+        raise Http404
+    if program_id not in monitored_program:
+        raise Http404
+    
+    # Fetch the partner details using the slug
+    selected_partner_list = get_partner(user_token)
+    
+    if not selected_partner_list or not isinstance(selected_partner_list, list):
+        raise Http404("Partner not found")
+    
+    # Assuming the first item is the correct partner
+    selected_partner = selected_partner_list[0]
+    partner_details.append(selected_partner)
+    
+    is_user_partner = False
+    if request.session.get('is_partner'):
+        partners = user_partners(user_token)
+        
+        if partners:
+            # Filter programs associated with the selected partner
+            for data in partners:
+                if data['partner_id'] == selected_partner['id']:
+                    is_user_partner = True
+                    program_id = data['program_id']
+    else:
+        raise Http404("User is not a partner")
+    
+    context['program_details'] = program_data
+    context['partner_details'] = partner_details
+    context['partner_slug'] = partner_slug
+    context['is_user_partner'] = is_user_partner
+    
+    return render(request, template_name, context)
+
+def program_edit(request, partner_slug, program_slug):
+    user_token = request.session.get('user_token')
+    
+    if not request.session.get('is_partner'):
+        raise Http404("You are not authorized to edit this partner.")
+    
+    date_now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    
+    selected_partner_list = get_partner_through_slug(user_token, partner_slug)
+    selected_program_list = get_program_through_slug (user_token, program_slug)
+    
+    if not selected_partner_list or not isinstance(selected_partner_list, list):
+        raise Http404("Partner not found")
+    
+    selected_partner = selected_partner_list[0]
+    selected_program = selected_program_list[0]
+    
+    if request.method == 'POST':
+        
+        # Get data from the POST request
+        
+        # 'name': name,
+        # 'slug': slug,
+        # 'description': description,
+        # 'about': about,
+        # 'external_id': external_id,
+        # 'start_date': start_date,
+        # 'registration_end': registration_end,
+        # 'end_date': end_date,
+        # 'last_modified': date_now,
+        # 'badge': badge,
+        # 'certificate': certificate
+        
+        program_name = request.POST.get('program_name')
+        program_new_slug = request.POST.get('program_slug')
+        program_description = request.POST.get('program_description')
+        program_about = request.POST.get('program_about')
+        # program_external_id = request.POST.get('program_external_id')
+        program_start_date = request.POST.get('program_start_date')
+        program_registration_end = request.POST.get('program_registration_end')
+        program_end_date = request.POST.get('program_end_date')
+        date_now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        program_badge = request.POST.get('program_badge')
+        program_certificate = request.POST.get('program_certificate')
+        
+        # Call the API to update the program details
+        updated_program, response_message= update_program(
+            user_token,
+            selected_program['id'],
+            selected_partner['id'],
+            program_name,
+            program_new_slug,
+            program_description,
+            program_about,
+            program_start_date,
+            program_registration_end,
+            program_end_date,
+            date_now,
+            program_badge,
+            program_certificate
+        )
+        
+        print(updated_program)
+        print(response_message)
+        return redirect('program_slug', partner_slug=partner_slug, program_slug = program_new_slug)
+        
+    context = {
+        'partner': selected_partner,
+        'program': selected_program
+    }
+    
+    return render(request, 'program/program_edit_page.html', context)
+
+def application(request, partner_slug, program_slug):
     """"""
     template_name = "scholar_application.html"
     context = {}
@@ -609,6 +783,7 @@ def application(request, program_slug):
 
     context['programs'] = program_data
     context['scholarship_applicants'] = scholarship_applicants
+    context[partner_slug] = partner_slug
     
     return render(request, template_name, context)
 

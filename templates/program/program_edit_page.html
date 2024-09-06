@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% comment %} {% load parse_iso %} {% endcomment %}
+{% block content %}
+<div class="container">
+    <h2>Edit {{ program.name }}</h2>
+    
+    <form action="" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        
+        <!-- Partner Name -->
+        <div class="mb-3">
+            <label for="programName" class="form-label">Program Name</label>
+            <input type="text" class="form-control" id="programName" value="{{ program.name }}" name="program_name" required>
+        </div>
+
+        <!-- Program Description -->
+        <div class="mb-3">
+            <label for="programDescription" class="form-label">Program Description</label>
+            <textarea class="form-control" id="programDescription" name="program_description" rows="4">{{ program.description }}</textarea>
+        </div>
+
+        <!-- Program Slug -->
+        <div class="mb-3">
+            <label for="programSlug" class="form-label">Program Slug</label>
+            <input type="text" class="form-control" id="programSlug" value="{{ program.slug }}" name="program_slug" required>
+        </div>
+
+        <!-- Program About -->
+        <div class="mb-3">
+            <label for="programAbout" class="form-label">Program About</label>
+            <textarea class="form-control" id="programAbout" name="program_about" rows="4">{{ program.about }}</textarea>
+        </div>
+
+         <!-- Program Start Date -->
+        <div class="mb-3">
+            <label for="programStartDate" class="form-label">Start Date</label>
+            <input type="date" class="form-control" id="programStartDate" value="{{ program.start_date }}" name="program_start_date">
+        </div>
+
+        <!-- Program Registration End Date -->
+        <div class="mb-3">
+            <label for="registrationEnd" class="form-label">Registration End Date</label>
+            <input type="date" class="form-control" id="registrationEnd" value="{{ program.registration_end }}" name="registration_end">
+        </div>
+
+        <!-- Program End Date -->
+        <div class="mb-3">
+            <label for="programEndDate" class="form-label">End Date</label>
+            <input type="date" class="form-control" id="programEndDate" value="{{ program.end_date }}" name="program_end_date">
+        </div>
+
+        <!-- Program Badge -->
+        <div class="mb-3 form-check">
+            <input type="checkbox" class="form-check-input" id="badgeCheck" name="badge" {% if program.badge %}checked{% endif %}>
+            <label class="form-check-label" for="badgeCheck">Badge Available</label>
+        </div>
+
+        <!-- Program Certificate -->
+        <div class="mb-3 form-check">
+            <input type="checkbox" class="form-check-input" id="certificateCheck" name="certificate" {% if program.certificate %}checked{% endif %}>
+            <label class="form-check-label" for="certificateCheck">Certificate Available</label>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="d-flex justify-content-between">
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+            
+            <!-- Cancel Button -->
+            <a href="{% url 'program_slug' partner.slug program.slug %}" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
+    </form>
+</div>
+{% endblock %}

@@ -587,23 +587,62 @@ def update_education (bearer_token, degree, school, study, date_now, privacy):
 
     return context, response_message
 
-# POST https://scholarium.tmtg-clone.click/v1/partner/programs 
-def update_program (bearer_token, program_id, name, description, partner_id, logo, image, start_date, end_date, registration_end, badge, certificate, date_now):
-    updated_data = []
+# POST https://scholarium.tmtg-clone.click/v1/partner
+def update_partner (bearer_token, partner_id, name, about, slug, url, fb, ig, date_now) :
     context = {}
     payload={
-        'program_id': program_id,
+        'id': partner_id,
         'name': name,
-        'description': description,
+        'about': about,
+        'slug': slug,
+        'url': url,
+        'fb': fb,
+        'ig': ig,        
+        'last_modified': date_now,
+    }
+    
+    files=[]
+    headers = {
+    'Authorization': bearer_token
+    }
+    
+    response = requests.request("POST", API_PARTNER_URL, headers=headers, data=payload, files=files)        
+    response_dict = ast.literal_eval(response.text)
+    
+    if 'data' in response_dict:
+            response_message = "Partner Updated!"
+    else:
+        response_message = response_dict.get("error")
+    
+    # AUTO-ADD SA CONTEXT NG MGA KEYS NA NA-UPDATE VIA API
+    if 'data' in response_dict:
+        try:
+            for data in response_dict['data']:
+                for key, value in data.items():
+                    if value is not None:
+                        context[key] = data.get(key)
+                        
+        except Exception as e:
+            print(str(e), flush=True)
+
+    return context, response_message
+
+# POST https://scholarium.tmtg-clone.click/v1/partner/programs 
+def update_program (bearer_token, program_id, partner_id, name, slug, description, about, start_date, registration_end, end_date, date_now, badge, certificate):
+    context = {}
+    payload={
+        'id': program_id,
         'partner_id': partner_id,
-        'logo': logo,
-        'image': image,
+        'name': name,
+        'slug': slug,
+        'description': description,
+        'about': about,
         'start_date': start_date,
-        'end_date': end_date,
         'registration_end': registration_end,
+        'end_date': end_date,
+        'last_modified': date_now,
         'badge': badge,
-        'certificate': certificate,
-        'last_modified': date_now
+        'certificate': certificate
     }
     
     files=[]
@@ -625,8 +664,6 @@ def update_program (bearer_token, program_id, name, description, partner_id, log
             for data in response_dict['data']:
                 for key, value in data.items():
                     if value is not None:
-                        program_data = {key:data.get(key)}
-                        updated_data.append(program_data)
                         context[key] = data.get(key)
                         
         except Exception as e:
