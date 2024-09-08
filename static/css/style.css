@@ -528,6 +528,11 @@ div.card-image {
 .edit-button{
   width: 50%;
 }
+
+.partner-link{
+  text-decoration: none !important;
+  color: #000;
+}
 /* mobile response */
 @media screen and (max-width: 430px) {
   .program-partner-logos img {
