@@ -5,8 +5,13 @@
   box-sizing: border-box;
   font-family: "Poppins", sans-serif;
 }
+
 a{
   text-decoration: none !important;
+}
+
+.btn-primary{
+  background-color: #ff7300 !important;
 }
 
 body {
