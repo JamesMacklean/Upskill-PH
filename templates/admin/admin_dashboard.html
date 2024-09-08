@@ -1,16 +1,16 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="w-100 mb-5">
+<div class="w-100 mb-5 p-5">
 
     <h3 class="mb-5">User  Management</h3>
 
-    <div>
+    <div class="mb-5">
         <a href="{% url 'user_management' %}" class="btn btn-primary">User Management</a>
     </div>
 
-    <h3>License Codes</h3>
+    <h3 class="mb-5">License Codes</h3>
 
-    <div>
+    <div class="mb-5">
         {% comment %} TEMPORARILY HARD CODED FOR DICT {% endcomment %}
         <a href="{% url 'admin_partners' '2' %}" class="btn btn-primary">DICT</a>
     </div>
