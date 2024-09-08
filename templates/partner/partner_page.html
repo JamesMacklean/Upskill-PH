@@ -5,17 +5,18 @@
 
 <div class="mb-5"></div>
 
-<div class="bg-light py-5" id="partner-details">
+<div class="bg-light py-5 w-100 px-3" id="partner-details">
     <div class="container">
+        <h4 class="mb-5">{{ partner.name }}</h4>
         {% for partner in partner_details %}
-        <div class="partner-info mb-5 text-center">
-            <h4>{{ partner.name }}</h4>
+        <div class="partner-info mb-5 d-flex">
             {% if partner.logo %}
             <img class="partner-logo" src="{{ partner.logo }}" alt="{{ partner.name }} Logo">
             {% else %}
             <img class="partner-logo" src="https://via.placeholder.com/150" alt="Placeholder Logo">
             {% endif %}
-            <p class="partner-description">{{ partner.about|default:"No description available." }}</p>
+            <div class="partner-description-container">
+                <p class="partner-description">{{ partner.about|default:"No description available." }}</p>
 
             <!-- Edit button visible only to partners -->
             {% if is_user_partner %}
@@ -23,6 +24,7 @@
                 <a href="{% url 'partner_edit' partner.slug %}" class="btn btn-primary">Edit</a>
             </div>
             {% endif %}
+            </div>
 
         </div>
 
