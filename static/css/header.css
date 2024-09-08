@@ -44,6 +44,19 @@ nav a:hover {
   cursor: pointer;
 }
 
+.btn-primary{
+  background-color: #ff7300 !important;
+}
+.btn-green{
+  background-color: rgb(6, 115, 35);
+}
+.btn-yellow{
+  background-color: rgb(254, 219, 24);
+}
+.btn-red{
+  background-color: rgb(201, 49, 49);
+}
+
 .btn:hover {
   background-color: #f24725;
   color: #fff;
