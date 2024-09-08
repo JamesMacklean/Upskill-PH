@@ -4,7 +4,8 @@
 {% block content %}
 <link rel="stylesheet" type="text/css" href="{% static 'css/courses.css' %}"/>
 
-{% for program in program_list %} 
+<div class="d-flex program-list">
+    {% for program in program_list %} 
     <a href="{% url 'license_codes' program.slug %}">
         <div class="partner-card-container">
             <div class="partner-card-image">
@@ -43,5 +44,6 @@
         </div>
     </a>  
 {% endfor %}
+</div>
 
 {% endblock %}
