@@ -4,10 +4,10 @@
 {% block content %}
 <link rel="stylesheet" type="text/css" href="{% static 'css/courses.css' %}"/>
 
-<div class="d-flex program-list">
+<div class="d-flex flex-wrap program-list p-5">
     {% for program in program_list %} 
     <a href="{% url 'license_codes' program.slug %}">
-        <div class="partner-card-container">
+        <div class="partner-card-container mx-3 my-3">
             <div class="partner-card-image">
                 {% if program.image %}
                     <img class="img-item" src="{{program.image}}">
