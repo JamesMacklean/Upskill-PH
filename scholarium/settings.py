@@ -37,7 +37,7 @@ EMAIL_USE_SSL = True
 SECRET_KEY = 'django-insecure-k(i3^c+t7zkamnk@nut1x_inn)p_^s)sfrq(o61=i@uu6@uv&6'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = [
     '139.59.116.183',
@@ -166,12 +166,12 @@ SESSION_SAVE_EVERY_REQUEST = True
 
 ########## ORIGINAL CODE ##########
 # comment these to run in DEV MODE
-SESSION_COOKIE_DOMAIN = '.upskillph.org'
-SESSION_COOKIE_SAMESITE = 'None'
-SESSION_COOKIE_SECURE = True
-CSRF_COOKIE_DOMAIN = '.upskillph.org'
-CSRF_COOKIE_SAMESITE = 'None'
-CSRF_COOKIE_SECURE = True
+# SESSION_COOKIE_DOMAIN = '.upskillph.org'
+# SESSION_COOKIE_SAMESITE = 'None'
+# SESSION_COOKIE_SECURE = True
+# CSRF_COOKIE_DOMAIN = '.upskillph.org'
+# CSRF_COOKIE_SAMESITE = 'None'
+# CSRF_COOKIE_SECURE = True
 ###################################
 
 LOGGING = {

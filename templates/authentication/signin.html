@@ -13,13 +13,17 @@
         <div class="input-box">
             <input id="password" type="password" name="password" placeholder="Password" required>
         </div>
-        <div class="error" style="display: none;">
+        
+        <!-- Conditionally show the error div if response_message is present -->
+        {% if response_message %}
+        <div class="error">
             <p>{{ response_message }}</p>
         </div>
+        {% endif %}
+        
         <button type="submit" class="btn" id="loginButton">Login</button>
         <div class="register-link">
-            <p>Don't have an account? <a href="/signup">Signup</a>
-            </p>
+            <p>Don't have an account? <a href="/signup">Signup</a></p>
         </div>
     </form>
 </div>

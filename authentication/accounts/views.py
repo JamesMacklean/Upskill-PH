@@ -122,10 +122,9 @@ def signup(request):
             
             print(f'SIGN UP: {response_message}', flush=True)
             
-            messages.info(request, response_message)
-            
     except Exception as e:
         print(str(e), flush=True)
+        context['response_message'] = "error"
     
     return render(request, template_name, context)
 
