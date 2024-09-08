@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
 {% comment %} {% load parse_iso %} {% endcomment %}
 {% block content %}
-<div class="container">
-    <h2>Edit {{ program.name }}</h2>
+<div class="container my-5">
+    <h2 class="mb-4">Edit {{ program.name }}</h2>
     
-    <form action="" method="POST" enctype="multipart/form-data">
+    <form action="" method="POST" enctype="multipart/form-data" class="px-5">
         {% csrf_token %}
         
         <!-- Partner Name -->
@@ -62,8 +62,8 @@
         </div>
 
         <!-- Submit Button -->
-        <div class="d-flex justify-content-between">
-            <button type="submit" class="btn btn-primary">Save Changes</button>
+        <div class="d-flex justify-content-center">
+            <button type="submit" class="btn btn-primary mx-3">Save Changes</button>
             
             <!-- Cancel Button -->
             <a href="{% url 'program_slug' partner.slug program.slug %}" class="btn btn-secondary">Cancel</a>

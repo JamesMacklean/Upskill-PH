@@ -18,14 +18,13 @@
                 <h4 class="mb-3">{{ partner.name }}</h4>
                 <p class="partner-description">{{ partner.about|default:"No description available." }}</p>
 
-            <!-- Edit button visible only to partners -->
-            {% if is_user_partner %}
-            <div class="mt-4">
-                <a href="{% url 'partner_edit' partner.slug %}" class="btn btn-primary">Edit</a>
+                <!-- Edit button visible only to partners -->
+                {% if is_user_partner %}
+                <div class="mt-4">
+                    <a href="{% url 'partner_edit' partner.slug %}" class="btn btn-primary">Edit</a>
+                </div>
+                {% endif %}
             </div>
-            {% endif %}
-            </div>
-
         </div>
 
         <!-- Partner's Programs Section -->
@@ -45,21 +44,22 @@
                                 {% else %}
                                 <img class="img-item" height="100%" width="320px" src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/mspiral_djph_model-768x417.jpg">
                                 {% endif %}
+        
+                                <div class="course-details-container w-100">
+                                        <p class="course-description mb-1 mt-2">
+                                            {{ program.name }}
+                                        </p>
+                                        <p class="text-dark mb-1">
+                                            {{ program.description }}
+                                        </p>
+                                        <div class="d-flex align-items-center pb-3">
+                                            <img width="50px" src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/DICT-Logo-nobg.png">
+                                            <img width="50px" src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/ILCDB+logo_2.png">
+                                            <img width="50px" src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/coursera-social-logo-brand.png">
+                                            <img width="50px" src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/logo-moocsx.png">
+                                        </div>
+                                </div>
                             </a>
-                            <div class="course-details-container w-100">
-                                    <p class="course-description mb-1 mt-2">
-                                        {{ program.name }}
-                                    </p>
-                                    <p class="text-dark mb-1">
-                                        {{ program.description }}
-                                    </p>
-                                    <div class="d-flex align-items-center pb-3">
-                                        <img width="50px" src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/DICT-Logo-nobg.png">
-                                        <img width="50px" src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/ILCDB+logo_2.png">
-                                        <img width="50px" src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/coursera-social-logo-brand.png">
-                                        <img width="50px" src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/logo-moocsx.png">
-                                    </div>
-                            </div>
                         </div>
                     </div>
                     {% endfor %}
