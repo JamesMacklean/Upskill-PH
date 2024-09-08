@@ -34,6 +34,9 @@
             <div class="dropdown-content">
                 <a href="{% url 'profile' %}">Profile</a>
                 <a href="{% url 'account' %}">Account</a>
+                {% if request.session.is_partner %}
+                <a href="{% url 'partner' %}">Partner</a>
+                {% endif %}
                 <a href="{% url 'signout' %}">Sign Out</a>
             </div>
         </div>
@@ -49,6 +52,9 @@
     <a class="m-nav-link" href="{% url 'dashboard' %}">Dashboard</a>
     {% if request.session.is_admin or request.session.is_global %}
     <a class="m-nav-link" href="{% url 'admin_dashboard' %}">Admin</a>
+    {% endif %}
+    {% if request.session.is_partner %}
+    <a class="m-nav-link" href="{% url 'partner' %}">Partner</a>
     {% endif %}
     <hr style="width:70%;">
     <a class="m-nav-link" href="{% url 'profile' %}">Profile</a>
