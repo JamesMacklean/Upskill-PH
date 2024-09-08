@@ -141,10 +141,10 @@ nav a:hover {
 }
 
 .hamburger {
-  height: 40px;
   border: none;
   background: transparent;
   box-shadow: none;
+  font-size: 20px;
 }
 
 .hamburger i {
