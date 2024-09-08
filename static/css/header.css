@@ -37,7 +37,7 @@ nav a:hover {
 
 .btn {
   padding: 8px 16px;
-  background-color: #ff7300;
+  /* background-color: #ff7300; */
   color: #fff;
   border: none;
   border-radius: 4px;
