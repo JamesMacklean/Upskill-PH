@@ -7,9 +7,8 @@
         <h3 class="banner-title">PROGRAMS</h3>
     </div>
 
-    <div class="bg-light w-100 min-100">
-        <div class="p-5">
-                <div class="bg-white w-100">
+    <div class="bg-light w-100 min-100 p-5">
+                <div class="d-flex flex-wrap">
                     {% for program in program_list %}
                         {% if program.id not in applied_programs %}   
                             <a href="{% url 'program' program.slug %}">
@@ -53,5 +52,4 @@
                     {% endfor %}
                 </div>
         </div>
-    </div>
 {% endblock %}
