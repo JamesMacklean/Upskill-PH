@@ -80,30 +80,25 @@
                             </form>
                             <script>
                                 function handleFormSubmit(event) {
-                                    event.preventDefault();  // Prevent the form from submitting normally
+                                    event.preventDefault();
                                     const form = event.target;
 
-                                    // Optionally, you can send the form data using Fetch API or XMLHttpRequest
-                                    // Here's a simple example using Fetch:
                                     fetch(form.action, {
                                         method: 'POST',
                                         body: new FormData(form),
                                         headers: {
-                                            'X-CSRFToken': '{{ csrf_token }}'  // Ensure CSRF token is included if needed
+                                            'X-CSRFToken': '{{ csrf_token }}'
                                         }
                                     }).then(response => {
                                         if (response.ok) {
                                             console.log('Form submitted successfully!');
-                                            // Optionally, reload the page or display a success message
+                                            
                                             window.location.reload();
                                         } else {
                                             console.error('Form submission failed!');
-                                            // Handle errors
+                                            
                                         }
                                     }).catch(error => console.error('Error submitting form:', error));
-
-                                    // Or simply reload the page without sending data if that's the intention
-                                    // window.location.reload();
                                 }
                             </script>
                         </div>
@@ -264,30 +259,22 @@
                     </form>
                     <script>
                         function handleFormSubmit(event) {
-                            event.preventDefault();  // Prevent the form from submitting normally
+                            event.preventDefault();
                             const form = event.target;
-
-                            // Optionally, you can send the form data using Fetch API or XMLHttpRequest
-                            // Here's a simple example using Fetch:
                             fetch(form.action, {
                                 method: 'POST',
                                 body: new FormData(form),
                                 headers: {
-                                    'X-CSRFToken': '{{ csrf_token }}'  // Ensure CSRF token is included if needed
+                                    'X-CSRFToken': '{{ csrf_token }}'
                                 }
                             }).then(response => {
                                 if (response.ok) {
                                     console.log('Form submitted successfully!');
-                                    // Optionally, reload the page or display a success message
                                     window.location.reload();
                                 } else {
                                     console.error('Form submission failed!');
-                                    // Handle errors
                                 }
                             }).catch(error => console.error('Error submitting form:', error));
-
-                            // Or simply reload the page without sending data if that's the intention
-                            // window.location.reload();
                         }
                     </script>
                 </div>
