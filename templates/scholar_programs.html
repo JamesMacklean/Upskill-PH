@@ -233,13 +233,4 @@
             </div>
         {% endif %}
     {% endfor %}
-    <script>
-        function showSubmissionPrompt() {
-            const promptDiv = document.querySelector('.application-prompt');
-            promptDiv.style.display = 'block'; // Show the div
-            setTimeout(() => {
-                promptDiv.style.display = 'none'; // Hide the div after 15 seconds
-            }, 15000);
-        }
-    </script>
 {% endblock %}
