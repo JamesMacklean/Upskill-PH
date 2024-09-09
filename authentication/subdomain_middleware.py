@@ -73,7 +73,7 @@ class SubdomainMiddleware(MiddlewareMixin):
 
     
         # FOR TEST CODE
-        # FOR https://127.0.0.1:8000
+        # FOR http://127.0.0.1:8000
         else:
             
             try:
@@ -82,7 +82,7 @@ class SubdomainMiddleware(MiddlewareMixin):
                 current_time = int(time.time())  # Get the current time in seconds since the epoch (UNIX time)
                 if current_time >= expires:
                     # The session has expired, sign out the user
-                    return self.signout(request, f'https://{host}')
+                    return self.signout(request, f'http://{host}')
                 try:
                     match = accounts_resolver.resolve(request.path)
                 except:
@@ -97,7 +97,7 @@ class SubdomainMiddleware(MiddlewareMixin):
                     match = None
                     
                 if not match:
-                    return self.signout(request, f'https://{host}')
+                    return self.signout(request, f'http://{host}')
             
         return None
     

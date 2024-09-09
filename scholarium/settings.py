@@ -24,7 +24,9 @@ DOMAIN = 'welcome.upskillph.org'
 ACCOUNTS_DOMAIN = "accounts.upskillph.org"
 
 EMAIL_HOST = 'smtp.hostinger.com' 
-EMAIL_HOST_USER = 'mailer@upskillph.org' 
+# EMAIL_HOST_USER = 'mailer@tmtg-clone.click' 
+# EMAIL_HOST_PASSWORD = 'hnVw35UEvflyXYPzJI7IWk2AmZkIpL8-'
+EMAIL_HOST_USER = 'hello@upskillph.org' 
 EMAIL_HOST_PASSWORD = 'hellO@upskillph2024'
 EMAIL_PORT = 465
 EMAIL_USE_TLS = False
@@ -37,7 +39,9 @@ EMAIL_USE_SSL = True
 SECRET_KEY = 'django-insecure-k(i3^c+t7zkamnk@nut1x_inn)p_^s)sfrq(o61=i@uu6@uv&6'
 
 # SECURITY WARNING: don't run with debug turned on in production!
+# DEBUG = True
 DEBUG = False
+
 ALLOWED_HOSTS = [
     '139.59.116.183',
     '127.0.0.1',

@@ -83,7 +83,7 @@ def signup(request):
             if user_hash:
                 #### MODAL RESPONSE KUNG NAGWORK BA ANG SIGN UP
                 response_message = "success"
-                # domain = f'https://{request.get_host()}'
+                # domain = f'http://{request.get_host()}'
                 # request.session['user_hash'] = user_hash
                 # request.session.modified = True
 
@@ -109,9 +109,9 @@ def signup(request):
                         'Content of the Message', 
                         settings.EMAIL_HOST_USER, 
                         ########## ORIGINAL CODE ##########
-                        [email], 
+                        # [email], 
                         ########## FOR TEST CODE ##########
-                        # [TEST_EMAIL_RECEIVER],
+                        [TEST_EMAIL_RECEIVER],
                         html_message=html,
                         fail_silently=False
                     )
@@ -136,7 +136,7 @@ def signin(request):
     if request.method == "POST":
         email = request.POST['email']
         password = request.POST['password']
-        domain = f'https://{request.get_host()}'
+        domain = f'http://{request.get_host()}'
         
         user_token, expires, redirect_url, response_message = login_account(email, password)
         
