@@ -55,7 +55,7 @@
                             <hr>
                         </div>
                         <div class="program-about mt-4">
-                            <form action="" class="program-application" id="apply" method="POST">
+                            <form action="" class="program-application" id="apply" method="POST" onsubmit="handleFormSubmit(event)">
                                 {% csrf_token %}
                                 <div class="rc-ProfilePhotoUploader form-horizontal">
                                     <div class="form-group horizontal-box wrap my-3 align-items-center">
@@ -78,6 +78,34 @@
                                     </div>
                                 </div>
                             </form>
+                            <script>
+                                function handleFormSubmit(event) {
+                                    event.preventDefault();  // Prevent the form from submitting normally
+                                    const form = event.target;
+
+                                    // Optionally, you can send the form data using Fetch API or XMLHttpRequest
+                                    // Here's a simple example using Fetch:
+                                    fetch(form.action, {
+                                        method: 'POST',
+                                        body: new FormData(form),
+                                        headers: {
+                                            'X-CSRFToken': '{{ csrf_token }}'  // Ensure CSRF token is included if needed
+                                        }
+                                    }).then(response => {
+                                        if (response.ok) {
+                                            console.log('Form submitted successfully!');
+                                            // Optionally, reload the page or display a success message
+                                            window.location.reload();
+                                        } else {
+                                            console.error('Form submission failed!');
+                                            // Handle errors
+                                        }
+                                    }).catch(error => console.error('Error submitting form:', error));
+
+                                    // Or simply reload the page without sending data if that's the intention
+                                    // window.location.reload();
+                                }
+                            </script>
                         </div>
                     </div>
                 {% endif %}
@@ -102,7 +130,7 @@
                 <div class="program-about mt-4">
                     <h5 class="mb-4">Apply to this Program</h5>
                     {% comment %} <form action="" class="program-application" id="apply" method="POST" onsubmit="showSubmissionPrompt()"> {% endcomment %}
-                    <form action="" class="program-application" id="apply" method="POST">
+                    <form action="" class="program-application" id="apply" method="POST" onsubmit="handleFormSubmit(event)">
                         {% csrf_token %}
                         {% comment %} **************************************************************************************** {% endcomment %}
                                     {% comment %} COMMENT MUNA ITO PARA ALLOWED MAG-APPLY NG MULTIPLE PROGRAMS {% endcomment %}
@@ -172,7 +200,10 @@
                                                 <li>inform Coursebank of any clarification and/or complaint you have in relation to the personal information and sensitive personal information being collected, processed, shared, and/or purged</li>
                                                 <li>lodge a complaint with the National Privacy Commission</li>
                                             </ul>
-                                            <p class="mb-0 mt-5 text-center"> <input id="privacy-checkbox" type="checkbox"> <strong> I Agree to the Data Privacy Policy of the Program</strong></p>
+                                            <label class="mb-0 mt-5 text-center" style="display: block; cursor: pointer;">
+                                                <input id="privacy-checkbox" type="checkbox" style="vertical-align: middle;">
+                                                <strong> I Agree to the Data Privacy Policy of the Program</strong>
+                                            </label>
                                         </div>
                                         <div class="modal-footer justify-content-center">
                                             <button type="submit" class="btn btn-primary" id="apply-button" disabled>APPLY NOW</button>
@@ -231,17 +262,36 @@
                             </div>
                         {% endif %}
                     </form>
+                    <script>
+                        function handleFormSubmit(event) {
+                            event.preventDefault();  // Prevent the form from submitting normally
+                            const form = event.target;
+
+                            // Optionally, you can send the form data using Fetch API or XMLHttpRequest
+                            // Here's a simple example using Fetch:
+                            fetch(form.action, {
+                                method: 'POST',
+                                body: new FormData(form),
+                                headers: {
+                                    'X-CSRFToken': '{{ csrf_token }}'  // Ensure CSRF token is included if needed
+                                }
+                            }).then(response => {
+                                if (response.ok) {
+                                    console.log('Form submitted successfully!');
+                                    // Optionally, reload the page or display a success message
+                                    window.location.reload();
+                                } else {
+                                    console.error('Form submission failed!');
+                                    // Handle errors
+                                }
+                            }).catch(error => console.error('Error submitting form:', error));
+
+                            // Or simply reload the page without sending data if that's the intention
+                            // window.location.reload();
+                        }
+                    </script>
                 </div>
             </div>
         {% endif %}
     {% endfor %}
-    {% comment %} <script>
-        function showSubmissionPrompt() {
-            const promptDiv = document.querySelector('.application-prompt');
-            promptDiv.style.display = 'block'; // Show the div
-            setTimeout(() => {
-                promptDiv.style.display = 'none'; // Hide the div after 15 seconds
-            }, 15000);
-        }
-    </script> {% endcomment %}
 {% endblock %}
