@@ -10,7 +10,7 @@
     <div class="bg-light w-100 min-100 p-5">
                 <div class="d-flex flex-wrap">
                     {% for program in program_list %}
-                        {% if program.id not in applied_programs %}   
+                        {% comment %} {% if program.id not in applied_programs %}    {% endcomment %}
                             <a href="{% url 'program' program.slug %}">
                                 <div class="partner-card-container">
                                     <div class="partner-card-image">
@@ -48,7 +48,7 @@
                                     </div>
                                 </div>
                             </a>  
-                        {% endif %}
+                        {% comment %} {% endif %} {% endcomment %}
                     {% endfor %}
                 </div>
         </div>

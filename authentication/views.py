@@ -881,7 +881,7 @@ def certificate(request):
 def account(request):
     """"""
     template_name = "account.html"
-    
+    context = {}
     user_token = request.session['user_token']
     if request.method == "POST":
         current_pass = request.POST.get('current-pass')
@@ -890,19 +890,13 @@ def account(request):
     
         if new_pass == confirm_pass:
             response = change_password(user_token, current_pass, new_pass)
-            #### MODAL RESPONSE KUNG NAGWORK BA ANG CHANGE PASSWORD
-            if response == 'Successfully Updated Password!':
-                print (response, flush=True)
-                return redirect ('home')
-            else:
-                print (response, flush=True)
-                return redirect ('account')
         else:
-            #### MODAL RESPONSE KUNG NAGWORK BA ANG CHANGE PASSWORD
-            print("Password does not match", flush=True)
-            return redirect ('account')
+            response = "Password does not match"
     
-    return render(request, template_name)
+    print(response, flush=True)
+    context['response_message'] = response
+    
+    return render(request, template_name, context)
 
 def lakip_landing(request):
     """"""

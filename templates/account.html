@@ -55,6 +55,12 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="error">
+                            <p 
+                                style="color: {% if response_message == 'Successfully Updated Password!' %}green{% else %}red{% endif %};">
+                                {{ response_message }}
+                            </p>
+                        </div>
                         {% csrf_token %}
                         <div class="rc-ProfilePhotoUploader form-horizontal">
                             <div class="form-group horizontal-box wrap my-3 align-items-center">
