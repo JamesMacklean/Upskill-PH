@@ -16,9 +16,9 @@
     
     <!-- Button to redirect to the main domain -->
     {% if original_url %}
-        <a href="http://{{ domain }}{{ original_url }}" class="btn btn-primary">Click Here to Go Back to Homepage</a>
+        <a href="https://{{ domain }}{{ original_url }}" class="btn btn-primary">Click Here to Go Back to Homepage</a>
     {% else %}
-        <a href="{% url "signin" %}" class="btn btn-primary">Click Here to Go Back to Homepage</a>
+        <a href="{% url 'signin' %}" class="btn btn-primary">Click Here to Go Back to Homepage</a>
     {% endif %}
 </div>
 
