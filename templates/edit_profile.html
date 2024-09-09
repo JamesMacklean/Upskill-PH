@@ -16,7 +16,7 @@
                     <div class="form-control-custom">
                         <div class="css-1cq002f">
                             <div class="css-ek3fxo">
-                                <input type="text" placeholder="Username" name="username" value="{{username}}" class="input-ctrl">
+                                <input type="text" placeholder="Username" name="username" value={% if request.session.username %} "{{ request.session.username }}" {% else %} "" {% endif %} class="input-ctrl">
                             </div>
                         </div>
                     </div>
@@ -26,10 +26,10 @@
                     <div class="form-control-custom">
                         <div class="css-1cq002f">
                             <div class="css-ek3fxo mb-2">
-                                <input type="text" name = "first_name" placeholder="First Name" value="{{profile.first_name}}" class="input-ctrl" pattern="[A-Za-z]+">
+                                <input type="text" name = "first_name" placeholder="First Name" value="{{profile.first_name}}" class="input-ctrl">
                             </div>
                             <div class="css-ek3fxo">
-                                <input type="text" name = "last_name" placeholder="Last Name" value="{{profile.last_name}}" class="input-ctrl" pattern="[A-Za-z]+">
+                                <input type="text" name = "last_name" placeholder="Last Name" value="{{profile.last_name}}" class="input-ctrl">
                             </div>
                         </div>
                     </div>

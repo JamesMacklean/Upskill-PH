@@ -389,6 +389,7 @@ def edit_profile(request):
     
     if request.method == "POST":
         photo = request.POST.get('photo')
+        username = request.POST.get('username')
         first_name = request.POST.get('first_name')
         last_name = request.POST.get('last_name')
         employ_status = request.POST.get('employ_status')
@@ -409,11 +410,8 @@ def edit_profile(request):
         contact = request.POST.get('mobile')
         privacy = request.POST.get('details_privacy')
         date_now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-        
-        request.session['first_name']=first_name
-        request.session['last_name']=last_name
-        request.session.modified = True 
 
+        username_update, username_response = update_username(user_token, username)
         profile_update, profile_response = update_profile(user_token, photo, first_name,
                                             last_name, about, country, region, municipality, 
                                             socials, gender, birthday, contact, date_now,privacy)
@@ -421,12 +419,29 @@ def edit_profile(request):
                                             employer, occupation, exp_level, date_now, privacy)
         education_update, education_response = update_education(user_token, degree, 
                                             university, study, date_now, privacy)
+
+        if username != request.session.get('username'):
+            request.session['username']=username
+            request.session.modified = True 
+            print(f"NEW USERNAME: {username}", flush=True)
         
+        if first_name != request.session.get('first_name'):
+            request.session['first_name']=first_name
+            request.session.modified = True 
+            print(f"NEW FIRST NAME: {first_name}", flush=True)
+            
+        if last_name != request.session.get('last_name'):
+            request.session['last_name']=last_name
+            request.session.modified = True 
+            print(f"NEW LAST NAME: {last_name}", flush=True)
+
         context['profile'] = profile_update
         context['employment'] = employment_update
         context['education'] = education_update
-
+        
+        print(username_update)
         #### MODAL RESPONSE KUNG NAGWORK BA ANG UPDATE NG PROFILE, EMPLOYMENT AT EDUCATION
+        print("USERNAME:", username_response, flush=True)
         print("PROFILE:",profile_response, flush=True)
         print("EMPLOYMENT:",employment_response, flush=True)
         print("EDUCATION:",education_response, flush=True)

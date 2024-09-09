@@ -459,6 +459,41 @@ def create_account(request, email, password):
     
     return user_hash, redirect_url, response_message
 
+# POST https://scholarium.tmtg-clone.click/v1/me/user
+def update_username (bearer_token, username):
+    profile_data = []
+    context = {}
+    payload={
+        'username': username
+    }
+    files=[]
+    headers = {
+    'Authorization': bearer_token
+    }
+
+    response = requests.request("POST", API_USER_USERNAME_URL, headers=headers, data=payload, files=files)        
+    response_dict = ast.literal_eval(response.text)
+    
+    if 'data' in response_dict:
+            response_message = "User Account Updated!"
+    else:
+        response_message = response_dict.get("error")
+    
+    # AUTO-ADD SA CONTEXT NG MGA KEYS NA NA-UPDATE VIA API
+    if 'data' in response_dict:
+        try:
+            for data in response_dict['data']:
+                for key, value in data.items():
+                    if value is not None:
+                        user_data = {key:data.get(key)}
+                        profile_data.append(user_data)
+                        context[key] = data.get(key)
+                        
+        except Exception as e:
+            print(str(e), flush=True)
+            
+    return context, response_message
+
 # POST https://scholarium.tmtg-clone.click/v1/me/profile 
 def update_profile (bearer_token, photo, first_name, last_name, about, country, region, municipality, socials, gender, birthday, contact, date_now, privacy):
     profile_data = []
