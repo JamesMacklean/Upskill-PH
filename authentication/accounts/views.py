@@ -105,7 +105,7 @@ def signup(request):
                 })
                 try:
                     send_mail(
-                        'Title', 
+                        'Welcome to Upskill PH', 
                         'Content of the Message', 
                         settings.EMAIL_HOST_USER, 
                         ########## ORIGINAL CODE ##########

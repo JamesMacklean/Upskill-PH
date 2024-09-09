@@ -158,7 +158,6 @@
 
 												<p paraeid="{1b4cc704-c191-43b8-97cf-436dff91fda5}{136}" paraid="2054846623">
 													<span style="color:#000000;">{% filter force_escape %}You're almost there! Click the button below to verify your upskillPH account. {% endfilter %}<br>
-														<em>{% filter force_escape %}Note that you will not be able to log into your account until you have activated it.{% endfilter %}</em>
 													</span>
 												</p>
 												<p>
@@ -168,14 +167,15 @@
 													<center>
 														<a href="https://{{ accounts_domain }}{% url 'verify_account' user_hash %}" style="background-color: #ff7300; padding: 10px 20px; color: #FFFFFF; text-decoration: none; border-radius: 5px;">Verify your Account</a>
 														<br>
-														<p style="margin-top: 25px!important;">or use this link instead:</p>
-														<br>
+														<p style="color:#000;margin: 40px 0 0">or use this link instead:</p>
 														<a href="https://accounts.upskillph.org/verify/{{ user_hash }}">https://accounts.upskillph.org/verify/{{ user_hash }}</a>
 
 													</center>
 												</span>
 
-												<p><span style="color:#000000;">&nbsp;&nbsp;</span></p>
+												<p><span style="color:#000000;">
+													<em>{% filter force_escape %}Note that you will not be able to log into your account until you have activated it.{% endfilter %}</em>
+												</span></p>
 
 												<p><span style="color:#000000;">Best regards,&nbsp;</span></p>
 
