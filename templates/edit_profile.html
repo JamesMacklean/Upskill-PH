@@ -217,7 +217,7 @@
                             <div class="css-ek3fxo">
                                 <select name="country" id="country" class="input-ctrl">
                                     {% if profile.country %}
-                                        <option value="" selected disabled hidden>{{profile.country}}</option>
+                                        <option value="" selected >{{profile.country}}</option>
                                     {% endif %}
                                     {% for country in country_choices %}
                                         <option value="{{country}}">{{country}}</option>
