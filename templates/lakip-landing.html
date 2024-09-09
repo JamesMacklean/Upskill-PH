@@ -1,0 +1,382 @@
+{% extends 'lakip_base.html' %}
+{% load static %}
+{% block content %}
+
+    <div class="sticky-whole-nav">
+        <nav class="container main-navbar navbar navbar-expand-lg justify-content-between align-items-center">
+            <img class="lakip-logo" src="/images/lakip-black (1).png" height="48px" width="auto"/>
+            <div id="sticky-nav-content" class="sticky-nav-content d-flex gap-3 align-items-center">
+                <a class="nav-link" href="#overview">Overview</a>
+                <a class="nav-link" href="#about">About</a>
+                <a class="nav-link" href="#courses">Courses</a>
+                <a class="nav-link" href="#partners">Partners</a>
+                <a class="nav-link" href="#faq">FAQ</a>
+                <!-- <a class="lakip-button" href="https://accounts.upskillph.org?client_id=OJtoPxeaJBm7Ya38TuiVpKgBaOojwPHULZz2UrupZLuG0hDizPcMiUJ0Nw4Y4PXm">Apply Now</a> -->
+                <a class="lakip-button" href="/lakip/apply">Apply Now</a>
+            </div>
+        </nav>
+    </div>
+
+    <main>
+        <div class="hero">
+            <img  class="hero-banner" src="images/lakip-logo-black.png" alt="">
+        </div>
+        <div id="overview" class="overview d-flex align-items-center">
+            <div class="col-6 px-4">
+                <h3 class="mb-5">OVERVIEW</h3>
+                <p class="lakip-text">
+                    <strong>LAKIP</strong> aims to offer a wide range of courses that have been thoughtfully translated into the Bisaya dialect, ensuring that individuals from diverse linguistic backgrounds, particularly those who speak the Cebuano language, can access and benefit from the learning materials. By incorporating localized translations, LAKIP promotes equal educational opportunities and fosters inclusivity by removing language barriers that may hinder individuals’ access to knowledge.
+                </p>
+            </div>
+            <div class="col-6 p-5">
+                <img src="https://coursebank-static-assets.s3.ap-northeast-1.amazonaws.com/partners/lakipv2_1.png" alt="" width="100%" style="object-fit: cover;">
+            </div>
+        </div>
+
+        <div id="about" class="overview d-flex align-items-center">
+            <div class="col-6 p-5">
+                <img src="https://coursebank-static-assets.s3.ap-northeast-1.amazonaws.com/partners/lakipv2_2.png" alt="" width="100%" style="object-fit: cover;">
+            </div>
+            <div class="col-6 px-4">
+                <h3 class="mb-5">ABOUT</h3>
+                <p class="lakip-text">
+                    The <span class="special-text"> <strong>Department of Information and Communications Technology (DICT) - 10</strong></span>, through its <span class="special-text"><strong>ICT Literacy and Competency Development Bureau (ILCDB)</strong></span>, also known as the training arm of the Department, is responsible for providing ICT training and capacity-building initiatives to the government workforce and ICT-enabled sectors. The ILCDB promotes and recognizes the vital role of information and communications technology in nation-building, promote digital literacy, ICT expertise, and knowledge-building among citizens to enable them to participate and compete in an evolving ICT age, and empower, through the use of ICT, the disadvantaged segments of the population, including the elderly, out-of-school youth, persons with disabilities and indigenous and minority groups.
+                </p>
+            </div>
+        </div>
+
+        <section id="courses"  class="section-courses-container container mb-5">
+            <div class="section-header d-flex align-items-center">
+                <h3 class="section-title me-auto mb-5">COURSES</h3>
+            </div>
+            <div class="row pt-5 gutter-2rem courses-list-container">
+                <!-- 1 -->
+                <div class="col-12 col-md-6 col-lg-4 course-item-container">
+                    <a href="/course.html?courseCard=microsoft-productivity-tools">
+                        <div class="course-item">
+                            <img class="img-item" height="auto" width="100%"
+                                src="/images/microsoft-productivity-tools.jpeg" />
+                            <div class="course-details-container">
+                                <p class="course-description mt-2 pb-3">
+                                    Microsoft Productivity Tools [Bisaya]
+                                </p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- 2 -->
+                <div class="col-12 col-md-6 col-lg-4 course-item-container">
+                    <a href="/course.html?courseCard=navigating-google-workspace">
+                        <div class="course-item">
+                            <img class="img-item" height="auto" width="100%"
+                                src="/images/navigating-google-workspace.jpeg" />
+                            <div class="course-details-container">
+                                <p class="course-description mt-2 pb-3">
+                                    Navigating Google Workspace [Bisaya]
+                                </p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- 3 -->
+                <div class="col-12 col-md-6 col-lg-4 course-item-container">
+                    <a href="/course.html?courseCard=canva-for-graphic-design">
+                        <div class="course-item">
+                            <img class="img-item" height="auto" width="100%"
+                                src="/images/canva-for-graphic-design.png" />
+                            <div class="course-details-container">
+                                <p class="course-description mt-2 pb-3">
+                                    Canva for Graphic Design [Bisaya]
+                                </p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- 4 -->
+                <div class="col-12 col-md-6 col-lg-4 course-item-container">
+                    <a href="/course.html?courseCard=introduction-to-data-privacy">
+                        <div class="course-item">
+                            <img class="img-item" height="auto" width="100%"
+                                src="/images/introduction-to-data-privacy.jpeg" />
+                            <div class="course-details-container">
+                                <p class="course-description mt-2 pb-3">
+                                    Introduction to Data Privacy [Bisaya]
+                                </p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- 5 -->
+                <div class="col-12 col-md-6 col-lg-4 course-item-container">
+                    <a href="/course.html?courseCard=digital-citizenship">
+                        <div class="course-item">
+                            <img class="img-item" height="auto" width="100%"
+                                src="/images/digital-citizenship.jpeg" />
+                            <div class="course-details-container">
+                                <p class="course-description mt-2 pb-3">
+                                    Digital Citizenship and Civility in the Workplace [Bisaya]
+                                </p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- 6 -->
+                <div class="col-12 col-md-6 col-lg-4 course-item-container">
+                    <a href="/course.html?courseCard=designing-presentation-slides">
+                        <div class="course-item">
+                            <img class="img-item" height="auto" width="100%"
+                                src="/images/designing-presentation.jpeg" />
+                            <div class="course-details-container">
+                                <p class="course-description mt-2 pb-3">
+                                    Designing Presentation Slides [Bisaya]
+                                </p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- 7 -->
+                <div class="col-12 col-md-6 col-lg-4 course-item-container">
+                    <a href="/course.html?courseCard=principles-of-design">
+                        <div class="course-item">
+                            <img class="img-item" height="auto" width="100%"
+                                src="/images/principles-of-design.jpeg" />
+                            <div class="course-details-container">
+                                <p class="course-description mt-2 pb-3">
+                                    Principles of Design [Bisaya]
+                                </p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- 8 -->
+                <div class="col-12 col-md-6 col-lg-4 course-item-container">
+                    <a href="/course.html?courseCard=everyday-cybersecurity">
+                        <div class="course-item">
+                            <img class="img-item" height="auto" width="100%"
+                                src="/images/everyday-cybersecurity.png" />
+                            <div class="course-details-container">
+                                <p class="course-description mt-2 pb-3">
+                                    Everyday Cybersecurity: Protecting Your Digital Life and Work [Bisaya]
+                                </p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- 10 -->
+                <div class="col-12 col-md-6 col-lg-4 course-item-container">
+                    <a href="/course.html?courseCard=functional-composition">
+                        <div class="course-item">
+                            <img class="img-item" height="auto" width="100%"
+                                src="/images/functional-composition.jpeg" />
+                            <div class="course-details-container">
+                                <p class="course-description mt-2 pb-3">
+                                    Functional Composition [Bisaya]
+                                </p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- 11 -->
+                <div class="col-12 col-md-6 col-lg-4 course-item-container">
+                    <a href="/course.html?courseCard=digital-innovation">
+                        <div class="course-item">
+                            <img class="img-item" height="auto" width="100%"
+                                src="images/digital-innovation.jpeg" />
+                            <div class="course-details-container">
+                                <p class="course-description mt-2 pb-3">
+                                    Digital Innovation in Government [Bisaya]
+                                </p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- 12 -->
+                <div class="col-12 col-md-6 col-lg-4 course-item-container">
+                    <a href="/course.html?courseCard=analytics-for-the-public-sector">
+                        <div class="course-item">
+                            <img class="img-item" height="auto" width="100%"
+                                src="/images/analytics-for-public.jpeg" />
+                            <div class="course-details-container">
+                                <p class="course-description mt-2 pb-3">
+                                    Analytics for the Public Sector [Bisaya]
+                                </p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- 13 -->
+                <div class="col-12 col-md-6 col-lg-4 course-item-container">
+                    <a href="/course.html?courseCard=digital-marketing">
+                        <div class="course-item">
+                            <img class="img-item" height="auto" width="100%"
+                                src="/images/digital-marketing-channels.jpeg" />
+                            <div class="course-details-container">
+                                <p class="course-description mt-2 pb-3">
+                                    Digital Marketing Channels and Funnel [Bisaya]
+                                </p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- 14 -->
+                <div class="col-12 col-md-6 col-lg-4 course-item-container">
+                    <a href="/course.html?courseCard=trends-in-art-and-design">
+                        <div class="course-item">
+                            <img class="img-item" height="auto" width="100%"
+                                src="/images/trends-in-art.jpeg" />
+                            <div class="course-details-container">
+                                <p class="course-description mt-2 pb-3">
+                                    Trends in Art and Design [Bisaya]
+                                </p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- 15 -->
+                <div class="col-12 col-md-6 col-lg-4 course-item-container">
+                    <a href="/course.html?courseCard=digital-transformation">
+                        <div class="course-item">
+                            <img class="img-item" height="auto" width="100%"
+                                src="/images/digital-transformation.jpeg" />
+                            <div class="course-details-container">
+                                <p class="course-description mt-2 pb-3">
+                                    Digital Transformation 101: Reimagining Businesses [Bisaya]
+                                </p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <!-- 16 -->
+                <div class="col-12 col-md-6 col-lg-4 course-item-container">
+                    <a href="/course.html?courseCard=fundamentals-of-marketing">
+                        <div class="course-item">
+                            <img class="img-item" height="auto" width="100%"
+                                src="/images/fundamentals-of-marketing.jpeg" />
+                            <div class="course-details-container">
+                                <p class="course-description mt-2 pb-3">
+                                    Fundamentals of Marketing [Bisaya]
+                                </p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <!-- 17 -->
+                <div class="col-12 col-md-6 col-lg-4 course-item-container">
+                    <a href="/course.html?courseCard=social-media-marketing">
+                        <div class="course-item">
+                            <img class="img-item" height="auto" width="100%"
+                                src="/images/social-media-marketing.jpeg" />
+                            <div class="course-details-container">
+                                <p class="course-description mt-2 pb-3">
+                                    Social Media Marketing [Bisaya]
+                                </p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <!-- 18 -->
+                <div class="col-12 col-md-6 col-lg-4 course-item-container">
+                    <a href="/course.html?courseCard=mastering-collaborations">
+                        <div class="course-item">
+                            <img class="img-item" height="auto" width="100%"
+                                src="/images/mastering-collaborations.jpeg" />
+                            <div class="course-details-container">
+                                <p class="course-description mt-2 pb-3">
+                                    Mastering Collaboration with MS Teams [Bisaya]
+                                </p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <!-- 19 -->
+                <div class="col-12 col-md-6 col-lg-4 course-item-container">
+                    <a href="/course.html?courseCard=mastering-digital-notetaking">
+                        <div class="course-item">
+                            <img class="img-item" height="auto" width="100%"
+                                src="/images/mastering-notetaking.jpeg" />
+                            <div class="course-details-container">
+                                <p class="course-description mt-2 pb-3">
+                                    Mastering Digital Notetaking with MS OneNote [Bisaya]
+                                </p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <!-- 20 -->
+                <div class="col-12 col-md-6 col-lg-4 course-item-container">
+                    <a href="/course.html?courseCard=mastering-sharepoint">
+                        <div class="course-item">
+                            <img class="img-item" height="auto" width="100%"
+                                src="/images/mastering-sharepoint.jpeg" />
+                            <div class="course-details-container">
+                                <p class="course-description mt-2 pb-3">
+                                    MS SharePoint and OneDrive: Manage Cloud Like a Pro [Bisaya]
+                                </p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <!-- 21 -->
+                <div class="col-12 col-md-6 col-lg-4 course-item-container">
+                    <a href="/course.html?courseCard=ms-planner-101">
+                        <div class="course-item">
+                            <img class="img-item" height="auto" width="100%"
+                                src="/images/ms-planner.jpeg" />
+                            <div class="course-details-container">
+                                <p class="course-description mt-2 pb-3">
+                                    MS Planner 101: Optimize Task Organization [Bisaya]
+                                </p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <!-- 21 -->
+                <div class="col-12 col-md-6 col-lg-4 course-item-container">
+                    <a href="/course.html?courseCard=ms-outlook">
+                        <div class="course-item">
+                            <img class="img-item" height="auto" width="100%"
+                                src="/images/ms-outlook.jpeg" />
+                            <div class="course-details-container">
+                                <p class="course-description mt-2 pb-3">
+                                    MS Outlook 101: Master Email Management [Bisaya]
+                                </p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+    <section id="partners">
+        <h3 class="mb-5 partner-heading">OUR PARTNERS</h3>
+            <div class="partners">
+                <img class="partner-img" src="/images/lakip-dict.png" alt="DICT region10">
+                <img class="partner-img" src="/images/lakip-cdo.png" alt="Cagayan De Oro">
+                <img class="partner-img" src="/images/lakip-cb.png" alt="coursebank">
+                <img class="partner-img" src="/images/lakip-deped.png" alt="DepEd Region 10">
+            </div>
+    </section>
+    <section id="faq">
+        <h3 class="mb-5 faq-title">FREQUENTLY ASKED QUESTIONS</h3>
+        <div class="faq">
+            <h5>Are the courses Free?</h5>
+            <p class="mb-5 mx-5">The courses under this project is free. This initiative is fully funded by the Department of Information and Communications Technology.</p>
+            <h5>How can I access the courses?</h5>
+            <p class="mx-5">You can apply access to the courses by accomplishing an application form. The project staff will send the invite via your registered email address. Make sure that you first have a coursebank account.</p>
+        </div>
+    </section>
+
+{% endblock %}

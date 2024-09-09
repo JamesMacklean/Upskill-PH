@@ -2,122 +2,394 @@
 {% load static %}
 {% block content %}
 
-<div class="program-grid-container">
-    <div class="program-grid-left">
-        <a href="#back" style="font-size: 15px; color:black; text-decoration: none"><i class="fa fa-angle-left"></i>Back</a>
-    </div>
-    <div class="program-grid-right">
-        <h2>Edit my profile</h2>
-        <form action="" class="edit-update-profile" method="POST" enctype="multipart/form-data">
-            {% csrf_token %}
-                
-                <h3 class="profile-label">Profile Data</h3>
-                <div class="profile-container" id="profile-data">
-                    <div class="profile-data">
-                        <label for="name"> Full name: </label>
-                        <input type="text" name="first_name" placeholder="First Name" value="{{profile.first_name|title}}">
-                        <input type="text" name="last_name" placeholder="Last Name" value="{{profile.last_name|title}}">
-                    </div>
-            
-                    <div class="profile-data">
-                        <p>
-                        <label for="profile_pic">Upload/ Update your Profile Picture: </label>
-                        <input type="file" id="profile_pic" name="profile_pic" accept="image/*">
-                        </p>
-                        <input type="button" value="UPLOAD">
-                    </div>
-                </div>
-
-                <h3>Education and Work Experience</h3>
-                <div class="educ-container" id="educ-data">
-                    <div class="educ-item">
-                        <label for="employ_status">Employment Status: </label>
-                        
-                        <select name="employ_status" id="empstatus">
-                            {% if employment.employ_status %}
-                                <option value="" selected disabled hidden>{{employment.employ_status}}</option>
-                            {% endif %}
-                            {% for employment_status in employment_status_choices %}
-                                <option value="{{employment_status}}">{{employment_status}}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                
-                    <div class="educ-item">
-                        <label for="industry">Industry: </label>
-                        <select name="industry" id="industry">
-                            {% if employment.industry %}
-                                <option value="" selected disabled hidden>{{employment.industry}}</option>
-                            {% endif %}
-                            {% for industry in industry_choices %}
-                                <option value="{{industry}}">{{industry}}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                
-                    <div class="educ-item">
-                        <label for="employer">Employer: </label>
-                        <input type="text" placeholder="Employer" name="employer" value="{{employment.employer}}">
-                    </div>
-                
-                    <div class="educ-item">
-                        <label for="occupation">Occupation: </label>
-                        <input type="text" placeholder="Occupation" name="occupation" value="{{employment.occupation}}">
-                    </div>
-                
-                    <div class="educ-item">
-                        <label for="exp_level">Experience Level: </label>
-                        <select name="exp_level" id="experience">
-                            {% if employment.experience %}
-                                <option value="" selected disabled hidden>{{employment.experience}}</option>
-                            {% endif %}
-                            {% for experience in experience_choices %}
-                                <option value="{{experience}}" >{{experience}}</option>
-                            {% endfor %}
-                        </select>
+<div class="content-container">
+<h3 class="res-title">Edit my profile</h3>
+</div>
+<form action="" class="edit-update-profile w-100" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="content-container bg-light px-5 pt-5 pb-1">
+        <h5 class="res-title">Introduction</h5>
+        <div>
+            <div class="rc-ProfilePhotoUploader form-horizontal">
+                <div class="form-group horizontal-box wrap my-3 align-items-center">
+                    <label for="username" class="body-2-text color-primary-text form-label">Username</label>
+                    <div class="form-control-custom">
+                        <div class="css-1cq002f">
+                            <div class="css-ek3fxo">
+                                <input type="text" placeholder="Username" name="username" value={% if request.session.username %} "{{ request.session.username }}" {% else %} "" {% endif %} class="input-ctrl">
+                            </div>
                         </div>
-                
-                    <div class="educ-item">
-                        <label for="degree">Degree: </label>
-                        <select name="degree" id="degree">
-                            {% if education.degree %}
-                                <option value="" selected disabled hidden>{{education.degree}}</option>
-                            {% endif %}
-                            {% for degree in degree_choices %}
-                                <option value="{{degree}}">{{degree}}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
-            
-                    <div class="educ-item">
-                        <label for="university">University: </label>
-                        <input type="text" name = "university" placeholder="University" value="{{education.school}}">
-                    </div>
-            
-                    <div class="educ-item">
-                        <label for="study">Field of Study: </label>
-                        <select name="study" id="field">
-                            {% if education.study %}
-                                <option value="" selected disabled hidden>{{education.study}}</option>
-                            {% endif %}
-                            {% for field_of_study in field_of_study_choices %}
-                                <option value="{{field_of_study}}">{{field_of_study}}</option>
-                            {% endfor %}
-                        </select>
                     </div>
                 </div>
-                
-                <h3>About</h3>
-                <div class="about-container" id="about-data">
-                
-                    <div class="about">
-                        <label for="bio">About Me: </label>
-                        <textarea name="bio" id="bio" cols="30" rows="3">{{profile.about}}</textarea>
+                <div class="form-group horizontal-box wrap my-3">
+                    <label for="photo-uploader" class="body-2-text color-primary-text form-label">Full Name</label>
+                    <div class="form-control-custom">
+                        <div class="css-1cq002f">
+                            <div class="css-ek3fxo mb-2">
+                                <input type="text" name = "first_name" placeholder="First Name" value="{{profile.first_name}}" class="input-ctrl">
+                            </div>
+                            <div class="css-ek3fxo">
+                                <input type="text" name = "last_name" placeholder="Last Name" value="{{profile.last_name}}" class="input-ctrl">
+                            </div>
+                        </div>
                     </div>
-                
+                </div>
+            </div>
+            <div class="form-group horizontal-box wrap mb-3">
+                <div class="cds-9 css-1hsf5wl cds-11 cds-grid-item cds-56 cds-58">
+                    <label for="about_me_text" class="body-2-text color-primary-text form-label">Bio</label>
+                </div>
+                <div class="form-control-custom">
+                    <div class="form-ctrl">
+                        <div class="cds-227 cds-212 cds-input-root cds-text-field-root cds-input-onLight css-1d9ogt6 cds-228 cds-235 cds-220 cds-input-multiline">
+                            <textarea rows="6" aria-invalid="false" aria-describedby="" id="about_me_text" name="bio" placeholder="Tell us about yourself, such as what you do, what your interests are, and what you hope to get out of your courses." aria-label="About Me" class="input-ctrl" style="height: 144px;">
+                            {{profile.about}}
+                            </textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="content-container bg-light px-5 pt-5 pb-1">
+        <h5 class="res-title">Work Experience and Education</h5>
+        <div>
+            {% comment %} EMPLOYMENT STATUS {% endcomment %}
+            <div class="rc-ProfilePhotoUploader form-horizontal">
+                <div class="form-group horizontal-box wrap my-3 align-items-center">
+                    <label for="emp-status" class="body-2-text color-primary-text form-label">Employment Status</label>
+                    <div class="form-control-custom">
+                        <div class="css-1cq002f">
+                            <div class="css-ek3fxo">
+                                <select name="employ_status" id="empstatus" class="input-ctrl">
+                                    {% if employment.employ_status %}
+                                        <option value="" selected disabled hidden>{{employment.employ_status}}</option>
+                                    {% endif %}
+                                    {% for employment_status in employment_status_choices %}
+                                        <option value="{{employment_status}}">{{employment_status}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {% comment %} INDUSTRY {% endcomment %}
+            <div class="rc-ProfilePhotoUploader form-horizontal">
+                <div class="form-group horizontal-box wrap my-3 align-items-center">
+                    <label for="emp-status" class="body-2-text color-primary-text form-label">Industry</label>
+                    <div class="form-control-custom">
+                        <div class="css-1cq002f">
+                            <div class="css-ek3fxo">
+                                <select name="industry" id="industry" class="input-ctrl">
+                                    {% if employment.industry %}
+                                        <option value="" selected disabled hidden>{{employment.industry}}</option>
+                                    {% endif %}
+                                    {% for industry in industry_choices %}
+                                        <option value="{{industry}}">{{industry}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {% comment %} EMPLOYER {% endcomment %}
+            <div class="rc-ProfilePhotoUploader form-horizontal">
+                <div class="form-group horizontal-box wrap my-3 align-items-center">
+                    <label for="employer" class="body-2-text color-primary-text form-label">Employer</label>
+                    <div class="form-control-custom">
+                        <div class="css-1cq002f">
+                            <div class="css-ek3fxo">
+                                <input type="text" placeholder="Employer" name="employer" value="{{employment.employer}}" class="input-ctrl">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {% comment %} OCCUPATION {% endcomment %}
+            <div class="rc-ProfilePhotoUploader form-horizontal">
+                <div class="form-group horizontal-box wrap my-3 align-items-center">
+                    <label for="occupation" class="body-2-text color-primary-text form-label">Occupation</label>
+                    <div class="form-control-custom">
+                        <div class="css-1cq002f">
+                            <div class="css-ek3fxo">
+                                <input type="text" placeholder="Occupation" name="occupation" value="{{employment.occupation}}" class="input-ctrl">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {% comment %} EXPERIENCE LEVEL {% endcomment %}
+            <div class="rc-ProfilePhotoUploader form-horizontal">
+                <div class="form-group horizontal-box wrap my-3 align-items-center">
+                    <label for="emp-status" class="body-2-text color-primary-text form-label">Experience Level</label>
+                    <div class="form-control-custom">
+                        <div class="css-1cq002f">
+                            <div class="css-ek3fxo">
+                                <select name="exp_level" id="experience" class="input-ctrl">
+                                    {% if employment.experience %}
+                                        <option value="" selected disabled hidden>{{employment.experience}}</option>
+                                    {% endif %}
+                                    {% for experience in experience_choices %}
+                                        <option value="{{experience}}" >{{experience}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {% comment %} DEGREE {% endcomment %}
+            <div class="rc-ProfilePhotoUploader form-horizontal">
+                <div class="form-group horizontal-box wrap my-3 align-items-center">
+                    <label for="degree" class="body-2-text color-primary-text form-label">Degree</label>
+                    <div class="form-control-custom">
+                        <div class="css-1cq002f">
+                            <div class="css-ek3fxo">
+                                <select name="degree" id="degree" class="input-ctrl">
+                                    {% if education.degree %}
+                                        <option value="" selected disabled hidden>{{education.degree}}</option>
+                                    {% endif %}
+                                    {% for degree in degree_choices %}
+                                        <option value="{{degree}}">{{degree}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {% comment %} UNIVERSITY {% endcomment %}
+            <div class="rc-ProfilePhotoUploader form-horizontal">
+                <div class="form-group horizontal-box wrap my-3 align-items-center">
+                    <label for="university" class="body-2-text color-primary-text form-label">University</label>
+                    <div class="form-control-custom">
+                        <div class="css-1cq002f">
+                            <div class="css-ek3fxo">
+                                <input type="text" name = "university" placeholder="University" value="{{education.school}}" class="input-ctrl">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {% comment %} FOS {% endcomment %}
+            <div class="rc-ProfilePhotoUploader form-horizontal">
+                <div class="form-group horizontal-box wrap my-3 align-items-center">
+                    <label for="study" class="body-2-text color-primary-text form-label">Field of Study</label>
+                    <div class="form-control-custom">
+                        <div class="css-1cq002f">
+                            <div class="css-ek3fxo">
+                                <select name="study" id="field" class="input-ctrl">
+                                    {% if education.study %}
+                                        <option value="" selected disabled hidden>{{education.study}}</option>
+                                    {% endif %}
+                                    {% for field_of_study in field_of_study_choices %}
+                                        <option value="{{field_of_study}}">{{field_of_study}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="content-container bg-light px-5 pt-5 pb-1">
+        <h5 class="res-title">About</h5>
+        <div>
+            {% comment %} COUNTRY {% endcomment %}
+            <div class="rc-ProfilePhotoUploader form-horizontal">
+                <div class="form-group horizontal-box wrap my-3 align-items-center">
+                    <label for="country" class="body-2-text color-primary-text form-label">Country</label>
+                    <div class="form-control-custom">
+                        <div class="css-1cq002f">
+                            <div class="css-ek3fxo">
+                                <select name="country" id="country" class="input-ctrl">
+                                    {% if profile.country %}
+                                        <option value="" selected disabled hidden>{{profile.country}}</option>
+                                    {% endif %}
+                                    {% for country in country_choices %}
+                                        <option value="{{country}}">{{country}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {% comment %} REGION {% endcomment %}
+            <div class="rc-ProfilePhotoUploader form-horizontal">
+                <div class="form-group horizontal-box wrap my-3 align-items-center">
+                    <label for="region" class="body-2-text color-primary-text form-label">Region</label>
+                    <div class="form-control-custom">
+                        <div class="css-1cq002f">
+                            <div class="css-ek3fxo">
+                                <select id="region" name="region" class="input-ctrl">
+                                    {% if profile.region %}
+                                        {% for region_key, region_value in region_choices.items %}
+                                            {% if profile.region == region_key %}
+                                                <option value="{{profile.region}}" selected disabled hidden>{{region_value}}</option>
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% endif %}
+                                    {% for region_key, region_value in region_choices.items %}
+                                        <option value="{{region_key}}">{{region_value}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {% comment %} MUNICIPALITY {% endcomment %}
+            <div class="rc-ProfilePhotoUploader form-horizontal">
+                <div class="form-group horizontal-box wrap my-3 align-items-center">
+                    <label for="municipality" class="body-2-text color-primary-text form-label">Municipality</label>
+                    <div class="form-control-custom">
+                        <div class="css-1cq002f">
+                            <div class="css-ek3fxo">
+                                <select id="municipality" name="municipality" class="input-ctrl">
+                                    {% if profile.municipality %}
+                                    <option value="" selected disabled hidden>{{profile.municipality}}</option>
+                                    {% endif %}
+                                    {% for municipality_key, municipality_value in municipality_choices.items %}
+                                        {% for municipality in municipality_value %}
+                                            <option value="{{municipality}}" parent={{municipality_key}}>{{municipality}}</option>
+                                        {% endfor %}
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {% comment %} LINKEDIN {% endcomment %}
+            <div class="rc-ProfilePhotoUploader form-horizontal">
+                <div class="form-group horizontal-box wrap my-3 align-items-center">
+                    <label for="linkedin" class="body-2-text color-primary-text form-label">LinkedIn</label>
+                    <div class="form-control-custom">
+                        <div class="css-1cq002f">
+                            <div class="css-ek3fxo">
+                                <input type="text" placeholder="linkedin" name="linkedin" class="input-ctrl">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {% comment %} GENDER {% endcomment %}
+            <div class="rc-ProfilePhotoUploader form-horizontal">
+                <div class="form-group horizontal-box wrap my-3 align-items-center">
+                    <label for="gender" class="body-2-text color-primary-text form-label">Gender</label>
+                    <div class="form-control-custom">
+                        <div class="css-1cq002f">
+                            <div class="css-ek3fxo">
+                                <select id="gender" name="gender" class="input-ctrl">
+                                    {% if profile.gender %}
+                                    <option value="" selected disabled hidden>{{profile.gender}}</option>
+                                    {% endif %}
+                                    {% for gender in gender_choices %}
+                                        <option value="{{gender}}">{{gender}}</option>
+                                    {% endfor %}
+                            </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {% comment %} DATE OF BIRTH {% endcomment %}   
+            <div class="rc-ProfilePhotoUploader form-horizontal">
+                <div class="form-group horizontal-box wrap my-3 align-items-center">
+                    <label for="date" class="body-2-text color-primary-text form-label">Date of Birth</label>
+                    <div class="form-control-custom">
+                        <div class="css-1cq002f">
+                            <div class="css-ek3fxo">
+                                <input type="date" value="{{profile.birthday}}" name="birthday" class="input-ctrl">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {% comment %} MOBILE NUMBER {% endcomment %}
+            <div class="rc-ProfilePhotoUploader form-horizontal">
+                <div class="form-group horizontal-box wrap my-3 align-items-center">
+                    <label for="mobile" class="body-2-text color-primary-text form-label">Mobile Number</label>
+                    <div class="form-control-custom">
+                        <div class="css-1cq002f">
+                            <div class="css-ek3fxo">
+                                <input type="tel" name="mobile" value="{{profile.contact}}" class="input-ctrl" maxlength="11" pattern="\d{11}">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="content-container bg-light px-5 pt-1 pb-5 mb-5">
+        {% comment %} FOS {% endcomment %}
+        <div class="rc-ProfilePhotoUploader form-horizontal">
+            <div class="form-group horizontal-box wrap my-3 align-items-center">
+                <label for="study" class="body-2-text color-primary-text form-label">Details Privacy</label>
+                <div class="form-control-custom">
+                    <div class="css-1cq002f">
+                        <div class="css-ek3fxo">
+                            <select name="details_privacy" id="details-privacy" class="input-ctrl">
+                                <option value="2" {% if profile.privacy == 2 %}selected{% endif %}>Only Me</option>
+                                <option value="1" {% if profile.privacy == 1 %}selected{% endif %}>SupskillPH Community</option>
+                                <option value="0" {% if profile.privacy == 0 %}selected{% endif %}>Public on the Web</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="rc-ProfilePhotoUploader form-horizontal">
+            <div class="form-group horizontal-box wrap my-3 align-items-center">
+                <label for="save" class="body-2-text color-primary-text form-label"></label>
+                <div class="form-control-custom">
+                    <div class="css-1cq002f">
+                        <div class="css-ek3fxo d-flex">
+                            <input type="submit" value="SAVE CHANGES" class="btn btn-primary edit-button">
+                            <a href="#" id="cancelButton" class="btn btn-sec edit-button">CANCEL</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<script>
+    document.getElementById('cancelButton').addEventListener('click', function(event) {
+        event.preventDefault();
+        var userConfirmed = confirm('Are you sure you want to cancel editing and go back?');
+        if (userConfirmed) {
+            window.history.back();
+        }
+    });
+</script>
+
+{% comment %} 
                 <!--  COUNTRY SELECTION START  -->
                 
-                    <div class="about" id="address-data">
+                    <div class=" " id="address-data">
                         <label for="country">Country: </label>
                         <select name="country" id="country">
                             {% if profile.country %}
@@ -129,7 +401,7 @@
                         </select>
                     </div>
                 
-                    <div class="about">
+                    <div class=" ">
                         <label for="region">Region: </label>
                         <select id="region" name="region">
                             {% if profile.region %}
@@ -145,7 +417,7 @@
                         </select>
                     </div>
             
-                    <div class="about">
+                    <div class=" ">
                         <label for="municipality">Municipality: </label>
                         <select id="municipality" name="municipality">
                         {% if profile.municipality %}
@@ -161,12 +433,12 @@
                 
                 <!--  COUNTRY SELECTION END  -->
                 
-                    <div class="about" id="social-data">
+                    <div class="" id="social-data">
                         <label for="Socials">Social Media Links: </label> <br>
                         <label for="linkedin">LinkedIn: </label><input type="text" placeholder="linkedin" name="linkedin">
                     </div>
                 
-                    <div class="about" id="personal-data">
+                    <div class="" id="personal-data">
                         <label for="gender">Gender: </label>
                             <select id="gender" name="gender">
                                 {% if profile.gender %}
@@ -178,17 +450,17 @@
                         </select>
                     </div>
                 
-                    <div class="about">
+                    <div class="">
                         <label for="birthday">Date of Birth:</label>
                         <input type="date" value="{{profile.birthday}}" name="birthday">
                     </div>
                 
-                    <div class="about">
+                    <div class="">
                         <label for="mobile">Mobile Number: </label>
                         <input type="text" name="mobile" value="{{profile.contact}}">
                     </div>
                 
-                    <div class="about">
+                    <div class="">
                         <label for="details_privacy">Details Privacy: </label>
                         <select name="details_privacy" id="details-privacy">
                                 <option value="2" {% if profile.privacy == 2 %}selected{% endif %}>Only Me</option>
@@ -219,12 +491,12 @@
       </div>
       <div class="overlay-buttons">
         <center>
-        <a href="{% url 'profile' %}" class="btn">Yes(Cancel)</a>
-        <a href="#" class="btn">No(Continue editing)</a>
+        <a href="{% url 'profile' %}" class="btn">Yes</a>
+        <a href="#" class="btn">No</a>
         </center>
       </div>
   </div>
-</div>
+</div> {% endcomment %}
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script>

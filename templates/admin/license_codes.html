@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+{% block content %}
+<title>License Codes List</title>
+<div class="">
+
+    <h3>License Codes</h3>
+    <form method="GET" class="d-flex mb-5">
+        <div style="width: 400px;">
+            <input class="input-ctrl" type="text" name="search" placeholder="Search..." value="{{ search_query }}">
+        </div>
+        <button class="btn btn-primary mx-3" type="submit">Search</button>
+        <button class="btn btn-primary" type="submit" name="generate_csv">Generate CSV</button>
+    </form>
+
+    <table border="0" id="license-table" class="w-100 text-center admin-table">
+        <thead class="text-white bg-scholarium">
+        <tr>
+            <th onclick="sortTable(0)">ID</th>
+            <th onclick="sortTable(1)">Code</th>
+            <th onclick="sortTable(2)">User ID</th>
+            <th onclick="sortTable(3)">Status</th>
+        </tr>
+        </thead>
+        {% for code in license_codes %}
+        <tr>
+            <td >{{ code.id }}</td>
+            <td>
+                {% comment %} <a href="{% url 'user_details' user.id %}" class="fw-bold schol-link">{{ user.username }} {% endcomment %}
+                {{ code.code }}                    
+            </td>
+            <td>{{ code.user_id }}</td>
+            <td>{% if code.status %}
+                    Active
+                {% else %}
+                    Inactive
+                {% endif %}
+            </td>
+            
+        </tr>
+        {% endfor %}
+    </table>
+    <div class="pagination justify-content-center my-5">
+        <span class="step-links">
+            {% if license_codes.has_previous %}
+            <a href="?page=1{% if search_query %}&search={{ search_query }}{% endif %}" class="schol-link">First</a>
+            <a href="?page={{ license_codes.previous_page_number }}{% if search_query %}&search={{ search_query }}{% endif %}" class="schol-link">Previous</a>
+            {% endif %}
+            
+            <span class="current">
+                Page {{ license_codes.number }} of {{ license_codes.paginator.num_pages }}.
+            </span>
+            
+            {% if license_codes.has_next %}
+            <a href="?page={{ license_codes.next_page_number }}{% if search_query %}&search={{ search_query }}{% endif %}" class="schol-link">Next</a>
+            <a href="?page={{ paginator.num_pages }}{% if search_query %}&search={{ search_query }}{% endif %}" class="schol-link">Last</a>
+            {% endif %}
+        </span>
+    </div> 
+</div>
+<script>
+    var sortOrders = [];
+    function sortTable(colIndex) {
+        var table, rows, switching, i, x, y, shouldSwitch;
+        table = document.getElementById("license-table");
+        switching = true;
+    
+        if (!sortOrders[colIndex]) {
+            sortOrders[colIndex] = "asc";
+        } else if (sortOrders[colIndex] === "asc") {
+            sortOrders[colIndex] = "desc";
+        } else {
+            sortOrders[colIndex] = "asc";
+        }
+    
+        while (switching) {
+            switching = false;
+            rows = table.rows;
+            for (i = 1; i < (rows.length - 1); i++) {
+                shouldSwitch = false;
+    
+                x = rows[i].getElementsByTagName("td")[colIndex];
+                y = rows[i + 1].getElementsByTagName("td")[colIndex];
+    
+                if (sortOrders[colIndex] === "asc") {
+                    if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                        shouldSwitch = true;
+                        break;
+                    }
+                } else if (sortOrders[colIndex] === "desc") {
+                    if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                        shouldSwitch = true;
+                        break;
+                    }
+                }
+            }
+            if (shouldSwitch) {
+                rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                switching = true;
+            }
+        }
+    }
+</script>
+{% endblock %}

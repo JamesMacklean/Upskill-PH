@@ -20,12 +20,17 @@ import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-EMAIL_HOST = EMAIL_HOST
-EMAIL_PORT = EMAIL_PORT
-EMAIL_HOST_USER = EMAIL_HOST_USER
-EMAIL_HOST_PASSWORD = EMAIL_HOST_PASSWORD
-EMAIL_USE_TLS = EMAIL_USE_TLS
-EMAIL_USE_SSL = EMAIL_USE_SSL
+DOMAIN = 'welcome.upskillph.org'
+ACCOUNTS_DOMAIN = "accounts.upskillph.org"
+
+EMAIL_HOST = 'smtp.hostinger.com' 
+# EMAIL_HOST_USER = 'mailer@tmtg-clone.click' 
+# EMAIL_HOST_PASSWORD = 'hnVw35UEvflyXYPzJI7IWk2AmZkIpL8-'
+EMAIL_HOST_USER = 'hello@upskillph.org' 
+EMAIL_HOST_PASSWORD = 'hellO@upskillph2024'
+EMAIL_PORT = 465
+EMAIL_USE_TLS = False
+EMAIL_USE_SSL = True
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
@@ -34,10 +39,19 @@ EMAIL_USE_SSL = EMAIL_USE_SSL
 SECRET_KEY = 'django-insecure-k(i3^c+t7zkamnk@nut1x_inn)p_^s)sfrq(o61=i@uu6@uv&6'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# DEBUG = True
+DEBUG = False
 
-# ALLOWED_HOSTS = ['54.249.25.89', 'scholarium.io','127.0.0.1','185.229.113.4']
-ALLOWED_HOSTS = ['54.249.25.89', 'scholarium.io','127.0.0.1', 'scholarium.tmtg-clone.click']
+ALLOWED_HOSTS = [
+    '139.59.116.183',
+    '127.0.0.1',
+    'welcome.upskillph.org', 
+    'accounts.upskillph.org', 
+    'lgu.upskillph.org',
+    'misamis-occidental.upskillph.org',
+    'mamamo.upskillph.org',
+]
+
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 # Application definition
@@ -63,6 +77,8 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'corsheaders.middleware.CorsMiddleware',
+    'authentication.subdomain_middleware.SubdomainMiddleware',
+    
 ]
 
 ROOT_URLCONF = 'scholarium.urls'
@@ -144,7 +160,38 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CORS_ORIGIN_ALLOW_ALL = True
+# CORS_ALLOWED_ORIGINS = [
+#     "https://dict-lakip.org",
+# ]
+
 CORS_ALLOW_CREDENTIALS = True
-# CORS_ORIGIN_WHITELIST = ['https://scholarium.io']
 SESSION_SAVE_EVERY_REQUEST = True
 
+########## ORIGINAL CODE ##########
+# comment these to run in DEV MODE
+SESSION_COOKIE_DOMAIN = '.upskillph.org'
+SESSION_COOKIE_SAMESITE = 'None'
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_DOMAIN = '.upskillph.org'
+CSRF_COOKIE_SAMESITE = 'None'
+CSRF_COOKIE_SECURE = True
+###################################
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(BASE_DIR, 'django_debug.log'),
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['file'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+    },
+}

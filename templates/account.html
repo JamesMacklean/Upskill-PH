@@ -2,54 +2,79 @@
 {% load static %}
 {% load parse_iso %}
 {% block content %}
-<div class="program-grid-container">
-    <div class="program-grid-left">
-        <a href="#back" style="font-size: 15px; color:black; text-decoration: none"><i class="fa fa-angle-left"></i>Back</a>
-    </div>
-    <div class="program-grid-right">
-        <div class="account-settings">
-            <h3>Account Settings</h3>
-            <div class="passwords-container">
+
+<div class="content-container mb-3 mt-5">
+    <h3>Account Settings</h3>
+</div>
+        <div class="bg-light content-container w-100">
+            <div class="passwords-container px-5 pt-5 pb-1 mb-5 h-100">
                     <form action="" method="POST" class="passwords">
-                        <p>
+                        {% comment %} <p>
                             {{request.session.first_name|title}} {{request.session.last_name|title}}<br>
                             {{request.session.email}}<br>
                             date joined: {{ user_date_joined|parse_iso|date:"F d, Y" }} <br>
-                        </p>
-                        <label for="current-pass">Current Password </label> 
-                        <input type="password" name="current-pass"> <br>
-                    
-                        <label for="new-pass">New Password </label> 
-                        <input type="password" name="new-pass"> <br>
-                    
-                        <label for="confirm-pass">Confirm Password </label> 
-                        <input type="password" name="confirm-pass"> <br>
+                        </p> {% endcomment %}
+                        {% comment %} CURRENT PASSWORD {% endcomment %}
+                        <div class="rc-ProfilePhotoUploader form-horizontal">
+                            <div class="form-group horizontal-box wrap my-3 align-items-center">
+                                <label for="current-pass" class="body-2-text color-primary-text form-label">Current Password</label>
+                                <div class="form-control-custom">
+                                    <div class="css-1cq002f">
+                                        <div class="css-ek3fxo">
+                                            <input type="password" placeholder="Current Password" name="current-pass" class="input-ctrl">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {% comment %} NEW PASSWORD {% endcomment %}
+                        <div class="rc-ProfilePhotoUploader form-horizontal">
+                            <div class="form-group horizontal-box wrap my-3 align-items-center">
+                                <label for="new-pass" class="body-2-text color-primary-text form-label">New Password</label>
+                                <div class="form-control-custom">
+                                    <div class="css-1cq002f">
+                                        <div class="css-ek3fxo">
+                                            <input type="password" placeholder="New Password" name="new-pass" class="input-ctrl">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {% comment %} PASSWORD CONFIRMATION {% endcomment %}
+                        <div class="rc-ProfilePhotoUploader form-horizontal">
+                            <div class="form-group horizontal-box wrap my-3 align-items-center">
+                                <label for="new-pass" class="body-2-text color-primary-text form-label">Confirm Password</label>
+                                <div class="form-control-custom">
+                                    <div class="css-1cq002f">
+                                        <div class="css-ek3fxo">
+                                            <input type="password" placeholder="Confirm Password" name="confirm-pass" class="input-ctrl">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="error">
+                            <p 
+                                style="color: {% if response_message == 'Successfully Updated Password!' %}green{% else %}red{% endif %};">
+                                {{ response_message }}
+                            </p>
+                        </div>
                         {% csrf_token %}
-                        <input type="submit" value="Update Password">
+                        <div class="rc-ProfilePhotoUploader form-horizontal">
+                            <div class="form-group horizontal-box wrap my-3 align-items-center">
+                                <label for="save" class="body-2-text color-primary-text form-label"></label>
+                                <div class="form-control-custom">
+                                    <div class="css-1cq002f">
+                                        <div class="css-ek3fxo">
+                                        <input type="submit" value="UPDATE PASSWORD" class="btn btn-primary"> 
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </form>
             </div>
         </div>
-    </div>
-</div>
-{% comment %} MODAL {% endcomment %}
-<div class="overlay" tabindex="-1" id="back">
-    <div class="overlay-content">
-      <div class="overlay-header">
-        <h5 class="overlay-title">Quit editing?</h5>
-      </div>
-      <div class="overlay-body"> 
-          <p>
-              Are you sure you want to go back and cancel editing your profile? <br>
-              Changes you made so far will NOT be saved.
-          </p>
-      </div>
-      <div class="overlay-buttons">
-        <center>
-        <a href="{% url 'profile' %}" class="btn">Yes(Cancel)</a>
-        <a href="#" class="btn">No(Continue editing)</a>
-        </center>
-      </div>
-  </div>
-</div>
-
 {% endblock %}

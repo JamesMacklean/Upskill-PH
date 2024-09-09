@@ -1,0 +1,157 @@
+/* courses.css */
+
+.course-cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.course-card {
+    position: relative; /* Added for positioning the button */
+    background-color: #f5f5f5;
+    border-radius: 3px;
+    width: 300px;
+    outline: 1px solid lightgray;
+}
+
+.course-card img {
+    width: 300px;
+    height: 200px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+.course-title{
+    font-size: 18px;
+    font-weight: 400;
+}
+
+.course-card h2 {
+    font-size: 1.2rem;
+    margin: 0;
+    color: #333;
+}
+
+.course-card p {
+    margin: 5px 0;
+    color: #666;
+}
+
+.course-card a {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    background-color: #007bff;
+    color: #fff;
+    text-decoration: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+.course-card .course-details{
+    padding: 3px;
+}
+
+.course-card a:hover {
+    background-color: #0056b3;
+}
+/* Add styling for the topic badge */
+.course-card .topic-badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background-color: #10b0e0;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 13px;
+}
+p.partner-card {
+    font-size: 12px;
+}
+.partner-cards{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+@media screen and (max-width: 768px) {
+    .partner-cards{
+        padding: 0 40px;
+    }
+    .res-title {
+        font-size: 18px !important;
+        margin-left: 30px;
+    }
+    .container-card-title h5{
+        font-size: 16px !important;
+    }
+    .partner-cards p{
+        font-size: 12px !important;
+    }
+}
+@media screen and (max-width: 425px) {
+    .partner-cards{
+        justify-content: center;
+    }
+}
+@media screen and (max-width: 320px) {
+    .partner-cards{
+        justify-content: center;
+    }
+    .partner-card-container {
+        max-width: 250px !important;
+    }
+    .partner-card-image {
+        width: 250px !important;
+        display: flex;
+        flex-wrap: wrap;
+    }
+    .card-partner-logo {
+        width: 250px !important;
+        height: 35px !important;
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-evenly;
+        align-content: center;
+    }
+    .card-content {
+        padding: 2px 15px !important;
+    }
+}
+.partner-card-container {
+    max-width: 300px;
+    outline: 1px solid lightgray;
+    background-color: #fff;
+}
+.partner-card-image {
+    width: 300px;
+    display: flex;
+    flex-wrap: wrap;
+}
+.partner-card-image img{
+    width: 100%;
+}
+.card-partner-logo {
+    width: 300px;
+    height: 30px;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+    align-content: center;
+}
+.card-partner-logo img{
+    width: 50px;
+}
+.card-content{
+    padding: 1rem;
+}
+.partner-cards a{
+    text-decoration: none;
+}
+.partner-cards p{
+    font-size: 14px;
+    color: #666;
+}

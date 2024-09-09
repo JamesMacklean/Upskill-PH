@@ -1,147 +1,142 @@
-{% extends 'base.html' %}
+{% extends 'authentication/login_base.html' %}
 {% load static %}
+{% block 'title' %}upskillPH | Signup{% endblock %}
 {% block content %}
-
-{% comment %} <script>
-    alert('{{ message }}');
-</script> {% endcomment %}
-    
-{% comment %} {% if messages %}
-<ul class="messages">
-    {% for message in messages %}
-    <div id="message_container" {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</div>
-    {% endfor %}
-</ul>
-{% endif %} {% endcomment %}
-
-{% if message %}
-<div class="modal fade" id="SignupModal" tabindex="-1" data-bs-backdrop="static" aria-labelledby="SignupModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        {% if message == "success" %}
-        <div class="modal-content">
-            <div class="modal-header">
-            <h1 class="modal-title fs-5" id="SignupModalLabel">Success! 🎉</h1>
-            </div>
-            <div class="modal-body">
-                <img src="{% static 'images/success.svg'%}" class="modal-image">
-                <p>You have successfully created your <span class="schol-heading" style="color: #F15A25; text-transform: uppercase; font-weight: 500px;">Scholarium</span> account!
-                <br>kindly check your inbox in your email: {{ request.session.new_email }} for verification. Thank You!
-                <br> <em>  Note: also check on your SPAM folder </em> 
-                </p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            </div>
-        </div>
-        {% else %}
-        <div class="modal-content">
-            <div class="modal-header">
-            <h1 class="modal-title fs-5" id="SignupModalLabel">Error! ⚠️</h1>
-            </div>
-            <div class="modal-body">
-                <img src="https://scholarium-static.s3.ap-southeast-1.amazonaws.com/undraw_feeling_blue_-4-b7q.svg" class="modal-image">
-                <p>
-                    {{ message }}
-                </p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            </div>
-        </div>
-        {% endif %}
-    </div>
-</div>
-{% endif %}      
-
-<div class="container-signup">
-    <div class="forms-container">
-        <div class="signup-signin">
-            <form method="post" action="" class="sign-up-form" id="signup">
-                {% csrf_token %}
-                <h2 class="title">Create an Account</h2>
-                <br>
-                <div class="input-field">
-                    <i class="fas fa-user"></i>
-                    <input type="text" id="username" name="username" placeholder="username" required>
+    {% if response_message == "user account added" %}
+    <div class="mx-0 d-flex flex-column justify-content-center mobile-bg" style="height: calc(100vh - 90px);">
+        <div class="d-flex content-container h-100 align-items-center">
+            <div class="col d-flex flex-column justify-content-center align-items-center">
+                <div class="p-3 d-flex flex-column align-items-center justify-content-center text-center" id="signup">
+                    <img src="{% static 'images/congrats.png' %}" alt="" width="200px">
+                    <h5 class="title p-2 mb-4 mform-text justify-content-center">Congratulations on creating your account!</h5>
+                    <p>
+                        Your journey begins here, and we're thrilled to have you join our community. 
+                        <br>
+                        To complete the process and activate your account, kindly verify your email. 
+                        <br>
+                        This step ensures confirmation and full access to all our exciting features. 
+                        <br>
+                        If you need any assistance, feel free to reach out: <a href="mailto:hello@upskillph.org">hello@upskillph.org</a>. Welcome aboard!
+                    </p>
+                    <a href="https://accounts.upskillph.org/signin/" class="btn btn-primary">Login</a>
                 </div>
-                
-                <div class="input-field">
-                    <i class="fas fa-address-card"></i>
-                    <input type="text" id="firstname" name="firstname" placeholder="first name" required>
-                </div>
-                
-                <div class="input-field">
-                    <i class="fas fa-address-card"></i>
-                    <input type="text" id="lastname" name="lastname" placeholder="last name" required>
-                </div>
-                
-                <div class="input-field">
-                    <i class="fas fa-envelope"></i>
-                    <input type="text" id="email"  name="email" placeholder="email" required>
-                </div>
-
-                    {% comment %} <button type="submit" class="btn solid" data-bs-toggle="modal" data-bs-target="#SignupModal">sign up</button> {% endcomment %}
-                    <button type="submit" class="btn solid">sign up</button>
-            </form>
+            </div>
         </div>
     </div>
-</div>
-
-<div class="panels-container">
-    <div class="panel left-panel">
-        <div class="content">
-            <h3>Already have an account?</h3>
-            <p></p>
-            <a class="btn-transparent" href="/signin">Sign in</a>
-        </div>
-        <img src="{% static 'images/signup.svg'%}" class="image" alt=""/>
-    </div>
-</div>
-
-<!-- Modal -->
-<div class="modal fade" id="SignupModal" tabindex="-1" data-bs-backdrop="static" aria-labelledby="SignupModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        {% if message == "success" %}
-        <div class="modal-content">
-            <div class="modal-header">
-            <h1 class="modal-title fs-5" id="SignupModalLabel">Success! 🎉</h1>
+    {% elif response_message == "error" %}
+    <div class="mx-0 d-flex flex-column justify-content-center mobile-bg" style="height: calc(100vh - 90px);">
+        <div class="d-flex content-container h-100 align-items-center">
+            <div class="col d-flex flex-column justify-content-center align-items-center">
+                <div class="p-3 d-flex flex-column align-items-center justify-content-center text-center" id="signup">
+                    <img src="{% static 'images/sad.png' %}" width="200px"/>
+                    <h5 class="title p-2 mb-4 mform-text justify-content-center">Account Creation failed</h5>
+                    <p class="mform-text">
+                        We're sorry for the trouble with your account creation. Our team is ready to help!
+                        <br>
+                        Please contact <a href="mailto:hello@upskillph.org" class="schol-link">hello@upskillph.org</a> to get you set up smoothly. 
+                        <br>
+                        Thank you for your patience!
+                    </p>
+                </div>
             </div>
-            <div class="modal-body">
-                <img src="{% static 'images/success.svg'%}" class="modal-image">
-                <p>You have successfully created your <span class="schol-heading" style="color: #F15A25; text-transform: uppercase; font-weight: 500px;">Scholarium</span> account!
-                <br>kindly check your inbox in your email: {{ request.session.new_email }} for verification. Thank You!
-                <br> <em>  Note: also check on your SPAM folder </em> 
+        </div>
+    </div>
+    {% else %}
+    <div class="wrapper">
+        <form method="post" action="">
+            {% csrf_token %}
+            <h1>Create an Account</h1>
+            <div class="input-box">
+                <input id="email" name="email" type="email" placeholder="Email" required>
+            </div>
+            <div class="input-box">
+                <input id="password" name="password" type="password" placeholder="Password" required minlength="8" oninput="checkPasswordLength()">
+                <span id="lengthWarning" style="position: absolute; right: 12px; top: 12px; display: none; color: orange;">
+                    <i class="fa-solid fa-triangle-exclamation" title="Password must be at least 8 characters long."></i>
+                    <span class="tooltip-warning" style="visibility: visible;width: 165px;font-size: 12px;background-color: white;border: 1px solid;color: orange;text-align: center;border-radius: 6px;padding: 5px 5px;position: absolute;z-index: 1;right: -195px; top: -10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">Password must be at least 8 characters long.</span>
+                </span>
+            </div>
+            <div class="input-box">
+                <input id="password2" type="password" placeholder="Confirm Password" required oninput="checkPasswordMatch()">
+                <span id="checkmark" style="position: absolute; right: 12px; top: 12px; display: none;">
+                    <i class="fa-solid fa-circle-check" style="color: green;"></i>
+                    <span class="tooltip-match" style="visibility: visible;width: 165px;font-size: 12px;background-color: white;border: 1px solid;color: green;text-align: center;border-radius: 6px;padding: 5px 5px;position: absolute;z-index: 1;right: -195px; top: -2px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">Passwords match.</span>
+                </span>
+                <span id="crossmark" style="position: absolute; right: 12px; top: 12px; display: none; color: red;">
+                    <i class="fa-solid fa-circle-xmark"></i>
+                    <span class="tooltip-mismatch" style="visibility: visible;width: 170px;font-size: 12px;background-color: white;border: 1px solid;color: red;text-align: center;border-radius: 6px;padding: 5px 5px;position: absolute;z-index: 1;right: -200px; top: -2px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">Passwords do not match.</span>
+                </span>
+            </div>
+            <div class="error">
+                    <p>{{ response_message }}</p>
+            </div>
+            <br>
+            <script>
+                function checkPasswordLength() {
+                    var password = document.getElementById('password').value;
+                    if (password.length < 8) {
+                        document.getElementById('lengthWarning').style.display = 'inline';
+                        document.querySelector('#lengthWarning .tooltip').style.visibility = 'visible';
+                    } else {
+                        document.getElementById('lengthWarning').style.display = 'none';
+                        document.querySelector('#lengthWarning .tooltip').style.visibility = 'hidden';
+                    }
+                }
+
+                function checkPasswordMatch() {
+                    var password = document.getElementById('password').value;
+                    var password2 = document.getElementById('password2').value;
+                    if (password === "" || password2 === "") {
+                        document.getElementById('checkmark').style.display = 'none';
+                        document.getElementById('crossmark').style.display = 'none';
+                        document.querySelector('#checkmark .tooltip').style.visibility = 'hidden';
+                        document.querySelector('#crossmark .tooltip').style.visibility = 'hidden';
+                    } else if (password === password2) {
+                        document.getElementById('checkmark').style.display = 'inline';
+                        document.getElementById('crossmark').style.display = 'none';
+                        document.querySelector('#checkmark .tooltip').style.visibility = 'visible';
+                        document.querySelector('#crossmark .tooltip').style.visibility = 'hidden';
+                    } else {
+                        document.getElementById('checkmark').style.display = 'none';
+                        document.getElementById('crossmark').style.display = 'inline';
+                        document.querySelector('#checkmark .tooltip').style.visibility = 'hidden';
+                        document.querySelector('#crossmark .tooltip').style.visibility = 'visible';
+                    }
+                }
+            </script>
+            <!-- <div class="forgot-password">
+                <a href="#">Forgot password?</a>
+            </div> -->
+            <button type="submit" class="btn" id="registerButton" disabled>Register</button>
+            <script>
+                function updateRegisterButton() {
+                    var password = document.getElementById('password').value;
+                    var password2 = document.getElementById('password2').value;
+                    var allInputs = document.querySelectorAll('.input-box input');
+                    var allFilled = Array.from(allInputs).every(input => input.value !== '');
+
+                    if (password === password2 && allFilled) {
+                        document.getElementById('registerButton').disabled = false;
+                        document.getElementById('registerButton').style.backgroundColor = 'green';
+                        document.getElementById('registerButton').classList.add('enabled-button');
+                        document.getElementById('registerButton').style.color = 'white';
+                    } else {
+                        document.getElementById('registerButton').disabled = true;
+                        document.getElementById('registerButton').classList.remove('enabled-button');
+                    }
+                }
+
+                document.querySelectorAll('.input-box input').forEach(input => {
+                    input.addEventListener('input', updateRegisterButton);
+                });
+            </script>
+            <div class="register-link">
+                <p>Already have an account? <a href="/signin">Login</a>
                 </p>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            </div>
-        </div>
-        {% else %}
-        <div class="modal-content">
-            <div class="modal-header">
-            <h1 class="modal-title fs-5" id="SignupModalLabel">Error! ⚠️</h1>
-            </div>
-            <div class="modal-body">
-                <img src="https://scholarium-static.s3.ap-southeast-1.amazonaws.com/undraw_feeling_blue_-4-b7q.svg" class="modal-image">
-                <p>
-                    {{ message }}
-                </p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            </div>
-        </div>
-        {% endif %}
+        </form>
     </div>
-</div>
 
-<script>
-    var message_ele = document.getElementById("message_container");
-    
-    setTimeout(function(){ 
-    message_ele.style.display = "none"; 
-    }, 10000);
-</script>
+    {% endif %}
 
 {% endblock %}

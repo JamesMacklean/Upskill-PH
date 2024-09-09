@@ -1,28 +1,48 @@
 {% load static %}
 <link rel="stylesheet" href="{% static 'css/footer.css' %}">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-<footer id="scholarium-footer">
-    <div class="footer-container-row">
-        <div class="footer-container-col-left">
-          <section>
-            <h5 class="footer-link-heading">SCHOLARIUM</h5>
-          </section>
-          <div class="footer-link-footer-static">
-            <ul class="static-link-footer">
-              <li><a href="#">Help and FAQ</a></li>
-              <li><a href="#">Terms of Service</a></li>
-              <li><a href="#">Honor Code</a></li>
-              <li><a href="{% url 'privacy' %}">Privacy Policy</a></li>
-            </ul>
-          </div>
+
+{% comment %} <footer class="bg-dark">
+  <div class="container mb-5">
+    <div class="row mb-5 pb-5">
+      <div class="col col-md-10">
+        <h2 class="text-white mb-3">Scholarium</h2>
+        {% if not request.session.user_token %}
+        <div class="mt-3">
+          <a href="{% url 'signup' %}" class="btn">
+            Join Our Community
+          </a>
         </div>
-        <div class="footer-container-col-right">
-            <div class="footer-link-footer-social">
-              <a class="footer-social-icon"href="#"><i class="fab fa-facebook"></i></a>
-              <a class="footer-social-icon" href="#"><i class="fab fa-linkedin"></i></a>
-            </div>
-            <span>© 2022 TMTG</span> <br>
-            <span>All rights reserved.</span>
+        {% else %}
+        <div class="mt-3">
+
+        </div>
+        {% endif %}
+        <div class="mt-3">
+          <p class="text-white">© Copyright 2023 TMTG. All rights reserved.</p>
         </div>
       </div>
+      <div class="col">
+        <ul class="mt-4 footer-links">
+          <li><a href="{% url "contact" %}">Contact Us</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</footer> {% endcomment %}
+
+<footer class="bg-dark footer w-100">
+  <div class="col custom-footer-1">
+   <h2 class="text-white mb-3">upskillPH</h2>
+   {% if not request.session.user_token %}
+   <a href="{% url "signup" %}" class="btn btn-primary">Join Our Community</a>
+   {% endif %}
+   <p class="text-white mt-4 web-cr">© Copyright 2023 HorizonZero. All rights reserved.</p>
+  </div>
+  <div class="col custom-footer-2">
+    <a class="footer-link" href="{% url "contact" %}">Contact Us</a>
+    <a class="footer-link" href="#">Privacy Policy</a>
+  </div>
+  <p class="text-white mt-4 mobile-cr">© Copyright 2023 TMTG. All rights reserved.</p>
 </footer>

@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load parse_iso %}
+{% block content %}
+
+<div class="mb-5"></div>
+
+<div class="bg-light py-5 w-100 px-3" id="program-details">
+    <div class="container">
+        {% for program in program_details %}
+        <div class="program-info mb-5 d-flex">
+            {% if program.logo %}
+            <img class="program-logo" src="{{ program.logo }}" alt="{{ program.name }} Logo">
+            {% else %}
+            <img class="program-logo" src="https://via.placeholder.com/150" alt="Placeholder Logo">
+            {% endif %}
+
+            <div class="program-description-container mx-4">
+                <h4>{{ program.name }}</h4>
+                <p class="program-description">{{ program.about|default:"No description available." }}</p>
+
+                <!-- Edit button visible only to partners -->
+                {% if is_user_partner %}
+                <div class="mt-4">
+                    <a href="{% url 'program_edit' partner_slug program.slug %}" class="btn btn-primary">Edit</a>
+                </div>
+                <div class="mt-3">
+                    <a href="{% url 'application' partner_slug program.slug %}" class="btn btn-secondary">Applications</a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}
+
+

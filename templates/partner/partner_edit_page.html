@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% comment %} {% load parse_iso %} {% endcomment %}
+{% block content %}
+<div class="container my-5">
+    <h2 class="mb-4">Edit {{ partner.name }}</h2>
+    
+    <form action="" method="POST" enctype="multipart/form-data" class="px-5">
+        {% csrf_token %}
+        
+        <!-- Partner Name -->
+        <div class="mb-3">
+            <label for="partnerName" class="form-label">Partner Name</label>
+            <input type="text" class="form-control" id="partnerName" value="{{ partner.name }}" name="partner_name" required>
+        </div>
+
+        <!-- Partner About -->
+        <div class="mb-3">
+            <label for="partnerAbout" class="form-label">Partner Description</label>
+            <textarea class="form-control" id="partnerAbout" name="partner_about" rows="4">{{ partner.about }}</textarea>
+        </div>
+
+        <!-- Partner Slug -->
+        <div class="mb-3">
+            <label for="partnerSlug" class="form-label">Partner Slug</label>
+            <input type="text" class="form-control" id="partnerSlug" value="{{ partner.slug }}" name="partner_slug" required>
+        </div>
+        
+        <!-- Partner URL -->
+        <div class="mb-3">
+            <label for="partnerURL" class="form-label">Partner URL</label>
+            <input type="text" class="form-control" id="partnerURL" value="{{ partner.url }}" name="partner_url">
+        </div>
+
+        <!-- Partner FB -->
+        <div class="mb-3">
+            <label for="partnerFB" class="form-label">Partner FB</label>
+            <input type="text" class="form-control" id="partnerFB" value="{{ partner.fb }}" name="partner_fb">
+        </div>
+
+        <!-- Partner IG -->
+        <div class="mb-3">
+            <label for="partnerIG" class="form-label">Partner IG</label>
+            <input type="text" class="form-control" id="partnerIG" value="{{ partner.ig }}" name="partner_ig">
+        </div>        
+
+        {% comment %} <!-- Partner Start Date -->
+        <div class="mb-3">
+            <label for="partnerStartDate" class="form-label">Start Date</label>
+            <input type="date" class="form-control" id="partnerStartDate" value="{{partner.start_date|parse_iso|date:"M d, Y"}}" name="partner_start_date">
+        </div>
+
+        <!-- Partner Status -->
+        <div class="mb-3">
+            <label for="partnerStatus" class="form-label">Partner Status</label>
+            <input type="text" class="form-control" id="partnerStatus" value="{{ partner.status }}" name="partner_status" required>
+        </div> {% endcomment %}
+
+        <!-- Submit Button -->
+        <div class="d-flex justify-content-center">
+            <button type="submit" class="btn btn-primary mx-3">Save Changes</button>
+            
+            <!-- Cancel Button -->
+            <a href="{% url 'partner_slug' partner.slug %}" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
+    </form>
+</div>
+{% endblock %}

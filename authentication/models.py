@@ -1,6 +1,7 @@
 from django.urls import reverse
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils import timezone
 
 # Create your models here.
 
@@ -234,3 +235,22 @@ class Application(models.Model):
         if self.status != self.REJECTED:
             self.status = self.REJECTED
             self.save()
+
+class CourseraToken(models.Model):
+    ITEM_CHOICES = [
+        ('initial_code', 'Initial Code'),
+        ('access_token', 'Access Token'),
+        ('refresh_token', 'Refresh Token'),
+    ]
+
+    item = models.CharField(max_length=15, choices=ITEM_CHOICES, unique=True)
+    value = models.TextField()
+    last_modified = models.DateTimeField(auto_now=True)
+    
+    def __str__(self):
+        return self.item
+
+    def is_access_token_expired(self):
+        now = timezone.now()
+        time_difference = now - self.last_modified
+        return time_difference.total_seconds() > 1500  # 25 minutes
