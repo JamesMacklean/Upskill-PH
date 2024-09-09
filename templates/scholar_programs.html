@@ -101,7 +101,8 @@
                 </div>
                 <div class="program-about mt-4">
                     <h5 class="mb-4">Apply to this Program</h5>
-                    <form action="" class="program-application" id="apply" method="POST" onsubmit="showSubmissionPrompt()">
+                    {% comment %} <form action="" class="program-application" id="apply" method="POST" onsubmit="showSubmissionPrompt()"> {% endcomment %}
+                    <form action="" class="program-application" id="apply" method="POST">
                         {% csrf_token %}
                         {% comment %} **************************************************************************************** {% endcomment %}
                                     {% comment %} COMMENT MUNA ITO PARA ALLOWED MAG-APPLY NG MULTIPLE PROGRAMS {% endcomment %}
@@ -234,7 +235,7 @@
             </div>
         {% endif %}
     {% endfor %}
-    <script>
+    {% comment %} <script>
         function showSubmissionPrompt() {
             const promptDiv = document.querySelector('.application-prompt');
             promptDiv.style.display = 'block'; // Show the div
@@ -242,5 +243,5 @@
                 promptDiv.style.display = 'none'; // Hide the div after 15 seconds
             }, 15000);
         }
-    </script>
+    </script> {% endcomment %}
 {% endblock %}
