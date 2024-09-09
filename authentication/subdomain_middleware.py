@@ -25,7 +25,7 @@ class SubdomainMiddleware(MiddlewareMixin):
                 current_time = int(time.time())  
                 if current_time >= expires:
                     # The session has expired, sign out the user
-                    return self.signout(request, f'http://{settings.ACCOUNTS_DOMAIN}')
+                    return self.signout(request, f'https://{settings.ACCOUNTS_DOMAIN}')
                 try:
                     match = accounts_resolver.resolve(request.path)
                 except:
@@ -35,7 +35,7 @@ class SubdomainMiddleware(MiddlewareMixin):
                 
             except KeyError:
                 print(f'WELCOME: Unauthenticated.', flush=True)
-                return self.signout(request, f'http://{settings.ACCOUNTS_DOMAIN}')                       
+                return self.signout(request, f'https://{settings.ACCOUNTS_DOMAIN}')                       
                 
         elif subdomain == 'accounts': 
             try:
@@ -52,19 +52,19 @@ class SubdomainMiddleware(MiddlewareMixin):
                     current_time = int(time.time())  
                     if current_time >= expires:
                         # The session has expired, sign out the user
-                        return self.signout(request, f'http://{settings.ACCOUNTS_DOMAIN}')
-                    return redirect(f'http://{settings.DOMAIN}')
+                        return self.signout(request, f'https://{settings.ACCOUNTS_DOMAIN}')
+                    return redirect(f'https://{settings.DOMAIN}')
                 except KeyError:
                     print(f'ACCOUNTS: Unauthenticated.', flush=True)
             else:
                 print(f"HINDI MATCH! {match}", flush = True)
                 try:
                     user_token = request.session['user_token']
-                    return redirect(f'http://{settings.DOMAIN}{request.path}')
+                    return redirect(f'https://{settings.DOMAIN}{request.path}')
                 except KeyError:
                     print(f"WALANG GANITONG PATH SA ACCOUNTS! {request.path}", flush = True)
                     if request.path=='' or request.path =='/':
-                        return self.signout(request, f'http://{settings.ACCOUNTS_DOMAIN}')
+                        return self.signout(request, f'https://{settings.ACCOUNTS_DOMAIN}')
                     else:
                         raise Http404("Page not found.")
         
@@ -73,7 +73,7 @@ class SubdomainMiddleware(MiddlewareMixin):
 
     
         # FOR TEST CODE
-        # FOR http://127.0.0.1:8000
+        # FOR https://127.0.0.1:8000
         else:
             
             try:
@@ -82,7 +82,7 @@ class SubdomainMiddleware(MiddlewareMixin):
                 current_time = int(time.time())  # Get the current time in seconds since the epoch (UNIX time)
                 if current_time >= expires:
                     # The session has expired, sign out the user
-                    return self.signout(request, f'http://{host}')
+                    return self.signout(request, f'https://{host}')
                 try:
                     match = accounts_resolver.resolve(request.path)
                 except:
@@ -97,7 +97,7 @@ class SubdomainMiddleware(MiddlewareMixin):
                     match = None
                     
                 if not match:
-                    return self.signout(request, f'http://{host}')
+                    return self.signout(request, f'https://{host}')
             
         return None
     
