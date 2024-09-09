@@ -175,6 +175,7 @@
                                         </div>
                                         <div class="modal-footer justify-content-center">
                                             <button type="submit" class="btn btn-primary" id="apply-button" disabled>APPLY NOW</button>
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                                         </div>
                                     </div>
                                 </div>
@@ -184,7 +185,8 @@
                             <script>
                                 document.addEventListener('DOMContentLoaded', function() {
                                     const privacyModal = new bootstrap.Modal(document.getElementById('privacy-modal'));
-                                    const applyBtn = document.getElementById('applyBtn'); // check kung tama id
+                                    const successModal = new bootstrap.Modal(document.getElementById('success-modal'));
+                                    const applyBtn = document.getElementById('applyBtn');
 
                                     if (applyBtn) {
                                         applyBtn.addEventListener('click', function() {
@@ -192,10 +194,36 @@
                                         });
                                     }
 
+                                    const form = document.querySelector('.program-application');
+                                    form.addEventListener('submit', function(event) {
+                                        event.preventDefault(); // Prevent the form from submitting traditionally
+
+                                        // Prepare FormData object for sending form data
+                                        var formData = new FormData(form);
+
+                                        // AJAX request to the server
+                                        fetch(form.action, {
+                                            method: 'POST',
+                                            body: formData,
+                                            headers: {
+                                                'X-CSRFToken': '{{ csrf_token }}' // Ensure CSRF token is included if needed
+                                            }
+                                        })
+                                        .then(response => response.json()) // Assuming server responds with JSON
+                                        .then(data => {
+                                            console.log('Success:', data);
+                                            privacyModal.hide(); // Hide the privacy modal
+                                            successModal.show(); // Show the success modal
+                                        })
+                                        .catch((error) => {
+                                            console.error('Error:', error);
+                                        });
+                                    });
+
                                     const checkbox = document.getElementById('privacy-checkbox');
                                     const applyButton = document.getElementById('apply-button');
 
-                                    //event listener pag okay si checkbox
+                                    // Enable the apply button only if the checkbox is checked
                                     if (checkbox && applyButton) {
                                         checkbox.addEventListener('change', function() {
                                             applyButton.disabled = !this.checked;
@@ -233,4 +261,22 @@
             </div>
         {% endif %}
     {% endfor %}
+
+    <!-- Success Modal -->
+    <div class="modal fade" id="success-modal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="successModalLabel">Application Submitted</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Your application has been successfully submitted!
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
