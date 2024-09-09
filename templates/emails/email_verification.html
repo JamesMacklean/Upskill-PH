@@ -165,6 +165,7 @@
 												</p>
 												<span>
 													<center>
+														{% comment %} <a href="http://127.0.0.1:8000{% url 'verify_account' user_hash %}" style="background-color: #ff7300; padding: 10px 20px; color: #FFFFFF; text-decoration: none; border-radius: 5px;">Verify your Account</a> {% endcomment %}
 														<a href="https://{{ accounts_domain }}{% url 'verify_account' user_hash %}" style="background-color: #ff7300; padding: 10px 20px; color: #FFFFFF; text-decoration: none; border-radius: 5px;">Verify your Account</a>
 														<br>
 														<p style="color:#000;margin: 40px 0 0">or use this link instead:</p>

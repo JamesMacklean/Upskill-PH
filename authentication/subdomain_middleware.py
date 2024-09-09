@@ -44,12 +44,12 @@ class SubdomainMiddleware(MiddlewareMixin):
                 match = None
   
             if match:
-                print(f'ACCOUNTS MATCH! {match}', flush=True)
                 request.urlconf = accounts_urlconf
                 try:
                     user_token = request.session['user_token']
                     expires = request.session['expires']
-                    current_time = int(time.time())  
+                    current_time = int(time.time()) 
+                    print(f'ACCOUNTS MATCH! {match}', flush=True) 
                     if current_time >= expires:
                         # The session has expired, sign out the user
                         return self.signout(request, f'https://{settings.ACCOUNTS_DOMAIN}')
