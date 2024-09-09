@@ -109,13 +109,13 @@ def signup(request):
                         'Content of the Message', 
                         settings.EMAIL_HOST_USER, 
                         ########## ORIGINAL CODE ##########
-                        # [email], 
+                        [email], 
                         ########## FOR TEST CODE ##########
-                        [TEST_EMAIL_RECEIVER],
+                        # [TEST_EMAIL_RECEIVER],
                         html_message=html,
                         fail_silently=False
                     )
-                    print(f'Verification email sent to {TEST_EMAIL_RECEIVER}', flush=True)
+                    print(f'Verification email sent to {email}', flush=True)
                 except Exception as e:
                     print("Failed to send email:", str(e), flush=True)
                 ############################# FOR MAIL ##############################
