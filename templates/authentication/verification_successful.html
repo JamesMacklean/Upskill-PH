@@ -1,21 +1,26 @@
+{% extends "base.html" %}
 {% autoescape off %}
 
-<h1>
-    VERIFICATION SUCCESS!
-</h1>
-<p style="color: rgba(0,0,0,.75);">
-    {% filter force_escape %}
-        Your account has been verified.
-    {% endfilter %}
-    <br />
-</p>
+{% block content %}
+<div class="min-100 w-100 d-flex justify-content-center align-items-center">
+    <h1 class="mb-4">
+        VERIFICATION SUCCESS!
+    </h1>
+    <p style="color: rgba(0,0,0,.75);">
+        {% filter force_escape %}
+            Your account has been verified.
+        {% endfilter %}
+        <br />
+    </p>
+    
+    <!-- Button to redirect to the main domain -->
+    {% if original_url %}
+        <a href="http://{{ domain }}{{ original_url }}" class="btn btn-primary">Click Here to Go Back to Homepage</a>
+    {% else %}
+        <a href="{% url "signin" %}" class="btn btn-primary">Click Here to Go Back to Homepage</a>
+    {% endif %}
+</div>
 
-<!-- Button to redirect to the main domain -->
-{% if original_url %}
-    <a href="http://{{ domain }}{{ original_url }}" class="btn btn-primary">Click Here to Go Back to Homepage</a>
-{% else %}
-    <a href="{% url "signin" %}" class="btn btn-primary">Click Here to Go Back to Homepage</a>
-{% endif %}
-                
+{% endblock %}
 
 {% endautoescape %}
