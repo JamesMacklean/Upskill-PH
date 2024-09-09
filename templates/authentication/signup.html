@@ -43,7 +43,7 @@
             {% csrf_token %}
             <h1>Create an Account</h1>
             <div class="input-box">
-                <input id="email" name="email" type="text" placeholder="Email" required>
+                <input id="email" name="email" type="email" placeholder="Email" required>
             </div>
             <div class="input-box">
                 <input id="password" name="password" type="password" placeholder="Password" required minlength="8" oninput="checkPasswordLength()">

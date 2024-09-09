@@ -24,8 +24,8 @@ DOMAIN = 'welcome.upskillph.org'
 ACCOUNTS_DOMAIN = "accounts.upskillph.org"
 
 EMAIL_HOST = 'smtp.hostinger.com' 
-EMAIL_HOST_USER = 'mailer@tmtg-clone.click' 
-EMAIL_HOST_PASSWORD = 'hnVw35UEvflyXYPzJI7IWk2AmZkIpL8-'
+EMAIL_HOST_USER = 'mailer@upskillph.org' 
+EMAIL_HOST_PASSWORD = 'hellO@upskillph2024'
 EMAIL_PORT = 465
 EMAIL_USE_TLS = False
 EMAIL_USE_SSL = True
