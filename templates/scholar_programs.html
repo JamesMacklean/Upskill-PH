@@ -182,19 +182,25 @@
                             <script src="https://unpkg.com/@popperjs/core@2"></script>
                             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
                             <script>
-                                const submitButton = document.getElementById('submit-button');
-                                const privacyModal = new bootstrap.Modal(document.getElementById('privacy-modal'));
+                                document.addEventListener('DOMContentLoaded', function() {
+                                    const privacyModal = new bootstrap.Modal(document.getElementById('privacy-modal'));
+                                    const applyBtn = document.getElementById('applyBtn'); // check kung tama id
 
-                                submitButton.addEventListener('click', function() {
-                                    privacyModal.show();
-                                });
+                                    if (applyBtn) {
+                                        applyBtn.addEventListener('click', function() {
+                                            privacyModal.show();
+                                        });
+                                    }
 
-                                const checkbox = document.getElementById('privacy-checkbox');
-                                const applyButton = document.getElementById('apply-button');
+                                    const checkbox = document.getElementById('privacy-checkbox');
+                                    const applyButton = document.getElementById('apply-button');
 
-                                // Event listener to enable the 'APPLY NOW' button when the checkbox is checked
-                                checkbox.addEventListener('change', function() {
-                                    applyButton.disabled = !this.checked;
+                                    //event listener pag okay si checkbox
+                                    if (checkbox && applyButton) {
+                                        checkbox.addEventListener('change', function() {
+                                            applyButton.disabled = !this.checked;
+                                        });
+                                    }
                                 });
                             </script>
                         {% comment %} KUNG MAGA-APPLY SIYA AT HINDI UPDATED ANG PROFILE NIYA {% endcomment %}
@@ -227,13 +233,13 @@
             </div>
         {% endif %}
     {% endfor %}
+    <script>
+        function showSubmissionPrompt() {
+            const promptDiv = document.querySelector('.application-prompt');
+            promptDiv.style.display = 'block'; // Show the div
+            setTimeout(() => {
+                promptDiv.style.display = 'none'; // Hide the div after 15 seconds
+            }, 15000);
+        }
+    </script>
 {% endblock %}
-<script>
-    function showSubmissionPrompt() {
-        const promptDiv = document.querySelector('.application-prompt');
-        promptDiv.style.display = 'block'; // Show the div
-        setTimeout(() => {
-            promptDiv.style.display = 'none'; // Hide the div after 15 seconds
-        }, 15000);
-    }
-</script>
