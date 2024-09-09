@@ -2,7 +2,7 @@
 {% load static %}
 {% block 'title' %}Program{% endblock %}
 {% block content %}
-<div class="application-prompt" style="display: none;">Application Submitted</div>
+{% comment %} <div class="application-prompt" style="display: none;">Application Submitted</div> {% endcomment %}
     {% for program in programs %}
         {% comment %} DEFAULT SA LAHAT NG PROGRAMS {% endcomment %}
         <div class="bg_{{program.id}}_image w-100">
