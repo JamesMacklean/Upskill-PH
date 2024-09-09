@@ -52,8 +52,6 @@ def verify_account(request, user_hash):
             context['original_url'] = original_url
             context['domain'] = settings.DOMAIN
             
-            print(template_successful, flush=True)
-            
             return render(request, template_successful, context)                
         else:
             print ("ERROR:", response_message, flush=True)
@@ -111,9 +109,9 @@ def signup(request):
                         'Content of the Message', 
                         settings.EMAIL_HOST_USER, 
                         ########## ORIGINAL CODE ##########
-                        # [email], 
+                        [email], 
                         ########## FOR TEST CODE ##########
-                        [TEST_EMAIL_RECEIVER],
+                        # [TEST_EMAIL_RECEIVER],
                         html_message=html,
                         fail_silently=False
                     )
