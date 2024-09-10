@@ -1,5 +1,24 @@
+{% extends 'authentication/login_base.html' %}
+{% block 'title' %}upskillPH | Account Verification{% endblock %}
 {% autoescape off %}
+{% block content %}
 
-VERIFICATION FAILED. PLEASE CONTACT THE ADMINISTRATOR.
+<div class="mx-0 d-flex flex-column justify-content-center mobile-bg" style="height: calc(100vh - 90px);">
+    <div class="d-flex content-container h-100 align-items-center">
+        <div class="col d-flex flex-column justify-content-center align-items-center">
+            <div class="p-3 d-flex flex-column align-items-center justify-content-center text-center" id="signup">
+                <img src="{% static 'images/congrats.png' %}" alt="" width="200px">
+                <h5 class="title p-2 mb-4 mform-text justify-content-center">Verification failed!</h5>
+                <p>
+                    Please contact the administrator.
+                    <br>
+                    If you need any assistance, feel free to reach out: <a href="mailto:hello@upskillph.org">hello@upskillph.org</a>. Welcome aboard!
+                </p>
+                <a href="https://accounts.upskillph.org/signin/" class="btn btn-primary">Login</a>
+            </div>
+        </div>
+    </div>
+</div>
 
+{% endblock %}
 {% endautoescape %}
