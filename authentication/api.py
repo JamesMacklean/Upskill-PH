@@ -367,6 +367,34 @@ def get_applicants(bearer_token, partner_id, program_id, status):
                 
     return applicants_list
 
+# GET https://scholarium.tmtg-clone.click/v1/partner/[partner_id]/scholarship/[program_id]/status/[status]
+def get_csv_buri(bearer_token, partner_id, program_id, status):  
+    csv_buri_data = []
+    context = {}
+    add_on = f'/status/{str(status)}/csv-to-buri'
+    payload={
+        "partner_id": partner_id,
+        "program_id": program_id,
+        "add_on": add_on
+    }
+    headers = {
+    'Authorization': bearer_token
+    }
+    
+    response = requests.request("GET", os.path.join(f"{API_PARTNER_URL}{str(partner_id)}/scholarship/{str(program_id)}{add_on}"), headers=headers, data=payload)
+    response_dict = json.loads(response.text)
+
+    # AUTO-ADD SA CONTEXT NG MGA KEYS NA NA-GET VIA API
+    if 'data' in response_dict:
+        try:
+            for data in response_dict['data']:
+                csv_buri_data.append(data)
+                        
+        except Exception as e:
+            print(str(e), flush=True)
+            
+    return csv_buri_data
+
 # GET https://scholarium.tmtg-clone.click/v1/admin/codes/[code]
 def license_code(bearer_token,code):  
     license_codes = []

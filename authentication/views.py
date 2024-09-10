@@ -635,6 +635,40 @@ def program_slug(request, partner_slug, program_slug):
     partner_id = program_data[0]['partner_id']
     program_id = program_data[0]['id']
     
+    if request.method == 'POST':
+        csv_data = get_csv_buri(user_token, partner_id, program_id, 0) # status 0 means PENDING
+        print(csv_data)
+        
+        date_now = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
+
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = f'attachment; filename="pending_applications_{date_now}.csv"'
+        
+        writer = csv.writer(response)
+        writer.writerow([
+            'Email Address [Required]', 
+            'First Name [Required]', 
+            'Last Name [Required]', 
+            'Password [Required] atleast 6 characters', 
+            'Groups [Required]', 
+            'Change password upon login',
+            'Confirm account upon upload'
+        ])
+
+        for row in csv_data:
+            writer.writerow([
+                row['email'],
+                row['first_name'],
+                row['last_name'],
+                row['password'],
+                row['groups'],
+                row['change_pass'],
+                row['confirm_account']
+            ])
+
+        return response
+        
+    
     monitored_partner = [data['partner_id'] for data in partners]
     monitored_program = [data['program_id'] for data in partners]
             
