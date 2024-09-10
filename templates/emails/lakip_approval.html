@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Application Approved</title>
+</head>
+<body>
+    <p>Dear {{ full_name }},</p>
+
+    <p>Your application to the DICT-LAKIP program has been approved. The courses under this program are hosted on our partner’s, CAST, learning management system.</p>
+
+    <h4>Already have an account with Cast?</h4>
+    <p>If you already have an account using this email on the CAST platform, you may use those credentials to access the courses of this program at: 
+        <a href="https://{{ domain }}">https://{{ domain }}</a>.
+        <br>
+        If you cannot login, please wait 24 hours for the linking of your existing account to this specific DICT-LAKIP program.
+    </p>
+
+    <h4>Do not have an account with Cast yet?</h4>
+    <p>If you are new to the CAST platform, an account will be created for you using your registered email with UpskillPH.org within 24 hours.</p>
+    <p>You may login at <a href="https://{{ domain }}">https://{{ domain }}</a> using your email registered with UpskillPH.org and this temporary password: <strong>{{ password }}</strong>. 
+    You will be prompted to change your password during your first sign in on the Cast platform.</p>
+
+    <p>Best regards,</p>
+    <p>The DICT-LAKIP Team</p>
+</body>
+</html>

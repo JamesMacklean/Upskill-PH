@@ -804,16 +804,64 @@ def application(request, partner_slug, program_slug):
         raise Http404
     if program_id not in monitored_program:
         raise Http404
-
+        
     if request.method == "POST":
         user_ids = request.POST.getlist("user_id[]")
 
         response_message = ''
-
+        applicants = get_applicants(user_token,partner_id,program_id,None)
+        for applicant in applicants:
+            scholarship_applicants.append(applicant)
+            
         for user_id in user_ids:
+            for applicant in scholarship_applicants:
+                if str(applicant['user_id']) == user_id:
+                    applicant_name = f"{applicant['first_name']} {applicant['last_name']}"
+                    applicant_email = applicant['email']
+                    
             if 'approve' in request.POST:
                 print("APPROVE attempt", flush=True)
                 response_message = update_applicant(user_token, int(user_id), int(partner_id), int(program_id), 1)
+                if response_message == "Successfully Updated!":
+                    csv_data = get_csv_buri(user_token, partner_id, program_id, 1) # status 1 means APPROVED
+                    print(csv_data)
+                    
+                    applicant_password = None
+                    for record in csv_data:
+                        if record['email'] == applicant_email:
+                            applicant_password = record['password']  # Get the password from the CSV data
+                            break
+                    if applicant_password:
+                        print(applicant_password, flush = True)
+                        ############################# FOR MAIL ##############################
+                        html = render_to_string('emails/lakip_approval.html', {
+                            'email': applicant_email,
+                            'full_name': applicant_name,
+                            'password': applicant_password,
+                            ########## ORIGINAL CODE ##########
+                            'domain': "dict-lakip.upskillph.org" 
+                        })
+                        try:
+                            send_mail(
+                                'Application Approved', 
+                                '', 
+                                settings.EMAIL_HOST_USER, 
+                                ########## ORIGINAL CODE ##########
+                                [applicant_email], 
+                                ########## FOR TEST CODE ##########
+                                # [TEST_EMAIL_RECEIVER],
+                                html_message=html,
+                                fail_silently=False
+                            )
+                            print(f'Approval email sent to {applicant_email}', flush=True)
+                        except Exception as e:
+                            print("Failed to send email:", str(e), flush=True)
+                        ############################# FOR MAIL ##############################
+                    else:
+                        print(f"Password for {applicant_email} not found in csv_data.", flush=True)
+                else:
+                    response_message == "Approval Failed."
+
             elif 'waitlist' in request.POST:
                 print("WAITLIST attempt", flush=True)
                 response_message = update_applicant(user_token, int(user_id), int(partner_id), int(program_id), 2)
@@ -825,11 +873,12 @@ def application(request, partner_slug, program_slug):
                 response_message = update_applicant(user_token, int(user_id), int(partner_id), int(program_id), 0)
 
             print(f'APPLICATION: {response_message} for user_id: {user_id}', flush=True)
-            
+
     applicants = get_applicants(user_token,partner_id,program_id,None)
+    scholarship_applicants = []
     for applicant in applicants:
         scholarship_applicants.append(applicant)
-
+        
     context['programs'] = program_data
     context['scholarship_applicants'] = scholarship_applicants
     context[partner_slug] = partner_slug
