@@ -1,0 +1,67 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Certificate</title>
+    
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            height: 100vh;
+            background-color: #ececec;
+        }
+        .certificate-wrapper{
+            padding: 50px;
+            background-color: #ffff;
+            border: 5px solid #01449d;
+        }
+        .heading1{
+            margin:0;
+        }
+        .heading2{
+            margin-top: 0;
+            text-transform: uppercase;
+        }
+        .signature {
+            margin-top: 60px;
+            font-style: italic;
+            font-size: 1.2em;
+        }
+        .online-course {
+            font-size: 1rem;
+            color: #777;
+            margin-top: 20px;
+        }
+        .ribbon{
+            width:170px;
+            height: 500px;
+            position: absolute;
+            right: 370px; 
+        }
+    </style>
+</head>
+<body>
+    <div class="certificate-wrapper">
+        <div class="certificate" style="padding: 50px; width: 900px; text-align: left; background-image: url({% static 'images/upskillph.png' %}); box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); position: relative;">
+            <img src="{% static 'images/upskilllogo.png' %}" alt="" width="150px" style="margin-bottom: 15px;">
+            <h2 class="heading1">Certificate of</h2>
+            <h1 class="heading2"> Completion</h1>
+            <p>This is to certify that</p>
+            <h1><strong>[Recipient's Name]</strong></h1>
+            <p>has successfully completed the online course</p>
+            <h2>[Course Name]</h2>
+            <p class="online-course">[Date]</p>
+            <p class="online-course">[Certificate ID]</p>
+            <p class="signature">____________________</p>
+            <p>Instructor's Name</p>
+        </div>
+    </div>
+    <img src="{% static 'ribbon2.png' %}" alt="" class="ribbon">
+</body>
+</html>
