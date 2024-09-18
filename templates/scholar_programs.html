@@ -42,7 +42,7 @@
                         <div class="program-about mt-4">
                             <h5 class="mb-4">About this Program</h5>
                             {% comment %} will be replaced by program.about {% endcomment %}
-                            <p>{{program.about}}</p>
+                            <p>{{program.about|safe}}</p>
                             <hr>
                         </div>
                         <div class="program-about mt-4">
