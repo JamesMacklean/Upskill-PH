@@ -78,8 +78,20 @@ def home(request):
         except Exception as e:
             print(str(e), flush=True)
     
-    # Fetch course data from the API
-    context['program_list'] = get_programs(user_token,6,None)
+        # TEMP CODE FOR ALL PROGRAMS
+    all_programs = []
+    
+    for i in range(1, 11):
+        if i == 6 or i == 9 or i == 10:
+            programs = get_programs(user_token, i, None)
+            if programs:
+                all_programs.extend(programs)
+    
+    print("Combined Programs:")
+    print(all_programs)
+    
+    context['program_list'] = all_programs
+    # context['program_list'] = get_programs(user_token, 6,None)
     context['scholarships'] = scholarships
     context['applied_programs'] = applied_programs
     # context['courses'] = get_courses(request, "static_templates/privacy.html")
@@ -137,8 +149,20 @@ def applied_programs(request):
         except Exception as e:
             print(str(e), flush=True)       
 
-    # NAKADEFAULT MUNA ITO SA 2 SINCE DICT PA LANG ANG MAY PROGRAMS
-    context['program_list'] = get_programs(user_token,6,None)
+    # TEMP CODE FOR ALL PROGRAMS
+    all_programs = []
+    
+    for i in range(1, 11):
+        if i == 6 or i == 9 or i == 10:
+            programs = get_programs(user_token, i, None)
+            if programs:
+                all_programs.extend(programs)
+    
+    print("Combined Programs:")
+    print(all_programs)
+    
+    context['program_list'] = all_programs
+    # context['program_list'] = get_programs(user_token, 6,None)
     context['profile'] = user_profile(user_token)
     context['scholarships'] = scholarships
     context['applied_programs'] = applied_programs
@@ -370,8 +394,20 @@ def profile(request):
         except Exception as e:
             print(str(e), flush=True)       
 
-    # NAKADEFAULT MUNA ITO SA 6 SINCE DICT PA LANG ANG MAY PROGRAMS
-    context['program_list'] = get_programs(user_token,6,None)
+    # TEMP CODE FOR ALL PROGRAMS
+    all_programs = []
+    
+    for i in range(1, 11):
+        if i == 6 or i == 9 or i == 10:
+            programs = get_programs(user_token, i, None)
+            if programs:
+                all_programs.extend(programs)
+    
+    print("Combined Programs:")
+    print(all_programs)
+    
+    context['program_list'] = all_programs
+    # context['program_list'] = get_programs(user_token, 6,None)
     context['profile'] = user_profile(user_token)
     context['employment'] = user_employment(user_token)
     context['education'] = user_education(user_token)
@@ -945,9 +981,21 @@ def program(request, slug):
         context['message'] = response
         return render(request, template_name, context)
     
-    # KUNIN LAHAT NG DATA NG MGA PROGRAMS
-    all_programs = get_programs(user_token, 6, None)
+    # TEMP CODE FOR ALL PROGRAMS
+    all_programs = []
     
+    for i in range(1, 11):
+        if i == 6 or i == 9 or i == 10:
+            programs = get_programs(user_token, i, None)
+            if programs:
+                all_programs.extend(programs)
+    
+    print("Combined Programs:")
+    print(all_programs)
+    
+    # KUNIN LAHAT NG DATA NG MGA PROGRAMS
+    # all_programs = get_programs(user_token, 6, None)
+
     for program in all_programs:
         for key, value in program.items():
             if key == 'id':
