@@ -373,6 +373,12 @@ textarea#about_me_text {
   flex-direction: column;
 }
 
+.partner-cards{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
 .program-partner-logos {
   gap: 25px;
 }

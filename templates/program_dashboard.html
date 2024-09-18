@@ -40,7 +40,7 @@
                                             
                                             <div class="card-content">
                                                 <div class="container-card-title pt-3">
-                                                    <h5 class="text-dark">{{program.name}}</h5>
+                                                    <h5 class="text-dark program-card-title">{{program.name}}</h5>
                                                     <p class="card-title-content">
                                                         {% if program.end_date %}
                                                             {{program.start_date|parse_iso|date:"M d"}} - {{program.end_date|parse_iso|date:"M d, Y"}}

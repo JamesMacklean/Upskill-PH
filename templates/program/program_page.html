@@ -17,7 +17,7 @@
 
             <div class="program-description-container mx-4">
                 <h4>{{ program.name }}</h4>
-                <p class="program-description">{{ program.about|default:"No description available." }}</p>
+                <p class="program-description">{{ program.about|safe|default:"No description available." }}</p>
 
                 <!-- Edit button visible only to partners -->
                 {% if is_user_partner %}
