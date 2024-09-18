@@ -342,9 +342,25 @@ textarea#about_me_text {
   font-size: 36px;
 }
 
-.program-banner {
+.program-banner-lakip {
   height: 400px;
   background: linear-gradient(90deg, rgba(0, 74, 173, 0.8) 0%, rgba(255, 189, 89, 0.8) 50%, rgba(255, 49, 49, 0.8) 100%), url(https://coursebank-static-assets.s3.ap-northeast-1.amazonaws.com/partners/lakip-main-bg.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  object-fit: cover;
+}
+
+.program-banner-misamis-occidental-upskilling {
+  height: 400px;
+  background: linear-gradient(90deg, rgba(0, 74, 173, 0.8) 0%, rgba(255, 189, 89, 0.8) 50%, rgba(255, 49, 49, 0.8) 100%), url(https://coursebank-static-assets.s3.ap-northeast-1.amazonaws.com/upskill/educ-1.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  object-fit: cover;
+}
+
+.program-banner-tesda-r10-upskilling{
+  height: 400px;
+  background: linear-gradient(90deg, rgba(0, 74, 173, 0.8) 0%, rgba(255, 189, 89, 0.8) 50%, rgba(255, 49, 49, 0.8) 100%), url(https://coursebank-static-assets.s3.ap-northeast-1.amazonaws.com/upskill/educ-2.jpg);
   background-repeat: no-repeat;
   background-size: cover;
   object-fit: cover;
