@@ -34,35 +34,39 @@
                     <h3 class="mb-4">Programs</h3>
                     <div class="d-flex flex-column">
                         {% for program in program_list %}
-                        <div class="bg-white w-100 px-3 py-3 mb-4">
+                        <div class="bg-white w-100 mb-4">
                             <a class="partner-link" href="{% url 'program_slug' partner.slug program.slug %}">
-                            <div class="partner-wrapper">
-                                <div class="partner-item">
+                            <div class="partner-program-wrapper d-flex flex-row">
+                                <div class="partner-program-item">
                                     {% if program.image_1 %}
                                     <img class="img-item" height="100%" width="320px" src="{{ program.image_1 }}">
                                     {% else %}
                                     <img class="img-item" height="100%" width="320px" src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/mspiral_djph_model-768x417.jpg">
                                     {% endif %}
-                                    <p class=" partner-program-description text-dark mb-1">
-                                        {{ program.description }}
-                                    </p>
-                                    <p class=" partner-program-description text-dark mb-1">
-                                        {{ program.name }}
-                                    </p>
-                                    <div class="d-flex align-items-center pb-3">
-                                        {% if program.logo_1 %}
-                                            <img width="50px" src="{{ program.logo_1 }}">
-                                        {% endif %}
-
-                                        {% if program.logo_2 %}
-                                            <img width="50px" src="{{ program.logo_2 }}">
-                                        {% endif %}
-                                        {% if program.logo_3 %}
-                                            <img width="50px" src="{{ program.logo_3 }}">
-                                        {% endif %}
-                                        {% if program.logo_4 %}
-                                            <img width="50px" src="{{ program.logo_4 }}">
-                                        {% endif %}
+                                    <div class="d-flex flex-column">
+                                        <h5 class="partner-program-title text-dark mb-1">
+                                            {{ program.name }}
+                                        </h5>
+                                        <p class=" partner-program-description text-dark mb-1">
+                                            {{ program.description }}
+                                        </p>
+                                        <div class="d-flex align-items-center pb-3">
+                                            {% if program.logo_1 %}
+                                                <img width="50px" src="{{ program.logo_1 }}">
+                                            {% endif %}
+    
+                                            {% if program.logo_2 %}
+                                                <img width="50px" src="{{ program.logo_2 }}">
+                                            {% endif %}
+    
+                                            {% if program.logo_3 %}
+                                                <img width="50px" src="{{ program.logo_3 }}">
+                                            {% endif %}
+    
+                                            {% if program.logo_4 %}
+                                                <img width="50px" src="{{ program.logo_4 }}">
+                                            {% endif %}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
