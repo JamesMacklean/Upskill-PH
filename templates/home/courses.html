@@ -8,7 +8,7 @@
     </div>
 
     <div class="bg-light w-100 min-100 p-5">
-                <div class="program-cards">
+                <div class="partner-cards">
                     {% for program in program_list %}
                         {% comment %} {% if program.id not in applied_programs %}    {% endcomment %}
                             <a href="{% url 'program' program.slug %}">
