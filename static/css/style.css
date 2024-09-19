@@ -6,20 +6,23 @@
   font-family: "Poppins", sans-serif;
 }
 
-a{
+a {
   text-decoration: none !important;
 }
 
-.btn-primary{
+.btn-primary {
   background-color: #ff7300 !important;
 }
-.btn-green{
+
+.btn-green {
   background-color: rgb(6, 115, 35);
 }
-.btn-yellow{
+
+.btn-yellow {
   background-color: rgb(254, 219, 24);
 }
-.btn-red{
+
+.btn-red {
   background-color: rgb(201, 49, 49);
 }
 
@@ -334,7 +337,8 @@ textarea#about_me_text {
   background: linear-gradient(90deg, rgba(0, 74, 173, 0.8) 0%, rgba(255, 189, 89, 0.8) 50%, rgba(255, 49, 49, 0.8) 100%);
   background-repeat: no-repeat;
   background-size: cover;
-  object-fit: cover;
+  -o-object-fit: cover;
+     object-fit: cover;
   color: #fff;
 }
 
@@ -347,7 +351,8 @@ textarea#about_me_text {
   background: linear-gradient(90deg, rgba(0, 74, 173, 0.8) 0%, rgba(255, 189, 89, 0.8) 50%, rgba(255, 49, 49, 0.8) 100%), url(https://coursebank-static-assets.s3.ap-northeast-1.amazonaws.com/partners/lakip-main-bg.png);
   background-repeat: no-repeat;
   background-size: cover;
-  object-fit: cover;
+  -o-object-fit: cover;
+     object-fit: cover;
 }
 
 .program-banner-misamis-occidental-upskilling {
@@ -355,15 +360,17 @@ textarea#about_me_text {
   background: linear-gradient(90deg, rgba(0, 74, 173, 0.8) 0%, rgba(255, 189, 89, 0.8) 50%, rgba(255, 49, 49, 0.8) 100%), url(https://coursebank-static-assets.s3.ap-northeast-1.amazonaws.com/upskill/educ-1.jpg);
   background-repeat: no-repeat;
   background-size: cover;
-  object-fit: cover;
+  -o-object-fit: cover;
+     object-fit: cover;
 }
 
-.program-banner-tesda-r10-upskilling{
+.program-banner-tesda-r10-upskilling {
   height: 400px;
   background: linear-gradient(90deg, rgba(0, 74, 173, 0.8) 0%, rgba(255, 189, 89, 0.8) 50%, rgba(255, 49, 49, 0.8) 100%), url(https://coursebank-static-assets.s3.ap-northeast-1.amazonaws.com/upskill/educ-2.jpg);
   background-repeat: no-repeat;
   background-size: cover;
-  object-fit: cover;
+  -o-object-fit: cover;
+     object-fit: cover;
 }
 
 .contained-wrapper {
@@ -391,7 +398,8 @@ textarea#about_me_text {
 }
 
 .program-partner-logos img {
-  object-fit: cover;
+  -o-object-fit: cover;
+     object-fit: cover;
   height: 80px;
 }
 
@@ -424,7 +432,8 @@ textarea#about_me_text {
 }
 
 .section-courses-container .course-item .img-item {
-  object-fit: cover;
+  -o-object-fit: cover;
+     object-fit: cover;
   height: 257px;
 }
 
@@ -554,22 +563,26 @@ div.card-image {
 .min-100 {
   min-height: 100vh;
 }
-.css-ek3fxo{
+
+.css-ek3fxo {
   flex-direction: row;
   gap: 10px;
 }
-.edit-button{
+
+.edit-button {
   width: 50%;
 }
 
-.partner-link{
+.partner-link {
   text-decoration: none !important;
   color: #000;
 }
+
 /* mobile response */
 @media screen and (max-width: 430px) {
   .program-partner-logos img {
-    object-fit: cover;
+    -o-object-fit: cover;
+       object-fit: cover;
     height: 35px;
   }
   .program-about {
@@ -579,25 +592,22 @@ div.card-image {
   label.body-2-text.color-primary-text.form-label {
     text-align: left;
   }
-  .css-ek3fxo{
+  .css-ek3fxo {
     flex-direction: column;
   }
-  .edit-button{
+  .edit-button {
     width: 100%;
   }
 }
-
 /* courses */
-
 /* courses.css */
-
 .course-cards {
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
 }
 
-.program-card-title{
+.program-card-title {
   font-size: 16px;
 }
 
@@ -615,7 +625,8 @@ div.card-image {
   border-radius: 5px;
   margin-bottom: 10px;
 }
-.course-title{
+
+.course-title {
   font-size: 18px;
   font-weight: 400;
 }
@@ -642,13 +653,15 @@ div.card-image {
   border-radius: 5px;
   transition: background-color 0.3s ease;
 }
-.course-card .course-details{
+
+.course-card .course-details {
   padding: 3px;
 }
 
 .course-card a:hover {
   background-color: #0056b3;
 }
+
 /* Add styling for the topic badge */
 .course-card .topic-badge {
   position: absolute;
@@ -660,58 +673,61 @@ div.card-image {
   border-radius: 5px;
   font-size: 13px;
 }
+
 p.partner-card {
   font-size: 12px;
 }
-.partner-cards{
+
+.partner-cards {
   display: flex;
   flex-wrap: wrap;
   gap: 15px;
 }
+
 @media screen and (max-width: 768px) {
-  .partner-cards{
-      padding: 0 40px;
+  .partner-cards {
+    padding: 0 40px;
   }
   .res-title {
-      font-size: 18px !important;
-      margin-left: 30px;
+    font-size: 18px !important;
+    margin-left: 30px;
   }
-  .container-card-title h5{
-      font-size: 16px !important;
+  .container-card-title h5 {
+    font-size: 16px !important;
   }
-  .partner-cards p{
-      font-size: 12px !important;
+  .partner-cards p {
+    font-size: 12px !important;
   }
 }
 @media screen and (max-width: 425px) {
-  .partner-cards{
-      justify-content: center;
+  .partner-cards {
+    justify-content: center;
   }
 }
 @media screen and (max-width: 320px) {
-  .partner-cards{
-      justify-content: center;
+  .partner-cards {
+    justify-content: center;
   }
   .partner-card-container {
-      max-width: 250px !important;
+    max-width: 250px !important;
   }
   .partner-card-image {
-      width: 250px !important;
-      display: flex;
-      flex-wrap: wrap;
+    width: 250px !important;
+    display: flex;
+    flex-wrap: wrap;
   }
   .card-partner-logo {
-      width: 250px !important;
-      height: 35px !important;
-      display: flex;
-      flex-wrap: wrap;
-      flex-direction: row;
-      align-items: center;
-      justify-content: space-evenly;
-      align-content: center;
+    width: 250px !important;
+    height: 35px !important;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+    align-content: center;
   }
   .card-content {
-      padding: 2px 15px !important;
+    padding: 2px 15px !important;
   }
 }
 .partner-card-container {
@@ -727,7 +743,7 @@ p.partner-card {
   flex-wrap: wrap;
 }
 
-.partner-card-image img{
+.partner-card-image img {
   width: 100%;
 }
 
@@ -742,22 +758,19 @@ p.partner-card {
   align-content: center;
 }
 
-.card-partner-logo img{
+.card-partner-logo img {
   width: 50px;
 }
 
-.card-content{
+.card-content {
   padding: 1rem;
 }
 
-.partner-cards a{
+.partner-cards a {
   text-decoration: none;
 }
 
-.partner-cards p{
+.partner-cards p {
   font-size: 14px;
   color: #666;
-}
-
-
-/*# sourceMappingURL=style.css.map */
+}/*# sourceMappingURL=style.css.map */
