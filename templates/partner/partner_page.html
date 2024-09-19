@@ -8,65 +8,70 @@
 <div class="bg-light py-5 w-100 px-3" id="partner-details">
     <div class="container">
         {% for partner in partner_details %}
-        <div class="partner-info mb-5 d-flex">
-            {% if partner.logo %}
-            <img class="partner-logo" src="{{ partner.logo }}" alt="{{ partner.name }} Logo">
-            {% else %}
-            <img class="partner-logo" src="https://via.placeholder.com/150" alt="Placeholder Logo">
-            {% endif %}
-            <div class="partner-description-container mx-4">
-                <h4 class="mb-3">{{ partner.name }}</h4>
-                <p class="partner-description">{{ partner.about|default:"No description available." }}</p>
-
-                <!-- Edit button visible only to partners -->
-                {% if is_user_partner %}
-                <div class="mt-4">
-                    <a href="{% url 'partner_edit' partner.slug %}" class="btn btn-primary">Edit</a>
-                </div>
+            <div class="partner-info mb-5 d-flex">
+                {% if partner.logo %}
+                <img class="partner-logo" src="{{ partner.logo }}" alt="{{ partner.name }} Logo">
+                {% else %}
+                <img class="partner-logo" src="https://via.placeholder.com/150" alt="Placeholder Logo">
                 {% endif %}
-            </div>
-        </div>
+                <div class="partner-description-container mx-4">
+                    <h4 class="mb-3">{{ partner.name }}</h4>
+                    <p class="partner-description">{{ partner.about|default:"No description available." }}</p>
 
-        <!-- Partner's Programs Section -->
-        <div class="bg-light py-5" id="courses">
-            <div class="pb-5">
-              <section class="section-courses-container">
-                <div class="section-header d-flex align-items-center">
-                  <h3 class="section-title me-auto py-4">Programs</h3>
+                    <!-- Edit button visible only to partners -->
+                    {% if is_user_partner %}
+                    <div class="mt-4">
+                        <a href="{% url 'partner_edit' partner.slug %}" class="btn btn-primary">Edit</a>
+                    </div>
+                    {% endif %}
                 </div>
-                <div class="row pt-3 gutter-2rem">
-                    {% for program in program_list %}
-                    <div class="col-12 mb-4">
-                        <div class="course-item course-item-row">
-                            <a href="{% url 'program_slug' partner.slug program.slug %}">
-                                {% if program.image %}
-                                <img class="img-item" height="100%" width="320px" src="{{ program.image }}">
-                                {% else %}
-                                <img class="img-item" height="100%" width="320px" src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/mspiral_djph_model-768x417.jpg">
-                                {% endif %}
-        
-                                <div class="course-details-container w-100">
-                                        <p class="course-description mb-1 mt-2">
-                                            {{ program.name }}
-                                        </p>
-                                        <p class="text-dark mb-1">
-                                            {{ program.description }}
-                                        </p>
-                                        <div class="d-flex align-items-center pb-3">
-                                            <img width="50px" src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/DICT-Logo-nobg.png">
-                                            <img width="50px" src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/ILCDB+logo_2.png">
-                                            <img width="50px" src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/coursera-social-logo-brand.png">
-                                            <img width="50px" src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/logo-moocsx.png">
-                                        </div>
+            </div>
+
+            <!-- Partner's Programs Section -->
+
+            <div class="bg-light p-5 w-100" id="partners">
+                <div class="pb-5">
+                    <h3 class="mb-4">Programs</h3>
+                    <div class="d-flex flex-column">
+                        {% for program in program_list %}
+                        <div class="bg-white w-100 px-3 py-3 mb-4">
+                            <a class="partner-link" href="{% url 'program_slug' partner.slug program.slug %}">
+                            <div class="partner-wrapper">
+                                <div class="partner-item">
+                                    {% if program.image_1 %}
+                                    <img class="img-item" height="100%" width="320px" src="{{ program.image_1 }}">
+                                    {% else %}
+                                    <img class="img-item" height="100%" width="320px" src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/mspiral_djph_model-768x417.jpg">
+                                    {% endif %}
+                                    <p class=" partner-program-description text-dark mb-1">
+                                        {{ program.description }}
+                                    </p>
+                                    <p class=" partner-program-description text-dark mb-1">
+                                        {{ program.name }}
+                                    </p>
+                                    <div class="d-flex align-items-center pb-3">
+                                        {% if program.logo_1 %}
+                                            <img width="50px" src="{{ program.logo_1 }}">
+                                        {% endif %}
+
+                                        {% if program.logo_2 %}
+                                            <img width="50px" src="{{ program.logo_2 }}">
+                                        {% endif %}
+                                        {% if program.logo_3 %}
+                                            <img width="50px" src="{{ program.logo_3 }}">
+                                        {% endif %}
+                                        {% if program.logo_4 %}
+                                            <img width="50px" src="{{ program.logo_4 }}">
+                                        {% endif %}
+                                    </div>
                                 </div>
+                            </div>
                             </a>
                         </div>
+                        {% endfor %}
                     </div>
-                    {% endfor %}
                 </div>
-              </section>
             </div>
-        </div>
         {% endfor %}
     </div>
 </div>
