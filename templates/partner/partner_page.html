@@ -36,14 +36,14 @@
                         {% for program in program_list %}
                         <div class="bg-white w-100 mb-4">
                             <a class="partner-link" href="{% url 'program_slug' partner.slug program.slug %}">
-                            <div class="partner-program-wrapper d-flex flex-row">
-                                <div class="partner-program-item">
+                            <div class="partner-program-wrapper">
+                                <div class="partner-program-item d-flex flex-row">
                                     {% if program.image_1 %}
                                     <img class="img-item" height="100%" width="320px" src="{{ program.image_1 }}">
                                     {% else %}
                                     <img class="img-item" height="100%" width="320px" src="https://coursebank-static-assets-tmtg.s3.ap-northeast-1.amazonaws.com/mspiral_djph_model-768x417.jpg">
                                     {% endif %}
-                                    <div class="d-flex flex-column">
+                                    <div class="d-flex flex-column p-4">
                                         <h5 class="partner-program-title text-dark mb-1">
                                             {{ program.name }}
                                         </h5>
