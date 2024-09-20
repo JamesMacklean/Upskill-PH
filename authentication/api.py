@@ -691,7 +691,8 @@ def update_partner (bearer_token, partner_id, name, about, slug, url, fb, ig, da
     return context, response_message
 
 # POST https://scholarium.tmtg-clone.click/v1/partner/programs 
-def update_program (bearer_token, program_id, partner_id, name, slug, description, about, start_date, registration_end, end_date, date_now, badge, certificate):
+def update_program (bearer_token, program_id, partner_id, name, slug, description, about, start_date, registration_end, end_date, date_now, badge, certificate,
+                    partner_logo_1, partner_logo_2, partner_logo_3, partner_logo_4, image_1, image_2, image_3, image_4):
     context = {}
     payload={
         'id': program_id,
@@ -705,7 +706,15 @@ def update_program (bearer_token, program_id, partner_id, name, slug, descriptio
         'end_date': end_date,
         'last_modified': date_now,
         'badge': badge,
-        'certificate': certificate
+        'certificate': certificate,
+        'partner_logo_1': partner_logo_1,
+        'partner_logo_2': partner_logo_2,
+        'partner_logo_3': partner_logo_3,
+        'partner_logo_4': partner_logo_4,
+        'image_1': image_1,
+        'image_2': image_2,
+        'image_3': image_3,
+        'image_4': image_4,
     }
     
     files=[]

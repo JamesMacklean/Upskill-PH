@@ -802,7 +802,9 @@ def program_edit(request, partner_slug, program_slug):
             program_end_date,
             date_now,
             program_badge,
-            program_certificate
+            program_certificate,
+            "","","","", # partner logos
+            "","","","" # images
         )
         
         print(updated_program)
@@ -1028,7 +1030,9 @@ def account(request):
     """"""
     template_name = "account.html"
     context = {}
+    response = ""
     user_token = request.session['user_token']
+    
     if request.method == "POST":
         current_pass = request.POST.get('current-pass')
         new_pass = request.POST.get('new-pass')
