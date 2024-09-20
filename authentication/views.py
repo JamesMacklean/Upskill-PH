@@ -791,6 +791,7 @@ def program_edit(request, partner_slug, program_slug):
         partner_logo_2 = request.POST.get('partner_logo_2')
         partner_logo_3 = request.POST.get('partner_logo_3')
         partner_logo_4 = request.POST.get('partner_logo_4')
+        image_1 = request.POST.get('program_image_1')
         # Call the API to update the program details
         updated_program, response_message= update_program(
             user_token,
@@ -810,7 +811,7 @@ def program_edit(request, partner_slug, program_slug):
             partner_logo_2,
             partner_logo_3,
             partner_logo_4,
-            "","","","" # images
+            image_1,"","","" # images
         )
         
         print(updated_program)
