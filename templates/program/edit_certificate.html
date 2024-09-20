@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container my-5">
+    <h2 class="mb-4">Certifivate Configuration for {{ program.name }}</h2>
+
+    <a href=""></a>
+    
+    <form action="" method="POST" enctype="multipart/form-data" class="px-5">
+        {% csrf_token %}
+        <!-- Program Name -->
+        <div class="mb-3">
+            <label for="signature" class="form-label">Signature</label>
+            <input type="text" class="form-control" id="sugnature" value="" name="signature">
+            {% comment %} VALUE WILL BE REPLACED BY URL, WILL ADD SIGNATURE IMAGE IF MERON NA {% endcomment %}
+            
+        </div>
+        <div class="mb-3">
+            <label for="programDirector" class="form-label">Signatory Line</label>
+            <input type="text" class="form-control" id="programDirector" value="" name="program_director">
+        </div>
+
+        <!-- Submit Button -->
+        <div class="d-flex justify-content-center">
+            <button type="submit" class="btn btn-primary mx-3">Save Changes</button>
+            
+            <!-- Cancel Button -->
+            <a href="{% url 'program_slug' partner.slug program.slug %}" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

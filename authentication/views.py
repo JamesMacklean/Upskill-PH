@@ -816,6 +816,18 @@ def program_edit(request, partner_slug, program_slug):
     
     return render(request, 'program/program_edit_page.html', context)
 
+# ADD/EDIT CERTIFICATE
+
+# def edit_certificate():
+#     """"""
+
+# CERTIFICATE PREVIEW
+def preview_certificate(request):
+    """"""
+    template_name = "certificate/certificate.html"
+
+    return render(request, template_name)
+
 def application(request, partner_slug, program_slug):
     """"""
     template_name = "scholar_application.html"
