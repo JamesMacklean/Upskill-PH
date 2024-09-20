@@ -787,7 +787,10 @@ def program_edit(request, partner_slug, program_slug):
         date_now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         program_badge = request.POST.get('program_badge')
         program_certificate = request.POST.get('program_certificate')
-        
+        partner_logo_1 = request.POST.get('partner_logo_1')
+        partner_logo_2 = request.POST.get('partner_logo_2')
+        partner_logo_3 = request.POST.get('partner_logo_3')
+        partner_logo_4 = request.POST.get('partner_logo_4')
         # Call the API to update the program details
         updated_program, response_message= update_program(
             user_token,
@@ -803,7 +806,10 @@ def program_edit(request, partner_slug, program_slug):
             date_now,
             program_badge,
             program_certificate,
-            "","","","", # partner logos
+            partner_logo_1,
+            partner_logo_2,
+            partner_logo_3,
+            partner_logo_4,
             "","","","" # images
         )
         
