@@ -822,11 +822,11 @@ def program_edit(request, partner_slug, program_slug):
 #     """"""
 
 # CERTIFICATE PREVIEW
-def preview_certificate(request):
-    """"""
-    template_name = "certificate/certificate.html"
+# def preview_certificate(request):
+#     """"""
+#     template_name = "certificate/certificate.html"
 
-    return render(request, template_name)
+#     return render(request, template_name)
 
 def application(request, partner_slug, program_slug):
     """"""
