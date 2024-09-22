@@ -739,8 +739,9 @@ p.partner-card {
 
 .partner-card-image {
   width: 300px;
-  display: flex;
-  flex-wrap: wrap;
+    height: 170px;
+    display: flex;
+    object-fit: cover;
 }
 
 .partner-card-image img {
