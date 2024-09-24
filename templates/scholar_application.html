@@ -150,7 +150,9 @@
     selectAllCheckbox.addEventListener('change', function() {
         const isChecked = this.checked;
         applicantRows.forEach(row => {
-            row.style.display = isChecked ? '' : 'none';
+            const checkbox = row.querySelector('.checkbox');
+            checkbox.checked = isChecked; // Check or uncheck the individual applicant checkboxes
+            row.style.display = ''; // Ensure all rows are displayed
         });
     });
 
