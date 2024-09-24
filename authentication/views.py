@@ -780,18 +780,19 @@ def program_edit(request, partner_slug, program_slug):
         program_new_slug = request.POST.get('program_slug')
         program_description = request.POST.get('program_description')
         program_about = request.POST.get('program_about')
+        program_url = request.POST.get('program_url')
         # program_external_id = request.POST.get('program_external_id')
         program_start_date = request.POST.get('program_start_date')
-        program_registration_end = request.POST.get('program_registration_end')
         program_end_date = request.POST.get('program_end_date')
+        program_registration_end = request.POST.get('program_registration_end')
         date_now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         program_badge = request.POST.get('program_badge')
         program_certificate = request.POST.get('program_certificate')
-        partner_logo_1 = request.POST.get('partner_logo_1')
-        partner_logo_2 = request.POST.get('partner_logo_2')
-        partner_logo_3 = request.POST.get('partner_logo_3')
-        partner_logo_4 = request.POST.get('partner_logo_4')
-        image_1 = request.POST.get('program_image_1')
+        partner_logo_1 = request.POST.get('partner_logo_1') or selected_program.get('partner_logo_1')
+        partner_logo_2 = request.POST.get('partner_logo_2') or selected_program.get('partner_logo_2')
+        partner_logo_3 = request.POST.get('partner_logo_3') or selected_program.get('partner_logo_3')
+        partner_logo_4 = request.POST.get('partner_logo_4') or selected_program.get('partner_logo_4')
+        image_1 = request.POST.get('program_image_1') or selected_program.get('image_1')
         # Call the API to update the program details
         updated_program, response_message= update_program(
             user_token,
@@ -799,6 +800,7 @@ def program_edit(request, partner_slug, program_slug):
             selected_partner['id'],
             program_name,
             program_new_slug,
+            program_url,
             program_description,
             program_about,
             program_start_date,
