@@ -20,7 +20,14 @@
                     </div>
                 </div>
             </div>
-        
+            
+            <div class="my-3">
+                <label><input type="checkbox" class="status-filter" value="1"> Approved</label>&nbsp;&nbsp;
+                <label><input type="checkbox" class="status-filter" value="2"> Waitlisted</label>&nbsp;&nbsp;
+                <label><input type="checkbox" class="status-filter" value="3"> Rejected</label>&nbsp;&nbsp;
+                <label><input type="checkbox" class="status-filter" value="0"> Pending</label>
+            </div>
+
             <table class="my-5">
                 <tr>
                     <td class="box">
@@ -34,33 +41,37 @@
                 </tr>
                 <form action="" class="scholarship-applications" id="apply" method="POST">
                     {% csrf_token %}
-                    {% for applicant in scholarship_applicants %}
-                        <tr>
-                            <td>
-                                <input class="checkbox" type="checkbox" name="user_id[]" value="{{ applicant.user_id }}" id="user_id_{{applicant.user_id}}">
-                            </td>
-                            <td>
-                                <label for="user_id_{{applicant.user_id}}" class="action-name">
-                                <strong>{{applicant.first_name|title}} {{applicant.last_name|title}}</strong> 
-                                &nbsp;&nbsp;
-                                    {% if applicant.status == 0 %}
-                                        Pending
-                                        {% elif applicant.status == 1 %}
-                                        Approved
-                                        {% elif applicant.status == 2 %}
-                                        Waitlisted
-                                        {% elif applicant.status == 3 %}
-                                        Rejected
-                                    {% endif %}
-                                <br>
-                                {{ applicant.email }}{% if applicant.email and applicant.occupation or applicant.degree %} • {% endif %}
-                                {{ applicant.occupation }}{% if applicant.occupation and applicant.degree %} • {% endif %}
-                                {{ applicant.degree }}
-                                </label>
-                                <input type="hidden" name="user_id" value="{{ applicant.user_id }}">
-                            </td>
-                        </tr>
-                    {% endfor %}
+                    <tbody id="applicant-list">
+                        {% for applicant in scholarship_applicants %}
+                            <tr class="applicant-row" data-status="{{ applicant.status }}">
+                                <td>
+                                    <input class="checkbox" type="checkbox" name="user_id[]" value="{{ applicant.user_id }}" id="user_id_{{applicant.user_id}}">
+                                </td>
+                                <td>
+                                    <label for="user_id_{{applicant.user_id}}" class="action-name">
+                                        <strong>{{applicant.first_name|title}} {{applicant.last_name|title}}</strong> 
+                                        &nbsp;&nbsp;
+                                            {% if applicant.status == 0 %}
+                                                Pending
+                                                {% elif applicant.status == 1 %}
+                                                Approved
+                                                {% elif applicant.status == 2 %}
+                                                Waitlisted
+                                                {% elif applicant.status == 3 %}
+                                                Rejected
+                                            {% endif %}
+                                        <br>
+                                        {{ applicant.email }}
+                                        {% if applicant.email and applicant.occupation or applicant.degree %} • {% endif %}
+                                        {{ applicant.occupation }}{% if applicant.occupation and applicant.degree %} • {% endif %}
+                                        {{ applicant.degree }}
+                                    </label>
+                                    <input type="hidden" name="user_id" value="{{ applicant.user_id }}">
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+
                     <button class="btn btn-green mx-1" type="submit" name="approve" value="Approve">Approve</button>
                     <button class="btn btn-yellow mx-1" type="submit" name="waitlist" value="Waitlist">Waitlist</button>
                     <button class="btn btn-red mx-1" type="submit" name="reject" value="Reject">Reject</button>
@@ -114,6 +125,42 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.js"></script>
 <script type="text/javascript" src="https://f001.backblazeb2.com/file/buonzz-assets/jquery.ph-locations.js"></script>
 <script type="text/javascript">
+    
+        // Get references to the status filter checkboxes
+    const statusFilters = document.querySelectorAll('.status-filter');
+    const applicantRows = document.querySelectorAll('.applicant-row');
+    const selectAllCheckbox = document.getElementById("selectAll");
+    const checkboxes = document.querySelectorAll('.checkbox');
+
+    // Add event listeners for the filter checkboxes
+    statusFilters.forEach(function(filter) {
+        filter.addEventListener('change', function() {
+            applyFilters();
+        });
+    });
+
+    // Function to filter applicants based on selected statuses
+    function applyFilters() {
+        const selectedStatuses = Array.from(statusFilters)
+            .filter(filter => filter.checked)
+            .map(filter => filter.value);
+
+        applicantRows.forEach(function(row) {
+            const applicantStatus = row.getAttribute('data-status');
+            if (selectedStatuses.length === 0 || selectedStatuses.includes(applicantStatus)) {
+                row.style.display = '';  // Show row
+            } else {
+                row.style.display = 'none';  // Hide row
+            }
+        });
+    }
+
+    // Add event listener for "Select All" functionality
+    selectAllCheckbox.addEventListener("change", function () {
+        checkboxes.forEach(function (checkbox) {
+            checkbox.checked = selectAllCheckbox.checked;
+        });
+    });
     
     var my_handlers = {
 
