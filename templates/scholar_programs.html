@@ -127,12 +127,16 @@
                     <p>
                         {{program.about|safe}}
                     </p>
+                    <br>
+                        {% if program.url %}
+                            <p>To know more about this program, you may visit its official page at <a href="{{ program.url }}" target="_blank">{{ program.url}}</a>.</p>
+                        {% endif %}
                     <hr>
                 </div>
                 <div class="program-about mt-4">
                     <h5 class="mb-4">Learning Platform</h5>
                     <p>
-                        <a href="https://castlms.com/" target="_blank" style="color: #000 !important;">Cast LMS</a>
+                        <a href="https://castlms.com/" target="_blank">Cast LMS</a>
                     </p>
                     <hr>
                 </div>
