@@ -25,8 +25,7 @@
         </div>
         <div class="mb-5 mt-3w-100 mt-4">
             <div class="program-partners w-100 px-5">
-                <div class="program-partner-logos d-flex flex-row w-100 justify-content-center">
-                    <img src="https://welcome.upskillph.org/static/images/upskilllogo.png">
+                <div class="program-partner-logos d-flex flex-row w-100 justify-content-center align-items-center">
                     {% if program.partner_logo_1 %}
                         <img src="{{ program.partner_logo_1 }}">
                     {% endif %}
@@ -42,6 +41,8 @@
                     {% if program.partner_logo_4 %}
                         <img src="{{ program.partner_logo_4 }}">
                     {% endif %}
+
+                    <img src="https://welcome.upskillph.org/static/images/upskilllogo.png" style="height:30px;">
                 </div>
             </div>
         </div>
