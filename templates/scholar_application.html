@@ -149,10 +149,25 @@
     const selectAllCheckbox = document.getElementById('selectAll');
     selectAllCheckbox.addEventListener('change', function() {
         const isChecked = this.checked;
-        statusFilters.forEach(filter => {
-            filter.checked = isChecked;
+        applicantRows.forEach(row => {
+            row.style.display = isChecked ? '' : 'none';
         });
-        applyFilters();
+    });
+
+    const searchInput = document.querySelector('.input-ctrl');
+    const searchButton = document.getElementById('search');
+
+    searchButton.addEventListener('click', function() {
+        const searchTerm = searchInput.value.trim().toLowerCase();
+
+        applicantRows.forEach(row => {
+            const fullName = row.querySelector('.action-name').textContent.toLowerCase();
+            if (fullName.includes(searchTerm)) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        });
     });
 </script>
 {% endblock %}
