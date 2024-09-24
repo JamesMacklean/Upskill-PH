@@ -22,10 +22,10 @@
             </div>
             
             <div class="my-3">
-                <label><input type="radio" class="status-filter" name="status" value="1"> Approved</label>&nbsp;&nbsp;
-                <label><input type="radio" class="status-filter" name="status" value="2"> Waitlisted</label>&nbsp;&nbsp;
-                <label><input type="radio" class="status-filter" name="status" value="3"> Rejected</label>&nbsp;&nbsp;
-                <label><input type="radio" class="status-filter" name="status" value="0"> Pending</label>
+                <label><input type="checkbox" class="status-filter" value="1"> Approved</label>&nbsp;&nbsp;
+                <label><input type="checkbox" class="status-filter" value="2"> Waitlisted</label>&nbsp;&nbsp;
+                <label><input type="checkbox" class="status-filter" value="3"> Rejected</label>&nbsp;&nbsp;
+                <label><input type="checkbox" class="status-filter" value="0"> Pending</label>
             </div>
 
             <table class="my-5">
@@ -127,12 +127,11 @@
 
 <script>
     function applyFilters() {
-        const selectedStatus = Array.from(statusFilters)
-            .find(filter => filter.checked)?.value;
+        const selectedStatuses = Array.from(document.querySelectorAll('.status-filter:checked')).map(filter => filter.value);
 
         applicantRows.forEach(function(row) {
             const applicantStatus = row.getAttribute('data-status');
-            if (!selectedStatus || selectedStatus === 'all' || applicantStatus === selectedStatus) {
+            if (selectedStatuses.length === 0 || selectedStatuses.includes(applicantStatus)) {
                 row.style.display = ''; 
             } else {
                 row.style.display = 'none';
@@ -140,12 +139,20 @@
         });
     }
 
+    const statusFilters = document.querySelectorAll('.status-filter');
+    const applicantRows = document.querySelectorAll('.applicant-row');
+
     statusFilters.forEach(filter => {
-        filter.addEventListener('change', function() {
-            if (!this.checked) {
-                applyFilters();
-            }
+        filter.addEventListener('change', applyFilters);
+    });
+
+    const selectAllCheckbox = document.getElementById('selectAll');
+    selectAllCheckbox.addEventListener('change', function() {
+        const isChecked = this.checked;
+        statusFilters.forEach(filter => {
+            filter.checked = isChecked;
         });
+        applyFilters();
     });
 </script>
 {% endblock %}
