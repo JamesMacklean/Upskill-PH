@@ -508,8 +508,9 @@ def partner(request):
     if not user_token or not request.session.get('is_partner'):
         raise Http404
 
-    # Get the user's partners
-    partners = user_partners(user_token)
+    # Get the user's partners (exclude access level==0)
+    # partners = user_partners(user_token)
+    partners = [p for p in user_partners(user_token) if p.get('access_level') != 0]
     
     if not partners:
         raise Http404
@@ -548,31 +549,29 @@ def partner_slug(request, partner_slug):
     partner_details = []
 
     user_token = request.session['user_token']
-    
+    partners = user_partners(user_token)    
     # Fetch the partner details using the slug
     selected_partner_list = get_partner_through_slug(user_token, partner_slug)
     
     if not selected_partner_list or not isinstance(selected_partner_list, list):
         raise Http404("Partner not found")
     
-    # Assuming the first item is the correct partner
     selected_partner = selected_partner_list[0]
     partner_details.append(selected_partner)
     
     is_user_partner = False
     if request.session.get('is_partner'):
-        partners = user_partners(user_token)
-        
         if partners:
             # Filter programs associated with the selected partner
             for data in partners:
                 if data['partner_id'] == selected_partner['id']:
-                    is_user_partner = True
                     program_id = data['program_id']
                     
                     if program_id:
                         programs_list = get_programs(user_token, selected_partner['id'], program_id)
                         partner_programs.extend(programs_list)
+                    if data['access_level'] != 0:
+                        is_user_partner = True
     else:
         raise Http404("User is not a partner")
     
@@ -629,47 +628,49 @@ def partner_edit(request, partner_slug):
     
     return render(request, 'partner/partner_edit_page.html', context)
 
-# def partner(request):
-#     """"""
-#     template_name = "partner/partner_page.html"
-#     context = {}
-#     partner_programs = []
-        
-#     user_token = request.session['user_token']
-#     if request.session['is_partner']:
-#         partners = user_partners(user_token)
-        
-#         if partners:   
-#             for data in partners:
-#                 partner_id = data['partner_id']
-#                 program_id = data['program_id']
-                
-#                 if program_id:
-#                     programs_list = get_programs(user_token,partner_id,program_id)
-                    
-#                     for program in programs_list:
-#                         partner_programs.append(program)
-#     else:
-#         raise Http404
-    
-#     context['program_list'] = partner_programs
-    
-#     return render(request, template_name, context)
-
 def program_slug(request, partner_slug, program_slug):
     template_name = "program/program_page.html"
     context = {}
 
     user_token = request.session['user_token']
-    partners = user_partners(user_token)
+    program_data = get_program_through_slug(user_token, program_slug)
+    # Get the user's partners (exclude access level==0)
+    # partners = user_partners(user_token)
+    partners = [p for p in user_partners(user_token) if p.get('access_level') != 0]
     partner_details = []
     # Get the program using the slug
-    program_data = get_program_through_slug(user_token, program_slug)
+    
     if not program_data:
         raise Http404
     
     partner_id = program_data[0]['partner_id']
-    program_id = program_data[0]['id']
+    program_id = program_data[0]['id']        
+    
+    # monitored_partner = [data['partner_id'] for data in partners]
+    # monitored_program = [data['program_id'] for data in partners]
+            
+    # if partner_id not in monitored_partner:
+    #     raise Http404
+    # if program_id not in monitored_program:
+    #     raise Http404
+    
+    # Fetch the partner details using the id
+    selected_program_list = get_programs(user_token, partner_id,program_id)
+    selected_program = selected_program_list[0]
+
+    is_user_partner = False
+    if request.session.get('is_partner'):
+        if partners:
+            for data in partners:
+                if data['partner_id'] == selected_program['partner_id']:
+                    is_user_partner = True
+
+    else:
+        raise Http404("User is not a partner")
+    
+    context['program_details'] = program_data
+    context['partner_slug'] = partner_slug
+    context['is_user_partner'] = is_user_partner
     
     if request.method == 'POST':
         csv_data = get_csv_buri(user_token, partner_id, program_id, 0) # status 0 means PENDING
@@ -703,43 +704,6 @@ def program_slug(request, partner_slug, program_slug):
             ])
 
         return response
-        
-    
-    monitored_partner = [data['partner_id'] for data in partners]
-    monitored_program = [data['program_id'] for data in partners]
-            
-    if partner_id not in monitored_partner:
-        raise Http404
-    if program_id not in monitored_program:
-        raise Http404
-    
-    # Fetch the partner details using the slug
-    selected_partner_list = get_partner(user_token)
-    
-    if not selected_partner_list or not isinstance(selected_partner_list, list):
-        raise Http404("Partner not found")
-    
-    # Assuming the first item is the correct partner
-    selected_partner = selected_partner_list[0]
-    partner_details.append(selected_partner)
-    
-    is_user_partner = False
-    if request.session.get('is_partner'):
-        partners = user_partners(user_token)
-        
-        if partners:
-            # Filter programs associated with the selected partner
-            for data in partners:
-                if data['partner_id'] == selected_partner['id']:
-                    is_user_partner = True
-                    program_id = data['program_id']
-    else:
-        raise Http404("User is not a partner")
-    
-    context['program_details'] = program_data
-    context['partner_details'] = partner_details
-    context['partner_slug'] = partner_slug
-    context['is_user_partner'] = is_user_partner
     
     return render(request, template_name, context)
 
@@ -841,7 +805,8 @@ def application(request, partner_slug, program_slug):
     scholarship_applicants = []
         
     user_token = request.session['user_token']
-    partners = user_partners(user_token)
+    # Get the user's partners (exclude access level==0)
+    partners = [p for p in user_partners(user_token) if p.get('access_level') != 0]
     
     # Get the program using the slug
     program_data = get_program_through_slug(user_token, program_slug)

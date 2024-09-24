@@ -49,7 +49,6 @@ ALLOWED_HOSTS = [
     'accounts.upskillph.org', 
     'lgu.upskillph.org',
     'misamis-occidental.upskillph.org',
-    'mamamo.upskillph.org',
 ]
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
