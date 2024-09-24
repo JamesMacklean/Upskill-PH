@@ -34,7 +34,6 @@ class SubdomainMiddleware(MiddlewareMixin):
                     raise Http404("Page not found.")
                 
             except KeyError:
-                print(f'WELCOME: Unauthenticated.', flush=True)
                 return self.signout(request, f'https://{settings.ACCOUNTS_DOMAIN}')                       
                 
         elif subdomain == 'accounts': 
@@ -49,20 +48,17 @@ class SubdomainMiddleware(MiddlewareMixin):
                     user_token = request.session['user_token']
                     expires = request.session['expires']
                     current_time = int(time.time()) 
-                    print(f'ACCOUNTS MATCH! {match}', flush=True) 
                     if current_time >= expires:
                         # The session has expired, sign out the user
                         return self.signout(request, f'https://{settings.ACCOUNTS_DOMAIN}')
                     return redirect(f'https://{settings.DOMAIN}')
                 except KeyError:
-                    print(f'ACCOUNTS: Unauthenticated.', flush=True)
+                    pass
             else:
-                print(f"HINDI MATCH! {match}", flush = True)
                 try:
                     user_token = request.session['user_token']
                     return redirect(f'https://{settings.DOMAIN}{request.path}')
                 except KeyError:
-                    print(f"WALANG GANITONG PATH SA ACCOUNTS! {request.path}", flush = True)
                     if request.path=='' or request.path =='/':
                         return self.signout(request, f'https://{settings.ACCOUNTS_DOMAIN}')
                     else:
@@ -83,13 +79,6 @@ class SubdomainMiddleware(MiddlewareMixin):
                 if current_time >= expires:
                     # The session has expired, sign out the user
                     return self.signout(request, f'http://{host}')
-                try:
-                    match = accounts_resolver.resolve(request.path)
-                except:
-                    match = None
-                    
-                if match:
-                    raise Http404("Page not found.")
             except KeyError:
                 try:
                     match = accounts_resolver.resolve(request.path)

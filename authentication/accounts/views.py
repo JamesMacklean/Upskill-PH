@@ -16,6 +16,7 @@ from rest_framework.views import APIView
 from ..api import *
 from django.template import Library
 from django.core.paginator import Paginator
+from django.views.decorators.cache import never_cache
 
 import os, requests, ast, jwt, csv
 
@@ -60,11 +61,16 @@ def verify_account(request, user_hash):
     except Exception as e:
         print(str(e), flush=True)
         return render(request, template_failed, context)
-    
+
+@never_cache
 def signup(request):
     """"""
     template_name = "authentication/signup.html"
     context = {}
+    domain = f'http://{request.get_host()}'
+
+    if request.session.get('user_token'):
+        return redirect(domain)    
         
     try:
         if request.method == "POST":
@@ -128,15 +134,19 @@ def signup(request):
     
     return render(request, template_name, context)
 
+@never_cache
 def signin(request): 
     """"""
     template_name = "authentication/signin.html"
     context = {}
+    domain = f'http://{request.get_host()}'
+
+    if request.session.get('user_token'):
+        return redirect(domain)    
     
     if request.method == "POST":
         email = request.POST['email']
         password = request.POST['password']
-        domain = f'http://{request.get_host()}'
         
         user_token, expires, redirect_url, response_message = login_account(email, password)
         
@@ -210,7 +220,7 @@ def signin(request):
             print ("SIGN IN ERROR:", response_message, flush=True)
             context['response_message'] = response_message
             return render(request, template_name, context)
-
+    
     return render(request, template_name, context)
 
 def clear_session(request,key):
