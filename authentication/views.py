@@ -62,7 +62,7 @@ def clear_session(request,key):
 
 def home(request):
     """"""
-    template_name = "home/courses.html"
+    template_name = "home/home.html"
     context = {}
     applied_programs = []
         
@@ -749,8 +749,6 @@ def program_edit(request, partner_slug, program_slug):
     if not request.session.get('is_partner'):
         raise Http404("You are not authorized to edit this partner.")
     
-    date_now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-    
     selected_partner_list = get_partner_through_slug(user_token, partner_slug)
     selected_program_list = get_program_through_slug (user_token, program_slug)
     
@@ -760,22 +758,18 @@ def program_edit(request, partner_slug, program_slug):
     selected_partner = selected_partner_list[0]
     selected_program = selected_program_list[0]
     
+    def format_date(date_str):
+        if date_str and date_str != '0000-00-00 00:00:00':  # Ensure date is valid
+            return datetime.strptime(date_str, '%Y-%m-%d %H:%M:%S').strftime('%Y-%m-%d')
+        return ''
+    
+    selected_program['start_date'] = format_date(selected_program.get('start_date'))
+    selected_program['end_date'] = format_date(selected_program.get('end_date'))
+    selected_program['registration_end'] = format_date(selected_program.get('registration_end'))
+    
     if request.method == 'POST':
         
-        # Get data from the POST request
-        
-        # 'name': name,
-        # 'slug': slug,
-        # 'description': description,
-        # 'about': about,
-        # 'external_id': external_id,
-        # 'start_date': start_date,
-        # 'registration_end': registration_end,
-        # 'end_date': end_date,
-        # 'last_modified': date_now,
-        # 'badge': badge,
-        # 'certificate': certificate
-        
+        # Get data from the POST request        
         program_name = request.POST.get('program_name')
         program_new_slug = request.POST.get('program_slug')
         program_description = request.POST.get('program_description')
@@ -793,6 +787,7 @@ def program_edit(request, partner_slug, program_slug):
         partner_logo_3 = request.POST.get('partner_logo_3') or selected_program.get('partner_logo_3')
         partner_logo_4 = request.POST.get('partner_logo_4') or selected_program.get('partner_logo_4')
         image_1 = request.POST.get('program_image_1') or selected_program.get('image_1')
+        
         # Call the API to update the program details
         updated_program, response_message= update_program(
             user_token,
