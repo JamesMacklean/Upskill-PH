@@ -1,13 +1,7 @@
-from multiprocessing import context
-from re import template
-from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth.models import User
-from django.contrib import messages
-from django.contrib.auth import authenticate, login, logout
+from django.shortcuts import render, redirect
 from scholarium import settings
-from datetime import datetime, timedelta
-from django.core.mail import EmailMessage, send_mail
-from django.contrib.sites.shortcuts import get_current_site
+from datetime import datetime
+from django.core.mail import send_mail
 from django.template.loader import render_to_string
 from scholarium.info import *
 from django.http import HttpResponse, Http404, HttpResponseRedirect
@@ -17,13 +11,15 @@ from .models import *
 from .api import *
 from .forms import *
 from .decorators import *
-from django.template import Library
 # from .api import InvitationsAPI
 from django.core.paginator import Paginator
-# from authentication.subdomain_middleware import AuthenticationMiddleware
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from django.core.files.storage import default_storage
+from django.core.files.base import ContentFile
 
 from .variables import *
-import os, requests, ast, jwt, csv
+import jwt, csv
 
 class SessionChecker(APIView):
     def get(self, request):    
@@ -746,11 +742,16 @@ def program_edit(request, partner_slug, program_slug):
         date_now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         program_badge = request.POST.get('program_badge')
         program_certificate = request.POST.get('program_certificate')
-        partner_logo_1 = request.POST.get('partner_logo_1') or selected_program.get('partner_logo_1')
-        partner_logo_2 = request.POST.get('partner_logo_2') or selected_program.get('partner_logo_2')
-        partner_logo_3 = request.POST.get('partner_logo_3') or selected_program.get('partner_logo_3')
-        partner_logo_4 = request.POST.get('partner_logo_4') or selected_program.get('partner_logo_4')
-        image_1 = request.POST.get('program_image_1') or selected_program.get('image_1')
+        partner_logo_1 = request.POST.get('partner_logo_1')
+        partner_logo_2 = request.POST.get('partner_logo_2')
+        partner_logo_3 = request.POST.get('partner_logo_3')
+        partner_logo_4 = request.POST.get('partner_logo_4')
+        image_1 = request.POST.get('program_image_1')
+        # partner_logo_1 = request.POST.get('partner_logo_1') or selected_program.get('partner_logo_1')
+        # partner_logo_2 = request.POST.get('partner_logo_2') or selected_program.get('partner_logo_2')
+        # partner_logo_3 = request.POST.get('partner_logo_3') or selected_program.get('partner_logo_3')
+        # partner_logo_4 = request.POST.get('partner_logo_4') or selected_program.get('partner_logo_4')
+        # image_1 = request.POST.get('program_image_1') or selected_program.get('image_1')
         
         # Call the API to update the program details
         updated_program, response_message= update_program(
