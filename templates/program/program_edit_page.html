@@ -10,15 +10,12 @@
         <div class="mb-3">
             <label for="programImage" class="form-label">Program Image</label>
             <div>
-                {% if program.image_1 %}
-                    <img id="programImagePreview" src="{{ program.image_1 }}" alt="{{ program.name }} Logo" width="272px" height="153px">
-                {% else %}
-                    <img id="programImagePreview" class="program-logo" src="https://via.placeholder.com/150" alt="Placeholder Logo" width="150px" height="150px">
-                {% endif %}
-                <input type="file" class="mx-3" id="programImageFile" accept="image/*">
-                <input type="hidden" id="programImageUrl" name="program_image_1" value="{{ program.image_1 }}">
-                <button type="button" class="btn btn-primary" onclick="uploadImage('programImageFile', 'programImagePreview', 'programImageUrl')">Upload</button>
-                <button type="button" class="btn btn-danger" onclick="clearImage('programImagePreview', 'programImageUrl')">Clear</button>
+            {% if program.image_1 %}
+                <img src="{{ program.image_1 }}" alt="{{ program.name }} Logo" width="272px" height="153px">
+            {% else %}
+                <img class="program-logo" src="https://via.placeholder.com/150" alt="Placeholder Logo" width="150px" height="150px">
+            {% endif %}
+            <input type="text" class="mx-3" id="programImage" name="program_image_1">
             </div>
         </div>
         
@@ -88,61 +85,37 @@
             {% comment %} to be replace w/ condition{% endcomment %}
             <p>Add Program Partner Logos</p>
             <div class="mt-3 d-flex flex-column">
-                <!-- Program Partner Logo 1 -->
                 <div class="mb-3">
-                    <div>
-                        {% if program.partner_logo_1 %}
-                            <img id="partnerLogo1Preview" src="{{ program.partner_logo_1 }}" alt="Partner Logo 1" width="50px" height="50px">
-                        {% else %}
-                            <img id="partnerLogo1Preview" class="program-logo" src="https://via.placeholder.com/150" alt="Placeholder Logo" width="50px" height="50px">
-                        {% endif %}
-                        <input type="file" class="mx-3" id="partnerLogo1File" accept="image/*">
-                        <input type="hidden" id="partnerLogo1Url" name="partner_logo_1" value="{{ program.partner_logo_1 }}">
-                        <button type="button" class="btn btn-primary" onclick="uploadImage('partnerLogo1File', 'partnerLogo1Preview', 'partnerLogo1Url')">Upload</button>
-                        <button type="button" class="btn btn-danger" onclick="clearImage('partnerLogo1Preview', 'partnerLogo1Url')">Clear</button>
-                    </div>
+                    {% if program.partner_logo_1 %}
+                        <img src="{{ program.partner_logo_1 }}" alt="" width="50px" height="50px">
+                    {% else %}
+                        <img class="program-logo" src="https://via.placeholder.com/150" alt="Placeholder Logo" width="50px" height="50px">
+                    {% endif %}
+                    <input type="text" class="mx-3" id="partnerLogo_1" name="partner_logo_1">
                 </div>
-                <!-- Program Partner Logo 2 -->
                 <div class="mb-3">
-                    <div>
-                        {% if program.partner_logo_2 %}
-                            <img id="partnerLogo2Preview" src="{{ program.partner_logo_2 }}" alt="Partner Logo 2" width="50px" height="50px">
-                        {% else %}
-                            <img id="partnerLogo2Preview" class="program-logo" src="https://via.placeholder.com/150" alt="Placeholder Logo" width="50px" height="50px">
-                        {% endif %}
-                        <input type="file" class="mx-3" id="partnerLogo2File" accept="image/*">
-                        <input type="hidden" id="partnerLogo2Url" name="partner_logo_2" value="{{ program.partner_logo_2 }}">
-                        <button type="button" class="btn btn-primary" onclick="uploadImage('partnerLogo2File', 'partnerLogo2Preview', 'partnerLogo2Url')">Upload</button>
-                        <button type="button" class="btn btn-danger" onclick="clearImage('partnerLogo2Preview', 'partnerLogo2Url')">Clear</button>
-                    </div>
+                    {% if program.partner_logo_2 %}
+                        <img src="{{ program.partner_logo_2 }}" alt="" width="50px" height="50px">
+                    {% else %}
+                        <img class="program-logo" src="https://via.placeholder.com/150" alt="Placeholder Logo" width="50px" height="50px">
+                    {% endif %}
+                    <input type="text" class="mx-3" id="partnerLogo_2" name="partner_logo_2">
                 </div>
-                <!-- Program Partner Logo 3 -->
                 <div class="mb-3">
-                    <div>
-                        {% if program.partner_logo_3 %}
-                            <img id="partnerLogo3Preview" src="{{ program.partner_logo_3 }}" alt="Partner Logo 3" width="50px" height="50px">
-                        {% else %}
-                            <img id="partnerLogo3Preview" class="program-logo" src="https://via.placeholder.com/150" alt="Placeholder Logo" width="50px" height="50px">
-                        {% endif %}
-                        <input type="file" class="mx-3" id="partnerLogo3File" accept="image/*">
-                        <input type="hidden" id="partnerLogo3Url" name="partner_logo_3" value="{{ program.partner_logo_3 }}">
-                        <button type="button" class="btn btn-primary" onclick="uploadImage('partnerLogo3File', 'partnerLogo3Preview', 'partnerLogo3Url')">Upload</button>
-                        <button type="button" class="btn btn-danger" onclick="clearImage('partnerLogo3Preview', 'partnerLogo3Url')">Clear</button>
+                    {% if program.partner_logo_3 %}
+                        <img src="{{ program.partner_logo_3 }}" alt="" width="50px" height="50px">
+                    {% else %}
+                        <img class="program-logo" src="https://via.placeholder.com/150" alt="Placeholder Logo" width="50px" height="50px">
+                    {% endif %}
+                    <input type="text" class="mx-3" id="partnerLogo_3" name="partner_logo_3">
                     </div>
-                </div> 
-                <!-- Program Partner Logo 4 -->
                 <div class="mb-3">
-                    <div>
-                        {% if program.partner_logo_4 %}
-                            <img id="partnerLogo4Preview" src="{{ program.partner_logo_4 }}" alt="Partner Logo 4" width="50px" height="50px">
-                        {% else %}
-                            <img id="partnerLogo4Preview" class="program-logo" src="https://via.placeholder.com/150" alt="Placeholder Logo" width="50px" height="50px">
-                        {% endif %}
-                        <input type="file" class="mx-3" id="partnerLogo4File" accept="image/*">
-                        <input type="hidden" id="partnerLogo4Url" name="partner_logo_4" value="{{ program.partner_logo_4 }}">
-                        <button type="button" class="btn btn-primary" onclick="uploadImage('partnerLogo4File', 'partnerLogo4Preview', 'partnerLogo4Url')">Upload</button>
-                        <button type="button" class="btn btn-danger" onclick="clearImage('partnerLogo4Preview', 'partnerLogo4Url')">Clear</button>
-                    </div>
+                    {% if program.partner_logo_4 %}
+                        <img src="{{ program.partner_logo_4 }}" alt="" width="50px" height="50px">
+                    {% else %}
+                        <img class="program-logo" src="https://via.placeholder.com/150" alt="Placeholder Logo" width="50px" height="50px">
+                    {% endif %}
+                    <input type="text" class="mx-3" id="partnerLogo_4" name="partner_logo_4">
                 </div>
             </div>
                 {% comment %} <form action="" method="POST">
@@ -246,34 +219,4 @@
         </div>
     </form>
 </div>
-
-<script>
-    function uploadImage(fileInputId, previewImageId, hiddenInputId) {
-        const fileInput = document.getElementById(fileInputId);
-        const previewImage = document.getElementById(previewImageId);
-        const hiddenInput = document.getElementById(hiddenInputId);
-
-        if (fileInput.files.length === 0) {
-        alert('Please select a file to upload.');
-        return;
-    }
-        if (fileInput.files && fileInput.files[0]) {
-            const reader = new FileReader();
-            reader.onload = function (e) {
-                previewImage.src = e.target.result;
-                hiddenInput.value = e.target.result; // Set the hidden input value to the base64 image string
-            };
-            reader.readAsDataURL(fileInput.files[0]);
-        }
-    }
-
-    function clearImage(previewImageId, hiddenInputId) {
-        const previewImage = document.getElementById(previewImageId);
-        const hiddenInput = document.getElementById(hiddenInputId);
-        
-        previewImage.src = 'https://via.placeholder.com/150'; // Reset to placeholder image
-        hiddenInput.value = ''; // Clear the hidden input value
-    }
-</script>
-
 {% endblock %}

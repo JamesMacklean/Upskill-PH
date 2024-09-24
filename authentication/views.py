@@ -742,16 +742,11 @@ def program_edit(request, partner_slug, program_slug):
         date_now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         program_badge = request.POST.get('program_badge')
         program_certificate = request.POST.get('program_certificate')
-        partner_logo_1 = request.POST.get('partner_logo_1')
-        partner_logo_2 = request.POST.get('partner_logo_2')
-        partner_logo_3 = request.POST.get('partner_logo_3')
-        partner_logo_4 = request.POST.get('partner_logo_4')
-        image_1 = request.POST.get('program_image_1')
-        # partner_logo_1 = request.POST.get('partner_logo_1') or selected_program.get('partner_logo_1')
-        # partner_logo_2 = request.POST.get('partner_logo_2') or selected_program.get('partner_logo_2')
-        # partner_logo_3 = request.POST.get('partner_logo_3') or selected_program.get('partner_logo_3')
-        # partner_logo_4 = request.POST.get('partner_logo_4') or selected_program.get('partner_logo_4')
-        # image_1 = request.POST.get('program_image_1') or selected_program.get('image_1')
+        partner_logo_1 = request.POST.get('partner_logo_1') or selected_program.get('partner_logo_1')
+        partner_logo_2 = request.POST.get('partner_logo_2') or selected_program.get('partner_logo_2')
+        partner_logo_3 = request.POST.get('partner_logo_3') or selected_program.get('partner_logo_3')
+        partner_logo_4 = request.POST.get('partner_logo_4') or selected_program.get('partner_logo_4')
+        image_1 = request.POST.get('program_image_1') or selected_program.get('image_1')
         
         # Call the API to update the program details
         updated_program, response_message= update_program(
