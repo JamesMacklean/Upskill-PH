@@ -1,0 +1,86 @@
+<script type="text/javascript">
+    
+    // Get references to the status filter checkboxes
+const statusFilters = document.querySelectorAll('.status-filter');
+const applicantRows = document.querySelectorAll('.applicant-row');
+const selectAllCheckbox = document.getElementById("selectAll");
+const checkboxes = document.querySelectorAll('.checkbox');
+
+// Add event listeners for the filter checkboxes
+statusFilters.forEach(function(filter) {
+    filter.addEventListener('change', function() {
+        applyFilters();
+    });
+});
+
+// Function to filter applicants based on selected statuses
+function applyFilters() {
+    const selectedStatuses = Array.from(statusFilters)
+        .filter(filter => filter.checked)
+        .map(filter => filter.value);
+
+    applicantRows.forEach(function(row) {
+        const applicantStatus = row.getAttribute('data-status');
+        if (selectedStatuses.length === 0 || selectedStatuses.includes(applicantStatus)) {
+            row.style.display = '';  // Show row
+        } else {
+            row.style.display = 'none';  // Hide row
+        }
+    });
+}
+
+// Add event listener for "Select All" functionality
+selectAllCheckbox.addEventListener("change", function () {
+    checkboxes.forEach(function (checkbox) {
+        checkbox.checked = selectAllCheckbox.checked;
+    });
+});
+
+var my_handlers = {
+
+    fill_provinces:  function(){
+
+        var region_code = $(this).val();
+        $('#province').ph_locations('fetch_list', [{"region_code": region_code}]);
+        
+    },
+
+    fill_cities: function(){
+
+        var province_code = $(this).val();
+        $('#city').ph_locations( 'fetch_list', [{"province_code": province_code}]);
+    },
+
+
+    fill_barangays: function(){
+
+        var city_code = $(this).val();
+        $('#barangay').ph_locations('fetch_list', [{"city_code": city_code}]);
+    }
+};
+
+$(function(){
+    $('#region').on('change', my_handlers.fill_provinces);
+    $('#city').on('change', my_handlers.fill_barangays);
+
+    $('#region').ph_locations({'location_type': 'regions'});
+    $('#province').ph_locations({'location_type': 'provinces'});
+    $('#city').ph_locations({'location_type': 'cities'});
+    $('#barangay').ph_locations({'location_type': 'barangays'});
+
+    $('#region').ph_locations('fetch_list');
+});
+
+{% comment %} $( ".select option:selected" ).text(); {% endcomment %}
+// Get references to the "Select All" checkbox and the checkboxes to be selected/deselected
+const selectAllCheckbox = document.getElementById("selectAll");
+const checkboxes = document.querySelectorAll('.checkbox');
+
+// Add an event listener to the "Select All" checkbox
+selectAllCheckbox.addEventListener("change", function () {
+// Loop through all other checkboxes and set their checked state to match the "Select All" checkbox
+checkboxes.forEach(function (checkbox) {
+checkbox.checked = selectAllCheckbox.checked;
+});
+});
+</script>
