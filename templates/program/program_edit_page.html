@@ -8,7 +8,7 @@
         {% csrf_token %}
         <!-- Program Image -->
         <div class="mb-3">
-            <label for="programImage" class="form-label">Program Image</label>
+            {% comment %} <label for="programImage" class="form-label">Program Image</label> {% endcomment %}
             <div>
                 {% if program.image_1 %}
                     <img src="{{ program.image_1 }}" alt="{{ program.name }} Logo" width="272px" height="153px" id="imagePreview1">

@@ -8,7 +8,7 @@
         {% csrf_token %}
         <!-- Partner Logo -->
         <div class="mb-3">
-            <label for="partnerLogo" class="form-label">Partner Logo</label>
+            {% comment %} <label for="partnerLogo" class="form-label">Partner Logo</label> {% endcomment %}
             <div>
                 {% if partner.logo_1 %}
                     <img src="{{ partner.logo_1 }}" alt="{{ partner.name }} Logo" width="150px" height="150px" id="logoPreview">
