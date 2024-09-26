@@ -50,10 +50,12 @@
 <div class="nav-bar collapse">
     <a class="m-nav-link" href="{% url 'home' %}">Home</a>
     <a class="m-nav-link" href="{% url 'dashboard' %}">Dashboard</a>
+    {% if request.session.is_partner %}
+    <a href="{% url 'partner' %}">Partners</a>
+    {% endif %}
     {% if request.session.is_admin or request.session.is_global %}
     <a class="m-nav-link" href="{% url 'admin_dashboard' %}">Admin</a>
     {% endif %}
-    <a class="m-nav-link" href="{% url 'partner' %}">Partners</a>
     <hr style="width:70%;">
     <a class="m-nav-link" href="{% url 'profile' %}">Profile</a>
     <a class="m-nav-link" href="{% url 'account' %}">Account</a>

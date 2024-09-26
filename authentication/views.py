@@ -83,8 +83,8 @@ def home(request):
             if programs:
                 all_programs.extend(programs)
     
-    print("Combined Programs:")
-    print(all_programs)
+    print("ALL PROGRAMS")
+    print(all_programs, flush=True)
     
     context['program_list'] = all_programs
     # context['program_list'] = get_programs(user_token, 6,None)
