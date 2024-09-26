@@ -511,12 +511,19 @@ def partner(request):
     if not partners:
         raise Http404
     
+    # all_partners = get_partner(user_token)
+    all_partners = [p for p in get_partner(user_token) if p.get('status') != 0]
+    
     # Collect all unique partner_ids
-    unique_partner_ids = list({data['partner_id'] for data in partners})
+    # unique_partner_ids = list({data['partner_id'] for data in partners})
+    unique_partner_ids = list({
+        p['partner_id'] for p in partners
+        if any(ap['id'] == p['partner_id'] for ap in all_partners)  # Only include if the partner exists in all_partners with status != 0
+    })
+    
     if len(unique_partner_ids) == 1:
         # If there is only one unique partner, fetch its details and redirect
         partner_id = unique_partner_ids[0]
-        all_partners = get_partner(user_token)
         selected_partner = next((partner for partner in all_partners if partner['id'] == partner_id), None)
         
         if not selected_partner or not selected_partner['slug']:
@@ -525,7 +532,6 @@ def partner(request):
         return HttpResponseRedirect(reverse('partner_slug', kwargs={'partner_slug': selected_partner['slug']}))
     else:
         # If there are multiple unique partners, render the partner selection page
-        all_partners = get_partner(user_token)
         partner_details = []
         
         for partner_id in unique_partner_ids:
@@ -574,7 +580,7 @@ def partner_slug(request, partner_slug):
     context['partner_details'] = partner_details
     context['program_list'] = partner_programs
     context['is_user_partner'] = is_user_partner
-    
+
     return render(request, template_name, context)
 
 def partner_edit(request, partner_slug):
@@ -604,10 +610,27 @@ def partner_edit(request, partner_slug):
         partner_ig = request.POST.get('partner_ig')
         date_now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         
+        # Handle image uploads
+        uploaded_partner_logo_1 = request.FILES.get('partner_logo_1')
+        
+        # Define a function to save images
+        def save_image(uploaded_file, existing_url):
+            if uploaded_file:
+                file_name = default_storage.save(uploaded_file.name, ContentFile(uploaded_file.read()))
+                return f'https://{settings.DOMAIN}/static/images/{file_name}'
+            return existing_url
+        
+        partner_logo_cleared = request.POST.get('partner_logo_cleared') == 'true'
+        if partner_logo_cleared:
+            partner_logo = ""  # Set to empty string if cleared
+        else:
+            partner_logo = save_image(uploaded_partner_logo_1, selected_partner.get('logo_1'))
+
         # Call the API to update the partner details
         updated_partner, response_message= update_partner(
             user_token,
             selected_partner['id'],
+            partner_logo,
             partner_name,
             partner_about,
             partner_slug,
@@ -616,6 +639,7 @@ def partner_edit(request, partner_slug):
             partner_ig,
             date_now,
         )
+        print(response_message)
         return redirect('partner_slug', partner_slug=partner_slug)
         
     context = {
@@ -718,8 +742,9 @@ def program_edit(request, partner_slug, program_slug):
     selected_partner = selected_partner_list[0]
     selected_program = selected_program_list[0]
     
+    # Ensure date is valid
     def format_date(date_str):
-        if date_str and date_str != '0000-00-00 00:00:00':  # Ensure date is valid
+        if date_str and date_str != '0000-00-00 00:00:00':  
             return datetime.strptime(date_str, '%Y-%m-%d %H:%M:%S').strftime('%Y-%m-%d')
         return ''
     

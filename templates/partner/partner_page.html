@@ -9,8 +9,8 @@
     <div class="container">
         {% for partner in partner_details %}
             <div class="partner-info mb-5 d-flex">
-                {% if partner.logo %}
-                <img class="partner-logo" src="{{ partner.logo }}" alt="{{ partner.name }} Logo">
+                {% if partner.logo_1 %}
+                <img class="partner-logo" src="{{ partner.logo_1 }}" alt="{{ partner.name }} Logo">
                 {% else %}
                 <img class="partner-logo" src="https://via.placeholder.com/150" alt="Placeholder Logo">
                 {% endif %}

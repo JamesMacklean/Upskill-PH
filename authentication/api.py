@@ -651,10 +651,11 @@ def update_education (bearer_token, degree, school, study, date_now, privacy):
     return context, response_message
 
 # POST https://scholarium.tmtg-clone.click/v1/partner
-def update_partner (bearer_token, partner_id, name, about, slug, url, fb, ig, date_now) :
+def update_partner (bearer_token, partner_id, logo, name, about, slug, url, fb, ig, date_now) :
     context = {}
     payload={
         'id': partner_id,
+        'logo_1': logo,
         'name': name,
         'about': about,
         'slug': slug,
