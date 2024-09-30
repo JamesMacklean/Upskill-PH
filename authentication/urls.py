@@ -21,6 +21,7 @@ urlpatterns = [
     path('partner/', views.partner, name="partner"),
     path('partner/<slug:partner_slug>', views.partner_slug, name="partner_slug"),
     path('partner/<slug:partner_slug>/edit/', views.partner_edit, name='partner_edit'),
+    path('partner/<slug:partner_slug>/add-program/', views.add_program, name='add_program'),
     path('partner/<slug:partner_slug>/<slug:program_slug>/', views.program_slug, name='program_slug'),
     path('partner/<slug:partner_slug>/<slug:program_slug>/application/', views.application, name="application"),
     path('partner/<slug:partner_slug>/<slug:program_slug>/edit/', views.program_edit, name="program_edit"),

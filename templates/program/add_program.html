@@ -1,0 +1,144 @@
+{% extends 'base.html' %}
+{% comment %} {% load parse_iso %} {% endcomment %}
+{% block content %}
+<div class="container my-5">
+    <h2 class="mb-4">Add Program</h2>
+    
+    <form action="" method="POST" enctype="multipart/form-data" class="px-5">
+        {% csrf_token %}
+        <!-- Program Image -->
+        <div class="mb-3">
+            {% comment %} <label for="programImage" class="form-label">Program Image</label> {% endcomment %}
+            <div>
+                <img class="program-logo" src="https://via.placeholder.com/150" alt="Placeholder Logo" width="150px" height="150px" id="imagePreview1">
+                <input type="file" class="mx-3" id="programImage" name="program_image_1" onchange="previewImage(event, 'imagePreview1')">
+                <button type="button" class="btn btn-danger" onclick="clearImage('imagePreview1', 'programImage', programImageCleared)">Clear</button>
+                <input type="hidden" name="program_image_cleared" id="programImageCleared" value="false">
+            </div>
+        </div>
+        
+        <!-- Program Name -->
+        <div class="mb-3">
+            <label for="programName" class="form-label">Program Name</label>
+            <input type="text" class="form-control" id="programName" name="program_name" required>
+        </div>
+
+        <!-- Program Description -->
+        <div class="mb-3">
+            <label for="programDescription" class="form-label">Program Description</label>
+            <textarea class="form-control" id="programDescription" name="program_description" rows="4"></textarea>
+        </div>
+
+        <!-- Program Slug -->
+        <div class="mb-3">
+            <label for="programSlug" class="form-label">Program Slug (required)</label>
+            <input type="text" class="form-control" id="programSlug" name="program_slug" required>
+        </div>
+
+        <!-- Program URL -->
+        <div class="mb-3">
+            <label for="programURL" class="form-label">Program URL</label>
+            <input type="text" class="form-control" id="programURL" name="program_url">
+        </div>
+
+        <!-- Program About -->
+        <div class="mb-3">
+            <label for="programAbout" class="form-label">Program About</label>
+            <textarea class="form-control" id="programAbout" name="program_about" rows="4"></textarea>
+        </div>
+
+         <!-- Program Start Date -->
+        <div class="mb-3">
+            <label for="programStartDate" class="form-label">Start Date</label>
+            <input type="date" class="form-control" id="programStartDate"name="program_start_date">
+        </div>        
+
+        <!-- Program End Date -->
+        <div class="mb-3">
+            <label for="programEndDate" class="form-label">End Date</label>
+            <input type="date" class="form-control" id="programEndDate" name="program_end_date">
+        </div>
+
+        <!-- Program Registration End Date -->
+        <div class="mb-3">
+            <label for="registrationEnd" class="form-label">Registration End Date</label>
+            <input type="date" class="form-control" id="registrationEnd" name="registration_end">
+        </div>
+
+        <!-- Program Badge -->
+        <div class="mb-3 form-check">
+            <input type="checkbox" class="form-check-input" id="badgeCheck" name="badge">
+            <label class="form-check-label" for="badgeCheck">Badge Available</label>
+        </div>
+
+        <!-- Program Certificate -->
+        <div class="mb-3 form-check">
+            <input type="checkbox" class="form-check-input" id="certificateCheck" name="certificate">
+            <label class="form-check-label" for="certificateCheck">Certificate Available</label>
+        </div>
+        
+        <br>
+        <h5 class="mb-4">Partners</h5>
+        <div class="mb-4 d-flex flex-column">
+            {% comment %} to be replace w/ condition{% endcomment %}
+            <p>Add Program Partner Logos</p>
+            <div class="mt-3 d-flex flex-column">
+                <!-- Program Partner Logo 1 -->
+                <div class="mb-3">
+                    <img class="program-logo" src="https://via.placeholder.com/150" alt="Placeholder Logo" width="50px" height="50px" id="partnerLogoPreview_1">
+                    <input type="file" class="mx-3" id="partnerLogo1" name="partner_logo_1" onchange="previewImage(event, 'partnerLogoPreview_1')">
+                    <button type="button" class="btn btn-danger" onclick="clearImage('partnerLogoPreview_1', 'partnerLogo1', 'partnerLogo1Cleared')">Clear</button>
+                    <input type="hidden" name="partner_logo_1_cleared" id="partnerLogo1Cleared" value="false">
+                </div>
+                <!-- Program Partner Logo 2 -->
+                <div class="mb-3">
+                    <img class="program-logo" src="https://via.placeholder.com/150" alt="Placeholder Logo" width="50px" height="50px" id="partnerLogoPreview_2">
+                    <input type="file" class="mx-3" id="partnerLogo2" name="partner_logo_2" onchange="previewImage(event, 'partnerLogoPreview_2')">
+                    <button type="button" class="btn btn-danger" onclick="clearImage('partnerLogoPreview_2', 'partnerLogo2', 'partnerLogo2Cleared')">Clear</button>
+                    <input type="hidden" name="partner_logo_2_cleared" id="partnerLogo2Cleared" value="false">
+                </div>
+                <!-- Program Partner Logo 3 -->
+                <div class="mb-3">
+                    <img class="program-logo" src="https://via.placeholder.com/150" alt="Placeholder Logo" width="50px" height="50px" id="partnerLogoPreview_3">
+                    <input type="file" class="mx-3" id="partnerLogo3" name="partner_logo_3" onchange="previewImage(event, 'partnerLogoPreview_3')">
+                    <button type="button" class="btn btn-danger" onclick="clearImage('partnerLogoPreview_3', 'partnerLogo3', 'partnerLogo1Cleared')">Clear</button>
+                    <input type="hidden" name="partner_logo_3_cleared" id="partnerLogo3Cleared" value="false">
+                </div>
+                <!-- Program Partner Logo 4 -->
+                <div class="mb-3">
+                    <img class="program-logo" src="https://via.placeholder.com/150" alt="Placeholder Logo" width="50px" height="50px" id="partnerLogoPreview_4">
+                    <input type="file" class="mx-3" id="partnerLogo4" name="partner_logo_4" onchange="previewImage(event, 'partnerLogoPreview_4')">
+                    <button type="button" class="btn btn-danger" onclick="clearImage('partnerLogoPreview_4', 'partnerLogo4', 'partnerLogo4Cleared')">Clear</button>
+                    <input type="hidden" name="partner_logo_4_cleared" id="partnerLogo4Cleared" value="false">
+                </div>
+            </div>
+        </div>
+        <!-- Submit Button -->
+        <div class="d-flex justify-content-center">
+            <button type="submit" class="btn btn-primary mx-3">Save Changes</button>
+            
+            <!-- Cancel Button -->
+            <a href="{% url 'partner_slug' partner_slug %}" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
+</div>
+<script>
+    function previewImage(event, previewElementId) {
+        const file = event.target.files[0];
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            document.getElementById(previewElementId).src = e.target.result;
+        }
+        if (file) {
+            reader.readAsDataURL(file);
+        }
+    }
+
+    function clearImage(previewElementId, fileInputId, hiddenInputId) {
+    document.getElementById(previewElementId).src = 'https://via.placeholder.com/150';
+    document.getElementById(fileInputId).value = '';
+    document.getElementById(hiddenInputId).value = 'true';
+    }
+
+</script>
+{% endblock %}

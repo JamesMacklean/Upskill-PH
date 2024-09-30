@@ -1111,6 +1111,110 @@ def lakip_application(request):
 #    context['courses'] = get_courses()
 #    return render(request,template_name, context)
 
+def add_program(request, partner_slug):
+    user_token = request.session.get('user_token')
+    
+    if not request.session.get('is_partner'):
+        raise Http404("You are not authorized to edit this partner.")
+    
+    selected_partner_list = get_partner_through_slug(user_token, partner_slug)
+    
+    if not selected_partner_list or not isinstance(selected_partner_list, list):
+        raise Http404("Partner not found")
+    
+    selected_partner = selected_partner_list[0]
+    
+    if request.method == 'POST':
+        
+        # Get data from the POST request        
+        program_name = request.POST.get('program_name')
+        program_new_slug = request.POST.get('program_slug')
+        program_description = request.POST.get('program_description')
+        program_about = request.POST.get('program_about')
+        program_url = request.POST.get('program_url')
+        program_start_date = request.POST.get('program_start_date')
+        program_end_date = request.POST.get('program_end_date')
+        program_registration_end = request.POST.get('program_registration_end')
+        date_now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        program_badge = request.POST.get('program_badge')
+        program_certificate = request.POST.get('program_certificate')
+
+        # Handle image uploads
+        uploaded_image_1 = request.FILES.get('program_image_1')
+        uploaded_logo_1 = request.FILES.get('partner_logo_1')
+        uploaded_logo_2 = request.FILES.get('partner_logo_2')
+        uploaded_logo_3 = request.FILES.get('partner_logo_3')
+        uploaded_logo_4 = request.FILES.get('partner_logo_4')
+        
+        # Define a function to save images
+        def save_image(uploaded_file, existing_url):
+            if uploaded_file:
+                file_name = default_storage.save(uploaded_file.name, ContentFile(uploaded_file.read()))
+                return f'https://{settings.DOMAIN}/static/images/{file_name}'
+            return existing_url
+        
+        program_image_cleared = request.POST.get('program_image_cleared') == 'true'
+        if program_image_cleared:
+            image_1 = "" 
+        else:
+            image_1 = save_image(uploaded_image_1, None)
+        partner_logo_1_cleared = request.POST.get('partner_logo_1_cleared') == 'true'
+        if partner_logo_1_cleared:
+            partner_logo_1 = ""
+        else:
+            partner_logo_1 = save_image(uploaded_logo_1, None)
+        
+        partner_logo_2_cleared = request.POST.get('partner_logo_2_cleared') == 'true'
+        if partner_logo_2_cleared:
+            partner_logo_2 = ""
+        else:
+            partner_logo_2 = save_image(uploaded_logo_2, None)
+
+        partner_logo_3_cleared = request.POST.get('partner_logo_3_cleared') == 'true'
+        if partner_logo_3_cleared:
+            partner_logo_3 = ""
+        else:
+            partner_logo_3 = save_image(uploaded_logo_3, None)
+
+        partner_logo_4_cleared = request.POST.get('partner_logo_4_cleared') == 'true'
+        if partner_logo_4_cleared:
+            partner_logo_4 = ""
+        else:
+            partner_logo_4 = save_image(uploaded_logo_4, None)
+        
+        # Call the API to update the program details
+        updated_program, response_message= update_program(
+            user_token,
+            None,
+            selected_partner['id'],
+            program_name,
+            program_new_slug,
+            program_url,
+            program_description,
+            program_about,
+            program_start_date,
+            program_registration_end,
+            program_end_date,
+            date_now,
+            program_badge,
+            program_certificate,
+            partner_logo_1,
+            partner_logo_2,
+            partner_logo_3,
+            partner_logo_4,
+            image_1,"","","" # images
+        )
+        
+        print(updated_program)
+        print(response_message)
+        return redirect('program_slug', partner_slug=partner_slug, program_slug = program_new_slug)
+        
+    context = {
+        'partner_slug': selected_partner['slug'],
+    }
+    
+    return render(request, 'program/add_program.html', context)
+
 # STATIC TEMPLATES
 def guidelines(request):
     return render(request, "static_templates/program_guidelines.html")
