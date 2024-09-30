@@ -577,6 +577,9 @@ div.card-image {
   text-decoration: none !important;
   color: #000;
 }
+.add-program-link:hover{
+  background-color: #ececec;
+}
 
 /* mobile response */
 @media screen and (max-width: 430px) {

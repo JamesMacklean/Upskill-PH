@@ -73,6 +73,15 @@
                             </a>
                         </div>
                         {% endfor %}
+                        <div class="bg-white w-100 mb-4">
+                            <a class="add-program-link" href="{% url 'add_program' partner.slug program.slug %}">
+                            <div class="partner-program-wrapper">
+                                <div class="partner-program-item d-flex flex-row align-items-center justify-content-center">
+                                    <h2>+</h2>
+                                </div>
+                            </div>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
