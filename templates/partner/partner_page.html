@@ -35,7 +35,7 @@
                     <div class="d-flex flex-column">
                         {% for program in program_list %}
                         <div class="bg-white w-100 mb-4">
-                            <a class="partner-link" href="{% url 'program_slug' partner.slug program.slug %}">
+                            <a class="partner-link" href="{% url 'program_slug' partner.slug %}">
                             <div class="partner-program-wrapper">
                                 <div class="partner-program-item d-flex flex-row">
                                     {% if program.image_1 %}
