@@ -12,6 +12,11 @@
             <div class="bg-white w-100 px-3 py-3 mb-4">
                 <a class="partner-link" href="{% url 'partner_slug' partner.slug %}">
                 <div class="partner-wrapper">
+                    {% if partner.logo_1 %}
+                        <img class="partner-logo" src="{{ partner.logo_1 }}" alt="{{ partner.name }} Logo" width="100px" height="100px">
+                    {% else %}
+                        <img class="partner-logo" src="https://via.placeholder.com/100" alt="Placeholder Logo" width="100px" height="100px">
+                    {% endif %}
                     <div class="partner-item">
                         <p class="partner-title mb-1 mt-2">
                             {{ partner.name }}

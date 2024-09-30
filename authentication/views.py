@@ -74,20 +74,13 @@ def home(request):
         except Exception as e:
             print(str(e), flush=True)
     
-        # TEMP CODE FOR ALL PROGRAMS
-    all_programs = []
-    
-    for i in range(1, 11):
-        if i == 6 or i == 9 or i == 10:
-            programs = get_programs(user_token, i, None)
-            if programs:
-                all_programs.extend(programs)
+    # GET ALL PROGRAMS NA ANG STATUS AY 1
+    all_programs = get_all_programs(user_token, 1)
     
     print("ALL PROGRAMS")
     print(all_programs, flush=True)
     
     context['program_list'] = all_programs
-    # context['program_list'] = get_programs(user_token, 6,None)
     context['scholarships'] = scholarships
     context['applied_programs'] = applied_programs
     # context['courses'] = get_courses(request, "static_templates/privacy.html")
