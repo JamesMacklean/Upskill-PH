@@ -34,6 +34,12 @@
             <label for="programSlug" class="form-label">Program Slug (required)</label>
             <input type="text" class="form-control" id="programSlug" name="program_slug" required>
         </div>
+       
+        <!-- Program Status -->
+        <div class="mb-3" hidden>
+            <label for="programStatus" class="form-label">Program Status</label>
+            <input type="text" class="form-control" id="programStatus" value="{{ program.status }}" name="program_status">
+        </div>
 
         <!-- Program URL -->
         <div class="mb-3">

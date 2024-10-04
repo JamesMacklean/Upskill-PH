@@ -39,6 +39,12 @@
             <input type="text" class="form-control" id="programSlug" value="{{ program.slug }}" name="program_slug" required>
         </div>
 
+        <!-- Program Status -->
+        <div class="mb-3" hidden>
+            <label for="programStatus" class="form-label">Program Status</label>
+            <input type="text" class="form-control" id="programStatus" value="{{ program.status }}" name="program_status">
+        </div>
+
         <!-- Program URL -->
         <div class="mb-3">
             <label for="programURL" class="form-label">Program URL</label>
@@ -80,6 +86,7 @@
             <input type="checkbox" class="form-check-input" id="certificateCheck" name="certificate" {% if program.certificate %}checked{% endif %}>
             <label class="form-check-label" for="certificateCheck">Certificate Available</label>
         </div>
+        
         
         <br>
         <h5 class="mb-4">Partners</h5>

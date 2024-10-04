@@ -542,7 +542,7 @@ def update_username (bearer_token, username):
     return context, response_message
 
 # POST https://scholarium.tmtg-clone.click/v1/me/profile 
-def update_profile (bearer_token, photo, first_name, last_name, about, country, region, municipality, socials, gender, birthday, contact, date_now, privacy):
+def update_profile (bearer_token, photo, first_name, last_name, about, country, region, municipality, socials, gender, birthday, contact, privacy):
     profile_data = []
     context = {}
     payload={
@@ -557,7 +557,6 @@ def update_profile (bearer_token, photo, first_name, last_name, about, country, 
         'gender': gender,
         'birthday': birthday,
         'contact': contact,
-        'last_modified': date_now,
         'privacy': privacy
     }
     files=[]
@@ -589,7 +588,7 @@ def update_profile (bearer_token, photo, first_name, last_name, about, country, 
     return context, response_message
 
 # POST https://scholarium.tmtg-clone.click/v1/me/employment 
-def update_employment (bearer_token, employ_status, industry, employer, occupation, experience, date_now, privacy):
+def update_employment (bearer_token, employ_status, industry, employer, occupation, experience, privacy):
     employment_data = []
     context = {}
     payload={
@@ -598,7 +597,6 @@ def update_employment (bearer_token, employ_status, industry, employer, occupati
         'employer': employer,
         'occupation': occupation,
         'experience': experience,
-        'last_modified': date_now,
         'privacy': privacy
     }
     files=[]
@@ -630,14 +628,13 @@ def update_employment (bearer_token, employ_status, industry, employer, occupati
     return context, response_message
 
 # POST https://scholarium.tmtg-clone.click/v1/me/education 
-def update_education (bearer_token, degree, school, study, date_now, privacy):
+def update_education (bearer_token, degree, school, study, privacy):
     education_data = []
     context = {}
     payload={
         'degree': degree,
         'school': school,
         'study': study,
-        'last_modified': date_now,
         'privacy': privacy
     }
     
@@ -670,7 +667,7 @@ def update_education (bearer_token, degree, school, study, date_now, privacy):
     return context, response_message
 
 # POST https://scholarium.tmtg-clone.click/v1/partner
-def update_partner (bearer_token, partner_id, logo, name, about, slug, url, fb, ig, date_now) :
+def update_partner (bearer_token, partner_id, logo, name, about, slug, url, fb, ig) :
     context = {}
     payload={
         'id': partner_id,
@@ -681,7 +678,6 @@ def update_partner (bearer_token, partner_id, logo, name, about, slug, url, fb, 
         'url': url,
         'fb': fb,
         'ig': ig,        
-        'last_modified': date_now,
     }
     
     files=[]
@@ -710,9 +706,44 @@ def update_partner (bearer_token, partner_id, logo, name, about, slug, url, fb, 
 
     return context, response_message
 
+# POST https://scholarium.tmtg-clone.click/v1/partner/admins
+def update_partner_admin (bearer_token, user_id, partner_id, program_id, access_level):
+    context = {}
+    payload = {
+        'user_id': user_id,
+        'partner_id': partner_id,
+        'program_id': program_id,
+        'access_level': access_level
+    }
+    files=[]
+    headers = {
+        'Authorization': bearer_token
+        }
+        
+    response = requests.request("POST", API_PARTNER_ADMIN_URL, headers=headers, data=payload, files=files)        
+    response_dict = ast.literal_eval(response.text)
+    
+    if 'data' in response_dict:
+            response_message = "Program Updated!"
+    else:
+        response_message = response_dict.get("error")
+    
+    # AUTO-ADD SA CONTEXT NG MGA KEYS NA NA-UPDATE VIA API
+    if 'data' in response_dict:
+        try:
+            for data in response_dict['data']:
+                for key, value in data.items():
+                    if value is not None:
+                        context[key] = data.get(key)
+                        
+        except Exception as e:
+            print(str(e), flush=True)
+
+    return context, response_message
+
 # POST https://scholarium.tmtg-clone.click/v1/partner/programs 
-def update_program (bearer_token, program_id, partner_id, name, slug, url, description, about, start_date, registration_end, end_date, date_now, badge, certificate,
-                    partner_logo_1, partner_logo_2, partner_logo_3, partner_logo_4, image_1, image_2, image_3, image_4):
+def update_program (bearer_token, program_id, partner_id, name, slug, url, description, about, start_date, registration_end, end_date, badge, certificate,
+                    partner_logo_1, partner_logo_2, partner_logo_3, partner_logo_4, image_1, image_2, image_3, image_4, status):
     context = {}
     payload={
         'id': program_id,
@@ -725,7 +756,6 @@ def update_program (bearer_token, program_id, partner_id, name, slug, url, descr
         'start_date': start_date,
         'registration_end': registration_end,
         'end_date': end_date,
-        'last_modified': date_now,
         'badge': badge,
         'certificate': certificate,
         'partner_logo_1': partner_logo_1,
@@ -736,6 +766,7 @@ def update_program (bearer_token, program_id, partner_id, name, slug, url, descr
         'image_2': image_2,
         'image_3': image_3,
         'image_4': image_4,
+        'status': status,
     }
     
     files=[]

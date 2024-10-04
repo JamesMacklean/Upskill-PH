@@ -19,7 +19,7 @@
                     <p class="partner-description">{{ partner.about|default:"No description available." }}</p>
 
                     <!-- Edit button visible only to partners -->
-                    {% if is_user_partner %}
+                    {% if is_user_partner_admin %}
                     <div class="mt-4">
                         <a href="{% url 'partner_edit' partner.slug %}" class="btn btn-primary">Edit</a>
                     </div>
@@ -73,6 +73,7 @@
                             </a>
                         </div>
                         {% endfor %}
+                        {% if is_user_partner_admin %}
                         <div class="bg-white w-100 mb-4">
                             <a class="add-link" href="{% url 'add_program' partner.slug %}">
                             <div class="partner-program-wrapper">
@@ -82,6 +83,7 @@
                             </div>
                             </a>
                         </div>
+                        {% endif %}
                     </div>
                 </div>
             </div>

@@ -165,6 +165,16 @@ def signin(request):
                 request.session['is_partner'] = partners
                 request.session.modified = True
                 
+                partner_admin_ids = [
+                    partner['partner_id'] 
+                    for partner in partners 
+                    if partner['access_level'] == 1
+                ]
+                partner_admin_ids = list(set(partner_admin_ids))
+                
+                request.session['is_partner_admin'] = partner_admin_ids
+                request.session.modified = True
+                
                 payload = jwt.decode(user_token, API_SECRET_KEY, algorithms=['HS256'])
                 # SAVE JWT PAYLOAD INTO SESSIONS
                 for key,value in payload.items():

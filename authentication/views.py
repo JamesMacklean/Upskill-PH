@@ -434,16 +434,15 @@ def edit_profile(request):
         birthday = request.POST.get('birthday')
         contact = request.POST.get('mobile')
         privacy = request.POST.get('details_privacy')
-        date_now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 
         username_update, username_response = update_username(user_token, username)
         profile_update, profile_response = update_profile(user_token, photo, first_name,
                                             last_name, about, country, region, municipality, 
-                                            socials, gender, birthday, contact, date_now,privacy)
+                                            socials, gender, birthday, contact, privacy)
         employment_update, employment_response = update_employment(user_token, employ_status, industry, 
-                                            employer, occupation, exp_level, date_now, privacy)
+                                            employer, occupation, exp_level, privacy)
         education_update, education_response = update_education(user_token, degree, 
-                                            university, study, date_now, privacy)
+                                            university, study, privacy)
 
         if username != request.session.get('username'):
             request.session['username']=username
@@ -554,25 +553,40 @@ def partner_slug(request, partner_slug):
     selected_partner = selected_partner_list[0]
     partner_details.append(selected_partner)
     
+    is_user_partner_admin = False
     is_user_partner = False
-    if request.session.get('is_partner'):
-        if partners:
-            # Filter programs associated with the selected partner
+    
+    is_partner_admin = request.session.get('is_partner_admin', [])
+    if selected_partner['id'] in is_partner_admin:
+        is_user_partner_admin = True
+        is_user_partner = True
+    
+    if request.session.get('is_partner') or request.session.get('is_partner_admin'):
+        # IF ACCESS LEVEL == 1
+        if is_user_partner_admin:
+            programs_list = get_programs(user_token, selected_partner['id'], None)
+            partner_programs.extend(programs_list)
+        
+        else:
+            # Filter accessible programs associated with the selected partner
             for data in partners:
                 if data['partner_id'] == selected_partner['id']:
                     program_id = data['program_id']
-                    
-                    if program_id:
+                    if data['access_level'] == 0:
+                        pass
+                    else:
                         programs_list = get_programs(user_token, selected_partner['id'], program_id)
                         partner_programs.extend(programs_list)
+
                     if data['access_level'] != 0:
-                        is_user_partner = True
+                        is_user_partner = True                    
     else:
-        raise Http404("User is not a partner")
+        raise Http404("You are not a associated with this partner.")
     
     context['partner_details'] = partner_details
     context['program_list'] = partner_programs
     context['is_user_partner'] = is_user_partner
+    context['is_user_partner_admin'] = is_user_partner_admin
 
     return render(request, template_name, context)
 
@@ -581,9 +595,7 @@ def partner_edit(request, partner_slug):
     
     if not request.session.get('is_partner'):
         raise Http404("You are not authorized to edit this partner.")
-    
-    date_now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-    
+        
     # Fetch the partner using the slug
     selected_partner_list = get_partner_through_slug(user_token, partner_slug)
     
@@ -601,7 +613,6 @@ def partner_edit(request, partner_slug):
         partner_url = request.POST.get('partner_url')
         partner_fb = request.POST.get('partner_fb')
         partner_ig = request.POST.get('partner_ig')
-        date_now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         
         # Handle image uploads
         uploaded_partner_logo_1 = request.FILES.get('partner_logo_1')
@@ -630,7 +641,6 @@ def partner_edit(request, partner_slug):
             partner_url,
             partner_fb,
             partner_ig,
-            date_now,
         )
         print(response_message)
         return redirect('partner_slug', partner_slug=partner_slug)
@@ -757,9 +767,9 @@ def program_edit(request, partner_slug, program_slug):
         program_start_date = request.POST.get('program_start_date')
         program_end_date = request.POST.get('program_end_date')
         program_registration_end = request.POST.get('program_registration_end')
-        date_now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         program_badge = request.POST.get('program_badge')
         program_certificate = request.POST.get('program_certificate')
+        program_status = request.POST.get('program_status')
         # partner_logo_1 = request.POST.get('partner_logo_1') or selected_program.get('partner_logo_1')
         # partner_logo_2 = request.POST.get('partner_logo_2') or selected_program.get('partner_logo_2')
         # partner_logo_3 = request.POST.get('partner_logo_3') or selected_program.get('partner_logo_3')
@@ -822,14 +832,14 @@ def program_edit(request, partner_slug, program_slug):
             program_start_date,
             program_registration_end,
             program_end_date,
-            date_now,
             program_badge,
             program_certificate,
             partner_logo_1,
             partner_logo_2,
             partner_logo_3,
             partner_logo_4,
-            image_1,"","","" # images
+            image_1,"","","", # images
+            program_status
         )
         
         print(updated_program)
@@ -1135,9 +1145,9 @@ def add_program(request, partner_slug):
         program_start_date = request.POST.get('program_start_date')
         program_end_date = request.POST.get('program_end_date')
         program_registration_end = request.POST.get('program_registration_end')
-        date_now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         program_badge = request.POST.get('program_badge')
         program_certificate = request.POST.get('program_certificate')
+        program_status = request.POST.get('program_status') or 1
 
         # Handle image uploads
         uploaded_image_1 = request.FILES.get('program_image_1')
@@ -1195,14 +1205,14 @@ def add_program(request, partner_slug):
             program_start_date,
             program_registration_end,
             program_end_date,
-            date_now,
             program_badge,
             program_certificate,
             partner_logo_1,
             partner_logo_2,
             partner_logo_3,
             partner_logo_4,
-            image_1,"","","" # images
+            image_1,"","","", # images
+            program_status,
         )
         
         print(updated_program)
