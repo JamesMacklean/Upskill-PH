@@ -22,6 +22,15 @@
                 {% if is_user_partner %}
                 <div class="mt-4">
                     <a href="{% url 'program_edit' partner_slug program.slug %}" class="btn btn-primary">Edit</a>
+                    <!-- Delete button visible only to admins -->
+                    {% if is_user_partner_admin %}
+                        <form method="POST" id="delete-program-form" onsubmit="return confirmDelete();">
+                            {% csrf_token %}
+                            <button type="submit" name="delete_program" class="btn btn-danger">
+                                <i class="fa fa-trash" aria-hidden="true"></i> Delete
+                            </button>
+                        </form>
+                    {% endif %}
                 </div>
                 {% endif %}
             </div>
@@ -56,7 +65,11 @@
         {% endfor %}
     </div>
 </div>
-
+<script>
+    function confirmDelete() {
+        return confirm("Are you sure you want to delete this program?");
+    }
+</script>
 {% endblock %}
 
 

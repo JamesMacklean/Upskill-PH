@@ -795,6 +795,34 @@ def update_program (bearer_token, program_id, partner_id, name, slug, url, descr
 
     return context, response_message
 
+# DELETE https://scholarium.tmtg-clone.click/v1/partner/[partner_id]/programs/[program_id]
+def delete_partner_or_program(bearer_token, partner_id, program_id):
+
+    payload={}
+    headers = {
+    'Authorization': bearer_token
+    }
+    
+    if program_id:
+        response = requests.request("DELETE", os.path.join(API_PARTNER_URL, str(partner_id)+"/programs/"+str(program_id)), headers=headers, data=payload)
+        response_dict = json.loads(response.text)
+        
+        if 'data' in response_dict:
+            response_message = "Program Deleted!"
+        else:
+            response_message = response_dict.get("error")
+                              
+    else:
+        response = requests.request("DELETE", os.path.join(API_PARTNER_URL, str(partner_id)), headers=headers, data=payload)
+        response_dict = json.loads(response.text)
+        
+        if 'data' in response_dict:
+            response_message = "Partner Deleted!"
+        else:
+            response_message = response_dict.get("error")
+
+    return response_message
+
 # POST https://scholarium.tmtg-clone.click/v1/me/scholarship
 def scholar_apply(bearer_token, program_id):
     payload={'program_id': program_id}

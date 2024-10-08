@@ -32,6 +32,14 @@
             <div class="bg-light p-5 w-100" id="partners">
                 <div class="pb-5">
                     <h3 class="mb-4">Programs</h3>
+                    <!-- Filter Buttons for Admin -->
+                    {% if is_user_partner_admin %}
+                        <div class="d-flex mb-4">
+                            <a href="?filter=all" class="btn {% if filter_status == 'all' %}btn-primary{% else %}btn-secondary{% endif %}">All</a>
+                            <a href="?filter=active" class="btn mx-2 {% if filter_status == 'active' %}btn-primary{% else %}btn-secondary{% endif %}">Active</a>
+                            <a href="?filter=archived" class="btn {% if filter_status == 'archived' %}btn-primary{% else %}btn-secondary{% endif %}">Archived</a>
+                        </div>
+                    {% endif %}
                     <div class="d-flex flex-column">
                         {% for program in program_list %}
                         <div class="bg-white w-100 mb-4">

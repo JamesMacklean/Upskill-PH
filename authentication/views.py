@@ -562,6 +562,9 @@ def partner_slug(request, partner_slug):
         is_user_partner = True
     
     if request.session.get('is_partner') or request.session.get('is_partner_admin'):
+        
+        filter_status = request.GET.get('filter', 'all')
+        
         # IF ACCESS LEVEL == 1
         if is_user_partner_admin:
             programs_list = get_programs(user_token, selected_partner['id'], None)
@@ -579,14 +582,23 @@ def partner_slug(request, partner_slug):
                         partner_programs.extend(programs_list)
 
                     if data['access_level'] != 0:
-                        is_user_partner = True                    
+                        is_user_partner = True  
+        
+        # Filter programs based on filter_status
+        if filter_status == 'active':
+            partner_programs = [program for program in partner_programs if program['status'] == 1]
+        elif filter_status == 'archived':
+            partner_programs = [program for program in partner_programs if program['status'] == 0]
+                  
     else:
         raise Http404("You are not a associated with this partner.")
     
+    print(partner_programs)
     context['partner_details'] = partner_details
     context['program_list'] = partner_programs
     context['is_user_partner'] = is_user_partner
     context['is_user_partner_admin'] = is_user_partner_admin
+    context['filter_status'] = filter_status
 
     return render(request, template_name, context)
 
@@ -669,19 +681,16 @@ def program_slug(request, partner_slug, program_slug):
     partner_id = program_data[0]['partner_id']
     program_id = program_data[0]['id']        
     
-    # monitored_partner = [data['partner_id'] for data in partners]
-    # monitored_program = [data['program_id'] for data in partners]
-            
-    # if partner_id not in monitored_partner:
-    #     raise Http404
-    # if program_id not in monitored_program:
-    #     raise Http404
-    
-    # Fetch the partner details using the id
     selected_program_list = get_programs(user_token, partner_id,program_id)
     selected_program = selected_program_list[0]
 
     is_user_partner = False
+    
+    is_partner_admin = request.session.get('is_partner_admin', [])
+    if partner_id in is_partner_admin:
+        is_user_partner_admin = True
+        is_user_partner = True
+    
     if request.session.get('is_partner'):
         if partners:
             for data in partners:
@@ -691,9 +700,18 @@ def program_slug(request, partner_slug, program_slug):
     else:
         raise Http404("User is not a partner")
     
+    # Handle the delete program request
+    if request.method == "POST" and 'delete_program' in request.POST:
+        delete_response = delete_partner_or_program(user_token, partner_id, program_id)
+        if delete_response == "Program Deleted!":
+            return redirect('partner_slug', partner_slug=partner_slug)
+        else:
+            context['error_message'] = delete_response
+        
     context['program_details'] = program_data
     context['partner_slug'] = partner_slug
     context['is_user_partner'] = is_user_partner
+    context['is_user_partner_admin'] = is_user_partner_admin
     
     if request.method == 'POST':
         csv_data = get_csv_buri(user_token, partner_id, program_id, 0) # status 0 means PENDING
