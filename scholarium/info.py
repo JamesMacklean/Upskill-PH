@@ -1,14 +1,12 @@
-TEST_EMAIL_RECEIVER = 'tmtcoredev@gmail.com'
+TEST_EMAIL_RECEIVER = 'test.email.here'
 
-API_TOKEN = 'UpskillPH etXESiNggFImCLPBBZjCsdPIRRW5v73PhpXKza7LXG9pLOCNTXE2UU461rldSor1'
+API_TOKEN = 'API.token.here'
 
 ############################### API ###############################
 # SCHOLARIUM
-API_SECRET_KEY = "5af375913e149630a4dd18e2ac1548cf9bdcde9c9e03eb24e1a1f3cb5e540c4a"
-API_URL = "https://scholarium.tmtg-clone.click/v1/"
+API_SECRET_KEY = "secret.key.here"
+API_URL = "api.url.here"
 ADMIN_URL = API_URL + "admin/"
-COURSEBANK_DISCOVERY_URL = "https://discovery.coursebank.ph/api/v1/"
-COURSEBANK_LMS_URL = "https://coursebank.ph/api/"
 API_LOGIN_ACCOUNT_URL = API_URL+"login"
 API_CREATE_ACCOUNT_URL = API_URL+"user/add"
 API_VERIFY_ACCOUNT_URL = API_URL+"user/verify/"
@@ -30,10 +28,6 @@ API_SCHOLAR_UPDATE_URL = API_PARTNER_URL+"scholarship/"
 API_ENROLL_CODE_URL = API_URL+"me/enroll/code"
 API_ENROLL_PROGRAM_URL = API_URL+"me/enroll/program"
 API_LICENSE_CODE_URL = API_URL+"admin/codes/"
-
-# COURSEBANK
-COURSEBANK_COURSES_URL = COURSEBANK_DISCOVERY_URL+"courses/?limit=9&"
-COURSEBANK_USERS_URL = COURSEBANK_LMS_URL+"users"
 
 # COURSERA
 # COURSERA_CLIENT_ID = "OuUgwjMHhlTxJqqV6uM01w"

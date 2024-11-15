@@ -23,11 +23,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 DOMAIN = 'welcome.upskillph.org'
 ACCOUNTS_DOMAIN = "accounts.upskillph.org"
 
-EMAIL_HOST = 'smtp.hostinger.com' 
-# EMAIL_HOST_USER = 'mailer@tmtg-clone.click' 
-# EMAIL_HOST_PASSWORD = 'hnVw35UEvflyXYPzJI7IWk2AmZkIpL8-'
-EMAIL_HOST_USER = 'hello@upskillph.org' 
-EMAIL_HOST_PASSWORD = 'hellO@upskillph2024'
+EMAIL_HOST = 'host.here' 
+EMAIL_HOST_USER = 'user.here' 
+EMAIL_HOST_PASSWORD = 'password.here'
 EMAIL_PORT = 465
 EMAIL_USE_TLS = False
 EMAIL_USE_SSL = True
@@ -45,10 +43,10 @@ DEBUG = True
 ALLOWED_HOSTS = [
     '139.59.116.183',
     '127.0.0.1',
-    'welcome.upskillph.org', 
-    'accounts.upskillph.org', 
-    'lgu.upskillph.org',
-    'misamis-occidental.upskillph.org',
+    # 'welcome.upskillph.org', 
+    # 'accounts.upskillph.org', 
+    # 'lgu.upskillph.org',
+    # 'misamis-occidental.upskillph.org',
 ]
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
